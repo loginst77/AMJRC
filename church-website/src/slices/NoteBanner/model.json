@@ -1,0 +1,78 @@
+{
+  "id": "note_banner",
+  "type": "SharedSlice",
+  "name": "NoteBanner",
+  "description": "NoteBanner",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktxnotebanner001",
+      "description": "President note banner with portrait, message, and CTA",
+      "primary": {
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "Label",
+            "placeholder": "Слово президента"
+          }
+        },
+        "name": {
+          "type": "Text",
+          "config": {
+            "label": "Name",
+            "placeholder": "President name"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "President title"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Photo",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "signature": {
+          "type": "Text",
+          "config": {
+            "label": "Signature",
+            "placeholder": "Optional closing line"
+          }
+        },
+        "buttonText": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": "Read more"
+          }
+        },
+        "buttonLink": {
+          "type": "Link",
+          "config": {
+            "label": "Button Link",
+            "placeholder": "",
+            "select": null
+          }
+        }
+      },
+      "items": {
+        "paragraph": {
+          "type": "Text",
+          "config": {
+            "label": "Paragraph",
+            "placeholder": "Message paragraph"
+          }
+        }
+      },
+      "imageUrl": ""
+    }
+  ]
+}

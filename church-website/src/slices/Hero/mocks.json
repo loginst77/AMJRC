@@ -1,0 +1,104 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading1",
+						"content": {
+							"text": "Steel",
+							"spans": []
+						},
+						"direction": "ltr"
+					}
+				]
+			},
+			"text": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Laboris adipisicing est duis in laboris in officia Lorem officia enim culpa consequat sint ut proident.",
+							"spans": []
+						},
+						"direction": "ltr"
+					}
+				]
+			},
+			"buttonLink": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://google.com"
+				}
+			},
+			"buttonText": {
+				"__TYPE__": "FieldContent",
+				"value": "matter",
+				"type": "Text"
+			},
+			"secondaryButtonLink": {
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://example.com"
+				}
+			},
+			"secondaryButtonText": {
+				"__TYPE__": "FieldContent",
+				"value": "discover",
+				"type": "Text"
+			},
+			"videoEmbed": {
+				"__TYPE__": "EmbedContent",
+				"value": {
+					"version": "1.0",
+					"type": "video",
+					"provider_name": "YouTube",
+					"provider_url": "https://www.youtube.com/",
+					"width": 480,
+					"height": 270,
+					"title": "Sample video",
+					"author_name": "YouTube",
+					"embed_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+					"html": "<iframe width=\"480\" height=\"270\" src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\" title=\"Sample video\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
+					"thumbnail_url": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+					"thumbnail_width": 480,
+					"thumbnail_height": 360
+				}
+			},
+			"backgroundImage": {
+				"__TYPE__": "ImageContent",
+				"url": "https://images.unsplash.com/photo-1616679312958-a86d9539afae?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw0fHxjaXRydXMlMjBmcnVpdHxlbnwwfHx8fDE3MTk1MzAwNDZ8MA&ixlib=rb-4.0.3&q=85",
+				"alt": "orange fruit on white ceramic plate",
+				"origin": {
+					"id": "Jr7t5QviCDM",
+					"url": "https://images.unsplash.com/photo-1616679312958-a86d9539afae?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw0fHxjaXRydXMlMjBmcnVpdHxlbnwwfHx8fDE3MTk1MzAwNDZ8MA&ixlib=rb-4.0.3&q=85",
+					"width": 3024,
+					"height": 4032
+				},
+				"width": 3024,
+				"height": 4032,
+				"edit": {
+					"background": "transparent",
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				"thumbnails": {}
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	}
+]

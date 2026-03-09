@@ -1,0 +1,42 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"signature": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Vcause this project doesn’t currently have Container or ButtonLink, I adapted the slice to the existing stack by using Bounded and a styled PrismicNextLink. I also synced the NoteBanner type shape in church-website/prismicio-types.d.ts so the slice fields are typed correctly.\nVerification: npm run lint passes. The only output was a non-blocking baseline-browser-mapping staleness warning from a dependency."
+			},
+			"buttonLink": {
+				"key": "28772fd0-edcd-4d1d-9fc8-29905923649e",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "google.com"
+				}
+			},
+			"label": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Слово президента"
+			},
+			"name": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Джо Доу"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Президент"
+			},
+			"buttonText": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Узнать больше"
+			}
+		},
+		"items": []
+	}
+]
