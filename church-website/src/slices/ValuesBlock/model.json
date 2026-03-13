@@ -1,0 +1,33 @@
+{
+  "id": "values_block",
+  "type": "SharedSlice",
+  "name": "ValuesBlock",
+  "description": "ValuesBlock",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {},
+      "items": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Служение"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Возможности для миссии и благовестия..."
+          }
+        }
+      },
+      "imageUrl": ""
+    }
+  ]
+}

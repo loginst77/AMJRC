@@ -1,0 +1,53 @@
+{
+  "id": "banner",
+  "type": "SharedSlice",
+  "name": "Banner",
+  "description": "Banner",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Добро пожаловать"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Короткое приглашение или сообщение"
+          }
+        },
+        "actionLabel": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": "Узнать больше"
+          }
+        },
+        "actionLink": {
+          "type": "Link",
+          "config": {
+            "label": "Button Link",
+            "placeholder": "https://example.com"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Background Image"
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": ""
+    }
+  ]
+}

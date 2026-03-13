@@ -1,0 +1,322 @@
+[
+  {
+    "logo": {
+      "__TYPE__": "ImageContent",
+      "origin": {
+        "id": "main",
+        "url": "https://images.unsplash.com/photo-1491975474562-1f4e30bc9468",
+        "width": 4000,
+        "height": 6000
+      },
+      "url": "https://images.unsplash.com/photo-1491975474562-1f4e30bc9468?rect=0%2C1950%2C4000%2C2100&w=400&h=210",
+      "width": 400,
+      "height": 210,
+      "edit": {
+        "zoom": 1,
+        "crop": {
+          "x": 0,
+          "y": 1950
+        },
+        "background": "transparent"
+      },
+      "alt": "Логотип",
+      "thumbnails": {}
+    },
+    "address_line_1": {
+      "__TYPE__": "FieldContent",
+      "value": "123 Main Street",
+      "type": "Text"
+    },
+    "address_line_2": {
+      "__TYPE__": "FieldContent",
+      "value": "Brooklyn, NY 11201",
+      "type": "Text"
+    },
+    "email": {
+      "__TYPE__": "FieldContent",
+      "value": "hello@amjrc.org",
+      "type": "Text"
+    },
+    "phone": {
+      "__TYPE__": "FieldContent",
+      "value": "+1 (718) 555-0123",
+      "type": "Text"
+    },
+    "navigation_column_title": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        {
+          "type": "heading3",
+          "content": { "text": "Навигация" }
+        }
+      ]
+    },
+    "navigation_links": {
+      "__TYPE__": "GroupContentType",
+      "value": [
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Медия" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Общины" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/communities" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "О нас" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/about" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Тора" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/read-torah" }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "actions_column_title": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        {
+          "type": "heading3",
+          "content": { "text": "Следующие шаги" }
+        }
+      ]
+    },
+    "action_links": {
+      "__TYPE__": "GroupContentType",
+      "value": [
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Контакты" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/contact" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Вступить в Альянс" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/join-alliance" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Пожертвовать" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/give" }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [{ "type": "heading3", "content": { "text": "Маршрут" } }]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "https://maps.google.com"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "service_times_title": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        {
+          "type": "heading3",
+          "content": { "text": "Время служений" }
+        }
+      ]
+    },
+    "service_times": {
+      "__TYPE__": "GroupContentType",
+      "value": [
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "Шаббат", "type": "Text" }],
+            ["time", { "__TYPE__": "FieldContent", "value": "10:00", "type": "Text" }]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "Молитва", "type": "Text" }],
+            ["time", { "__TYPE__": "FieldContent", "value": "19:00", "type": "Text" }]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "Изучение Торы", "type": "Text" }],
+            ["time", { "__TYPE__": "FieldContent", "value": "18:30", "type": "Text" }]
+          ]
+        }
+      ]
+    },
+    "social_links": {
+      "__TYPE__": "GroupContentType",
+      "value": [
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "YouTube", "type": "Text" }],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "https://youtube.com"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "Instagram", "type": "Text" }],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "https://instagram.com"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            ["label", { "__TYPE__": "FieldContent", "value": "Facebook", "type": "Text" }],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "https://facebook.com"
+                }
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "copyright_text": {
+      "__TYPE__": "FieldContent",
+      "value": "© 2026 AMJRC. Все права защищены.",
+      "type": "Text"
+    }
+  }
+]

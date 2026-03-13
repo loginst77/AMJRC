@@ -1,0 +1,82 @@
+{
+  "id": "card",
+  "type": "SharedSlice",
+  "name": "Card",
+  "description": "Card",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "Label",
+            "placeholder": "Миссия"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Во что мы верим"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Краткое описание блока"
+          }
+        }
+      },
+      "items": {
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Highlight text (optional)",
+            "placeholder": "Короткая цитата/выдержка"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Заголовок карточки"
+          }
+        },
+        "body": {
+          "type": "Text",
+          "config": {
+            "label": "Body",
+            "placeholder": "Основное описание"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image"
+          }
+        },
+        "buttonLabel": {
+          "type": "Text",
+          "config": {
+            "label": "Button label",
+            "placeholder": "Узнать больше"
+          }
+        },
+        "buttonLink": {
+          "type": "Link",
+          "config": {
+            "label": "Button link",
+            "placeholder": "https://example.com"
+          }
+        }
+      },
+      "imageUrl": ""
+    }
+  ]
+}

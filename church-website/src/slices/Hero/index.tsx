@@ -11,23 +11,8 @@ import { PrismicNextImage } from "@prismicio/next";
 import type { SliceComponentProps, JSXMapSerializer } from "@prismicio/react";
 
 import { PrismicRichText } from "@/components/PrismicRichText";
+import { SectionHeader } from "@/components/SectionHeader";
 import { ButtonLink } from "@/components/ui/button";
-
-const titleComponents: JSXMapSerializer = {
-  heading1: ({ children }) => (
-    <h1 className="max-w-2xl text-balance text-start text-4xl font-semibold leading-tight tracking-wide text-white sm:text-5xl md:text-6xl">
-      {children}
-    </h1>
-  ),
-};
-
-const textComponents: JSXMapSerializer = {
-  paragraph: ({ children }) => (
-    <p className="max-w-xl text-base leading-relaxed text-white/80 uppercase sm:text-base">
-      {children}
-    </p>
-  ),
-};
 
 type HeroProps = SliceComponentProps<Content.HeroSlice>;
 
@@ -69,8 +54,29 @@ const Hero: FC<HeroProps> = ({ slice }) => {
       <div className="relative mx-auto flex min-h-[75vh] max-w-6xl flex-col justify-center px-4 py-12 sm:px-6 sm:py-16 md:py-20">
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[1.05fr_1.2fr]">
           <div className="space-y-5 sm:space-y-6">
-            <PrismicRichText field={primary.title} components={titleComponents} />
-            <PrismicRichText field={primary.text} components={textComponents} />
+            <SectionHeader
+              as="h1"
+              tone="dark"
+              align="left"
+              className="max-w-2xl"
+              descriptionClassName="max-w-xl uppercase leading-relaxed text-white/80"
+              title={
+                <PrismicRichText
+                  field={primary.title}
+                  components={{
+                    heading1: ({ children }) => <>{children}</>,
+                  }}
+                />
+              }
+              description={
+                <PrismicRichText
+                  field={primary.text}
+                  components={{
+                    paragraph: ({ children }) => <>{children}</>,
+                  }}
+                />
+              }
+            />
 
             {(hasPrimaryButton || hasSecondaryButton) && (
               <div className="flex flex-wrap gap-3">

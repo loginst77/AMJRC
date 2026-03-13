@@ -1,0 +1,97 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"label": {
+				"__TYPE__": "FieldContent",
+				"value": "Следующее событие",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "Конференция «Свет для мира»",
+				"type": "Text"
+			},
+			"summary": {
+				"__TYPE__": "FieldContent",
+				"value": "Присоединяйтесь к нам, чтобы поклоняться, учиться и строить новые связи.",
+				"type": "Text"
+			},
+			"date": {
+				"__TYPE__": "FieldContent",
+				"value": "25 апреля 2026",
+				"type": "Text"
+			},
+			"time": {
+				"__TYPE__": "FieldContent",
+				"value": "10:00",
+				"type": "Text"
+			},
+			"location": {
+				"__TYPE__": "FieldContent",
+				"value": "ул. Пример, 1",
+				"type": "Text"
+			},
+			"countdownTarget": {
+				"__TYPE__": "FieldContent",
+				"value": "2026-04-25T07:00:00.000Z",
+				"type": "Timestamp"
+			},
+			"backgroundImage": {
+				"origin": {
+					"id": "mocked-image",
+					"url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&auto=format&fit=crop&q=80",
+					"width": 2400,
+					"height": 1600
+				},
+				"url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1600&auto=format&fit=crop&q=80",
+				"width": 2400,
+				"height": 1600,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {},
+				"dimensions": {
+					"width": 2400,
+					"height": 1600
+				}
+			},
+			"primaryButtonText": {
+				"__TYPE__": "FieldContent",
+				"value": "Зарегистрироваться",
+				"type": "Text"
+			},
+			"primaryButtonLink": {
+				"key": "b2e24d6d-dc1c-4fb0-8c86-36ab1d4adcef",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://example.com/register"
+				}
+			},
+			"secondaryButtonText": {
+				"__TYPE__": "FieldContent",
+				"value": "Подробнее",
+				"type": "Text"
+			},
+			"secondaryButtonLink": {
+				"key": "f1c14955-78bd-4c53-9c57-bd44e2526d13",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://example.com/details"
+				}
+			}
+		},
+		"items": []
+	}
+]

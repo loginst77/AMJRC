@@ -10,7 +10,38 @@
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {}
+          "choices": {
+            "values_block": {
+              "type": "SharedSlice"
+            },
+            "subscribe_to_newsletter": {
+              "type": "SharedSlice"
+            },
+            "note_banner": {
+              "type": "SharedSlice"
+            },
+            "qa": {
+              "type": "SharedSlice"
+            },
+            "info_card": {
+              "type": "SharedSlice"
+            },
+            "card": {
+              "type": "SharedSlice"
+            },
+            "big_event": {
+              "type": "SharedSlice"
+            },
+            "hero": {
+              "type": "SharedSlice"
+            },
+            "form": {
+              "type": "SharedSlice"
+            },
+            "banner": {
+              "type": "SharedSlice"
+            }
+          }
         }
       }
     },

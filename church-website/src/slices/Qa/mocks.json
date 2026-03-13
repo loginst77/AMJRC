@@ -1,0 +1,83 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "Частые вопросы",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"value": "Ответы на самые частые вопросы о наших встречах и служениях.",
+				"type": "Text"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"question",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Как выглядит ваше воскресное собрание?",
+							"type": "Text"
+						}
+					],
+					[
+						"answer",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Мы начинаем с совместного поклонения, продолжаем изучением Писания и завершаем молитвой и общением за чашкой кофе.",
+							"type": "Text"
+						}
+					]
+				]
+			},
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"question",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Можно ли прийти с детьми?",
+							"type": "Text"
+						}
+					],
+					[
+						"answer",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Да! У нас есть программы и наставники для детей и подростков, а также уютное место для родителей с малышами.",
+							"type": "Text"
+						}
+					]
+				]
+			},
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"question",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Нужно ли регистрироваться заранее?",
+							"type": "Text"
+						}
+					],
+					[
+						"answer",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Регистрация не обязательна, но если вы заполните форму на сайте, мы подготовим для вас приветственный набор и поможем с парковкой.",
+							"type": "Text"
+						}
+					]
+				]
+			}
+		]
+	}
+]

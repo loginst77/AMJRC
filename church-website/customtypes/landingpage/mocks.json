@@ -1,0 +1,125 @@
+[
+  {
+    "uid": {
+      "__TYPE__": "UIDContent",
+      "value": "her"
+    },
+    "slices": {
+      "__TYPE__": "SliceContentType",
+      "value": [
+        {
+          "key": "note_banner$da93c96e-abf9-4a35-969d-c281215edc81",
+          "name": "note_banner",
+          "widget": {
+            "__TYPE__": "SharedSliceContent",
+            "variation": "default",
+            "primary": {
+              "label": {
+                "__TYPE__": "FieldContent",
+                "value": "scientist",
+                "type": "Text"
+              },
+              "name": {
+                "__TYPE__": "FieldContent",
+                "value": "burst",
+                "type": "Text"
+              },
+              "title": {
+                "__TYPE__": "FieldContent",
+                "value": "massage",
+                "type": "Text"
+              },
+              "image": {
+                "__TYPE__": "ImageContent",
+                "origin": {
+                  "id": "main",
+                  "url": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
+                  "width": 5616,
+                  "height": 3744
+                },
+                "url": "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2",
+                "width": 5616,
+                "height": 3744,
+                "edit": {
+                  "zoom": 1,
+                  "crop": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "background": "transparent"
+                },
+                "alt": "smoke",
+                "thumbnails": {}
+              },
+              "signature": {
+                "__TYPE__": "FieldContent",
+                "value": "stomach",
+                "type": "Text"
+              },
+              "buttonText": {
+                "__TYPE__": "FieldContent",
+                "value": "number",
+                "type": "Text"
+              },
+              "buttonLink": {
+                "__TYPE__": "LinkContent",
+                "key": "f995b292-fefe-4db7-8fff-d5ba34771f2a",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "http://twitter.com"
+                }
+              }
+            },
+            "items": [
+              {
+                "__TYPE__": "GroupItemContent",
+                "value": [
+                  [
+                    "paragraph",
+                    {
+                      "__TYPE__": "FieldContent",
+                      "value": "nose",
+                      "type": "Text"
+                    }
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "meta_title": {
+      "__TYPE__": "FieldContent",
+      "value": "taught",
+      "type": "Text"
+    },
+    "meta_description": {
+      "__TYPE__": "FieldContent",
+      "value": "flies",
+      "type": "Text"
+    },
+    "meta_image": {
+      "__TYPE__": "ImageContent",
+      "origin": {
+        "id": "main",
+        "url": "https://images.unsplash.com/photo-1545239351-1141bd82e8a6",
+        "width": 3212,
+        "height": 3880
+      },
+      "url": "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?rect=0%2C1097%2C3212%2C1686&w=2400&h=1260",
+      "width": 2400,
+      "height": 1260,
+      "edit": {
+        "zoom": 1,
+        "crop": {
+          "x": 0,
+          "y": 1097
+        },
+        "background": "transparent"
+      },
+      "alt": "with",
+      "thumbnails": {}
+    }
+  }
+]

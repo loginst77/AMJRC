@@ -1,0 +1,82 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "mark",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Ad ea nulla sint nostrud ut quis eu fugiat officia elit anim sint."
+						}
+					}
+				]
+			},
+			"backgroundImage": {
+				"__TYPE__": "ImageContent",
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
+					"width": 4000,
+					"height": 6000
+				},
+				"url": "https://images.unsplash.com/photo-1541807084-5c52b6b3adef",
+				"width": 4000,
+				"height": 6000,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"alt": "taste"
+			},
+			"breadcrumbHomeLabel": {
+				"__TYPE__": "FieldContent",
+				"value": "open",
+				"type": "Text"
+			},
+			"breadcrumbHomeLink": {
+				"__TYPE__": "LinkContent",
+				"key": "ab8d0411-3721-4b1c-9b30-516033997b15",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://google.com"
+				}
+			},
+			"breadcrumbCurrent": {
+				"__TYPE__": "FieldContent",
+				"value": "start",
+				"type": "Text"
+			},
+			"buttonLabel": {
+				"__TYPE__": "FieldContent",
+				"value": "heard",
+				"type": "Text"
+			},
+			"buttonLink": {
+				"__TYPE__": "LinkContent",
+				"key": "530e93a3-41db-40ae-b06d-ff827eb0ed27",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://google.com"
+				}
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	}
+]

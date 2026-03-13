@@ -1,11 +1,19 @@
 {
   "id": "navigation",
-  "label": "Navigation",
+  "label": "Header",
   "format": "custom",
   "repeatable": false,
   "status": true,
   "json": {
     "Main": {
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "links": {
         "type": "Group",
         "config": {
@@ -29,6 +37,106 @@
               }
             }
           }
+        }
+      },
+      "dropdown_label": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Dropdown label",
+          "placeholder": "Optional - Label for the dropdown",
+          "allowTargetBlank": false,
+          "single": "heading3"
+        }
+      },
+      "dropdown_link": {
+        "type": "Link",
+        "config": {
+          "label": "Dropdown link",
+          "placeholder": "Link for the dropdown",
+          "select": null
+        }
+      },
+      "dropdown_items": {
+        "type": "Group",
+        "config": {
+          "label": "Dropdown items",
+          "fields": {
+            "label": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Label",
+                "placeholder": "Label for dropdown item",
+                "allowTargetBlank": false,
+                "single": "heading3"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Link for dropdown item",
+                "select": null
+              }
+            },
+            "icon": {
+              "type": "Select",
+              "config": {
+                "label": "Icon",
+                "placeholder": "Select an icon",
+                "options": ["Video", "Mic", "FileText", "BookMarked", "Radio", "Newspaper"]
+              }
+            }
+          }
+        }
+      },
+      "action_button_primary_label": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Primary button label",
+          "placeholder": "Label for primary action",
+          "single": "heading3",
+          "allowTargetBlank": false
+        }
+      },
+      "action_button_primary_link": {
+        "type": "Link",
+        "config": {
+          "label": "Primary button link",
+          "placeholder": "Link for primary action",
+          "select": null
+        }
+      },
+      "action_button_primary_variant": {
+        "type": "Select",
+        "config": {
+          "label": "Primary button variant",
+          "placeholder": "Choose a button style",
+          "options": ["primary", "secondary", "ghost", "outline", "filled"]
+        }
+      },
+      "action_button_secondary_label": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Secondary button label",
+          "placeholder": "Label for secondary action",
+          "single": "heading3",
+          "allowTargetBlank": false
+        }
+      },
+      "action_button_secondary_link": {
+        "type": "Link",
+        "config": {
+          "label": "Secondary button link",
+          "placeholder": "Link for secondary action",
+          "select": null
+        }
+      },
+      "action_button_secondary_variant": {
+        "type": "Select",
+        "config": {
+          "label": "Secondary button variant",
+          "placeholder": "Choose a button style",
+          "options": ["primary", "secondary", "ghost", "outline", "filled"]
         }
       }
     }

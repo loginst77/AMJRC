@@ -1,0 +1,176 @@
+{
+  "format": "custom",
+  "id": "footer",
+  "label": "Footer",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "address_line_1": {
+        "type": "Text",
+        "config": {
+          "label": "Address line 1",
+          "placeholder": "Street address"
+        }
+      },
+      "address_line_2": {
+        "type": "Text",
+        "config": {
+          "label": "Address line 2",
+          "placeholder": "City, region, postal code"
+        }
+      },
+      "email": {
+        "type": "Text",
+        "config": {
+          "label": "Email",
+          "placeholder": "hello@example.com"
+        }
+      },
+      "phone": {
+        "type": "Text",
+        "config": {
+          "label": "Phone",
+          "placeholder": "+1 555 123 4567"
+        }
+      },
+      "navigation_column_title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Navigation column title",
+          "placeholder": "Navigation",
+          "single": "heading3",
+          "allowTargetBlank": false
+        }
+      },
+      "navigation_links": {
+        "type": "Group",
+        "config": {
+          "label": "Navigation links",
+          "fields": {
+            "label": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Label",
+                "placeholder": "Link label",
+                "single": "heading3",
+                "allowTargetBlank": false
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Link URL",
+                "select": null
+              }
+            }
+          }
+        }
+      },
+      "actions_column_title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Actions column title",
+          "placeholder": "Next steps",
+          "single": "heading3",
+          "allowTargetBlank": false
+        }
+      },
+      "action_links": {
+        "type": "Group",
+        "config": {
+          "label": "Action links",
+          "fields": {
+            "label": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Label",
+                "placeholder": "Link label",
+                "single": "heading3",
+                "allowTargetBlank": false
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "Link URL",
+                "select": null
+              }
+            }
+          }
+        }
+      },
+      "service_times_title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Service times title",
+          "placeholder": "Service times",
+          "single": "heading3",
+          "allowTargetBlank": false
+        }
+      },
+      "service_times": {
+        "type": "Group",
+        "config": {
+          "label": "Service times",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": "Sunday worship"
+              }
+            },
+            "time": {
+              "type": "Text",
+              "config": {
+                "label": "Time",
+                "placeholder": "10:00"
+              }
+            }
+          }
+        }
+      },
+      "social_links": {
+        "type": "Group",
+        "config": {
+          "label": "Social links",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": "YouTube"
+              }
+            },
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "https://...",
+                "select": null
+              }
+            }
+          }
+        }
+      },
+      "copyright_text": {
+        "type": "Text",
+        "config": {
+          "label": "Copyright text",
+          "placeholder": "© 2026 AMJRC. Все права защищены."
+        }
+      }
+    }
+  }
+}

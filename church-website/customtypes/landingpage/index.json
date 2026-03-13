@@ -17,6 +17,33 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "info_card": {
+              "type": "SharedSlice"
+            },
+            "qa": {
+              "type": "SharedSlice"
+            },
+            "subscribe_to_newsletter": {
+              "type": "SharedSlice"
+            },
+            "values_block": {
+              "type": "SharedSlice"
+            },
+            "form": {
+              "type": "SharedSlice"
+            },
+            "banner": {
+              "type": "SharedSlice"
+            },
+            "big_event": {
+              "type": "SharedSlice"
+            },
+            "card": {
+              "type": "SharedSlice"
+            },
+            "landing_page_hero": {
+              "type": "SharedSlice"
+            },
             "note_banner": {
               "type": "SharedSlice"
             }

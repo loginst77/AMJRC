@@ -1,0 +1,73 @@
+[
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "default",
+    "primary": {},
+    "items": [
+      {
+        "__TYPE__": "GroupItemContent",
+        "value": [
+          [
+            "icon",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "fallen",
+              "type": "Text"
+            }
+          ],
+          [
+            "title",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "agree",
+              "type": "Text"
+            }
+          ],
+          [
+            "text",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "was",
+              "type": "Text"
+            }
+          ],
+          [
+            "buttonLabel",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "village",
+              "type": "Text"
+            }
+          ],
+          [
+            "buttonLink",
+            {
+              "__TYPE__": "LinkContent",
+              "key": "236ed0ca-8f32-4984-93ab-a083b1e2135b",
+              "value": {
+                "__TYPE__": "ExternalLink",
+                "url": "http://google.com"
+              }
+            }
+          ],
+          [
+            "buttonVariant",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "secondary",
+              "type": "Select"
+            }
+          ],
+          [
+            "buttonTarget",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "_self",
+              "type": "Select"
+            }
+          ]
+        ]
+      }
+    ]
+  }
+]

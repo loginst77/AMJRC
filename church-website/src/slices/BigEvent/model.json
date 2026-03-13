@@ -1,0 +1,106 @@
+{
+  "id": "big_event",
+  "type": "SharedSlice",
+  "name": "BigEvent",
+  "description": "BigEvent",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {
+        "label": {
+          "type": "Text",
+          "config": {
+            "label": "Label",
+            "placeholder": "Следующее событие"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Миссионерская конференция"
+          }
+        },
+        "summary": {
+          "type": "Text",
+          "config": {
+            "label": "Summary",
+            "placeholder": "Короткое описание события"
+          }
+        },
+        "date": {
+          "type": "Text",
+          "config": {
+            "label": "Date display",
+            "placeholder": "25 апреля 2026"
+          }
+        },
+        "time": {
+          "type": "Text",
+          "config": {
+            "label": "Time",
+            "placeholder": "10:00"
+          }
+        },
+        "location": {
+          "type": "Text",
+          "config": {
+            "label": "Location",
+            "placeholder": "Москва, ул. Пример, 1"
+          }
+        },
+        "countdownTarget": {
+          "type": "Timestamp",
+          "config": {
+            "label": "Countdown target",
+            "placeholder": "2026-04-25T10:00:00+03:00"
+          }
+        },
+        "backgroundImage": {
+          "type": "Image",
+          "config": {
+            "label": "Background image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "primaryButtonText": {
+          "type": "Text",
+          "config": {
+            "label": "Primary button text",
+            "placeholder": "Зарегистрироваться"
+          }
+        },
+        "primaryButtonLink": {
+          "type": "Link",
+          "config": {
+            "label": "Primary button link",
+            "placeholder": "",
+            "select": null
+          }
+        },
+        "secondaryButtonText": {
+          "type": "Text",
+          "config": {
+            "label": "Secondary button text",
+            "placeholder": "Подробнее"
+          }
+        },
+        "secondaryButtonLink": {
+          "type": "Link",
+          "config": {
+            "label": "Secondary button link",
+            "placeholder": "",
+            "select": null
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": ""
+    }
+  ]
+}

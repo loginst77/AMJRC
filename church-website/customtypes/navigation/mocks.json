@@ -13,9 +13,7 @@
                 "value": [
                   {
                     "type": "heading3",
-                    "content": {
-                      "text": "Better"
-                    }
+                    "content": { "text": "Общины" }
                   }
                 ]
               }
@@ -26,13 +24,322 @@
                 "__TYPE__": "LinkContent",
                 "value": {
                   "__TYPE__": "ExternalLink",
-                  "url": "http://google.com"
+                  "url": "/communities"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  {
+                    "type": "heading3",
+                    "content": { "text": "О нас" }
+                  }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "/about"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  {
+                    "type": "heading3",
+                    "content": { "text": "Тора" }
+                  }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "/read-torah"
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  {
+                    "type": "heading3",
+                    "content": { "text": "Пожертвовать" }
+                  }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": {
+                  "__TYPE__": "ExternalLink",
+                  "url": "/give"
                 }
               }
             ]
           ]
         }
       ]
+    },
+    "dropdown_label": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        {
+          "type": "heading3",
+          "content": { "text": "Медия" }
+        }
+      ]
+    },
+    "dropdown_link": {
+      "__TYPE__": "LinkContent",
+      "value": {
+        "__TYPE__": "ExternalLink",
+        "url": "/media"
+      }
+    },
+    "dropdown_items": {
+      "__TYPE__": "GroupContentType",
+      "value": [
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Видео" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/videos" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "Video" }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Подкасты" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/podcasts" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "Mic" }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Статьи" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/articles" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "FileText" }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Книги" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/books" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "BookMarked" }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Радио" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/radio" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "Radio" }
+            ]
+          ]
+        },
+        {
+          "__TYPE__": "GroupItemContent",
+          "value": [
+            [
+              "label",
+              {
+                "__TYPE__": "StructuredTextContent",
+                "value": [
+                  { "type": "heading3", "content": { "text": "Газета" } }
+                ]
+              }
+            ],
+            [
+              "link",
+              {
+                "__TYPE__": "LinkContent",
+                "value": { "__TYPE__": "ExternalLink", "url": "/media/newspaper" }
+              }
+            ],
+            [
+              "icon",
+              { "__TYPE__": "SelectContent", "value": "Newspaper" }
+            ]
+          ]
+        }
+      ]
+    }
+    ,
+    "logo": {
+      "__TYPE__": "ImageContent",
+      "origin": {
+        "id": "main",
+        "url": "https://images.unsplash.com/photo-1491975474562-1f4e30bc9468",
+        "width": 4000,
+        "height": 6000
+      },
+      "url": "https://images.unsplash.com/photo-1491975474562-1f4e30bc9468?rect=0%2C1950%2C4000%2C2100&w=400&h=210",
+      "width": 400,
+      "height": 210,
+      "edit": {
+        "zoom": 1,
+        "crop": {
+          "x": 0,
+          "y": 1950
+        },
+        "background": "transparent"
+      },
+      "alt": "Logo",
+      "thumbnails": {}
+    },
+    "action_button_primary_label": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        { "type": "heading3", "content": { "text": "Контакты" } }
+      ]
+    },
+    "action_button_primary_link": {
+      "__TYPE__": "LinkContent",
+      "value": {
+        "__TYPE__": "ExternalLink",
+        "url": "/contact"
+      }
+    },
+    "action_button_primary_variant": {
+      "__TYPE__": "SelectContent",
+      "value": "ghost"
+    },
+    "action_button_secondary_label": {
+      "__TYPE__": "StructuredTextContent",
+      "value": [
+        { "type": "heading3", "content": { "text": "Вступить в Альянс" } }
+      ]
+    },
+    "action_button_secondary_link": {
+      "__TYPE__": "LinkContent",
+      "value": {
+        "__TYPE__": "ExternalLink",
+        "url": "/join-alliance"
+      }
+    },
+    "action_button_secondary_variant": {
+      "__TYPE__": "SelectContent",
+      "value": "primary"
     }
   }
 ]

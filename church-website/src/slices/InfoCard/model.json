@@ -1,0 +1,70 @@
+{
+  "id": "info_card",
+  "type": "SharedSlice",
+  "name": "InfoCard",
+  "description": "InfoCard",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {},
+      "items": {
+        "icon": {
+          "type": "Text",
+          "config": {
+            "label": "Icon",
+            "placeholder": "✦"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Заголовок"
+          }
+        },
+        "text": {
+          "type": "Text",
+          "config": {
+            "label": "Text",
+            "placeholder": "Краткое описание"
+          }
+        },
+        "buttonLabel": {
+          "type": "Text",
+          "config": {
+            "label": "Button label",
+            "placeholder": "Подробнее"
+          }
+        },
+        "buttonLink": {
+          "type": "Link",
+          "config": {
+            "label": "Button link",
+            "placeholder": "https://example.com"
+          }
+        },
+        "buttonVariant": {
+          "type": "Select",
+          "config": {
+            "label": "Button variant",
+            "options": ["secondary", "ghost"],
+            "default_value": "secondary"
+          }
+        },
+        "buttonTarget": {
+          "type": "Select",
+          "config": {
+            "label": "Button target",
+            "options": ["_self", "_blank"],
+            "default_value": "_self"
+          }
+        }
+      },
+      "imageUrl": ""
+    }
+  ]
+}

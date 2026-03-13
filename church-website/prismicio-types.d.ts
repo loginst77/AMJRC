@@ -69,7 +69,35 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-type HomeDocumentDataSlicesSlice = never;
+interface FooterDocumentData {}
+
+/**
+ * Footer document from Prismic
+ *
+ * - **API ID**: `footer`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FooterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<FooterDocumentData>,
+    "footer",
+    Lang
+  >;
+
+type HomeDocumentDataSlicesSlice =
+  | ValuesBlockSlice
+  | SubscribeToNewsletterSlice
+  | NoteBannerSlice
+  | QaSlice
+  | InfoCardSlice
+  | CardSlice
+  | BigEventSlice
+  | HeroSlice
+  | FormSlice
+  | BannerSlice;
 
 /**
  * Content for Home documents
@@ -130,7 +158,17 @@ interface HomeDocumentData {
 export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
-type LandingpageDocumentDataSlicesSlice = NoteBannerSlice;
+type LandingpageDocumentDataSlicesSlice =
+  | InfoCardSlice
+  | QaSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | FormSlice
+  | BannerSlice
+  | BigEventSlice
+  | CardSlice
+  | LandingPageHeroSlice
+  | NoteBannerSlice;
 
 /**
  * Content for LandingPage documents
@@ -196,11 +234,11 @@ export type LandingpageDocument<Lang extends string = string> =
   >;
 
 /**
- * Item in *Navigation → Links*
+ * Item in *Header → Links*
  */
 export interface NavigationDocumentDataLinksItem {
   /**
-   * Label field in *Navigation → Links*
+   * Label field in *Header → Links*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: Optional - Label for the link
@@ -210,7 +248,7 @@ export interface NavigationDocumentDataLinksItem {
   label: prismic.RichTextField;
 
   /**
-   * Link field in *Navigation → Links*
+   * Link field in *Header → Links*
    *
    * - **Field Type**: Link
    * - **Placeholder**: Link for navigation item
@@ -221,11 +259,59 @@ export interface NavigationDocumentDataLinksItem {
 }
 
 /**
- * Content for Navigation documents
+ * Item in *Header → Dropdown items*
+ */
+export interface NavigationDocumentDataDropdownItemsItem {
+  /**
+   * Label field in *Header → Dropdown items*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Label for dropdown item
+   * - **API ID Path**: navigation.dropdown_items[].label
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  label: prismic.RichTextField;
+
+  /**
+   * Link field in *Header → Dropdown items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for dropdown item
+   * - **API ID Path**: navigation.dropdown_items[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Icon field in *Header → Dropdown items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Select an icon
+   * - **API ID Path**: navigation.dropdown_items[].icon
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  icon: prismic.SelectField<
+    "Video" | "Mic" | "FileText" | "BookMarked" | "Radio" | "Newspaper"
+  >;
+}
+
+/**
+ * Content for Header documents
  */
 interface NavigationDocumentData {
   /**
-   * Links field in *Navigation*
+   * Logo field in *Header*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  logo: prismic.ImageField<never>;
+
+  /**
+   * Links field in *Header*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
@@ -234,10 +320,133 @@ interface NavigationDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
   links: prismic.GroupField<Simplify<NavigationDocumentDataLinksItem>>;
+
+  /**
+   * Dropdown label field in *Header*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Optional - Label for the dropdown
+   * - **API ID Path**: navigation.dropdown_label
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  dropdown_label: prismic.RichTextField;
+
+  /**
+   * Dropdown link field in *Header*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the dropdown
+   * - **API ID Path**: navigation.dropdown_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  dropdown_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Dropdown items field in *Header*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navigation.dropdown_items[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  dropdown_items: prismic.GroupField<
+    Simplify<NavigationDocumentDataDropdownItemsItem>
+  >;
+
+  /**
+   * Primary button label field in *Header*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Label for primary action
+   * - **API ID Path**: navigation.action_button_primary_label
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  action_button_primary_label: prismic.RichTextField;
+
+  /**
+   * Primary button link field in *Header*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for primary action
+   * - **API ID Path**: navigation.action_button_primary_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  action_button_primary_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Primary button variant field in *Header*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Choose a button style
+   * - **API ID Path**: navigation.action_button_primary_variant
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  action_button_primary_variant: prismic.SelectField<
+    "primary" | "secondary" | "ghost" | "outline" | "filled"
+  >;
+
+  /**
+   * Secondary button label field in *Header*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Label for secondary action
+   * - **API ID Path**: navigation.action_button_secondary_label
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  action_button_secondary_label: prismic.RichTextField;
+
+  /**
+   * Secondary button link field in *Header*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for secondary action
+   * - **API ID Path**: navigation.action_button_secondary_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  action_button_secondary_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Secondary button variant field in *Header*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Choose a button style
+   * - **API ID Path**: navigation.action_button_secondary_variant
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  action_button_secondary_variant: prismic.SelectField<
+    "primary" | "secondary" | "ghost" | "outline" | "filled"
+  >;
 }
 
 /**
- * Navigation document from Prismic
+ * Header document from Prismic
  *
  * - **API ID**: `navigation`
  * - **Repeatable**: `false`
@@ -252,127 +461,426 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
-type PageDocumentDataSlicesSlice = HeroSlice;
+export type AllDocumentTypes =
+  | FooterDocument
+  | HomeDocument
+  | LandingpageDocument
+  | NavigationDocument;
 
 /**
- * Content for Page documents
+ * Primary content in *Banner → Default → Primary*
  */
-interface PageDocumentData {
+export interface BannerSliceDefaultPrimary {
   /**
-   * Title field in *Page*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  title: prismic.RichTextField;
-
-  /**
-   * Parent field in *Page*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.parent
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-   */
-  parent: prismic.ContentRelationshipField<"page">;
-
-  /**
-   * Slice Zone field in *Page*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/slices
-   */
-  slices: prismic.SliceZone<PageDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Page*
+   * Title field in *Banner → Default → Primary*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: A title of the page used for social media and search engines
-   * - **API ID Path**: page.meta_title
-   * - **Tab**: SEO & Metadata
+   * - **Placeholder**: Добро пожаловать
+   * - **API ID Path**: banner.default.primary.title
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  meta_title: prismic.KeyTextField;
+  title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Page*
+   * Description field in *Banner → Default → Primary*
    *
    * - **Field Type**: Text
-   * - **Placeholder**: A brief summary of the page
-   * - **API ID Path**: page.meta_description
-   * - **Tab**: SEO & Metadata
+   * - **Placeholder**: Короткое приглашение или сообщение
+   * - **API ID Path**: banner.default.primary.description
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  meta_description: prismic.KeyTextField;
+  description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Page*
+   * Button Text field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Узнать больше
+   * - **API ID Path**: banner.default.primary.actionLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  actionLabel: prismic.KeyTextField;
+
+  /**
+   * Button Link field in *Banner → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://example.com
+   * - **API ID Path**: banner.default.primary.actionLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  actionLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Background Image field in *Banner → Default → Primary*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
-   * - **API ID Path**: page.meta_image
-   * - **Tab**: SEO & Metadata
+   * - **API ID Path**: banner.default.primary.image
    * - **Documentation**: https://prismic.io/docs/fields/image
    */
-  meta_image: prismic.ImageField<never>;
+  image: prismic.ImageField<never>;
 }
 
 /**
- * Page document from Prismic
+ * Default variation for Banner Slice
  *
- * - **API ID**: `page`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
  */
-export type PageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
+export type BannerSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BannerSliceDefaultPrimary>,
+  never
+>;
 
 /**
- * Content for Settings documents
+ * Slice variation for *Banner*
  */
-interface SettingsDocumentData {
+type BannerSliceVariation = BannerSliceDefault;
+
+/**
+ * Banner Shared Slice
+ *
+ * - **API ID**: `banner`
+ * - **Description**: Banner
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BannerSlice = prismic.SharedSlice<"banner", BannerSliceVariation>;
+
+/**
+ * Primary content in *BigEvent → Default → Primary*
+ */
+export interface BigEventSliceDefaultPrimary {
   /**
-   * Site Title field in *Settings*
+   * Label field in *BigEvent → Default → Primary*
    *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Title of the site
-   * - **API ID Path**: settings.siteTitle
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   * - **Field Type**: Text
+   * - **Placeholder**: Следующее событие
+   * - **API ID Path**: big_event.default.primary.label
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  siteTitle: prismic.RichTextField;
-}
+  label: prismic.KeyTextField;
 
-/**
- * Settings document from Prismic
- *
- * - **API ID**: `settings`
- * - **Repeatable**: `false`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type SettingsDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
-    Simplify<SettingsDocumentData>,
-    "settings",
-    Lang
+  /**
+   * Title field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Миссионерская конференция
+   * - **API ID Path**: big_event.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Summary field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Короткое описание события
+   * - **API ID Path**: big_event.default.primary.summary
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  summary: prismic.KeyTextField;
+
+  /**
+   * Date display field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 25 апреля 2026
+   * - **API ID Path**: big_event.default.primary.date
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  date: prismic.KeyTextField;
+
+  /**
+   * Time field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 10:00
+   * - **API ID Path**: big_event.default.primary.time
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  time: prismic.KeyTextField;
+
+  /**
+   * Location field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Москва, ул. Пример, 1
+   * - **API ID Path**: big_event.default.primary.location
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  location: prismic.KeyTextField;
+
+  /**
+   * Countdown target field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Timestamp
+   * - **Placeholder**: 2026-04-25T10:00:00+03:00
+   * - **API ID Path**: big_event.default.primary.countdownTarget
+   * - **Documentation**: https://prismic.io/docs/fields/timestamp
+   */
+  countdownTarget: prismic.TimestampField;
+
+  /**
+   * Background image field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: big_event.default.primary.backgroundImage
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  backgroundImage: prismic.ImageField<never>;
+
+  /**
+   * Primary button text field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Зарегистрироваться
+   * - **API ID Path**: big_event.default.primary.primaryButtonText
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  primaryButtonText: prismic.KeyTextField;
+
+  /**
+   * Primary button link field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: big_event.default.primary.primaryButtonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  primaryButtonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
   >;
 
-export type AllDocumentTypes =
-  | HomeDocument
-  | LandingpageDocument
-  | NavigationDocument
-  | PageDocument
-  | SettingsDocument;
+  /**
+   * Secondary button text field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подробнее
+   * - **API ID Path**: big_event.default.primary.secondaryButtonText
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  secondaryButtonText: prismic.KeyTextField;
+
+  /**
+   * Secondary button link field in *BigEvent → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: big_event.default.primary.secondaryButtonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  secondaryButtonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Default variation for BigEvent Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigEventSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BigEventSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BigEvent*
+ */
+type BigEventSliceVariation = BigEventSliceDefault;
+
+/**
+ * BigEvent Shared Slice
+ *
+ * - **API ID**: `big_event`
+ * - **Description**: BigEvent
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BigEventSlice = prismic.SharedSlice<
+  "big_event",
+  BigEventSliceVariation
+>;
+
+/**
+ * Primary content in *Card → Default → Primary*
+ */
+export interface CardSliceDefaultPrimary {
+  /**
+   * Label field in *Card → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Миссия
+   * - **API ID Path**: card.default.primary.label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Title field in *Card → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Во что мы верим
+   * - **API ID Path**: card.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Card → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание блока
+   * - **API ID Path**: card.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Card → Items*
+ */
+export interface CardSliceDefaultItem {
+  /**
+   * Highlight text (optional) field in *Card → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Короткая цитата/выдержка
+   * - **API ID Path**: card.items[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Title field in *Card → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Заголовок карточки
+   * - **API ID Path**: card.items[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Body field in *Card → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Основное описание
+   * - **API ID Path**: card.items[].body
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  body: prismic.KeyTextField;
+
+  /**
+   * Image field in *Card → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: card.items[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Button label field in *Card → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Узнать больше
+   * - **API ID Path**: card.items[].buttonLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonLabel: prismic.KeyTextField;
+
+  /**
+   * Button link field in *Card → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://example.com
+   * - **API ID Path**: card.items[].buttonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Default variation for Card Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CardSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CardSliceDefaultPrimary>,
+  Simplify<CardSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *Card*
+ */
+type CardSliceVariation = CardSliceDefault;
+
+/**
+ * Card Shared Slice
+ *
+ * - **API ID**: `card`
+ * - **Description**: Card
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CardSlice = prismic.SharedSlice<"card", CardSliceVariation>;
+
+/**
+ * Default variation for Form Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FormSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *Form*
+ */
+type FormSliceVariation = FormSliceDefault;
+
+/**
+ * Form Shared Slice
+ *
+ * - **API ID**: `form`
+ * - **Description**: Form
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FormSlice = prismic.SharedSlice<"form", FormSliceVariation>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -381,12 +889,12 @@ export interface HeroSliceDefaultPrimary {
   /**
    * Title field in *Hero → Default → Primary*
    *
-   * - **Field Type**: Title
+   * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
    * - **API ID Path**: hero.default.primary.title
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
-  title: prismic.TitleField;
+  title: prismic.RichTextField;
 
   /**
    * Text field in *Hero → Default → Primary*
@@ -497,6 +1005,246 @@ type HeroSliceVariation = HeroSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Primary content in *InfoCard → Items*
+ */
+export interface InfoCardSliceDefaultItem {
+  /**
+   * Icon field in *InfoCard → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: ✦
+   * - **API ID Path**: info_card.items[].icon
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  icon: prismic.KeyTextField;
+
+  /**
+   * Title field in *InfoCard → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Заголовок
+   * - **API ID Path**: info_card.items[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Text field in *InfoCard → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: info_card.items[].text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  text: prismic.KeyTextField;
+
+  /**
+   * Button label field in *InfoCard → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подробнее
+   * - **API ID Path**: info_card.items[].buttonLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonLabel: prismic.KeyTextField;
+
+  /**
+   * Button link field in *InfoCard → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://example.com
+   * - **API ID Path**: info_card.items[].buttonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Button variant field in *InfoCard → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: secondary
+   * - **API ID Path**: info_card.items[].buttonVariant
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  buttonVariant: prismic.SelectField<"secondary" | "ghost", "filled">;
+
+  /**
+   * Button target field in *InfoCard → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: _self
+   * - **API ID Path**: info_card.items[].buttonTarget
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  buttonTarget: prismic.SelectField<"_self" | "_blank", "filled">;
+}
+
+/**
+ * Default variation for InfoCard Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type InfoCardSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  Simplify<InfoCardSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *InfoCard*
+ */
+type InfoCardSliceVariation = InfoCardSliceDefault;
+
+/**
+ * InfoCard Shared Slice
+ *
+ * - **API ID**: `info_card`
+ * - **Description**: InfoCard
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type InfoCardSlice = prismic.SharedSlice<
+  "info_card",
+  InfoCardSliceVariation
+>;
+
+/**
+ * Primary content in *LandingPageHero → Default → Primary*
+ */
+export interface LandingPageHeroSliceDefaultPrimary {
+  /**
+   * Title field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: О нас
+   * - **API ID Path**: landing_page_hero.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Краткое описание секции (Rich Text)
+   * - **API ID Path**: landing_page_hero.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Background image field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: landing_page_hero.default.primary.backgroundImage
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  backgroundImage: prismic.ImageField<never>;
+
+  /**
+   * Breadcrumb home label field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Главная
+   * - **API ID Path**: landing_page_hero.default.primary.breadcrumbHomeLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  breadcrumbHomeLabel: prismic.KeyTextField;
+
+  /**
+   * Breadcrumb home link field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: /
+   * - **API ID Path**: landing_page_hero.default.primary.breadcrumbHomeLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  breadcrumbHomeLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Breadcrumb current field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: О нас
+   * - **API ID Path**: landing_page_hero.default.primary.breadcrumbCurrent
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  breadcrumbCurrent: prismic.KeyTextField;
+
+  /**
+   * Button label (optional) field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подробнее
+   * - **API ID Path**: landing_page_hero.default.primary.buttonLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonLabel: prismic.KeyTextField;
+
+  /**
+   * Button link (optional) field in *LandingPageHero → Default → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://example.com
+   * - **API ID Path**: landing_page_hero.default.primary.buttonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * Default variation for LandingPageHero Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type LandingPageHeroSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<LandingPageHeroSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *LandingPageHero*
+ */
+type LandingPageHeroSliceVariation = LandingPageHeroSliceDefault;
+
+/**
+ * LandingPageHero Shared Slice
+ *
+ * - **API ID**: `landing_page_hero`
+ * - **Description**: LandingPageHero
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type LandingPageHeroSlice = prismic.SharedSlice<
+  "landing_page_hero",
+  LandingPageHeroSliceVariation
+>;
 
 /**
  * Primary content in *NoteBanner → Default → Primary*
@@ -624,6 +1372,213 @@ export type NoteBannerSlice = prismic.SharedSlice<
   NoteBannerSliceVariation
 >;
 
+/**
+ * Primary content in *Qa → Default → Primary*
+ */
+export interface QaSliceDefaultPrimary {
+  /**
+   * Title field in *Qa → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Частые вопросы
+   * - **API ID Path**: qa.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Qa → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Ответы на самые популярные вопросы
+   * - **API ID Path**: qa.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *Qa → Items*
+ */
+export interface QaSliceDefaultItem {
+  /**
+   * Question field in *Qa → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Как проходит ваше служение?
+   * - **API ID Path**: qa.items[].question
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  question: prismic.KeyTextField;
+
+  /**
+   * Answer field in *Qa → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Мы собираемся каждое воскресенье...
+   * - **API ID Path**: qa.items[].answer
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  answer: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Qa Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type QaSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<QaSliceDefaultPrimary>,
+  Simplify<QaSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *Qa*
+ */
+type QaSliceVariation = QaSliceDefault;
+
+/**
+ * Qa Shared Slice
+ *
+ * - **API ID**: `qa`
+ * - **Description**: Qa
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type QaSlice = prismic.SharedSlice<"qa", QaSliceVariation>;
+
+/**
+ * Primary content in *SubscribeToNewsletter → Default → Primary*
+ */
+export interface SubscribeToNewsletterSliceDefaultPrimary {
+  /**
+   * Title field in *SubscribeToNewsletter → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подпишитесь на рассылку
+   * - **API ID Path**: subscribe_to_newsletter.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *SubscribeToNewsletter → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Будьте в курсе наших последних новостей и событий...
+   * - **API ID Path**: subscribe_to_newsletter.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background image field in *SubscribeToNewsletter → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: subscribe_to_newsletter.default.primary.backgroundImage
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  backgroundImage: prismic.ImageField<never>;
+
+  /**
+   * Button text field in *SubscribeToNewsletter → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подписаться
+   * - **API ID Path**: subscribe_to_newsletter.default.primary.buttonText
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonText: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for SubscribeToNewsletter Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SubscribeToNewsletterSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SubscribeToNewsletterSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *SubscribeToNewsletter*
+ */
+type SubscribeToNewsletterSliceVariation = SubscribeToNewsletterSliceDefault;
+
+/**
+ * SubscribeToNewsletter Shared Slice
+ *
+ * - **API ID**: `subscribe_to_newsletter`
+ * - **Description**: SubscribeToNewsletter
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SubscribeToNewsletterSlice = prismic.SharedSlice<
+  "subscribe_to_newsletter",
+  SubscribeToNewsletterSliceVariation
+>;
+
+/**
+ * Primary content in *ValuesBlock → Items*
+ */
+export interface ValuesBlockSliceDefaultItem {
+  /**
+   * Title field in *ValuesBlock → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Служение
+   * - **API ID Path**: values_block.items[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *ValuesBlock → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Возможности для миссии и благовестия...
+   * - **API ID Path**: values_block.items[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for ValuesBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ValuesBlockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  Simplify<ValuesBlockSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *ValuesBlock*
+ */
+type ValuesBlockSliceVariation = ValuesBlockSliceDefault;
+
+/**
+ * ValuesBlock Shared Slice
+ *
+ * - **API ID**: `values_block`
+ * - **Description**: ValuesBlock
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ValuesBlockSlice = prismic.SharedSlice<
+  "values_block",
+  ValuesBlockSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -645,6 +1600,8 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      FooterDocument,
+      FooterDocumentData,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
@@ -654,21 +1611,54 @@ declare module "@prismicio/client" {
       NavigationDocument,
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
-      PageDocument,
-      PageDocumentData,
-      PageDocumentDataSlicesSlice,
-      SettingsDocument,
-      SettingsDocumentData,
+      NavigationDocumentDataDropdownItemsItem,
       AllDocumentTypes,
+      BannerSlice,
+      BannerSliceDefaultPrimary,
+      BannerSliceVariation,
+      BannerSliceDefault,
+      BigEventSlice,
+      BigEventSliceDefaultPrimary,
+      BigEventSliceVariation,
+      BigEventSliceDefault,
+      CardSlice,
+      CardSliceDefaultPrimary,
+      CardSliceDefaultItem,
+      CardSliceVariation,
+      CardSliceDefault,
+      FormSlice,
+      FormSliceVariation,
+      FormSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      InfoCardSlice,
+      InfoCardSliceDefaultItem,
+      InfoCardSliceVariation,
+      InfoCardSliceDefault,
+      LandingPageHeroSlice,
+      LandingPageHeroSliceDefaultPrimary,
+      LandingPageHeroSliceVariation,
+      LandingPageHeroSliceDefault,
       NoteBannerSlice,
       NoteBannerSliceDefaultPrimary,
       NoteBannerSliceDefaultItem,
       NoteBannerSliceVariation,
       NoteBannerSliceDefault,
+      QaSlice,
+      QaSliceDefaultPrimary,
+      QaSliceDefaultItem,
+      QaSliceVariation,
+      QaSliceDefault,
+      SubscribeToNewsletterSlice,
+      SubscribeToNewsletterSliceDefaultPrimary,
+      SubscribeToNewsletterSliceVariation,
+      SubscribeToNewsletterSliceDefault,
+      ValuesBlockSlice,
+      ValuesBlockSliceDefaultItem,
+      ValuesBlockSliceVariation,
+      ValuesBlockSliceDefault,
     };
   }
 }

@@ -1,0 +1,51 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "Подпишитесь на рассылку",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"value": "Будьте в курсе наших последних новостей и событий. Введите свой email ниже, чтобы подписаться.",
+				"type": "Text"
+			},
+			"backgroundImage": {
+				"origin": {
+					"id": "newsletter-bg",
+					"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80",
+					"width": 2400,
+					"height": 1600
+				},
+				"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80",
+				"width": 2400,
+				"height": 1600,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"credits": null,
+				"alt": null,
+				"__TYPE__": "ImageContent",
+				"thumbnails": {},
+				"dimensions": {
+					"width": 2400,
+					"height": 1600
+				}
+			},
+			"buttonText": {
+				"__TYPE__": "FieldContent",
+				"value": "Подписаться",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]

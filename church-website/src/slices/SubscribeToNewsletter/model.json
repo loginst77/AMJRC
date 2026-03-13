@@ -1,0 +1,48 @@
+{
+  "id": "subscribe_to_newsletter",
+  "type": "SharedSlice",
+  "name": "SubscribeToNewsletter",
+  "description": "SubscribeToNewsletter",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Подпишитесь на рассылку"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Будьте в курсе наших последних новостей и событий..."
+          }
+        },
+        "backgroundImage": {
+          "type": "Image",
+          "config": {
+            "label": "Background image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "buttonText": {
+          "type": "Text",
+          "config": {
+            "label": "Button text",
+            "placeholder": "Подписаться"
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": ""
+    }
+  ]
+}

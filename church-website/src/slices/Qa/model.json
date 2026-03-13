@@ -1,0 +1,48 @@
+{
+  "id": "qa",
+  "type": "SharedSlice",
+  "name": "Qa",
+  "description": "Qa",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Частые вопросы"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Ответы на самые популярные вопросы"
+          }
+        }
+      },
+      "items": {
+        "question": {
+          "type": "Text",
+          "config": {
+            "label": "Question",
+            "placeholder": "Как проходит ваше служение?"
+          }
+        },
+        "answer": {
+          "type": "Text",
+          "config": {
+            "label": "Answer",
+            "placeholder": "Мы собираемся каждое воскресенье..."
+          }
+        }
+      },
+      "imageUrl": ""
+    }
+  ]
+}
