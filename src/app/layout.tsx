@@ -47,6 +47,7 @@ export default async function RootLayout({
   const { primaryAction, secondaryAction } = buildActionButtons(navigationData);
   const logo = navigationData.logo;
   const footerContent = buildFooterContent(footerData);
+  const shouldRenderFooter = hasFooterContent(footerContent);
 
   return (
     <html lang="en" className={inter.variable}>
@@ -61,7 +62,7 @@ export default async function RootLayout({
           secondaryAction={secondaryAction}
         />
         {children}
-        <SiteFooter {...footerContent} />
+        {shouldRenderFooter ? <SiteFooter {...footerContent} /> : null}
         <PrismicPreview repositoryName={repositoryName} />
       </body>
     </html>
@@ -149,22 +150,23 @@ function SiteHeader({
         </div>
 
         <div className="flex items-center gap-2">
-          <MobileNav items={navigationLinks} dropdownItems={dropdownItems} />
-          {primaryAction ? (
-            <ButtonLink href={primaryAction.href} variant={primaryAction.variant} size="md">
-              {primaryAction.label}
-            </ButtonLink>
-          ) : null}
-          {secondaryAction ? (
-            <ButtonLink
-              href={secondaryAction.href}
-              variant={secondaryAction.variant}
-              size="md"
-              className="hidden sm:inline-flex"
-            >
-              {secondaryAction.label}
-            </ButtonLink>
-          ) : null}
+          <MobileNav items={navigationLinks} dropdownItems={dropdownItems} logo={logo} />
+          <div className="hidden md:flex items-center gap-2">
+            {primaryAction ? (
+              <ButtonLink href={primaryAction.href} variant={primaryAction.variant} size="md">
+                {primaryAction.label}
+              </ButtonLink>
+            ) : null}
+            {secondaryAction ? (
+              <ButtonLink
+                href={secondaryAction.href}
+                variant={secondaryAction.variant}
+                size="md"
+              >
+                {secondaryAction.label}
+              </ButtonLink>
+            ) : null}
+          </div>
         </div>
       </Container>
     </header>
@@ -209,9 +211,7 @@ function SiteFooter({
                   alt={logo?.alt || "Логотип"}
                   className="h-[100px] w-auto"
                 />
-              ) : (
-                <Image src="/logo.svg" alt="Логотип" width={100} height={100} />
-              )}
+              ) : null}
             </div>
             <div className="text-sm text-zinc-600 dark:text-zinc-400">
               {addressLine1}
@@ -272,7 +272,7 @@ function SiteFooter({
               {serviceTimes.map((service) => (
                 <li
                   key={`${service.label}-${service.time}`}
-                  className="flex items-center justify-between gap-4"
+                  className="flex items-center gap-2"
                 >
                   <span>{service.label}</span>
                   <span className="font-medium text-zinc-950 dark:text-white">
@@ -432,41 +432,37 @@ function buildFooterContent(footerData: any): SiteFooterProps {
     addressLine2: footerData.address_line_2 ?? "",
     email: footerData.email ?? "",
     phone: footerData.phone ?? "",
-    navigationTitle: asText(footerData.navigation_column_title) || "Навигация",
-    navigationLinks: buildFooterLinks(footerData.navigation_links, [
-      { label: "Медия", href: "/media" },
-      { label: "Общины", href: "/communities" },
-      { label: "О нас", href: "/about" },
-      { label: "Тора", href: "/read-torah" },
-    ]),
-    actionsTitle: asText(footerData.actions_column_title) || "Следующие шаги",
-    actionLinks: buildFooterLinks(footerData.action_links, [
-      { label: "Контакты", href: "/contact" },
-      { label: "Вступить в Альянс", href: "/join-alliance" },
-      { label: "Пожертвовать", href: "/give" },
-      { label: "Маршрут", href: "https://maps.google.com" },
-    ]),
-    serviceTimesTitle: asText(footerData.service_times_title) || "Время служений",
-    serviceTimes: buildServiceTimes(footerData.service_times, [
-      { label: "Шаббат", time: "10:00" },
-      { label: "Молитва", time: "19:00" },
-      { label: "Изучение Торы", time: "18:30" },
-    ]),
-    socialLinks: buildSocialLinks(footerData.social_links, [
-      { label: "YouTube", href: "https://youtube.com" },
-      { label: "Instagram", href: "https://instagram.com" },
-      { label: "Facebook", href: "https://facebook.com" },
-    ]),
-    copyrightText:
-      footerData.copyright_text || "© 2026 AMJRC. Все права защищены.",
+    navigationTitle: asText(footerData.navigation_column_title) || "",
+    navigationLinks: buildFooterLinks(footerData.navigation_links),
+    actionsTitle: asText(footerData.actions_column_title) || "",
+    actionLinks: buildFooterLinks(footerData.action_links),
+    serviceTimesTitle: asText(footerData.service_times_title) || "",
+    serviceTimes: buildServiceTimes(footerData.service_times),
+    socialLinks: buildSocialLinks(footerData.social_links),
+    copyrightText: footerData.copyright_text || "",
   };
 }
 
-function buildFooterLinks(
-  items: any[] | undefined,
-  fallback: FooterLinkItem[],
-): FooterLinkItem[] {
-  if (!Array.isArray(items)) return fallback;
+function hasFooterContent(content: SiteFooterProps): boolean {
+  return Boolean(
+    content.logo?.url ||
+      content.addressLine1 ||
+      content.addressLine2 ||
+      content.email ||
+      content.phone ||
+      content.navigationTitle ||
+      content.navigationLinks.length ||
+      content.actionsTitle ||
+      content.actionLinks.length ||
+      content.serviceTimesTitle ||
+      content.serviceTimes.length ||
+      content.socialLinks.length ||
+      content.copyrightText,
+  );
+}
+
+function buildFooterLinks(items: any[] | undefined): FooterLinkItem[] {
+  if (!Array.isArray(items)) return [];
 
   const parsed = items
     .map((item) => {
@@ -477,14 +473,13 @@ function buildFooterLinks(
     })
     .filter(Boolean) as FooterLinkItem[];
 
-  return parsed.length > 0 ? parsed : fallback;
+  return parsed.length > 0 ? parsed : [];
 }
 
 function buildServiceTimes(
   items: any[] | undefined,
-  fallback: FooterServiceTime[],
 ): FooterServiceTime[] {
-  if (!Array.isArray(items)) return fallback;
+  if (!Array.isArray(items)) return [];
 
   const parsed = items
     .map((item) => {
@@ -495,14 +490,13 @@ function buildServiceTimes(
     })
     .filter(Boolean) as FooterServiceTime[];
 
-  return parsed.length > 0 ? parsed : fallback;
+  return parsed.length > 0 ? parsed : [];
 }
 
 function buildSocialLinks(
   items: any[] | undefined,
-  fallback: FooterLinkItem[],
 ): FooterLinkItem[] {
-  if (!Array.isArray(items)) return fallback;
+  if (!Array.isArray(items)) return [];
 
   const parsed = items
     .map((item) => {
@@ -513,5 +507,5 @@ function buildSocialLinks(
     })
     .filter(Boolean) as FooterLinkItem[];
 
-  return parsed.length > 0 ? parsed : fallback;
+  return parsed.length > 0 ? parsed : [];
 }

@@ -47,7 +47,7 @@
         "config": {
           "label": "Navigation column title",
           "placeholder": "Navigation",
-          "single": "heading3",
+          "single": "heading4",
           "allowTargetBlank": false
         }
       },
@@ -61,7 +61,7 @@
               "config": {
                 "label": "Label",
                 "placeholder": "Link label",
-                "single": "heading3",
+                "single": "heading4",
                 "allowTargetBlank": false
               }
             },
@@ -81,7 +81,7 @@
         "config": {
           "label": "Actions column title",
           "placeholder": "Next steps",
-          "single": "heading3",
+          "single": "heading4",
           "allowTargetBlank": false
         }
       },
@@ -95,7 +95,7 @@
               "config": {
                 "label": "Label",
                 "placeholder": "Link label",
-                "single": "heading3",
+                "single": "heading4",
                 "allowTargetBlank": false
               }
             },
@@ -115,7 +115,7 @@
         "config": {
           "label": "Service times title",
           "placeholder": "Service times",
-          "single": "heading3",
+          "single": "heading4",
           "allowTargetBlank": false
         }
       },
