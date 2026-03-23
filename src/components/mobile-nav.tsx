@@ -65,7 +65,14 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? <X className="h-5 w-5" aria-hidden /> : <span className="flex items-center gap-2"><Menu className="h-5 w-5" aria-hidden />Menu</span>} 
+        {open ? (
+          <X className="h-5 w-5" aria-hidden />
+        ) : (
+          <span className="flex items-center gap-2">
+            <Menu className="h-5 w-5" aria-hidden />
+            Menu
+          </span>
+        )}
       </button>
 
       {mounted
@@ -94,15 +101,9 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
               >
                 <div className="mb-4 flex items-center justify-between">
                   {logo?.url ? (
-                    <PrismicNextImage
-                      field={logo}
-                      alt={logo?.alt || "Logo"}
-                      className="h-10 w-auto"
-                    />
+                    <PrismicNextImage field={logo} alt={logo?.alt || "Logo"} className="h-10 w-auto" />
                   ) : (
-                    <span className="text-base font-semibold text-zinc-900 dark:text-white">
-                      Меню
-                    </span>
+                    <span className="text-base font-semibold text-zinc-900 dark:text-white">Меню</span>
                   )}
                   <button
                     type="button"
@@ -127,9 +128,7 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
 
                   {dropdownItems.length > 0 ? (
                     <div className="mt-2 border-t border-dashed border-zinc-200 pt-2 dark:border-zinc-800">
-                      <div className="px-1 pb-1 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                        Медия
-                      </div>
+                      <div className="px-1 pb-1 text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Медия</div>
                       <div className="flex flex-col gap-1">
                         {dropdownItems.map((item) => (
                           <Link

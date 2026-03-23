@@ -69,7 +69,462 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
-interface FooterDocumentData {}
+type ArticleDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Article documents
+ */
+interface ArticleDocumentData {
+  /**
+   * Title field in *Article*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Заголовок статьи
+   * - **API ID Path**: article.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: article.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Date field in *Article*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  date: prismic.DateField;
+
+  /**
+   * Author field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Имя автора
+   * - **API ID Path**: article.author
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  author: prismic.KeyTextField;
+
+  /**
+   * Featured field in *Article*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: Отметить как главную
+   * - **API ID Path**: article.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
+
+  /**
+   * Content field in *Article*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Основной текст статьи
+   * - **API ID Path**: article.content
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  content: prismic.RichTextField;
+
+  /**
+   * Slice Zone field in *Article*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ArticleDocumentDataSlicesSlice>; /**
+   * Meta Title field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: article.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: article.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Article*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Article document from Prismic
+ *
+ * - **API ID**: `article`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArticleDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ArticleDocumentData>,
+    "article",
+    Lang
+  >;
+
+type ArticlelandingpageDocumentDataSlicesSlice =
+  | FormSlice
+  | NoteBannerSlice
+  | InfoCardSlice
+  | ValuesBlockSlice
+  | QaSlice
+  | BigEventSlice
+  | LandingPageHeroSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice;
+
+/**
+ * Content for ArticleLandingPage documents
+ */
+interface ArticlelandingpageDocumentData {
+  /**
+   * Slice Zone field in *ArticleLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: articlelandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ArticlelandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *ArticleLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: articlelandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *ArticleLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: articlelandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *ArticleLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: articlelandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * ArticleLandingPage document from Prismic
+ *
+ * - **API ID**: `articlelandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ArticlelandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ArticlelandingpageDocumentData>,
+    "articlelandingpage",
+    Lang
+  >;
+
+/**
+ * Item in *Footer → Navigation links*
+ */
+export interface FooterDocumentDataNavigationLinksItem {
+  /**
+   * Label field in *Footer → Navigation links*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Link label
+   * - **API ID Path**: footer.navigation_links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  label: prismic.RichTextField;
+
+  /**
+   * Link field in *Footer → Navigation links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link URL
+   * - **API ID Path**: footer.navigation_links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Item in *Footer → Action links*
+ */
+export interface FooterDocumentDataActionLinksItem {
+  /**
+   * Label field in *Footer → Action links*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Link label
+   * - **API ID Path**: footer.action_links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  label: prismic.RichTextField;
+
+  /**
+   * Link field in *Footer → Action links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link URL
+   * - **API ID Path**: footer.action_links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Item in *Footer → Service times*
+ */
+export interface FooterDocumentDataServiceTimesItem {
+  /**
+   * Label field in *Footer → Service times*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Sunday worship
+   * - **API ID Path**: footer.service_times[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Time field in *Footer → Service times*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 10:00
+   * - **API ID Path**: footer.service_times[].time
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  time: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Footer → Social links*
+ */
+export interface FooterDocumentDataSocialLinksItem {
+  /**
+   * Label field in *Footer → Social links*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: YouTube
+   * - **API ID Path**: footer.social_links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Link field in *Footer → Social links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://...
+   * - **API ID Path**: footer.social_links[].link
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Content for Footer documents
+ */
+interface FooterDocumentData {
+  /**
+   * Logo field in *Footer*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  logo: prismic.ImageField<never>;
+
+  /**
+   * Address line 1 field in *Footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Street address
+   * - **API ID Path**: footer.address_line_1
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  address_line_1: prismic.KeyTextField;
+
+  /**
+   * Address line 2 field in *Footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: City, region, postal code
+   * - **API ID Path**: footer.address_line_2
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  address_line_2: prismic.KeyTextField;
+
+  /**
+   * Email field in *Footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: hello@example.com
+   * - **API ID Path**: footer.email
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  email: prismic.KeyTextField;
+
+  /**
+   * Phone field in *Footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: +1 555 123 4567
+   * - **API ID Path**: footer.phone
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  phone: prismic.KeyTextField;
+
+  /**
+   * Navigation column title field in *Footer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Navigation
+   * - **API ID Path**: footer.navigation_column_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  navigation_column_title: prismic.RichTextField;
+
+  /**
+   * Navigation links field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.navigation_links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  navigation_links: prismic.GroupField<
+    Simplify<FooterDocumentDataNavigationLinksItem>
+  >;
+
+  /**
+   * Actions column title field in *Footer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Next steps
+   * - **API ID Path**: footer.actions_column_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  actions_column_title: prismic.RichTextField;
+
+  /**
+   * Action links field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.action_links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  action_links: prismic.GroupField<Simplify<FooterDocumentDataActionLinksItem>>;
+
+  /**
+   * Service times title field in *Footer*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Service times
+   * - **API ID Path**: footer.service_times_title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  service_times_title: prismic.RichTextField;
+
+  /**
+   * Service times field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.service_times[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  service_times: prismic.GroupField<
+    Simplify<FooterDocumentDataServiceTimesItem>
+  >;
+
+  /**
+   * Social links field in *Footer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.social_links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  social_links: prismic.GroupField<Simplify<FooterDocumentDataSocialLinksItem>>;
+
+  /**
+   * Copyright text field in *Footer*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: © 2026 AMJRC. Все права защищены.
+   * - **API ID Path**: footer.copyright_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  copyright_text: prismic.KeyTextField;
+}
 
 /**
  * Footer document from Prismic
@@ -461,11 +916,149 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Content for Video documents
+ */
+interface VideoDocumentData {
+  /**
+   * Title field in *Video*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Video title
+   * - **API ID Path**: video.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Video*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Short summary
+   * - **API ID Path**: video.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * YouTube URL field in *Video*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: https://www.youtube.com/watch?v=...
+   * - **API ID Path**: video.youtube_url
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/embed
+   */
+  youtube_url: prismic.EmbedField;
+
+  /**
+   * Publish date field in *Video*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video.date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  date: prismic.DateField;
+}
+
+/**
+ * Video document from Prismic
+ *
+ * - **API ID**: `video`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type VideoDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<VideoDocumentData>, "video", Lang>;
+
+type VideolandingpageDocumentDataSlicesSlice =
+  | CardSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | NoteBannerSlice
+  | QaSlice
+  | InfoCardSlice
+  | LandingPageHeroSlice;
+
+/**
+ * Content for VideoLandingPage documents
+ */
+interface VideolandingpageDocumentData {
+  /**
+   * Slice Zone field in *VideoLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: videolandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<VideolandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *VideoLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: videolandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *VideoLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: videolandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *VideoLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: videolandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * VideoLandingPage document from Prismic
+ *
+ * - **API ID**: `videolandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type VideolandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<VideolandingpageDocumentData>,
+    "videolandingpage",
+    Lang
+  >;
+
 export type AllDocumentTypes =
+  | ArticleDocument
+  | ArticlelandingpageDocument
   | FooterDocument
   | HomeDocument
   | LandingpageDocument
-  | NavigationDocument;
+  | NavigationDocument
+  | VideoDocument
+  | VideolandingpageDocument;
 
 /**
  * Primary content in *Banner → Default → Primary*
@@ -1600,8 +2193,18 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      ArticleDocument,
+      ArticleDocumentData,
+      ArticleDocumentDataSlicesSlice,
+      ArticlelandingpageDocument,
+      ArticlelandingpageDocumentData,
+      ArticlelandingpageDocumentDataSlicesSlice,
       FooterDocument,
       FooterDocumentData,
+      FooterDocumentDataNavigationLinksItem,
+      FooterDocumentDataActionLinksItem,
+      FooterDocumentDataServiceTimesItem,
+      FooterDocumentDataSocialLinksItem,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
@@ -1612,6 +2215,11 @@ declare module "@prismicio/client" {
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
       NavigationDocumentDataDropdownItemsItem,
+      VideoDocument,
+      VideoDocumentData,
+      VideolandingpageDocument,
+      VideolandingpageDocumentData,
+      VideolandingpageDocumentDataSlicesSlice,
       AllDocumentTypes,
       BannerSlice,
       BannerSliceDefaultPrimary,

@@ -5,8 +5,7 @@ import sm from "../slicemachine.config.json";
 /**
  * The project's Prismic repository name.
  */
-export const repositoryName =
-  process.env.NEXT_PUBLIC_PRISMIC_ENVIRONMENT || sm.repositoryName;
+export const repositoryName = process.env.NEXT_PUBLIC_PRISMIC_ENVIRONMENT || sm.repositoryName;
 
 /**
  * The project's Prismic Route Resolvers. This list determines a Prismic document's URL.
@@ -14,6 +13,9 @@ export const repositoryName =
 const routes: prismic.ClientConfig["routes"] = [
   { type: "home", path: "/" },
   { type: "landingpage", path: "/:uid" },
+  { type: "articlelandingpage", path: "/media/articles" },
+  { type: "article", path: "/media/articles/:uid" },
+  { type: "videolandingpage", path: "/media/videos" },
   { type: "navigation", path: "/" },
 ];
 
@@ -26,10 +28,7 @@ const routes: prismic.ClientConfig["routes"] = [
 export const createClient = (config: prismic.ClientConfig = {}) => {
   const client = prismic.createClient(repositoryName, {
     routes,
-    fetchOptions:
-      process.env.NODE_ENV === "production"
-        ? { next: { tags: ["prismic"] }, cache: "force-cache" }
-        : { next: { revalidate: 5 } },
+    fetchOptions: process.env.NODE_ENV === "production" ? { next: { tags: ["prismic"] }, cache: "force-cache" } : { next: { revalidate: 5 } },
     ...config,
   });
 

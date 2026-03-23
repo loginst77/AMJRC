@@ -31,9 +31,7 @@ const fallbackMediaDropdownItems: NavDropdownItem[] = [
   { label: "Газета", href: "/media/newspaper", icon: "Newspaper" },
 ];
 
-export default async function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const client = createClient();
   const navigation = await client.getSingle("navigation").catch(() => null);
   const footer = await client.getSingle("footer").catch(() => null);
@@ -41,9 +39,7 @@ export default async function RootLayout({
   const navigationData = (navigation?.data ?? {}) as any;
   const footerData = (footer?.data ?? {}) as any;
   const navigationLinks = navigationData.links ?? [];
-  const { dropdownItems, dropdownLabel, dropdownHref } = buildMediaDropdown(
-    navigationData,
-  );
+  const { dropdownItems, dropdownLabel, dropdownHref } = buildMediaDropdown(navigationData);
   const { primaryAction, secondaryAction } = buildActionButtons(navigationData);
   const logo = navigationData.logo;
   const footerContent = buildFooterContent(footerData);
@@ -105,15 +101,7 @@ type SiteFooterProps = {
   copyrightText: string;
 };
 
-function SiteHeader({
-  navigationLinks,
-  dropdownItems,
-  dropdownLabel,
-  dropdownHref,
-  logo,
-  primaryAction,
-  secondaryAction,
-}: SiteHeaderProps) {
+function SiteHeader({ navigationLinks, dropdownItems, dropdownLabel, dropdownHref, logo, primaryAction, secondaryAction }: SiteHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur duration-300 hover:bg-white dark:border-zinc-800/70 dark:bg-zinc-950/70">
       <Container className="flex h-[88px] items-center justify-between">
@@ -124,11 +112,7 @@ function SiteHeader({
             aria-label="Go to homepage"
           >
             {logo?.url ? (
-              <PrismicNextImage
-                field={logo}
-                alt={logo?.alt || "Logo"}
-                className="h-[70px] w-auto"
-              />
+              <PrismicNextImage field={logo} alt={logo?.alt || "Logo"} className="h-[70px] w-auto" />
             ) : (
               <Image src="/logo.svg" alt="Logo" width={70} height={70} />
             )}
@@ -138,10 +122,7 @@ function SiteHeader({
             {navigationLinks.map((item, index) => (
               // Resolve Prismic link to a URL; default to "/" if empty
               // eslint-disable-next-line react/no-array-index-key
-              <NavLink
-                key={`${asText(item.label)}-${index}`}
-                href={asLink(item.link) ?? "/"}
-              >
+              <NavLink key={`${asText(item.label)}-${index}`} href={asLink(item.link) ?? "/"}>
                 <PrismicText field={item.label} />
               </NavLink>
             ))}
@@ -158,11 +139,7 @@ function SiteHeader({
               </ButtonLink>
             ) : null}
             {secondaryAction ? (
-              <ButtonLink
-                href={secondaryAction.href}
-                variant={secondaryAction.variant}
-                size="md"
-              >
+              <ButtonLink href={secondaryAction.href} variant={secondaryAction.variant} size="md">
                 {secondaryAction.label}
               </ButtonLink>
             ) : null}
@@ -175,10 +152,7 @@ function SiteHeader({
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link
-      href={href}
-      className="text-sm text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
-    >
+    <Link href={href} className="text-sm text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white">
       {children}
     </Link>
   );
@@ -205,13 +179,7 @@ function SiteFooter({
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-3">
             <div className="font-semibold tracking-tight text-zinc-950 dark:text-white">
-              {logo?.url ? (
-                <PrismicNextImage
-                  field={logo}
-                  alt={logo?.alt || "Логотип"}
-                  className="h-[100px] w-auto"
-                />
-              ) : null}
+              {logo?.url ? <PrismicNextImage field={logo} alt={logo?.alt || "Логотип"} className="h-[100px] w-auto" /> : null}
             </div>
             <div className="text-sm text-zinc-600 dark:text-zinc-400">
               {addressLine1}
@@ -239,9 +207,7 @@ function SiteFooter({
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <div className="text-sm font-semibold text-zinc-950 dark:text-white">
-                {navigationTitle}
-              </div>
+              <div className="text-sm font-semibold text-zinc-950 dark:text-white">{navigationTitle}</div>
               <div className="flex flex-col gap-2">
                 {navigationLinks.map((item) => (
                   <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
@@ -251,9 +217,7 @@ function SiteFooter({
               </div>
             </div>
             <div className="space-y-2">
-              <div className="text-sm font-semibold text-zinc-950 dark:text-white">
-                {actionsTitle}
-              </div>
+              <div className="text-sm font-semibold text-zinc-950 dark:text-white">{actionsTitle}</div>
               <div className="flex flex-col gap-2">
                 {actionLinks.map((item) => (
                   <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
@@ -265,19 +229,12 @@ function SiteFooter({
           </div>
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-zinc-950 dark:text-white">
-              {serviceTimesTitle}
-            </div>
+            <div className="text-sm font-semibold text-zinc-950 dark:text-white">{serviceTimesTitle}</div>
             <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
               {serviceTimes.map((service) => (
-                <li
-                  key={`${service.label}-${service.time}`}
-                  className="flex items-center gap-2"
-                >
+                <li key={`${service.label}-${service.time}`} className="flex items-center gap-2">
                   <span>{service.label}</span>
-                  <span className="font-medium text-zinc-950 dark:text-white">
-                    {service.time}
-                  </span>
+                  <span className="font-medium text-zinc-950 dark:text-white">{service.time}</span>
                 </li>
               ))}
             </ul>
@@ -305,9 +262,7 @@ function SiteFooter({
   );
 }
 
-function buildMediaDropdown(
-  navigationData: any,
-): { dropdownItems: NavDropdownItem[]; dropdownLabel: string; dropdownHref: string } {
+function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownItem[]; dropdownLabel: string; dropdownHref: string } {
   const fallback = {
     dropdownItems: fallbackMediaDropdownItems,
     dropdownLabel: "Медия",
@@ -329,15 +284,20 @@ function buildMediaDropdown(
         .filter(Boolean)
     : [];
 
-  const dropdownLabel =
-    asText(navigationData.dropdown_label) || fallback.dropdownLabel;
-  const dropdownHref = navigationData.dropdown_link?.url ?? fallback.dropdownHref;
+  const dropdownLabel = asText(navigationData.dropdown_label) || fallback.dropdownLabel;
+  const dropdownHref = ensureAbsoluteHref(navigationData.dropdown_link?.url ?? fallback.dropdownHref);
 
   return {
     dropdownItems: dropdownItems.length ? (dropdownItems as NavDropdownItem[]) : fallback.dropdownItems,
     dropdownLabel,
     dropdownHref,
   };
+}
+
+function ensureAbsoluteHref(href: string | undefined): string {
+  if (!href) return "/";
+  if (href.startsWith("http://") || href.startsWith("https://") || href.startsWith("/")) return href;
+  return `/${href}`;
 }
 
 function normalizeDropdownIcon(iconValue: unknown): NavDropdownItem["icon"] {
@@ -347,9 +307,9 @@ function normalizeDropdownIcon(iconValue: unknown): NavDropdownItem["icon"] {
     video: "Video",
     mic: "Mic",
     filetext: "FileText",
-    "file_text": "FileText",
+    file_text: "FileText",
     bookmarked: "BookMarked",
-    "book_marked": "BookMarked",
+    book_marked: "BookMarked",
     radio: "Radio",
     newspaper: "Newspaper",
   };
@@ -385,34 +345,20 @@ function buildActionButtons(navigationData: any): {
 
   const primaryLabel = asText(navigationData.action_button_primary_label);
   const primaryHref = navigationData.action_button_primary_link?.url as string | undefined;
-  const primaryVariant = normalizeButtonVariant(
-    navigationData.action_button_primary_variant,
-    fallback.primaryAction.variant,
-  );
+  const primaryVariant = normalizeButtonVariant(navigationData.action_button_primary_variant, fallback.primaryAction.variant);
 
   const secondaryLabel = asText(navigationData.action_button_secondary_label);
   const secondaryHref = navigationData.action_button_secondary_link?.url as string | undefined;
-  const secondaryVariant = normalizeButtonVariant(
-    navigationData.action_button_secondary_variant,
-    fallback.secondaryAction.variant,
-  );
+  const secondaryVariant = normalizeButtonVariant(navigationData.action_button_secondary_variant, fallback.secondaryAction.variant);
 
   return {
-    primaryAction:
-      primaryLabel && primaryHref
-        ? { label: primaryLabel, href: primaryHref, variant: primaryVariant }
-        : fallback.primaryAction,
+    primaryAction: primaryLabel && primaryHref ? { label: primaryLabel, href: primaryHref, variant: primaryVariant } : fallback.primaryAction,
     secondaryAction:
-      secondaryLabel && secondaryHref
-        ? { label: secondaryLabel, href: secondaryHref, variant: secondaryVariant }
-        : fallback.secondaryAction,
+      secondaryLabel && secondaryHref ? { label: secondaryLabel, href: secondaryHref, variant: secondaryVariant } : fallback.secondaryAction,
   };
 }
 
-function normalizeButtonVariant(
-  value: unknown,
-  fallback: ButtonVariant,
-): ButtonVariant {
+function normalizeButtonVariant(value: unknown, fallback: ButtonVariant): ButtonVariant {
   if (!value || typeof value !== "string") return fallback;
   const normalized = value.toLowerCase();
   const allowed: Record<string, ButtonVariant> = {
@@ -446,18 +392,18 @@ function buildFooterContent(footerData: any): SiteFooterProps {
 function hasFooterContent(content: SiteFooterProps): boolean {
   return Boolean(
     content.logo?.url ||
-      content.addressLine1 ||
-      content.addressLine2 ||
-      content.email ||
-      content.phone ||
-      content.navigationTitle ||
-      content.navigationLinks.length ||
-      content.actionsTitle ||
-      content.actionLinks.length ||
-      content.serviceTimesTitle ||
-      content.serviceTimes.length ||
-      content.socialLinks.length ||
-      content.copyrightText,
+    content.addressLine1 ||
+    content.addressLine2 ||
+    content.email ||
+    content.phone ||
+    content.navigationTitle ||
+    content.navigationLinks.length ||
+    content.actionsTitle ||
+    content.actionLinks.length ||
+    content.serviceTimesTitle ||
+    content.serviceTimes.length ||
+    content.socialLinks.length ||
+    content.copyrightText,
   );
 }
 
@@ -476,9 +422,7 @@ function buildFooterLinks(items: any[] | undefined): FooterLinkItem[] {
   return parsed.length > 0 ? parsed : [];
 }
 
-function buildServiceTimes(
-  items: any[] | undefined,
-): FooterServiceTime[] {
+function buildServiceTimes(items: any[] | undefined): FooterServiceTime[] {
   if (!Array.isArray(items)) return [];
 
   const parsed = items
@@ -493,9 +437,7 @@ function buildServiceTimes(
   return parsed.length > 0 ? parsed : [];
 }
 
-function buildSocialLinks(
-  items: any[] | undefined,
-): FooterLinkItem[] {
+function buildSocialLinks(items: any[] | undefined): FooterLinkItem[] {
   if (!Array.isArray(items)) return [];
 
   const parsed = items
