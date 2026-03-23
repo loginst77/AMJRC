@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { uid } = await params;
   const client = createClient();
-  const article = await client.getByUID("article", uid).catch(() => null);
+  const article = await client.getByUID("article", uid, { fetchLinks: ["tag.name"] }).catch(() => null);
   if (!article) notFound();
 
   const all = await client.getAllByType("article", {
@@ -59,6 +59,18 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
   const plainContent = asText((article.data as { content?: any }).content) || asText(article.data.slices ?? []) || `${title} ${description}`;
   const mins = readingTime(plainContent);
   const date = asDate(article.data.date ?? article.first_publication_date);
+  const tagsGroup = (article.data as { tags?: { tag?: unknown }[] }).tags ?? [];
+  const tags = tagsGroup
+    .map((item) => {
+      const rel = item?.tag as Record<string, unknown> | null | undefined;
+      if (!rel || typeof rel !== "object") return null;
+      if (rel.link_type !== "Document" || !rel.id) return null;
+      const slug = String(rel.uid || rel.id);
+      const linkedName = (rel.data as { name?: string } | undefined)?.name;
+      const name = linkedName || slug;
+      return { slug, name };
+    })
+    .filter(Boolean) as { slug: string; name: string }[];
 
   return (
     <div className="flex flex-col">
@@ -110,6 +122,19 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                 <p className="text-base font-medium text-zinc-700">
                   Автор: <span className="text-zinc-800 font-bold dark:text-white p-1">{author}</span>
                 </p>
+              ) : null}
+              {tags.length ? (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {tags.map((tag) => (
+                    <Link
+                      key={tag.slug}
+                      href={`/media/articles?tag=${encodeURIComponent(tag.slug)}`}
+                      className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
+                    >
+                      {tag.name}
+                    </Link>
+                  ))}
+                </div>
               ) : null}
             </div>
             <article className="prose prose-zinc max-w-none dark:prose-invert prose-headings:mt-0 prose-headings:mb-0 prose-p:my-0 prose-p:leading-8 prose-strong:font-semibold">

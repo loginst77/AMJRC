@@ -2,7 +2,7 @@ import "./globals.css";
 
 import type { ComponentProps } from "react";
 import Link from "next/link";
-import { Inter } from "next/font/google";
+import { Inter, Figtree } from "next/font/google";
 import Image from "next/image";
 import { asLink, asText } from "@prismicio/client";
 import { PrismicText } from "@prismicio/react";
@@ -15,6 +15,9 @@ import { NavDropdown, type NavDropdownItem } from "@/components/nav-dropdown";
 import { NavLink } from "@/components/nav-link";
 import { createClient, repositoryName } from "@/prismicio";
 import type { NavigationDocumentDataLinksItem } from "../../prismicio-types";
+import { cn } from "@/lib/utils";
+
+const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -46,7 +49,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const shouldRenderFooter = hasFooterContent(footerContent);
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={cn("font-sans", figtree.variable)}>
       <body className="overflow-x-hidden antialiased">
         <SiteHeader
           navigationLinks={navigationLinks}

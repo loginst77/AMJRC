@@ -44,19 +44,25 @@ export function FeaturedArticle({ article, className, showPinnedLabel = true, fe
           <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-800/10" />
 
           <div className="relative p-8 sm:p-12">
-            <div className="mb-5 flex flex-wrap items-center gap-3">
-              <Badge className="flex items-center gap-1.5">Статья</Badge>
-              <span className="inline-flex items-center gap-1.5 text-sm text-zinc-400">
-                <Clock className="h-3.5 w-3.5" />
+            <div className="mb-5 flex flex-wrap items-center gap-3 justify-between">
+              <span className="inline-flex items-center justify-center gap-2 text-sm text-zinc-500">
+                <Clock className="h-4 w-4 mb-0.5" />
                 {readingTime(article.description)}
               </span>
-              <span className="text-sm text-zinc-400">{formatDate(article.date)}</span>
+              <span className="text-base text-zinc-500">{formatDate(article.date)}</span>
             </div>
 
             <h2 className="mb-4 text-3xl font-bold leading-snug tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 sm:text-4xl">
               {article.title}
             </h2>
-            <p className="mb-8 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{truncateWords(article.description, 36)}</p>
+            <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{truncateWords(article.description, 48)}</p>
+            <div className="flex flex-wrap items-center gap-2 mb-8">
+              {article.tags?.map((tag) => (
+                <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                  {tag.name}
+                </div>
+              ))}
+            </div>
 
             <div className="flex items-center justify-between">
               {article.author ? (

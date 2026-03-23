@@ -4,6 +4,12 @@ import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 import { truncateWords } from "@/lib/text";
 
+export type ArticleTag = {
+  id: string;
+  slug: string;
+  name: string;
+};
+
 export type MediaItem = {
   id: string;
   title: string;
@@ -11,6 +17,13 @@ export type MediaItem = {
   author?: string;
   date?: string | Date | null;
   href?: string;
+  featured?: boolean;
+  tags?: ArticleTag[];
+};
+
+type ArticleCardProps = {
+  article: MediaItem;
+  className?: string;
 };
 
 export function formatDate(value?: string | Date | null) {
@@ -45,8 +58,6 @@ export function authorColor(name?: string) {
 }
 
 export function ArticleCard({ article, className = "" }: ArticleCardProps) {
-  const color = authorColor(article.author);
-
   return (
     <Link
       href={`/media/${article.href || getArticleHref(article.id)}`}
@@ -58,10 +69,10 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
       )}
     >
       <div className="p-6 flex-1">
-        {/* Tag + reading time */}
-        <div className="flex items-center gap-2 mb-4">
-          <span className="inline-flex items-center gap-1 text-xs text-zinc-400">
-            <Clock className="h-3 w-3" />
+        {/* Tags + reading time */}
+        <div className="flex flex-wrap items-center gap-2 mb-4 justify-between">
+          <span className="inline-flex items-center gap-1 text-sm text-zinc-400 dark:text-zinc-500">
+            <Clock className="h-4 w-4 mb-0.5" />
             {readingTime(article.description)}
           </span>
         </div>
@@ -73,6 +84,16 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
 
         {/* Description */}
         <p className="text-base leading-relaxed text-zinc-500 line-clamp-3 flex-1">{truncateWords(article.description)}</p>
+        <div className="flex flex-wrap items-center gap-2 mt-4">
+          {article.tags?.map((tag) => (
+            <span
+              key={tag.id}
+              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
+            >
+              {tag.name}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Footer */}
@@ -82,7 +103,6 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-sm text-zinc-400">{formatDate(article.date)}</span>
-          <ArrowRight className="h-4 w-4 text-blue-600 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
         </div>
       </div>
     </Link>

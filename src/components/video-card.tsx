@@ -113,7 +113,7 @@ export function VideoCard({ video }: VideoCardProps) {
       {/* Info */}
       <div className="flex flex-1 flex-col justify-between">
         <button type="button" onClick={handleOpen} className="block w-full p-6 text-left cursor-pointer">
-          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2 group-hover:text-blue-600">
+          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2ßgroup-hover:text-blue-600">
             {video.title}
           </h3>
           {video.description ? <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{video.description}</p> : null}

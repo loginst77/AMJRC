@@ -48,6 +48,24 @@
           "placeholder": "Отметить как главную"
         }
       },
+      "tags": {
+        "type": "Group",
+        "config": {
+          "label": "Tags",
+          "fields": {
+            "tag": {
+              "type": "Link",
+              "config": {
+                "label": "Tag",
+                "select": "document",
+                "customtypes": [
+                  "tag"
+                ]
+              }
+            }
+          }
+        }
+      },
       "content": {
         "type": "StructuredText",
         "config": {
