@@ -69,6 +69,21 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
+/**
+ * Item in *Article → Tags*
+ */
+export interface ArticleDocumentDataTagsItem {
+  /**
+   * Tag field in *Article → Tags*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+}
+
 type ArticleDocumentDataSlicesSlice = never;
 
 /**
@@ -129,6 +144,17 @@ interface ArticleDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/boolean
    */
   featured: prismic.BooleanField;
+
+  /**
+   * Tags field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tags: prismic.GroupField<Simplify<ArticleDocumentDataTagsItem>>;
 
   /**
    * Content field in *Article*
@@ -917,6 +943,280 @@ export type NavigationDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Podcast → Tags*
+ */
+export interface PodcastDocumentDataTagsItem {
+  /**
+   * Tag field in *Podcast → Tags*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcast.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+}
+
+/**
+ * Content for Podcast documents
+ */
+interface PodcastDocumentData {
+  /**
+   * Title field in *Podcast*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Название выпуска
+   * - **API ID Path**: podcast.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Podcast*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: podcast.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Date field in *Podcast*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcast.date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  date: prismic.DateField;
+
+  /**
+   * Author field in *Podcast*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Имя ведущего или гостя
+   * - **API ID Path**: podcast.author
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  author: prismic.KeyTextField;
+
+  /**
+   * Ссылка на выпуск (Spotify/Apple/др.) field in *Podcast*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://open.spotify.com/...
+   * - **API ID Path**: podcast.external_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  external_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Featured field in *Podcast*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: Отметить как главный выпуск
+   * - **API ID Path**: podcast.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
+
+  /**
+   * Tags field in *Podcast*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcast.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tags: prismic.GroupField<Simplify<PodcastDocumentDataTagsItem>>; /**
+   * Meta Title field in *Podcast*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: podcast.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Podcast*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: podcast.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Podcast*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcast.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Podcast document from Prismic
+ *
+ * - **API ID**: `podcast`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PodcastDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PodcastDocumentData>,
+    "podcast",
+    Lang
+  >;
+
+type PodcastlandingpageDocumentDataSlicesSlice =
+  | FormSlice
+  | CardSlice
+  | LandingPageHeroSlice
+  | BannerSlice
+  | NoteBannerSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | QaSlice
+  | InfoCardSlice;
+
+/**
+ * Content for Podcast Landing Page documents
+ */
+interface PodcastlandingpageDocumentData {
+  /**
+   * Title field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Подкасты
+   * - **API ID Path**: podcastlandingpage.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание страницы подкастов
+   * - **API ID Path**: podcastlandingpage.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Slice Zone field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcastlandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<PodcastlandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: podcastlandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: podcastlandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Podcast Landing Page*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: podcastlandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Podcast Landing Page document from Prismic
+ *
+ * - **API ID**: `podcastlandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PodcastlandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<PodcastlandingpageDocumentData>,
+    "podcastlandingpage",
+    Lang
+  >;
+
+/**
+ * Content for Tag documents
+ */
+interface TagDocumentData {
+  /**
+   * Name field in *Tag*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Tag name
+   * - **API ID Path**: tag.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+}
+
+/**
+ * Tag document from Prismic
+ *
+ * - **API ID**: `tag`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TagDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
+
+/**
  * Content for Video documents
  */
 interface VideoDocumentData {
@@ -963,6 +1263,17 @@ interface VideoDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/date
    */
   date: prismic.DateField;
+
+  /**
+   * Featured field in *Video*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: Mark as featured
+   * - **API ID Path**: video.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
 }
 
 /**
@@ -1057,6 +1368,9 @@ export type AllDocumentTypes =
   | HomeDocument
   | LandingpageDocument
   | NavigationDocument
+  | PodcastDocument
+  | PodcastlandingpageDocument
+  | TagDocument
   | VideoDocument
   | VideolandingpageDocument;
 
@@ -2195,6 +2509,7 @@ declare module "@prismicio/client" {
     export type {
       ArticleDocument,
       ArticleDocumentData,
+      ArticleDocumentDataTagsItem,
       ArticleDocumentDataSlicesSlice,
       ArticlelandingpageDocument,
       ArticlelandingpageDocumentData,
@@ -2215,6 +2530,14 @@ declare module "@prismicio/client" {
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
       NavigationDocumentDataDropdownItemsItem,
+      PodcastDocument,
+      PodcastDocumentData,
+      PodcastDocumentDataTagsItem,
+      PodcastlandingpageDocument,
+      PodcastlandingpageDocumentData,
+      PodcastlandingpageDocumentDataSlicesSlice,
+      TagDocument,
+      TagDocumentData,
       VideoDocument,
       VideoDocumentData,
       VideolandingpageDocument,
