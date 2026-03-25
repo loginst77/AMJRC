@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { asDate, asText, type Content } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
+import { X } from "lucide-react";
 
 import { FeaturedEpisode } from "./featured-episode";
-import { PodcastEpisodeList, type PodcastEpisode } from "@/components/podcast-episode-list";
+import { TagFilterBar } from "./TagFilterBar";
+import { PodcastEpisodeList, type PodcastEpisode, type PodcastTag } from "@/components/podcast-episode-list";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -14,7 +16,17 @@ export const metadata: Metadata = {
   description: "Аудиобеседы, интервью и размышления о вере.",
 };
 
-export default async function PodcastsPage() {
+export default async function PodcastsPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const rawTagParam = resolvedSearchParams?.tag;
+  const selectedTag =
+    Array.isArray(rawTagParam) && rawTagParam.length > 0
+      ? decodeURIComponent(rawTagParam[0]!)
+      : typeof rawTagParam === "string"
+        ? decodeURIComponent(rawTagParam)
+        : undefined;
+  const selectedTagKey = selectedTag?.toLowerCase();
+
   const client = createClient();
 
   const [landing, podcasts] = await Promise.all([
@@ -39,6 +51,19 @@ export default async function PodcastsPage() {
     const date = asDate((episode.data as { date?: any }).date ?? episode.first_publication_date) || null;
     const author = (episode.data as { author?: string }).author || undefined;
     const featured = Boolean((episode.data as { featured?: boolean }).featured);
+    const tagsGroup = (episode.data as { tags?: { tag?: unknown }[] }).tags ?? [];
+    const tags: PodcastTag[] = tagsGroup
+      .map((item) => {
+        const rel = item?.tag as Record<string, unknown> | null | undefined;
+        if (!rel || typeof rel !== "object") return null;
+        if (rel.link_type !== "Document" || !rel.id) return null;
+        const id = String(rel.id);
+        const slug = String(rel.uid || id);
+        const linkedName = (rel.data as { name?: string } | undefined)?.name;
+        const name = linkedName || slug;
+        return { id, slug, name };
+      })
+      .filter(Boolean) as PodcastTag[];
 
     return {
       id: `${episode.id}`,
@@ -47,13 +72,37 @@ export default async function PodcastsPage() {
       author,
       date: date ? date.toISOString() : "",
       href: href || undefined,
+      tags,
       alliance: undefined,
       featured,
     };
   });
 
-  const featured = episodes.find((ep) => ep.featured) ?? episodes[0];
-  const rest = episodes.filter((ep) => ep !== featured);
+  const featuredEpisodes = episodes.filter((ep) => ep.featured);
+  const fallbackFeatured = featuredEpisodes.length ? featuredEpisodes : episodes.slice(0, 1);
+  const regularEpisodes = episodes.filter((ep) => !fallbackFeatured.some((featuredEp) => featuredEp.id === ep.id));
+
+  const tagStats = new Map<string, { tag: PodcastTag; count: number }>();
+  regularEpisodes.forEach((episode) => {
+    episode.tags?.forEach((tag) => {
+      const current = tagStats.get(tag.slug);
+      if (current) {
+        current.count += 1;
+      } else {
+        tagStats.set(tag.slug, { tag, count: 1 });
+      }
+    });
+  });
+
+  const tagFilters = Array.from(tagStats.values()).sort((a, b) => a.tag.name.localeCompare(b.tag.name, "ru"));
+
+  const matchedTag = selectedTagKey ? tagFilters.find((item) => item.tag.slug.toLowerCase() === selectedTagKey)?.tag : undefined;
+  const activeTagKey = matchedTag?.slug.toLowerCase();
+  const activeTagLabel = matchedTag?.name;
+  const matchesTag = (episode: PodcastEpisode) => !activeTagKey || episode.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey);
+  const rest = regularEpisodes.filter((episode) => matchesTag(episode));
+  const totalVisible = rest.length;
+  const listHeading = activeTagLabel ? `Подкасты · ${activeTagLabel}` : "Все выпуски";
 
   const landingTitle =
     landing && (asText((landing.data as { title?: any }).title) || (landing.data as any).meta_title)
@@ -96,12 +145,38 @@ export default async function PodcastsPage() {
         </section>
       )}
 
-      {featured ? <FeaturedEpisode episode={featured} /> : null}
+      {fallbackFeatured.length ? <FeaturedEpisode episodes={fallbackFeatured} /> : null}
 
       <section className="bg-zinc-50 dark:bg-black">
-        <Container className="py-14 sm:py-20">
-          <h2 className="mb-8 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Все выпуски</h2>
-          <PodcastEpisodeList episodes={rest} />
+        <Container className="space-y-5 py-10 sm:space-y-4 sm:py-20">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</h2>
+
+          <TagFilterBar
+            allCount={regularEpisodes.length}
+            anchorId="podcast-list"
+            tags={tagFilters.map(({ tag, count }) => ({
+              slug: tag.slug,
+              name: tag.name,
+              count,
+              href: `/media/podcasts?tag=${encodeURIComponent(tag.slug)}`,
+              active: activeTagKey === tag.slug.toLowerCase(),
+            }))}
+          />
+
+          <div id="podcast-list" className="scroll-mt-24">
+            {totalVisible === 0 ? (
+            <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет выпусков для выбранного тега</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Добавьте тег к выпуску в Prismic, чтобы он появился в этом фильтре.</p>
+            </div>
+          ) : rest.length === 0 ? (
+            <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">
+              Пока нет незакреплённых выпусков для выбранного тега.
+            </div>
+          ) : (
+            <PodcastEpisodeList episodes={rest} />
+            )}
+          </div>
         </Container>
       </section>
     </div>

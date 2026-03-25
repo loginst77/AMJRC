@@ -17,6 +17,7 @@ const routes: prismic.ClientConfig["routes"] = [
   { type: "article", path: "/media/articles/:uid" },
   { type: "videolandingpage", path: "/media/videos" },
   { type: "navigation", path: "/" },
+  { type: "podcastlandingpage", path: "/media/podcasts" },
 ];
 
 /**
