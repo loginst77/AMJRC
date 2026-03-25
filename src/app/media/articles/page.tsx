@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SliceZone } from "@prismicio/react";
 import { asDate, asText, type Content } from "@prismicio/client";
-import { X } from "lucide-react";
 import { ArticleCard, type ArticleTag, type MediaItem } from "@/components/article-card";
-import { ArticleTagChip, ArticleTagChipGroup } from "@/components/article-tag-chip";
 import { FeaturedArticle } from "@/components/featured-article";
+import { TagFilterBar } from "@/components/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -128,60 +126,41 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
         <Container className="space-y-6 sm:space-y-4">
           <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</p>
 
-          <ArticleTagChipGroup>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="font-semibold text-zinc-700 dark:text-zinc-200">Категории:</p>
-                <div className="inline-flex w-fit flex-wrap items-center gap-1 rounded-full bg-zinc-100 p-1 text-zinc-500 dark:bg-zinc-900/70 dark:text-zinc-400">
-                  <ArticleTagChip href="/media/articles" label={`Все (${regularCards.length})`} active={!activeTagKey} />
-                  {tagFilters.map(({ tag, count }) => (
-                    <ArticleTagChip
-                      key={tag.slug}
-                      href={`/media/articles?tag=${encodeURIComponent(tag.slug)}`}
-                      label={`${tag.name} (${count})`}
-                      active={activeTagKey === tag.slug.toLowerCase()}
-                    />
-                  ))}
-                </div>
-              </div>
+          <TagFilterBar
+            allCount={regularCards.length}
+            anchorId="article-list"
+            allHref="/media/articles"
+            tags={tagFilters.map(({ tag, count }) => ({
+              slug: tag.slug,
+              name: tag.name,
+              count,
+              href: `/media/articles?tag=${encodeURIComponent(tag.slug)}`,
+              active: activeTagKey === tag.slug.toLowerCase(),
+            }))}
+          />
 
-              <div className="flex min-h-9 min-w-[152px] items-center justify-end">
-                {activeTagKey ? (
-                  <Link
-                    href="/media/articles"
-                    scroll={false}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 hover:bg-zinc-200/70 bg-zinc-100 rounded-full px-4 py-3"
-                  >
-                    <X className="h-4 w-4" />
-                    Сбросить фильтр
-                  </Link>
-                ) : null}
+          <div id="article-list" className="scroll-mt-24">
+            {totalVisible === 0 ? (
+              <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+                <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет статей для выбранного тега</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.
+                </p>
               </div>
-            </div>
-          </ArticleTagChipGroup>
-
-          {totalVisible === 0 ? (
-            <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет статей для выбранного тега</p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.
-              </p>
-            </div>
-          ) : rest.length === 0 ? (
-            <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">
-              Пока нет несекреплённых статей для выбранного тега.
-            </div>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {rest.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
-          )}
+            ) : rest.length === 0 ? (
+              <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">
+                Пока нет несекреплённых статей для выбранного тега.
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {rest.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
+            )}
+          </div>
         </Container>
       </section>
     </div>
   );
 }
-
-// TagChip is now provided by ArticleTagChip component
