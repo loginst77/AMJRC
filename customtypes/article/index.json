@@ -1,5 +1,5 @@
 {
-  "format": "page",
+  "format": "custom",
   "id": "article",
   "label": "Article",
   "repeatable": true,
@@ -58,9 +58,7 @@
               "config": {
                 "label": "Tag",
                 "select": "document",
-                "customtypes": [
-                  "tag"
-                ]
+                "customtypes": ["tag"]
               }
             }
           }
@@ -73,9 +71,7 @@
           "placeholder": "Основной текст статьи",
           "allowTargetBlank": false,
           "multi": "paragraph,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
-          "labels": [
-            "quote"
-          ]
+          "labels": ["quote"]
         }
       },
       "slices": {

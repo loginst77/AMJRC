@@ -13,11 +13,11 @@ import { Container } from "@/components/ui/container";
 import { MobileNav } from "@/components/mobile-nav";
 import { NavDropdown, type NavDropdownItem } from "@/components/nav-dropdown";
 import { NavLink } from "@/components/nav-link";
-import { createClient, repositoryName } from "@/prismicio";
+import { createClient, linkResolver, repositoryName } from "@/prismicio";
 import type { NavigationDocumentDataLinksItem } from "../../prismicio-types";
 import { cn } from "@/lib/utils";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -125,7 +125,7 @@ function SiteHeader({ navigationLinks, dropdownItems, dropdownLabel, dropdownHre
             {navigationLinks.map((item, index) => (
               // Resolve Prismic link to a URL; default to "/" if empty
               // eslint-disable-next-line react/no-array-index-key
-              <NavLink key={`${asText(item.label)}-${index}`} href={asLink(item.link) ?? "/"}>
+              <NavLink key={`${asText(item.label)}-${index}`} href={asLink(item.link, linkResolver) ?? "/"}>
                 <PrismicText field={item.label} />
               </NavLink>
             ))}
@@ -278,7 +278,7 @@ function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownIt
   const dropdownItems = Array.isArray(dropdownItemsRaw)
     ? dropdownItemsRaw
         .map((item: any) => {
-          const href = item?.link?.url as string | undefined;
+          const href = asLink(item?.link, linkResolver) as string | null;
           if (!href) return null;
           const label = asText(item.label) || "Без названия";
           const icon = normalizeDropdownIcon(item.icon);
@@ -288,7 +288,7 @@ function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownIt
     : [];
 
   const dropdownLabel = asText(navigationData.dropdown_label) || fallback.dropdownLabel;
-  const dropdownHref = ensureAbsoluteHref(navigationData.dropdown_link?.url ?? fallback.dropdownHref);
+  const dropdownHref = ensureAbsoluteHref((asLink(navigationData.dropdown_link, linkResolver) as string | null) ?? fallback.dropdownHref);
 
   return {
     dropdownItems: dropdownItems.length ? (dropdownItems as NavDropdownItem[]) : fallback.dropdownItems,
@@ -347,11 +347,11 @@ function buildActionButtons(navigationData: any): {
   if (!navigationData) return fallback;
 
   const primaryLabel = asText(navigationData.action_button_primary_label);
-  const primaryHref = navigationData.action_button_primary_link?.url as string | undefined;
+  const primaryHref = ensureAbsoluteHref((asLink(navigationData.action_button_primary_link, linkResolver) as string | null) ?? undefined);
   const primaryVariant = normalizeButtonVariant(navigationData.action_button_primary_variant, fallback.primaryAction.variant);
 
   const secondaryLabel = asText(navigationData.action_button_secondary_label);
-  const secondaryHref = navigationData.action_button_secondary_link?.url as string | undefined;
+  const secondaryHref = ensureAbsoluteHref((asLink(navigationData.action_button_secondary_link, linkResolver) as string | null) ?? undefined);
   const secondaryVariant = normalizeButtonVariant(navigationData.action_button_secondary_variant, fallback.secondaryAction.variant);
 
   return {
@@ -416,7 +416,7 @@ function buildFooterLinks(items: any[] | undefined): FooterLinkItem[] {
   const parsed = items
     .map((item) => {
       const label = asText(item.label);
-      const href = asLink(item.link);
+      const href = asLink(item.link, linkResolver);
       if (!label || !href) return null;
       return { label, href };
     })

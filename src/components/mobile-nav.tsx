@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { asText } from "@prismicio/client";
-import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
+import { asLink, asText } from "@prismicio/client";
+import { PrismicNextImage } from "@prismicio/next";
 import { PrismicText } from "@prismicio/react";
 import { Menu, X } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+import { linkResolver } from "@/prismicio";
 import type { NavigationDocumentDataLinksItem } from "../../prismicio-types";
 import type { NavDropdownItem } from "./nav-dropdown";
 
@@ -116,14 +117,14 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
                 </div>
                 <nav className="flex flex-col gap-1">
                   {items.map((item, index) => (
-                    <PrismicNextLink
+                    <Link
                       key={`${asText(item.label)}-${index}`}
-                      field={item.link}
+                      href={asLink(item.link, linkResolver) ?? "/"}
                       className="rounded-xl px-3 py-3 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-800"
                       onClick={() => setOpen(false)}
                     >
                       <PrismicText field={item.label} />
-                    </PrismicNextLink>
+                    </Link>
                   ))}
 
                   {dropdownItems.length > 0 ? (

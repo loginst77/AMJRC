@@ -942,6 +942,98 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
+interface NewspaperDocumentData {}
+
+/**
+ * Newspaper document from Prismic
+ *
+ * - **API ID**: `newspaper`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NewspaperDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<NewspaperDocumentData>,
+    "newspaper",
+    Lang
+  >;
+
+type NewspaperlandingpageDocumentDataSlicesSlice =
+  | LandingPageHeroSlice
+  | FormSlice
+  | CardSlice
+  | ValuesBlockSlice
+  | SubscribeToNewsletterSlice
+  | BannerSlice
+  | QaSlice
+  | InfoCardSlice
+  | NoteBannerSlice;
+
+/**
+ * Content for NewspaperLandingPage documents
+ */
+interface NewspaperlandingpageDocumentData {
+  /**
+   * Slice Zone field in *NewspaperLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newspaperlandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<NewspaperlandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *NewspaperLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: newspaperlandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *NewspaperLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: newspaperlandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *NewspaperLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newspaperlandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * NewspaperLandingPage document from Prismic
+ *
+ * - **API ID**: `newspaperlandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NewspaperlandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NewspaperlandingpageDocumentData>,
+    "newspaperlandingpage",
+    Lang
+  >;
+
 /**
  * Item in *Podcast → Tags*
  */
@@ -1108,28 +1200,6 @@ type PodcastlandingpageDocumentDataSlicesSlice =
  */
 interface PodcastlandingpageDocumentData {
   /**
-   * Title field in *Podcast Landing Page*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Подкасты
-   * - **API ID Path**: podcastlandingpage.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  title: prismic.RichTextField;
-
-  /**
-   * Description field in *Podcast Landing Page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Краткое описание страницы подкастов
-   * - **API ID Path**: podcastlandingpage.description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  description: prismic.KeyTextField;
-
-  /**
    * Slice Zone field in *Podcast Landing Page*
    *
    * - **Field Type**: Slice Zone
@@ -1182,7 +1252,7 @@ interface PodcastlandingpageDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type PodcastlandingpageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
+  prismic.PrismicDocumentWithUID<
     Simplify<PodcastlandingpageDocumentData>,
     "podcastlandingpage",
     Lang
@@ -1368,6 +1438,8 @@ export type AllDocumentTypes =
   | HomeDocument
   | LandingpageDocument
   | NavigationDocument
+  | NewspaperDocument
+  | NewspaperlandingpageDocument
   | PodcastDocument
   | PodcastlandingpageDocument
   | TagDocument
@@ -2530,6 +2602,11 @@ declare module "@prismicio/client" {
       NavigationDocumentData,
       NavigationDocumentDataLinksItem,
       NavigationDocumentDataDropdownItemsItem,
+      NewspaperDocument,
+      NewspaperDocumentData,
+      NewspaperlandingpageDocument,
+      NewspaperlandingpageDocumentData,
+      NewspaperlandingpageDocumentDataSlicesSlice,
       PodcastDocument,
       PodcastDocumentData,
       PodcastDocumentDataTagsItem,
