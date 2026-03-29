@@ -138,9 +138,8 @@ export default async function NewspaperPage() {
           />
 
           {restCards.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600  dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся выпуски.</p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">Добавьте документы в Prismic, чтобы увидеть их в разделе газеты.</p>
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

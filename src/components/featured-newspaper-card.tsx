@@ -1,7 +1,6 @@
-import { Download, Newspaper } from "lucide-react";
+import { Download, FileDown, Newspaper } from "lucide-react";
 
 import { authorColor } from "@/components/article-card";
-import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/media-data";
@@ -14,6 +13,7 @@ export type FeaturedNewspaperIssue = {
   pdfUrl?: string;
   author?: string;
   date?: Date | null;
+  tags?: { name: string }[];
 };
 
 interface FeaturedNewspaperCardProps {
@@ -27,7 +27,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
         <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Последний выпуск</p>
         <div
           className={cn(
-            "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none dark:border-zinc-800 dark:from-blue-950/20 dark:via-zinc-950 dark:to-sky-950/10",
+            "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none dark:border-zinc-800 dark:from-blue-950/20 dark:via-zinc-950 dark:to-sky-950/10 !cursor-default",
             cardHoverCn,
           )}
         >
@@ -36,19 +36,27 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
 
           <div className="relative">
             <div className="p-8">
-              <div className="mb-5 flex flex-wrap items-center gap-3">
-                <Badge variant="outline" size="sm" className="flex items-center gap-1.5 bg-white !shadow-none">
-                  Последние новости
-                </Badge>
-              </div>
-
-              <h2 className="mb-4 flex items-center gap-2 text-3xl font-bold leading-snug tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 sm:text-4xl">
+              <h2 className="py-4 flex items-center gap-2 text-3xl font-bold leading-snug tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 sm:text-4xl">
                 <Newspaper className="h-8 w-8" strokeWidth={1.5} />
                 {issue.title}
               </h2>
 
-              <p className="mb-8 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{issue.description}</p>
+              <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{issue.description}</p>
             </div>
+            {issue.tags?.length ? (
+              <div className="mb-8 px-8 flex flex-wrap items-center gap-2">
+                {issue.tags.map((tag, index) => (
+                  <div
+                    key={`${tag.name}-${index}`}
+                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
+                  >
+                    {tag.name}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mb-8" />
+            )}
             <div className="flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800">
               {issue.author ? (
                 <div className="w-full px-8">
@@ -78,10 +86,10 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
               <a
                 href={issue.pdfUrl || "#"}
                 download
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap border-l border-zinc-200 bg-white px-8 py-8 text-sm font-medium hover:bg-blue-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-blue-900/20"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap border-l border-zinc-200 bg-white px-16 py-8 text-sm font-medium hover:bg-blue-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400"
               >
-                Скачать PDF
-                <Download className="h-4 w-4" />
+                Открыть PDF
+                <FileDown className="h-5 w-5" strokeWidth={1.5} />
               </a>
             </div>
           </div>
