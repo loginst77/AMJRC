@@ -61,8 +61,9 @@ export default async function BooksPage() {
   });
 
   const featured = books[0];
-  const recommended = books.slice(1, 4);
-  const rest = books.slice(4);
+  const regularBooks = books.slice(1);
+  const recommended = regularBooks.slice(0, 3);
+  const rest = regularBooks.slice(3);
 
   return (
     <div className="flex flex-col bg-white dark:bg-zinc-950">
@@ -91,7 +92,13 @@ export default async function BooksPage() {
             </div>
           ) : null}
 
-          {books.length > 0 && recommended.length ? (
+          {books.length > 0 && regularBooks.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появится больше книг.</p>
+            </div>
+          ) : null}
+
+          {regularBooks.length > 0 && recommended.length ? (
             <div className="space-y-4">
               <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Рекомендуем начать с этого</h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -102,7 +109,7 @@ export default async function BooksPage() {
             </div>
           ) : null}
 
-          {books.length > 0 ? (
+          {regularBooks.length > 0 ? (
             <div className="space-y-4">
               <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Каталог книг</h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

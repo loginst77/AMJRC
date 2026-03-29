@@ -3,6 +3,8 @@ import Image from "next/image";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { type MediaItem, formatDate } from "@/lib/media-data";
+import { cn } from "@/lib/cn";
+import { cardHoverCn } from "@/lib/variants";
 
 interface FeaturedBookProps {
   book: MediaItem;
@@ -13,10 +15,7 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
     <section className="bg-white dark:bg-zinc-950">
       <Container className="py-16 sm:py-20">
         <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Выбор редакции</p>
-        <Link
-          href={book.href || "#"}
-          className="group relative block overflow-hidden rounded-3xl border border-zinc-200 shadow-none transition-all duration-300 hover:-translate-y-1 hover:shadow-primary hover:shadow-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-zinc-800 dark:focus-visible:ring-offset-zinc-950"
-        >
+        <Link href={book.href || "#"} className={cn("group relative block", cardHoverCn)}>
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl transition-opacity group-hover:opacity-75 dark:bg-blue-800/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-blue-200/40 blur-3xl transition-opacity group-hover:opacity-75 dark:bg-blue-800/10" />
 
@@ -37,7 +36,7 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
               </div>
             </div>
 
-            <div className="flex flex-col justify-center md:w-[72%]">
+            <div className="flex flex-col md:w-[72%] md:self-stretch">
               <h2 className="mb-5 text-4xl font-bold leading-tight tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                 {book.title}
               </h2>
@@ -53,7 +52,7 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
                 ))}
               </div>
 
-              <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
+              <div className="mt-auto flex flex-col justify-between gap-6 pt-2 sm:flex-row sm:items-center">
                 {book.author || book.date ? (
                   <div className="flex flex-wrap items-center gap-4">
                     {book.author ? (

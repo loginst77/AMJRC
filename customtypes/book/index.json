@@ -62,6 +62,14 @@
           "placeholder": "Author name"
         }
       },
+      "buy_link": {
+        "type": "Link",
+        "config": {
+          "label": "Buy Link",
+          "placeholder": "https://...",
+          "select": "web"
+        }
+      },
       "featured": {
         "type": "Boolean",
         "config": {
