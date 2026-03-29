@@ -8,6 +8,13 @@ export type MediaItem = {
   authorHref?: string;
   date?: string | Date | null;
   featured?: boolean;
+  tags?: MediaTag[];
+};
+
+export type MediaTag = {
+  id: string;
+  slug: string;
+  name: string;
 };
 
 export function formatDate(value?: string | Date | null) {

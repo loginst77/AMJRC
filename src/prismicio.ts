@@ -22,6 +22,9 @@ export const linkResolver: prismic.LinkResolverFunction = (doc) => {
       return "/media/newspaper";
     case "newspaper":
       return "/media/newspaper";
+    case "booklandingpage":
+      return "/media/books";
+
     default:
       return doc.uid ? `/${doc.uid}` : "/";
   }
@@ -45,6 +48,7 @@ const routes: prismic.ClientConfig["routes"] = [
   { type: "podcastlandingpage", path: "/media/podcasts" },
   { type: "newspaperlandingpage", path: "/media/newspaper" },
   { type: "newspaper", path: "/media/newspaper" },
+  { type: "booklandingpage", path: "/media/books" },
 ];
 
 /**

@@ -301,6 +301,163 @@ export type ArticlelandingpageDocument<Lang extends string = string> =
   >;
 
 /**
+ * Content for Book documents
+ */
+interface BookDocumentData {
+  /**
+   * Image field in *Book*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: book.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *Book*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Book title
+   * - **API ID Path**: book.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Book*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Short description
+   * - **API ID Path**: book.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Tag (optional) field in *Book*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: book.tag
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+
+  /**
+   * Date of Release field in *Book*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: book.date_of_release
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  date_of_release: prismic.DateField;
+
+  /**
+   * Author field in *Book*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Author name
+   * - **API ID Path**: book.author
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  author: prismic.KeyTextField;
+}
+
+/**
+ * Book document from Prismic
+ *
+ * - **API ID**: `book`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BookDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<BookDocumentData>, "book", Lang>;
+
+type BooklandingpageDocumentDataSlicesSlice =
+  | FormSlice
+  | CardSlice
+  | LandingPageHeroSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice
+  | QaSlice
+  | ValuesBlockSlice
+  | NoteBannerSlice
+  | InfoCardSlice;
+
+/**
+ * Content for BookLandingPage documents
+ */
+interface BooklandingpageDocumentData {
+  /**
+   * Slice Zone field in *BookLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: booklandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<BooklandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *BookLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: booklandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *BookLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: booklandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *BookLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: booklandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * BookLandingPage document from Prismic
+ *
+ * - **API ID**: `booklandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BooklandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BooklandingpageDocumentData>,
+    "booklandingpage",
+    Lang
+  >;
+
+/**
  * Item in *Footer → Navigation links*
  */
 export interface FooterDocumentDataNavigationLinksItem {
@@ -942,7 +1099,92 @@ export type NavigationDocument<Lang extends string = string> =
     Lang
   >;
 
-interface NewspaperDocumentData {}
+/**
+ * Item in *Newspaper → Tags (optional)*
+ */
+export interface NewspaperDocumentDataTagsItem {
+  /**
+   * Tag field in *Newspaper → Tags (optional)*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newspaper.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+}
+
+/**
+ * Content for Newspaper documents
+ */
+interface NewspaperDocumentData {
+  /**
+   * Title field in *Newspaper*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Newspaper title
+   * - **API ID Path**: newspaper.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Newspaper*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Short description
+   * - **API ID Path**: newspaper.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * PDF field in *Newspaper*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newspaper.pdf
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+   */
+  pdf: prismic.LinkToMediaField<prismic.FieldState, never>;
+
+  /**
+   * Author (optional) field in *Newspaper*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Author name
+   * - **API ID Path**: newspaper.author
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  author: prismic.KeyTextField;
+
+  /**
+   * Featured field in *Newspaper*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: newspaper.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
+
+  /**
+   * Tags (optional) field in *Newspaper*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: newspaper.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tags: prismic.GroupField<Simplify<NewspaperDocumentDataTagsItem>>;
+}
 
 /**
  * Newspaper document from Prismic
@@ -1196,11 +1438,11 @@ type PodcastlandingpageDocumentDataSlicesSlice =
   | InfoCardSlice;
 
 /**
- * Content for Podcast Landing Page documents
+ * Content for PodcastLandingPage documents
  */
 interface PodcastlandingpageDocumentData {
   /**
-   * Slice Zone field in *Podcast Landing Page*
+   * Slice Zone field in *PodcastLandingPage*
    *
    * - **Field Type**: Slice Zone
    * - **Placeholder**: *None*
@@ -1209,7 +1451,7 @@ interface PodcastlandingpageDocumentData {
    * - **Documentation**: https://prismic.io/docs/slices
    */
   slices: prismic.SliceZone<PodcastlandingpageDocumentDataSlicesSlice>; /**
-   * Meta Title field in *Podcast Landing Page*
+   * Meta Title field in *PodcastLandingPage*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A title of the page used for social media and search engines
@@ -1220,7 +1462,7 @@ interface PodcastlandingpageDocumentData {
   meta_title: prismic.KeyTextField;
 
   /**
-   * Meta Description field in *Podcast Landing Page*
+   * Meta Description field in *PodcastLandingPage*
    *
    * - **Field Type**: Text
    * - **Placeholder**: A brief summary of the page
@@ -1231,7 +1473,7 @@ interface PodcastlandingpageDocumentData {
   meta_description: prismic.KeyTextField;
 
   /**
-   * Meta Image field in *Podcast Landing Page*
+   * Meta Image field in *PodcastLandingPage*
    *
    * - **Field Type**: Image
    * - **Placeholder**: *None*
@@ -1243,7 +1485,7 @@ interface PodcastlandingpageDocumentData {
 }
 
 /**
- * Podcast Landing Page document from Prismic
+ * PodcastLandingPage document from Prismic
  *
  * - **API ID**: `podcastlandingpage`
  * - **Repeatable**: `false`
@@ -1434,6 +1676,8 @@ export type VideolandingpageDocument<Lang extends string = string> =
 export type AllDocumentTypes =
   | ArticleDocument
   | ArticlelandingpageDocument
+  | BookDocument
+  | BooklandingpageDocument
   | FooterDocument
   | HomeDocument
   | LandingpageDocument
@@ -2586,6 +2830,11 @@ declare module "@prismicio/client" {
       ArticlelandingpageDocument,
       ArticlelandingpageDocumentData,
       ArticlelandingpageDocumentDataSlicesSlice,
+      BookDocument,
+      BookDocumentData,
+      BooklandingpageDocument,
+      BooklandingpageDocumentData,
+      BooklandingpageDocumentDataSlicesSlice,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataNavigationLinksItem,
@@ -2604,6 +2853,7 @@ declare module "@prismicio/client" {
       NavigationDocumentDataDropdownItemsItem,
       NewspaperDocument,
       NewspaperDocumentData,
+      NewspaperDocumentDataTagsItem,
       NewspaperlandingpageDocument,
       NewspaperlandingpageDocumentData,
       NewspaperlandingpageDocumentDataSlicesSlice,

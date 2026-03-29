@@ -6,6 +6,7 @@ import { SliceZone } from "@prismicio/react";
 import { FeaturedNewspaperCard } from "@/components/featured-newspaper-card";
 import { NewspaperCard } from "@/components/newspaper-card";
 import { SectionHeader } from "@/components/SectionHeader";
+import { TagFilterBar } from "@/components/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -48,7 +49,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function NewspaperPage() {
+export default async function NewspaperPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const rawTagParam = resolvedSearchParams?.tag;
+  const selectedTag =
+    Array.isArray(rawTagParam) && rawTagParam.length > 0
+      ? decodeURIComponent(rawTagParam[0]!)
+      : typeof rawTagParam === "string"
+        ? decodeURIComponent(rawTagParam)
+        : undefined;
+  const selectedTagKey = selectedTag?.toLowerCase();
+
   const client = createClient();
   const [landing, issues] = await Promise.all([
     client.getSingle("newspaperlandingpage").catch(() => null),
@@ -90,7 +101,28 @@ export default async function NewspaperPage() {
   const landingDescription =
     (landing?.data as { description?: string })?.description || (landing?.data as any)?.meta_description || "Архив выпусков газеты.";
   const featuredIssue = cards.find((card) => card.featured) ?? null;
-  const restCards = featuredIssue ? cards.filter((card) => card.id !== featuredIssue.id) : cards;
+  const regularCards = featuredIssue ? cards.filter((card) => card.id !== featuredIssue.id) : cards;
+  const tagStats = new Map<string, { tag: IssueTag; count: number }>();
+
+  regularCards.forEach((card) => {
+    card.tags.forEach((tag) => {
+      const current = tagStats.get(tag.slug);
+      if (current) {
+        current.count += 1;
+      } else {
+        tagStats.set(tag.slug, { tag, count: 1 });
+      }
+    });
+  });
+
+  const tagFilters = Array.from(tagStats.values()).sort((a, b) => a.tag.name.localeCompare(b.tag.name, "ru"));
+  const matchedTag = selectedTagKey ? tagFilters.find((item) => item.tag.slug.toLowerCase() === selectedTagKey)?.tag : undefined;
+  const activeTagKey = matchedTag?.slug.toLowerCase();
+  const activeTagLabel = matchedTag?.name;
+
+  const filteredCards = activeTagKey
+    ? regularCards.filter((card) => card.tags.some((tag) => tag.slug.toLowerCase() === activeTagKey))
+    : regularCards;
 
   return (
     <div className="flex flex-col bg-white dark:bg-zinc-950">
@@ -129,7 +161,7 @@ export default async function NewspaperPage() {
       <section className="bg-zinc-50 py-12 dark:bg-black">
         <Container className="space-y-8">
           <SectionHeader
-            title="Все выпуски"
+            title={activeTagLabel ? `Выпуски · ${activeTagLabel}` : "Все выпуски"}
             description="Архив PDF выпусков газеты."
             size="sm"
             as="div"
@@ -137,27 +169,47 @@ export default async function NewspaperPage() {
             descriptionClassName="text-center"
           />
 
-          {restCards.length === 0 ? (
+          <TagFilterBar
+            allCount={regularCards.length}
+            anchorId="newspaper-list"
+            allHref="/media/newspaper"
+            tags={tagFilters.map(({ tag, count }) => ({
+              slug: tag.slug,
+              name: tag.name,
+              count,
+              href: `/media/newspaper?tag=${encodeURIComponent(tag.slug)}`,
+              active: activeTagKey === tag.slug.toLowerCase(),
+            }))}
+          />
+
+          {regularCards.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600  dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся выпуски.</p>
             </div>
+          ) : filteredCards.length === 0 ? (
+            <div id="newspaper-list" className="scroll-mt-24 rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет выпусков для выбранного тега</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">Попробуйте выбрать другой тег или показать все выпуски.</p>
+            </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {restCards.map((issue) => (
-                <div key={issue.id} className="flex h-full flex-col">
-                  <NewspaperCard
-                    issue={{
-                      id: issue.id,
-                      title: issue.title,
-                      description: issue.description || "",
-                      href: issue.pdfUrl || "#",
-                      author: issue.author,
-                      date: issue.date,
-                      tags: issue.tags.map((tag) => tag.name),
-                    }}
-                  />
-                </div>
-              ))}
+            <div id="newspaper-list" className="scroll-mt-24">
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {filteredCards.map((issue) => (
+                  <div key={issue.id} className="flex h-full flex-col">
+                    <NewspaperCard
+                      issue={{
+                        id: issue.id,
+                        title: issue.title,
+                        description: issue.description || "",
+                        href: issue.pdfUrl || "#",
+                        author: issue.author,
+                        date: issue.date,
+                        tags: issue.tags.map((tag) => tag.name),
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </Container>

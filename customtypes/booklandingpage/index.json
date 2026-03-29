@@ -1,17 +1,11 @@
 {
   "format": "page",
-  "id": "podcastlandingpage",
-  "label": "PodcastLandingPage",
+  "id": "booklandingpage",
+  "label": "BookLandingPage",
   "repeatable": false,
   "status": true,
   "json": {
     "Main": {
-      "uid": {
-        "type": "UID",
-        "config": {
-          "label": "UID"
-        }
-      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -29,16 +23,16 @@
             "banner": {
               "type": "SharedSlice"
             },
-            "note_banner": {
+            "subscribe_to_newsletter": {
               "type": "SharedSlice"
             },
-            "subscribe_to_newsletter": {
+            "qa": {
               "type": "SharedSlice"
             },
             "values_block": {
               "type": "SharedSlice"
             },
-            "qa": {
+            "note_banner": {
               "type": "SharedSlice"
             },
             "info_card": {
