@@ -34,9 +34,9 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                   </div>
                   {/* Info */}
                   <div className="flex-1 space-y-3">
-                    <h3 className="text-2xl font-semibold text-zinc-950 dark:text-white group-hover:text-blue-600">{episode.title}</h3>
-                    <p className="text-zinc-600 dark:text-zinc-400">{episode.description}</p>
-                    <div className="flex items-center gap-4 text-sm text-zinc-500">
+                    <h3 className="text-3xl font-semibold text-zinc-950 group-hover:text-blue-600">{episode.title}</h3>
+                    <p className="text-zinc-600 text-lg">{episode.description}</p>
+                    <div className="flex items-center gap-4 text-base text-zinc-500">
                       {episode.author && <span className="font-medium">{episode.author}</span>}
                       <span>{formatDate(episode.date)}</span>
                     </div>

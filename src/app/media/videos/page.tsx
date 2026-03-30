@@ -114,6 +114,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
     const date = dateRaw ? dateRaw.toISOString() : null;
     const imageSrc = thumbnail || youtubeThumbnail(embedUrl || url) || undefined;
     const featured = Boolean((video.data as { featured?: boolean }).featured);
+    const author = (video.data as { author?: string | null }).author?.trim() || undefined;
 
     const tagsGroup = (video.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: MediaTag[] = tagsGroup
@@ -138,6 +139,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       imageSrc,
       date: date ?? undefined,
       featured,
+      author,
       tags,
     };
   });

@@ -40,10 +40,17 @@
           "label": "Publish date"
         }
       },
+      "author": {
+        "type": "Text",
+        "config": {
+          "label": "Author (optional)",
+          "placeholder": "Name"
+        }
+      },
       "tags": {
         "type": "Group",
         "config": {
-          "label": "Tags",
+          "label": "Tags (optional)",
           "fields": {
             "tag": {
               "type": "Link",

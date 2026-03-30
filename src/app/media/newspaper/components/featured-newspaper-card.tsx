@@ -38,12 +38,11 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
 
           <div className="relative">
             <div className="p-8">
-              <h2 className="py-4 flex items-center gap-2 text-3xl font-bold leading-snug tracking-tight text-zinc-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400 sm:text-4xl">
-                <Newspaper className="h-8 w-8" strokeWidth={1.5} />
+              <h2 className="py-4 flex items-center gap-2 text-3xl font-bold leading-snug tracking-tight text-zinc-900 group-hover:text-blue-600 sm:text-3xl">
                 {issue.title}
               </h2>
 
-              <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{issue.description}</p>
+              <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600">{issue.description}</p>
             </div>
             {issue.tags?.length ? (
               <div className="mb-8 px-8 flex flex-wrap items-center gap-2">
@@ -74,8 +73,8 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                         {issue.author.charAt(0)}
                       </div>
                       <div>
-                        <p className="text-sm font™-semibold text-zinc-800 dark:text-zinc-200">{issue.author}</p>
-                        <p className="text-xs text-zinc-500">Автор</p>
+                        <p className="text-base font™-semibold text-zinc-800 dark:text-zinc-200">{issue.author}</p>
+                        <p className="text-sm text-zinc-500">Автор</p>
                       </div>
                     </div>
 

@@ -66,8 +66,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
         "group flex flex-col bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50",
         cardHoverCn,
         className,
-      )}
-    >
+      )}>
       <div className="p-6 flex-1">
         {/* Tags + reading time */}
         <div className="flex flex-wrap items-center gap-2 mb-4 justify-between">
@@ -88,8 +87,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
           {article.tags?.map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
-            >
+              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
               {tag.name}
             </span>
           ))}
@@ -98,11 +96,11 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
 
       {/* Footer */}
       <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm">
-          {article.author && <span className="font-medium text-zinc-600">{article.author}</span>}
+        <div className="flex items-center gap-2">
+          {article.author && <span className="font-medium text-zinc-700 text-base">{article.author}</span>}
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-sm text-zinc-400">{formatDate(article.date)}</span>
+          <span className="text-base text-zinc-400">{formatDate(article.date)}</span>
         </div>
       </div>
     </Link>

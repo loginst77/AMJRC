@@ -1529,6 +1529,45 @@ export type TagDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
 /**
+ * Content for Author documents
+ */
+interface AuthorDocumentData {
+  /**
+   * Name field in *Author*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Display name
+   * - **API ID Path**: author.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Profile page (optional) field in *Author*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://...
+   * - **API ID Path**: author.page
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  page: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Author document from Prismic
+ *
+ * - **API ID**: `author`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AuthorDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
+
+/**
  * Item in *Video → Tags*
  */
 export interface VideoDocumentDataTagsItem {
@@ -1590,6 +1629,17 @@ interface VideoDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/date
    */
   date: prismic.DateField;
+
+  /**
+   * Author (optional) field in *Video*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video.author
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  author: prismic.ContentRelationshipField<"author">;
 
   /**
    * Tags field in *Video*
@@ -1702,6 +1752,7 @@ export type VideolandingpageDocument<Lang extends string = string> =
 export type AllDocumentTypes =
   | ArticleDocument
   | ArticlelandingpageDocument
+  | AuthorDocument
   | BookDocument
   | BooklandingpageDocument
   | FooterDocument

@@ -88,19 +88,17 @@ export function VideoCard({ video }: VideoCardProps) {
         type="button"
         onClick={handleOpen}
         className="relative block aspect-video w-full overflow-hidden bg-zinc-100 text-left cursor-pointer"
-        aria-label={`Смотреть видео: ${video.title}`}
-      >
-        {video.imageSrc ? (
+        aria-label={`Смотреть видео: ${video.title}`}>
+        {video.imageSrc ?
           <img
             src={video.imageSrc}
             alt={video.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-pointer"
           />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
+        : <div className="flex h-full w-full items-center justify-center">
             <PlayCircleIcon className="h-12 w-12 text-zinc-300" strokeWidth={1} />
           </div>
-        )}
+        }
         {/* Play button */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm">
@@ -117,66 +115,61 @@ export function VideoCard({ video }: VideoCardProps) {
           <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
             {video.title}
           </h3>
-          {video.description ? <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{video.description}</p> : null}
-          {video.tags && video.tags.length > 0 ? (
+          {video.description ?
+            <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{video.description}</p>
+          : null}
+          {video.tags && video.tags.length > 0 ?
             <div className="mt-3 flex flex-wrap gap-2">
               {video.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex items-center rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 ring-1 ring-inset ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700"
-                >
+                  className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
                   {tag.name}
                 </span>
               ))}
             </div>
-          ) : null}
+          : null}
         </button>
         <button
           type="button"
           onClick={handleOpen}
-          className="group/link flex items-center justify-between border-t border-zinc-200 p-6 text-sm text-zinc-600 transition-colors hover:bg-blue-100 hover:text-zinc-900 text-left cursor-pointer"
-        >
-          <span className="flex items-center gap-2 font-medium">
-            {video.author}
-            {video.author ? <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-1" /> : null}
-          </span>
-          <span>{formatDate(video.date)}</span>
+          className="group/link flex items-center justify-between border-t border-zinc-200 p-6  transition-colors hover:bg-blue-100 hover:text-zinc-900 text-left cursor-pointer">
+          <span className="flex items-center gap-2 font-medium text-zinc-700 text-base">{video.author}</span>
+          <span className="text-zinc-400">{formatDate(video.date)}</span>
         </button>
       </div>
 
-      {mounted && open && playableUrl
-        ? createPortal(
-            <div
-              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
-              role="dialog"
-              aria-modal="true"
-              onClick={(e) => {
-                if (e.currentTarget === e.target) setOpen(false);
-              }}
-            >
-              <div className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl" onClick={(e) => e.stopPropagation()}>
-                <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm font-bold text-zinc-900 hover:bg-white cursor-pointer hover:text-zinc-900 hover:bg-zinc-200"
-                >
-                  <XIcon className="h-4 w-4" />
-                  Закрыть
-                </button>
-                <div className="aspect-video w-full">
-                  <iframe
-                    src={playableUrl}
-                    title={video.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="h-full w-full"
-                  />
-                </div>
+      {mounted && open && playableUrl ?
+        createPortal(
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => {
+              if (e.currentTarget === e.target) setOpen(false);
+            }}>
+            <div className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="absolute left-3 top-3 z-10 flex items-center gap-2 rounded-full bg-white px-3 py-2 text-sm font-bold text-zinc-900 hover:bg-white cursor-pointer hover:text-zinc-900 hover:bg-zinc-200">
+                <XIcon className="h-4 w-4" />
+                Закрыть
+              </button>
+              <div className="aspect-video w-full">
+                <iframe
+                  src={playableUrl}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="h-full w-full"
+                />
               </div>
-            </div>,
-            document.body,
-          )
-        : null}
+            </div>
+          </div>,
+          document.body,
+        )
+      : null}
     </div>
   );
 }
