@@ -40,6 +40,22 @@
           "label": "Publish date"
         }
       },
+      "tags": {
+        "type": "Group",
+        "config": {
+          "label": "Tags",
+          "fields": {
+            "tag": {
+              "type": "Link",
+              "config": {
+                "label": "Tag",
+                "select": "document",
+                "customtypes": ["tag"]
+              }
+            }
+          }
+        }
+      },
       "featured": {
         "type": "Boolean",
         "config": {

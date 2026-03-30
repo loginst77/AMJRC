@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 import { ArrowRight, PlayCircleIcon, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
-import { formatDate } from "@/lib/media-data";
+import { formatDate, type MediaTag } from "@/lib/media-data";
 import { cardHoverCn } from "@/lib/variants";
 
 export interface VideoCardItem {
@@ -20,6 +20,7 @@ export interface VideoCardItem {
   authorHref?: string;
   date?: string | Date | null;
   featured?: boolean;
+  tags?: MediaTag[];
   onClick?: () => void;
 }
 
@@ -113,10 +114,22 @@ export function VideoCard({ video }: VideoCardProps) {
       {/* Info */}
       <div className="flex flex-1 flex-col justify-between">
         <button type="button" onClick={handleOpen} className="block w-full p-6 text-left cursor-pointer">
-          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2ßgroup-hover:text-blue-600">
+          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
             {video.title}
           </h3>
           {video.description ? <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{video.description}</p> : null}
+          {video.tags && video.tags.length > 0 ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {video.tags.slice(0, 3).map((tag) => (
+                <span
+                  key={tag.id}
+                  className="inline-flex items-center rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 ring-1 ring-inset ring-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:ring-zinc-700"
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          ) : null}
         </button>
         <button
           type="button"

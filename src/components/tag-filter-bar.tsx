@@ -25,8 +25,16 @@ export function TagFilterBar({ allCount, tags, anchorId = "podcast-list", allHre
   const [open, setOpen] = useState(false);
   const activeTag = tags.find((tag) => tag.active);
   const hash = anchorId ? `#${anchorId}` : "";
-  const lastFive = tags.slice(-5);
-  const desktopTags = activeTag ? [activeTag, ...lastFive.filter((tag) => tag.slug !== activeTag.slug)] : lastFive;
+  const latestDesktopTags = tags.slice(-4);
+  const desktopTags = (() => {
+    if (!activeTag) return latestDesktopTags;
+
+    const isActiveInLatest = latestDesktopTags.some((tag) => tag.slug === activeTag.slug);
+    if (isActiveInLatest) return latestDesktopTags;
+
+    // Keep 4 visible desktop tags: inject selected one right after "All".
+    return [activeTag, ...latestDesktopTags.slice(0, 3)];
+  })();
 
   return (
     <>
@@ -61,7 +69,7 @@ export function TagFilterBar({ allCount, tags, anchorId = "podcast-list", allHre
               </button>
             </div>
 
-            {/* Desktop: show last 5 tags + filter button */}
+            {/* Desktop: show "All", up to 4 tags and filters button */}
             <div className="hidden w-full max-w-5xl items-center gap-1 rounded-full bg-zinc-100 p-1 text-zinc-500 dark:bg-zinc-900/70 dark:text-zinc-400 lg:inline-flex">
               <ArticleTagChip href={`${allHref}${hash}`} label={`Все (${allCount})`} active={!activeTag} layoutId="tag-chip-highlight" />
               {desktopTags.map((tag) => (

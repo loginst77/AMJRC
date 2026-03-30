@@ -6,7 +6,7 @@ export type MediaItem = {
   href?: string;
   author?: string;
   authorHref?: string;
-  date?: string | Date | null;
+  date?: number | string | Date | null;
   featured?: boolean;
   tags?: MediaTag[];
 };

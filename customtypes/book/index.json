@@ -50,9 +50,10 @@
         }
       },
       "date_of_release": {
-        "type": "Date",
+        "type": "Number",
         "config": {
-          "label": "Date of Release"
+          "label": "Year of Release",
+          "placeholder": "2026"
         }
       },
       "author": {

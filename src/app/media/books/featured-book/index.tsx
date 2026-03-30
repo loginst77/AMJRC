@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { type MediaItem, formatDate } from "@/lib/media-data";
+import { type MediaItem } from "@/lib/media-data";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 
@@ -66,9 +66,9 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
                         </div>
                       </div>
                     ) : null}
-                    {book.date ? (
+                    {typeof book.date === "number" ? (
                       <span className="rounded-full border border-zinc-200 bg-zinc-100 px-4 py-2 text-xs font-semibold text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900">
-                        {formatDate(book.date)}
+                        {book.date}
                       </span>
                     ) : null}
                   </div>

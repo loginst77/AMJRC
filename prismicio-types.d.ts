@@ -1529,6 +1529,21 @@ export type TagDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
 /**
+ * Item in *Video → Tags*
+ */
+export interface VideoDocumentDataTagsItem {
+  /**
+   * Tag field in *Video → Tags*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+}
+
+/**
  * Content for Video documents
  */
 interface VideoDocumentData {
@@ -1575,6 +1590,17 @@ interface VideoDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/date
    */
   date: prismic.DateField;
+
+  /**
+   * Tags field in *Video*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: video.tags[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  tags: prismic.GroupField<Simplify<VideoDocumentDataTagsItem>>;
 
   /**
    * Featured field in *Video*
@@ -2867,6 +2893,7 @@ declare module "@prismicio/client" {
       TagDocumentData,
       VideoDocument,
       VideoDocumentData,
+      VideoDocumentDataTagsItem,
       VideolandingpageDocument,
       VideolandingpageDocumentData,
       VideolandingpageDocumentDataSlicesSlice,
