@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { asDate, asText, type Content } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
-import { X } from "lucide-react";
 
-import { FeaturedEpisode } from "./featured-episode";
-import { TagFilterBar } from "@/components/tag-filter-bar";
-import { PodcastEpisodeList, type PodcastEpisode, type PodcastTag } from "@/components/podcast-episode-list";
+import { FeaturedEpisode } from "./components/featured-episode";
+import { TagFilterBar } from "@/components/tags/tag-filter-bar";
+import { PodcastEpisodeList, type PodcastEpisode, type PodcastTag } from "@/components/media-components/podcast-episode-list";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Подкасты",
@@ -102,7 +102,6 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
   const matchesTag = (episode: PodcastEpisode) => !activeTagKey || episode.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey);
   const rest = regularEpisodes.filter((episode) => matchesTag(episode));
   const totalVisible = rest.length;
-  const listHeading = activeTagLabel ? `Подкасты · ${activeTagLabel}` : "Все выпуски";
 
   const landingTitle =
     landing && (asText((landing.data as { title?: any }).title) || (landing.data as any).meta_title)
@@ -147,9 +146,9 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
 
       {fallbackFeatured.length ? <FeaturedEpisode episodes={fallbackFeatured} /> : null}
 
-      <section className="bg-zinc-50 dark:bg-black">
-        <Container className="space-y-5 py-10 sm:space-y-4 sm:py-20">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</h2>
+      <section className="bg-zinc-50 py-12 dark:bg-black">
+        <Container className="space-y-4">
+          <SectionHeader title="Все выпуски" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           <TagFilterBar
             allCount={regularEpisodes.length}

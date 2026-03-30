@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { SliceZone } from "@prismicio/react";
 import { asDate, asText, type Content } from "@prismicio/client";
-import { ArticleCard, type ArticleTag, type MediaItem } from "@/components/article-card";
-import { FeaturedArticle } from "@/components/featured-article";
-import { TagFilterBar } from "@/components/tag-filter-bar";
+import { ArticleCard, type ArticleTag, type MediaItem } from "@/components/media-components/article-card";
+import { FeaturedArticle } from "@/app/media/articles/components/featured-article";
+import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
+import { SectionHeader } from "@/components/SectionHeader";
 
 export const metadata: Metadata = {
   title: "Статьи",
@@ -95,9 +96,6 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   const rest = regularCards.filter((c) => matchesTag(c));
   const totalVisible = rest.length;
 
-  const activeTagLabel = matchedTag?.name;
-  const listHeading = activeTagLabel ? `Статьи · ${activeTagLabel}` : "Все статьи";
-
   return (
     <div className="bg-white dark:bg-zinc-950">
       {landing ? (
@@ -123,9 +121,8 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
       ) : null}
 
       <section className="py-12 bg-zinc-50 dark:bg-zinc-900/50">
-        <Container className="space-y-6 sm:space-y-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</p>
-
+        <Container className="space-y-4">
+          <SectionHeader title="Все статьи" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
           <TagFilterBar
             allCount={regularCards.length}
             anchorId="article-list"

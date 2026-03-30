@@ -78,7 +78,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold leading-snug text-zinc-900 group-hover:text-blue-600 transition-colors duration-200 mb-2">
+        <h3 className="text-xl font-bold leading-snug text-zinc-900 group-hover:text-blue-600 transition-colors duration-200 mb-2">
           {article.title}
         </h3>
 

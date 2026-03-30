@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mic, PinIcon, SquareArrowOutUpRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { formatDate } from "@/lib/media-data";
-import type { PodcastEpisode } from "@/components/podcast-episode-list";
+import type { PodcastEpisode } from "@/components/media-components/podcast-episode-list";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 
@@ -16,8 +16,8 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
   return (
     <section className="bg-white dark:bg-zinc-950">
       <Container className="py-14 sm:py-20">
-        <p className="mb-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-          <PinIcon className="h-3.5 w-3.5" /> Закрепленные выпуски
+        <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <PinIcon className="h-5 w-5" /> Закрепленные выпуски
         </p>
         <div className="flex flex-col gap-6">
           {episodes.map((episode) => (

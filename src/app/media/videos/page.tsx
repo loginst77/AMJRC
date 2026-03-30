@@ -4,9 +4,9 @@ import { asDate, asText, type Content, type RichTextField } from "@prismicio/cli
 
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/SectionHeader";
-import { FeaturedVideo } from "@/components/featured-video";
-import { TagFilterBar } from "@/components/tag-filter-bar";
-import { VideoCard, type VideoCardItem } from "@/components/video-card";
+import { FeaturedVideo } from "@/app/media/videos/components/featured-video";
+import { TagFilterBar } from "@/components/tags/tag-filter-bar";
+import { VideoCard, type VideoCardItem } from "@/components/media-components/video-card";
 import { type MediaTag } from "@/lib/media-data";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -164,8 +164,6 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
   const matchesTag = (item: VideoCardItem) => !activeTagKey || item.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey);
   const visibleVideos = activeTagKey ? regularVideos.filter((v) => matchesTag(v)) : regularVideos;
 
-  const listHeading = matchedTag?.name ? `Видео · ${matchedTag.name}` : "Все видео";
-
   return (
     <div className="bg-white dark:bg-zinc-950">
       {landing && (
@@ -177,15 +175,8 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       {featuredVideos.length ? <FeaturedVideo videos={featuredVideos} /> : null}
 
       <section className="bg-zinc-50 py-12 dark:bg-black">
-        <Container className="space-y-8">
-          <SectionHeader
-            title="Все видео"
-            description="Новые видео появляются здесь сразу после публикации в Prismic."
-            size="sm"
-            as="div"
-            className="text-center"
-            descriptionClassName="text-center"
-          />
+        <Container className="space-y-4">
+          <SectionHeader title="Все видео" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           {items.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
@@ -201,8 +192,6 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
 
           {regularVideos.length > 0 ? (
             <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</p>
-
               <TagFilterBar
                 allCount={regularVideos.length}
                 anchorId="video-list"

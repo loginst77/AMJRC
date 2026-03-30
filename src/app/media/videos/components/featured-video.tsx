@@ -11,7 +11,7 @@ import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/media-data";
 import { cardHoverCn } from "@/lib/variants";
-import type { VideoCardItem } from "./video-card";
+import type { VideoCardItem } from "../../../../components/media-components/video-card";
 
 type FeaturedVideoProps = {
   videos: VideoCardItem[];
@@ -61,8 +61,8 @@ export function FeaturedVideo({ videos }: FeaturedVideoProps) {
   return (
     <section className="bg-white">
       <Container className="pb-14 sm:py-16">
-        <p className="mb-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-          <PinIcon className="h-3.5 w-3.5" /> Закрепленные видео
+        <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <PinIcon className="h-5 w-5" /> Закрепленные видео
         </p>
         <div className="flex flex-col gap-12">
           {videos.map((video) => {

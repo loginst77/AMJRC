@@ -1,5 +1,5 @@
 import { Download, Newspaper } from "lucide-react";
-import { formatDate, type MediaItem } from "@/lib/media-data";
+import { type MediaItem } from "@/lib/media-data";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 
@@ -20,7 +20,7 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
           </div>
         )}
 
-        <span className="text-sm text-zinc-600">{formatDate(issue.date)}</span>
+        <span className="text-sm text-zinc-600">{typeof issue.date === "number" ? issue.date : ""}</span>
       </div>
       <div className="flex flex-col p-6">
         <div className="flex flex-col gap-2">

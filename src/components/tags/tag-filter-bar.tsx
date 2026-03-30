@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FilterIcon, X } from "lucide-react";
 
-import { ArticleTagChip, ArticleTagChipGroup } from "@/components/article-tag-chip";
+import { ArticleTagChip, ArticleTagChipGroup } from "@/components/tags/article-tag-chip";
 
 type TagOption = {
   slug: string;

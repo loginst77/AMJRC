@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock, PinIcon } from "lucide-react";
 
-import { authorColor, formatDate, readingTime, type MediaItem } from "@/components/article-card";
+import { authorColor, formatDate, readingTime, type MediaItem } from "@/components/media-components/article-card";
 import { cn } from "@/lib/cn";
 import { Badge } from "@/components/ui/badge";
 import { truncateWords } from "@/lib/text";
@@ -16,20 +16,16 @@ type FeaturedArticleProps = {
   featuredCount?: number;
 };
 
-function pinnedSectionLabel(featuredCount: number) {
-  return featuredCount === 1 ? "Закрепленная статья" : "Закрепленные статьи";
-}
-
-export function FeaturedArticle({ article, className, showPinnedLabel = true, featuredCount = 1 }: FeaturedArticleProps) {
+export function FeaturedArticle({ article, className, showPinnedLabel = true }: FeaturedArticleProps) {
   const color = authorColor(article.author);
 
   return (
     <section className={cn("bg-white dark:bg-zinc-950", className)}>
-      <div className={cn("mx-auto w-full max-w-6xl px-6", showPinnedLabel ? "pt-16 sm:pt-20" : "pt-0")}>
+      <div className={cn("mx-auto w-full max-w-6xl px-6", "pt-16 sm:pt-20")}>
         {showPinnedLabel ? (
-          <p className="mb-6 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
-            <PinIcon className="h-3.5 w-3.5" />
-            {pinnedSectionLabel(featuredCount)}
+          <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+            <PinIcon className="h-5 w-5" />
+            Закрепленные статьи
           </p>
         ) : null}
         <Link

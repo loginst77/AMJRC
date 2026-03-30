@@ -3,10 +3,10 @@ import { asText, isFilled, type Content, type RichTextField } from "@prismicio/c
 import { SliceZone } from "@prismicio/react";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/SectionHeader";
-import { TagFilterBar } from "@/components/tag-filter-bar";
+import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { type MediaItem, type MediaTag } from "@/lib/media-data";
-import { BookCard } from "../../../components/book-card";
-import { FeaturedBook } from "./featured-book";
+import { BookCard } from "../../../components/media-components/book-card";
+import { FeaturedBook } from "./components/featured-book";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
@@ -105,15 +105,8 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
       {featured ? <FeaturedBook book={featured} /> : null}
 
       <section className="bg-zinc-50 py-12 dark:bg-black">
-        <Container className="space-y-8">
-          <SectionHeader
-            title="Все книги"
-            description="Подборка литературы для духовного роста и глубокого изучения."
-            size="sm"
-            as="div"
-            className="text-center"
-            descriptionClassName="text-center"
-          />
+        <Container className="space-y-4">
+          <SectionHeader title="Все книги" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           {books.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
@@ -129,8 +122,6 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
 
           {regularBooks.length > 0 ? (
             <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">{listHeading}</p>
-
               <TagFilterBar
                 allCount={regularBooks.length}
                 anchorId="book-list"

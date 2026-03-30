@@ -3,10 +3,10 @@ import Link from "next/link";
 import { asDate, asText, type Content } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 
-import { FeaturedNewspaperCard } from "@/components/featured-newspaper-card";
-import { NewspaperCard } from "@/components/newspaper-card";
+import { FeaturedNewspaperCard } from "@/app/media/newspaper/components/featured-newspaper-card";
+import { NewspaperCard } from "@/components/media-components/newspaper-card";
 import { SectionHeader } from "@/components/SectionHeader";
-import { TagFilterBar } from "@/components/tag-filter-bar";
+import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -159,15 +159,8 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
       {featuredIssue ? <FeaturedNewspaperCard issue={featuredIssue} /> : null}
 
       <section className="bg-zinc-50 py-12 dark:bg-black">
-        <Container className="space-y-8">
-          <SectionHeader
-            title={activeTagLabel ? `Выпуски · ${activeTagLabel}` : "Все выпуски"}
-            description="Архив PDF выпусков газеты."
-            size="sm"
-            as="div"
-            className="text-center"
-            descriptionClassName="text-center"
-          />
+        <Container className="space-y-4">
+          <SectionHeader title="Все выпуски" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           <TagFilterBar
             allCount={regularCards.length}
@@ -187,7 +180,10 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся выпуски.</p>
             </div>
           ) : filteredCards.length === 0 ? (
-            <div id="newspaper-list" className="scroll-mt-24 rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
+            <div
+              id="newspaper-list"
+              className="scroll-mt-24 rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400"
+            >
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет выпусков для выбранного тега</p>
               <p className="text-sm text-zinc-500 dark:text-zinc-400">Попробуйте выбрать другой тег или показать все выпуски.</p>
             </div>

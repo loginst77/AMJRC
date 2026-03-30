@@ -1,6 +1,6 @@
-import { Download, FileDown, Newspaper } from "lucide-react";
+import { Download, FileDown, Newspaper, PinIcon } from "lucide-react";
 
-import { authorColor } from "@/components/article-card";
+import { authorColor } from "@/components/media-components/article-card";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/media-data";
@@ -24,7 +24,9 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
   return (
     <section className="bg-white dark:bg-zinc-950">
       <Container className="py-16 sm:py-20">
-        <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Последний выпуск</p>
+        <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <PinIcon className="h-5 w-5" /> Закрепленные выпуски
+        </p>
         <div
           className={cn(
             "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none dark:border-zinc-800 dark:from-blue-950/20 dark:via-zinc-950 dark:to-sky-950/10 !cursor-default",
@@ -72,7 +74,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                         {issue.author.charAt(0)}
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{issue.author}</p>
+                        <p className="text-sm font™-semibold text-zinc-800 dark:text-zinc-200">{issue.author}</p>
                         <p className="text-xs text-zinc-500">Автор</p>
                       </div>
                     </div>

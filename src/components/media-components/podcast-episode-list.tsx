@@ -44,7 +44,7 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
 
             <div className="min-w-0 flex-1 text-left">
               <div className="flex h-full flex-col items-start justify-center space-y-1 min-h-[80px]">
-                <h3 className="truncate text-lg font-semibold text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+                <h3 className="truncate text-xl font-semibold text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                   {episode.title}
                 </h3>
                 {episode.description ? <p className="line-clamp-2 text-base text-zinc-500 dark:text-zinc-400">{episode.description}</p> : null}

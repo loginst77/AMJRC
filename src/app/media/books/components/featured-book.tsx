@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, PinIcon } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { type MediaItem } from "@/lib/media-data";
 import { cn } from "@/lib/cn";
@@ -14,7 +14,9 @@ export function FeaturedBook({ book }: FeaturedBookProps) {
   return (
     <section className="bg-white dark:bg-zinc-950">
       <Container className="py-16 sm:py-20">
-        <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Выбор редакции</p>
+        <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <PinIcon className="h-5 w-5" /> Закрепленные книги
+        </p>
         <Link href={book.href || "#"} className={cn("group relative block", cardHoverCn)}>
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl transition-opacity group-hover:opacity-75 dark:bg-blue-800/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-blue-200/40 blur-3xl transition-opacity group-hover:opacity-75 dark:bg-blue-800/10" />
