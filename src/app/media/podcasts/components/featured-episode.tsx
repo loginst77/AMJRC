@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { formatDate } from "@/lib/media-data";
 import type { PodcastEpisode } from "@/components/media-components/podcast-episode-list";
 import { cn } from "@/lib/cn";
+import { authorColor } from "@/components/media-components/article-card";
 import { cardHoverCn } from "@/lib/variants";
 
 interface FeaturedEpisodeProps {
@@ -23,44 +24,62 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
           {episodes.map((episode) => (
             <div
               key={episode.id}
-              className={cn("overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-white", cardHoverCn)}
-            >
+              className={cn("overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-white", cardHoverCn)}>
               <div className="group flex h-full flex-col sm:flex-row sm:items-stretch">
                 {/* Content: artwork + info */}
-                <div className="flex flex-col flex-1 gap-6 p-6 sm:flex-row sm:items-center">
-                  {/* Podcast artwork */}
-                  <div className="flex h-34 w-34 shrink-0 items-center justify-center rounded-2xl bg-blue-100 dark:bg-blue-900/30">
-                    <Mic size={48} strokeWidth={1.2} />
-                  </div>
+                <div className="flex flex-col flex-1 gap-0 sm:flex-row sm:items-center">
                   {/* Info */}
-                  <div className="flex-1 space-y-3">
-                    <h3 className="text-3xl font-semibold text-zinc-950 group-hover:text-blue-600">{episode.title}</h3>
-                    <p className="text-zinc-600 text-lg">{episode.description}</p>
-                    <div className="flex items-center gap-4 text-base text-zinc-500">
-                      {episode.author && <span className="font-medium">{episode.author}</span>}
-                      <span>{formatDate(episode.date)}</span>
-                    </div>
-                    <div className="">
-                      {!!episode.tags?.length && (
-                        <div className="flex flex-wrap items-center gap-2">
-                          {episode.tags.map((tag) => (
-                            <span
-                              key={tag.id}
-                              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
-                            >
-                              {tag.name}
-                            </span>
-                          ))}
+                  <div className="flex flex-col w-full">
+                    <div className="flex-1 space-y-2 p-8">
+                      <div className="flex items-start gap-6">
+                        {/* Podcast artwork */}
+                        <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-sky-300 via-blue-400 to-blue-500">
+                          {/* Decorative rings */}
+                          <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20" />
+                          <span className="absolute h-16 w-16 rounded-full bg-white/10 shadow-inner shadow-white/20" />
+                          <Mic size={36} strokeWidth={1.4} className="relative z-10 text-white drop-shadow" />
                         </div>
-                      )}
+                        <div className="flex flex-col gap-1">
+                          <h3 className="text-2xl font-bold leading-snug tracking-tight text-zinc-900 group-hover:text-blue-600 sm:text-3xl">
+                            {episode.title}
+                          </h3>
+                          <p className="max-w-2xl text-lg leading-relaxed text-zinc-600">{episode.description}</p>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        {!!episode.tags?.length && (
+                          <div className="flex flex-wrap items-center gap-2">
+                            {episode.tags.map((tag) => (
+                              <span
+                                key={tag.id}
+                                className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                                {tag.name}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between px-8 py-6 gap-4 border-t border-zinc-200 dark:border-zinc-800">
+                      {episode.author ?
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                            {episode.author.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="text-base font-semibold text-zinc-800 dark:text-zinc-200">{episode.author}</p>
+                            <p className="text-sm text-zinc-500">Автор</p>
+                          </div>
+                        </div>
+                      : <span />}
+                      <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center border-l border-zinc-200 duration-200">
                   <Link
                     href={episode.href || "#"}
-                    className="flex h-full w-full shrink-0 items-center justify-center sm:px-10 md:px-14 py-4 text-gray-800 hover:bg-blue-100 group/link"
-                  >
+                    className="flex h-full w-full shrink-0 items-center justify-center sm:px-10 md:px-14 py-4 text-gray-800 hover:bg-blue-100 group/link">
                     <SquareArrowOutUpRight className="h-6 w-6 transition-transform group-hover/link:scale-110" strokeWidth={1.7} />
                   </Link>
                 </div>
