@@ -4,12 +4,14 @@ import { cn } from "@/lib/cn";
 
 type Align = "left" | "center";
 type Size = "lg" | "sm";
+type Tone = "light" | "dark";
 
 type SectionHeaderProps = {
   title: ReactNode;
   description?: ReactNode;
   align?: Align;
   size?: Size;
+  tone?: Tone;
   className?: string;
   as?: ElementType;
   titleClassName?: string;
@@ -21,14 +23,21 @@ export function SectionHeader({
   description,
   align = "left",
   size = "lg",
+  tone = "light",
   className,
   as: TitleTag = "h2",
   titleClassName,
   descriptionClassName,
 }: SectionHeaderProps) {
-  const titleClass = size === "sm" ? "text-2xl font-semibold text-zinc-950" : "text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl";
+  const titleColor = tone === "dark" ? "text-white" : "text-zinc-950";
+  const descriptionColor = tone === "dark" ? "text-zinc-300" : size === "sm" ? "text-zinc-600" : "text-zinc-700";
 
-  const descriptionClass = size === "sm" ? "text-base text-zinc-600" : "text-lg text-zinc-700";
+  const titleClass =
+    size === "sm"
+      ? `text-2xl font-semibold ${titleColor}`
+      : `text-4xl font-semibold tracking-tight ${titleColor} sm:text-5xl`;
+
+  const descriptionClass = size === "sm" ? `text-base ${descriptionColor}` : `text-lg ${descriptionColor}`;
 
   const alignClass = align === "center" ? "items-center text-center" : "items-start text-left";
 
@@ -39,3 +48,4 @@ export function SectionHeader({
     </div>
   );
 }
+

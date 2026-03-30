@@ -115,9 +115,8 @@ const BigEvent: FC<BigEventProps> = ({ slice }) => {
               title={title}
               description={summary}
               align="center"
+              tone="dark"
               className="w-full lg:max-w-2xl lg:items-start lg:text-left"
-              titleClassName="text-white"
-              descriptionClassName="text-zinc-300"
             />
           </div>
 
