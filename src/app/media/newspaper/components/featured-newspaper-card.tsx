@@ -31,8 +31,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
           className={cn(
             "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none dark:border-zinc-800 dark:from-blue-950/20 dark:via-zinc-950 dark:to-sky-950/10 !cursor-default",
             cardHoverCn,
-          )}
-        >
+          )}>
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-800/10" />
           <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-800/10" />
 
@@ -44,22 +43,19 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
 
               <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600">{issue.description}</p>
             </div>
-            {issue.tags?.length ? (
+            {issue.tags?.length ?
               <div className="mb-8 px-8 flex flex-wrap items-center gap-2">
                 {issue.tags.map((tag, index) => (
                   <div
                     key={`${tag.name}-${index}`}
-                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
-                  >
+                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
                     {tag.name}
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="mb-8" />
-            )}
-            <div className="flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800">
-              {issue.author ? (
+            : <div className="mb-8" />}
+            <div className="flex items-stretch justify-between border-t border-zinc-200 dark:border-zinc-800">
+              {issue.author ?
                 <div className="w-full px-8">
                   <div className="flex w-full items-center justify-between gap-4 py-6">
                     <div className="flex items-center gap-3">
@@ -68,8 +64,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                           "flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold",
                           authorColor(issue.author).bg,
                           authorColor(issue.author).text,
-                        )}
-                      >
+                        )}>
                         {issue.author.charAt(0)}
                       </div>
                       <div>
@@ -78,19 +73,16 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                       </div>
                     </div>
 
-                    <span className="text-sm text-zinc-600">{formatDate(issue.date)}</span>
+                    <span className="text-base text-zinc-400">{formatDate(issue.date)}</span>
                   </div>
                 </div>
-              ) : (
-                <div className="px-8 py-6 text-sm text-zinc-500">{formatDate(issue.date)}</div>
-              )}
+              : <div className="px-8 py-6 text-base text-zinc-400">{formatDate(issue.date)}</div>}
               <a
                 href={issue.pdfUrl || "#"}
                 download
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap border-l border-zinc-200 bg-white px-16 py-8 text-sm font-medium hover:bg-blue-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400"
-              >
-                Открыть PDF
-                <FileDown className="h-5 w-5" strokeWidth={1.5} />
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap border-l border-zinc-200 bg-white px-16 py-8 text-base font-medium hover:bg-blue-50 hover:text-blue-600">
+                Скачать PDF
+                <Download className="h-4.5 w-4.5" strokeWidth={1.6} />
               </a>
             </div>
           </div>
