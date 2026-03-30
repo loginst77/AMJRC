@@ -24,7 +24,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
   return (
     <section className="bg-white dark:bg-zinc-950">
       <Container className="py-16 sm:py-20">
-        <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+        <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
           <PinIcon className="h-5 w-5" /> Закрепленные выпуски
         </p>
         <div

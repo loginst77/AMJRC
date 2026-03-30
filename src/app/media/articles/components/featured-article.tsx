@@ -23,7 +23,7 @@ export function FeaturedArticle({ article, className, showPinnedLabel = true }: 
     <section className={cn("bg-white dark:bg-zinc-950", className)}>
       <div className={cn("mx-auto w-full max-w-6xl px-6", "pt-16 sm:pt-20")}>
         {showPinnedLabel ? (
-          <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+          <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
             <PinIcon className="h-5 w-5" />
             Закрепленные статьи
           </p>

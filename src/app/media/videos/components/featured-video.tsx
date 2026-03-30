@@ -61,7 +61,7 @@ export function FeaturedVideo({ videos }: FeaturedVideoProps) {
   return (
     <section className="bg-white">
       <Container className="pb-14 sm:py-16">
-        <p className="mb-6 flex items-center gap-2 text-base font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+        <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
           <PinIcon className="h-5 w-5" /> Закрепленные видео
         </p>
         <div className="flex flex-col gap-12">
