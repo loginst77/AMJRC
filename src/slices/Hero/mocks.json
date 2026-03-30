@@ -9,25 +9,16 @@
 					{
 						"type": "heading1",
 						"content": {
-							"text": "Forgot"
-						}
-					}
-				]
-			},
-			"text": {
-				"__TYPE__": "StructuredTextContent",
-				"value": [
-					{
-						"type": "paragraph",
-						"content": {
-							"text": "Sunt duis ex sunt sint elit do ut sit est velit aute irure. Quis consequat consequat occaecat officia ea."
-						}
+							"text": "Ассоциация Мессианских Еврейских Русскоязычных Общин",
+							"spans": []
+						},
+						"direction": "ltr"
 					}
 				]
 			},
 			"buttonLink": {
-				"__TYPE__": "LinkContent",
 				"key": "298bf044-b4a4-4fef-94f6-dfdb4ecec951",
+				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",
 					"url": "https://prismic.io"
@@ -35,12 +26,12 @@
 			},
 			"buttonText": {
 				"__TYPE__": "FieldContent",
-				"value": "wherever",
-				"type": "Text"
+				"type": "Text",
+				"value": "Присоединиться"
 			},
 			"secondaryButtonLink": {
-				"__TYPE__": "LinkContent",
 				"key": "a2da538f-24e2-4b3a-a2fe-f4ae4a5a83f9",
+				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",
 					"url": "http://google.com"
@@ -48,57 +39,81 @@
 			},
 			"secondaryButtonText": {
 				"__TYPE__": "FieldContent",
-				"value": "sick",
-				"type": "Text"
-			},
-			"videoEmbed": {
-				"embed_url": "https://twitter.com/timbenniks/status/1304146886832594944",
-				"author_name": "Tim Benniks",
-				"author_url": "https://twitter.com/timbenniks",
-				"html": "<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\">I’ve been diving deep on <a href=\"https://twitter.com/prismicio?ref_src=twsrc%5Etfw\">@prismicio</a> <a href=\"https://twitter.com/hashtag/slicemachine?src=hash&amp;ref_src=twsrc%5Etfw\">#slicemachine</a> today. I made all my own components and I used custom slices. It works like a charm with <a href=\"https://twitter.com/nuxt_js?ref_src=twsrc%5Etfw\">@nuxt_js</a>. Also\": I’m coding with this view. <a href=\"https://t.co/F0I8X9gz39\">pic.twitter.com/F0I8X9gz39</a></p>&mdash; Tim Benniks (@timbenniks) <a href=\"https://twitter.com/timbenniks/status/1304146886832594944?ref_src=twsrc%5Etfw\">September 10, 2020</a></blockquote>\n<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>\n",
-				"width": 550,
-				"height": null,
-				"type": "rich",
-				"cache_age": "3153600000",
-				"provider_name": "Twitter",
-				"provider_url": "http://www.twitter.com/",
-				"version": "1.0",
-				"all": {
-					"embed_url": "https://twitter.com/timbenniks/status/1304146886832594944",
-					"author_name": "Tim Benniks",
-					"author_url": "https://twitter.com/timbenniks",
-					"html": "<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\">I’ve been diving deep on <a href=\"https://twitter.com/prismicio?ref_src=twsrc%5Etfw\">@prismicio</a> <a href=\"https://twitter.com/hashtag/slicemachine?src=hash&amp;ref_src=twsrc%5Etfw\">#slicemachine</a> today. I made all my own components and I used custom slices. It works like a charm with <a href=\"https://twitter.com/nuxt_js?ref_src=twsrc%5Etfw\">@nuxt_js</a>. Also\": I’m coding with this view. <a href=\"https://t.co/F0I8X9gz39\">pic.twitter.com/F0I8X9gz39</a></p>&mdash; Tim Benniks (@timbenniks) <a href=\"https://twitter.com/timbenniks/status/1304146886832594944?ref_src=twsrc%5Etfw\">September 10, 2020</a></blockquote>\n<script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>\n",
-					"width": 550,
-					"height": null,
-					"type": "rich",
-					"cache_age": "3153600000",
-					"provider_name": "Twitter",
-					"provider_url": "http://www.twitter.com/",
-					"version": "1.0"
-				},
-				"__TYPE__": "EmbedContent"
+				"type": "Text",
+				"value": "Узнать больше"
 			},
 			"backgroundImage": {
 				"__TYPE__": "ImageContent",
+				"provider": "imgix",
+				"url": "https://images.unsplash.com/photo-1612388839403-4d732790455b?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHwxN3x8amV3aXNoJTIwY2h1cmNofGVufDB8fHx8MTc3NDgzODUwOHww&ixlib=rb-4.1.0&q=85",
+				"alt": "brown wooden chairs inside church",
 				"origin": {
-					"id": "main",
-					"url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-					"width": 3882,
-					"height": 2584
+					"id": "Ad2cmI2dEIs",
+					"url": "https://images.unsplash.com/photo-1612388839403-4d732790455b?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHwxN3x8amV3aXNoJTIwY2h1cmNofGVufDB8fHx8MTc3NDgzODUwOHww&ixlib=rb-4.1.0&q=85",
+					"width": 5568,
+					"height": 3712
 				},
-				"url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-				"width": 3882,
-				"height": 2584,
+				"width": 5568,
+				"height": 3712,
 				"edit": {
+					"background": "transparent",
 					"zoom": 1,
 					"crop": {
 						"x": 0,
 						"y": 0
-					},
-					"background": "transparent"
+					}
 				},
-				"alt": "jump",
 				"thumbnails": {}
+			},
+			"videoEmbed": {
+				"embed_url": "https://www.youtube.com/watch?v=hpQrrfjnB-w",
+				"__TYPE__": "EmbedContent",
+				"type": "video",
+				"version": "1.0",
+				"title": "CROSS TO COMMISSION | Unlikely Witnesses | Matthew 28:11-15 | Philip Anthony Mitchell | FG",
+				"author_name": "2819 Church",
+				"author_url": "https://www.youtube.com/@2819Church",
+				"provider_name": "YouTube",
+				"provider_url": "https://www.youtube.com/",
+				"thumbnail_url": "https://i.ytimg.com/vi/hpQrrfjnB-w/hqdefault.jpg",
+				"thumbnail_width": 480,
+				"thumbnail_height": 360,
+				"html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hpQrrfjnB-w?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"CROSS TO COMMISSION | Unlikely Witnesses | Matthew 28:11-15 | Philip Anthony Mitchell | FG\"></iframe>",
+				"all": {
+					"embed_url": "https://www.youtube.com/watch?v=hpQrrfjnB-w",
+					"type": "video",
+					"version": "1.0",
+					"title": "CROSS TO COMMISSION | Unlikely Witnesses | Matthew 28:11-15 | Philip Anthony Mitchell | FG",
+					"author_name": "2819 Church",
+					"author_url": "https://www.youtube.com/@2819Church",
+					"provider_name": "YouTube",
+					"provider_url": "https://www.youtube.com/",
+					"thumbnail_url": "https://i.ytimg.com/vi/hpQrrfjnB-w/hqdefault.jpg",
+					"thumbnail_width": 480,
+					"thumbnail_height": 360,
+					"html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/hpQrrfjnB-w?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"CROSS TO COMMISSION | Unlikely Witnesses | Matthew 28:11-15 | Philip Anthony Mitchell | FG\"></iframe>",
+					"height": 113,
+					"width": 200
+				}
+			},
+			"text": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "123 Church St, Springfield, ST 12345",
+							"spans": [
+								{
+									"type": "strong",
+									"start": 0,
+									"end": 36
+								}
+							]
+						},
+						"direction": "ltr"
+					}
+				]
 			}
 		},
 		"items": [

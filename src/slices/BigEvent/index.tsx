@@ -1,15 +1,7 @@
 "use client";
 
 import { FC, useEffect, useMemo, useState } from "react";
-import {
-  asLink,
-  type Content,
-  type ImageField,
-  type KeyTextField,
-  type LinkField,
-  type TimestampField,
-  isFilled,
-} from "@prismicio/client";
+import { asLink, type Content, type ImageField, type KeyTextField, type LinkField, type TimestampField, isFilled } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 import { ArrowRight, Calendar, Clock, MapPin, type LucideIcon } from "lucide-react";
@@ -87,9 +79,7 @@ const BigEvent: FC<BigEventProps> = ({ slice }) => {
 
   const label = primary.label || "Следующее событие";
   const title = primary.title || "Мы готовим новое событие";
-  const summary =
-    primary.summary ||
-    "Скоро поделимся подробностями о месте, времени и формате встречи.";
+  const summary = primary.summary || "Скоро поделимся подробностями о месте, времени и формате встречи.";
   const eventDate = primary.date || "Дата уточняется";
   const eventTime = primary.time || "Время уточняется";
   const eventLocation = primary.location || "Место будет объявлено";
@@ -98,28 +88,17 @@ const BigEvent: FC<BigEventProps> = ({ slice }) => {
   const primaryButtonHref = primary.primaryButtonLink ? asLink(primary.primaryButtonLink) : null;
   const secondaryButtonHref = primary.secondaryButtonLink ? asLink(primary.secondaryButtonLink) : null;
 
-  const hasPrimaryCta =
-    isFilled.keyText(primary.primaryButtonText) &&
-    isFilled.link(primary.primaryButtonLink) &&
-    !!primaryButtonHref;
+  const hasPrimaryCta = isFilled.keyText(primary.primaryButtonText) && isFilled.link(primary.primaryButtonLink) && !!primaryButtonHref;
   const hasSecondaryCta =
-    isFilled.keyText(primary.secondaryButtonText) &&
-    isFilled.link(primary.secondaryButtonLink) &&
-    !!secondaryButtonHref;
+    isFilled.keyText(primary.secondaryButtonText) && isFilled.link(primary.secondaryButtonLink) && !!secondaryButtonHref;
 
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-950 text-white dark:border-zinc-800"
-    >
+      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-950 text-white dark:border-zinc-800">
       {isFilled.image(primary.backgroundImage) && (
-        <PrismicNextImage
-          field={primary.backgroundImage}
-          fill
-          priority
-          className="z-0 object-cover"
-        />
+        <PrismicNextImage field={primary.backgroundImage} fill priority className="z-0 object-cover" />
       )}
 
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.08),_transparent_55%)]" />
@@ -129,15 +108,16 @@ const BigEvent: FC<BigEventProps> = ({ slice }) => {
       <Bounded as="section" yPadding="base" className="relative z-10">
         <div className="flex flex-col gap-12 lg:gap-16">
           <div className="flex flex-col items-center space-y-6 text-center lg:items-start lg:text-left">
-            <Badge variant="filled" size="sm" className="!bg-white !text-zinc-900">
+            <Badge variant="filled" className="!bg-white !text-zinc-900">
               {label}
             </Badge>
             <SectionHeader
               title={title}
               description={summary}
-              tone="dark"
               align="center"
               className="w-full lg:max-w-2xl lg:items-start lg:text-left"
+              titleClassName="text-white"
+              descriptionClassName="text-zinc-300"
             />
           </div>
 

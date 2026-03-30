@@ -26,16 +26,21 @@ const Hero: FC<HeroProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative h-[75vh] min-h-[500px] overflow-hidden bg-slate-950 text-white"
-    >
+      className="relative h-[75vh] min-h-[500px] overflow-hidden bg-slate-950 text-white">
       {isFilled.image(backgroundImage) && (
-        <PrismicNextImage field={backgroundImage} alt="" fill={true} priority={true} className="pointer-events-none select-none object-cover" />
+        <PrismicNextImage
+          field={backgroundImage}
+          alt=""
+          fill={true}
+          priority={true}
+          className="pointer-events-none select-none object-cover"
+        />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/70 to-transparent" />
 
       <Container className="relative flex h-full flex-col justify-between pb-12 pt-32 sm:pb-16">
         <div />
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_1fr]">
           <div className="space-y-4">
             <PrismicRichText
               field={primary.title}
@@ -49,10 +54,10 @@ const Hero: FC<HeroProps> = ({ slice }) => {
             />
           </div>
 
-          <div className="relative mx-auto w-56 sm:w-64">
+          <div className="relative w-full">
             <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
-            <div className="relative aspect-[9/16] w-full overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15">
-              {isFilled.embed(primary.videoEmbed) ? (
+            <div className="relative aspect-[9/12] w-full overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15">
+              {isFilled.embed(primary.videoEmbed) ?
                 <iframe
                   src={`${primary.videoEmbed.embed_url?.replace("watch?v=", "embed/") ?? primary.videoEmbed.embed_url}?autoplay=1&mute=1&rel=0`}
                   title={primary.videoEmbed.title ?? "Embedded video"}
@@ -62,9 +67,7 @@ const Hero: FC<HeroProps> = ({ slice }) => {
                   className="h-full w-full"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
-              ) : (
-                <div className="flex h-full items-center justify-center text-sm text-white/40">Video goes here</div>
-              )}
+              : <div className="flex h-full items-center justify-center text-sm text-white/40">Video goes here</div>}
             </div>
           </div>
         </div>

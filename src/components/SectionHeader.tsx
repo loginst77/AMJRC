@@ -12,6 +12,7 @@ type SectionHeaderProps = {
   size?: Size;
   className?: string;
   as?: ElementType;
+  titleClassName?: string;
   descriptionClassName?: string;
 };
 
@@ -22,6 +23,7 @@ export function SectionHeader({
   size = "lg",
   className,
   as: TitleTag = "h2",
+  titleClassName,
   descriptionClassName,
 }: SectionHeaderProps) {
   const titleClass = size === "sm" ? "text-2xl font-semibold text-zinc-950" : "text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl";
@@ -32,7 +34,7 @@ export function SectionHeader({
 
   return (
     <div className={cn("flex flex-col gap-2", alignClass, className)}>
-      <TitleTag className={titleClass}>{title}</TitleTag>
+      <TitleTag className={cn(titleClass, titleClassName)}>{title}</TitleTag>
       {description ? <div className={cn(descriptionClass, descriptionClassName)}>{description}</div> : null}
     </div>
   );
