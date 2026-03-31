@@ -4,8 +4,7 @@ import type { ComponentProps } from "react";
 import Link from "next/link";
 import { Inter, Figtree } from "next/font/google";
 import Image from "next/image";
-import { asLink, asText } from "@prismicio/client";
-import { PrismicText } from "@prismicio/react";
+import { asLink, asText, isFilled } from "@prismicio/client";
 import { PrismicNextImage, PrismicPreview } from "@prismicio/next";
 
 import { ButtonLink } from "@/components/ui/button";
@@ -14,7 +13,7 @@ import { MobileNav } from "@/components/mobile-nav";
 import { NavDropdown, type NavDropdownItem } from "@/components/nav-dropdown";
 import { NavLink } from "@/components/nav-link";
 import { createClient, linkResolver, repositoryName } from "@/prismicio";
-import type { NavigationDocumentDataLinksItem } from "../../prismicio-types";
+import type { HeaderNavLinkItem } from "@/components/mobile-nav";
 import { cn } from "@/lib/utils";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
@@ -41,7 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
   const navigationData = (navigation?.data ?? {}) as any;
   const footerData = (footer?.data ?? {}) as any;
-  const navigationLinks = navigationData.links ?? [];
+  const navigationLinks = buildHeaderNavLinks(navigationData.nav);
   const { dropdownItems, dropdownLabel, dropdownHref } = buildMediaDropdown(navigationData);
   const { primaryAction, secondaryAction } = buildActionButtons(navigationData);
   const logo = navigationData.logo;
@@ -69,7 +68,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 }
 
 type SiteHeaderProps = {
-  navigationLinks: NavigationDocumentDataLinksItem[];
+  navigationLinks: HeaderNavLinkItem[];
   dropdownItems: NavDropdownItem[];
   dropdownLabel: string;
   dropdownHref: string;
@@ -122,11 +121,9 @@ function SiteHeader({ navigationLinks, dropdownItems, dropdownLabel, dropdownHre
           </Link>
 
           <nav className="ml-10 hidden items-center gap-1 md:flex">
-            {navigationLinks.map((item, index) => (
-              // Resolve Prismic link to a URL; default to "/" if empty
-              // eslint-disable-next-line react/no-array-index-key
-              <NavLink key={`${asText(item.label)}-${index}`} href={asLink(item.link, linkResolver) ?? "/"}>
-                <PrismicText field={item.label} />
+            {navigationLinks.map((item) => (
+              <NavLink key={`${item.href}-${item.label}`} href={item.href}>
+                {item.label}
               </NavLink>
             ))}
             <NavDropdown label={dropdownLabel} href={dropdownHref} items={dropdownItems} />
@@ -265,6 +262,32 @@ function SiteFooter({
   );
 }
 
+function buildHeaderNavLinks(nav: unknown): HeaderNavLinkItem[] {
+  if (!Array.isArray(nav)) return [];
+
+  const out: HeaderNavLinkItem[] = [];
+  for (const item of nav) {
+    if (!isFilled.link(item)) continue;
+    const href = ensureAbsoluteHref(asLink(item, linkResolver) as string | null);
+    if (!href) continue;
+    const label = item.text?.trim() || deriveNavLabelFromHref(href);
+    out.push({ href, label });
+  }
+  return out;
+}
+
+function deriveNavLabelFromHref(href: string): string {
+  try {
+    const path = href.replace(/^https?:\/\/[^/]+/i, "");
+    const segments = path.split("/").filter(Boolean);
+    const last = segments[segments.length - 1];
+    if (last) return decodeURIComponent(last.replace(/-/g, " "));
+  } catch {
+    /* ignore */
+  }
+  return href || "Link";
+}
+
 function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownItem[]; dropdownLabel: string; dropdownHref: string } {
   const fallback = {
     dropdownItems: fallbackMediaDropdownItems,
@@ -278,9 +301,11 @@ function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownIt
   const dropdownItems = Array.isArray(dropdownItemsRaw)
     ? dropdownItemsRaw
         .map((item: any) => {
-          const href = asLink(item?.link, linkResolver) as string | null;
+          const linkField = item?.link;
+          if (!isFilled.link(linkField)) return null;
+          const href = asLink(linkField, linkResolver) as string | null;
           if (!href) return null;
-          const label = asText(item.label) || "Без названия";
+          const label = linkField.text?.trim() || "Без названия";
           const icon = normalizeDropdownIcon(item.icon);
           return { label, href, icon };
         })
@@ -297,7 +322,7 @@ function buildMediaDropdown(navigationData: any): { dropdownItems: NavDropdownIt
   };
 }
 
-function ensureAbsoluteHref(href: string | undefined): string {
+function ensureAbsoluteHref(href: string | null | undefined): string {
   if (!href) return "/";
   if (href.startsWith("http://") || href.startsWith("https://") || href.startsWith("/")) return href;
   return `/${href}`;
@@ -346,13 +371,26 @@ function buildActionButtons(navigationData: any): {
 
   if (!navigationData) return fallback;
 
-  const primaryLabel = asText(navigationData.action_button_primary_label);
-  const primaryHref = ensureAbsoluteHref((asLink(navigationData.action_button_primary_link, linkResolver) as string | null) ?? undefined);
-  const primaryVariant = normalizeButtonVariant(navigationData.action_button_primary_variant, fallback.primaryAction.variant);
+  const primaryLink = navigationData.action_button_primary_link;
+  const secondaryLink = navigationData.action_button_secondary_link;
 
-  const secondaryLabel = asText(navigationData.action_button_secondary_label);
-  const secondaryHref = ensureAbsoluteHref((asLink(navigationData.action_button_secondary_link, linkResolver) as string | null) ?? undefined);
-  const secondaryVariant = normalizeButtonVariant(navigationData.action_button_secondary_variant, fallback.secondaryAction.variant);
+  const primaryHref = isFilled.link(primaryLink)
+    ? ensureAbsoluteHref(asLink(primaryLink, linkResolver) as string | null)
+    : "";
+  const primaryLabel =
+    isFilled.link(primaryLink) && primaryHref ? primaryLink.text?.trim() || deriveNavLabelFromHref(primaryHref) : "";
+  const primaryVariant = isFilled.link(primaryLink)
+    ? normalizeButtonVariant(primaryLink.variant, fallback.primaryAction.variant)
+    : fallback.primaryAction.variant;
+
+  const secondaryHref = isFilled.link(secondaryLink)
+    ? ensureAbsoluteHref(asLink(secondaryLink, linkResolver) as string | null)
+    : "";
+  const secondaryLabel =
+    isFilled.link(secondaryLink) && secondaryHref ? secondaryLink.text?.trim() || deriveNavLabelFromHref(secondaryHref) : "";
+  const secondaryVariant = isFilled.link(secondaryLink)
+    ? normalizeButtonVariant(secondaryLink.variant, fallback.secondaryAction.variant)
+    : fallback.secondaryAction.variant;
 
   return {
     primaryAction: primaryLabel && primaryHref ? { label: primaryLabel, href: primaryHref, variant: primaryVariant } : fallback.primaryAction,

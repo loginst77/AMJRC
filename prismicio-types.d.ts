@@ -301,6 +301,60 @@ export type ArticlelandingpageDocument<Lang extends string = string> =
   >;
 
 /**
+ * Content for Author documents
+ */
+interface AuthorDocumentData {
+  /**
+   * Name field in *Author*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Display name
+   * - **API ID Path**: author.name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Profile page (optional) field in *Author*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://...
+   * - **API ID Path**: author.page
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  page: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Author document from Prismic
+ *
+ * - **API ID**: `author`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type AuthorDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
+
+/**
+ * Item in *Book → Tags (optional)*
+ */
+export interface BookDocumentDataTagsItem {
+  /**
+   * Tag field in *Book → Tags (optional)*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: book.tags[].tag
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  tag: prismic.ContentRelationshipField<"tag">;
+}
+
+/**
  * Content for Book documents
  */
 interface BookDocumentData {
@@ -338,26 +392,26 @@ interface BookDocumentData {
   description: prismic.KeyTextField;
 
   /**
-   * Tag (optional) field in *Book*
+   * Tags (optional) field in *Book*
    *
-   * - **Field Type**: Content Relationship
+   * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: book.tag
+   * - **API ID Path**: book.tags[]
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  tag: prismic.ContentRelationshipField<"tag">;
+  tags: prismic.GroupField<Simplify<BookDocumentDataTagsItem>>;
 
   /**
-   * Date of Release field in *Book*
+   * Year of Release field in *Book*
    *
-   * - **Field Type**: Date
-   * - **Placeholder**: *None*
+   * - **Field Type**: Number
+   * - **Placeholder**: 2026
    * - **API ID Path**: book.date_of_release
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/date
+   * - **Documentation**: https://prismic.io/docs/fields/number
    */
-  date_of_release: prismic.DateField;
+  date_of_release: prismic.NumberField;
 
   /**
    * Author field in *Book*
@@ -369,6 +423,35 @@ interface BookDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   author: prismic.KeyTextField;
+
+  /**
+   * Buy Link field in *Book*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://...
+   * - **API ID Path**: book.buy_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buy_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Featured field in *Book*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: book.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
 }
 
 /**
@@ -454,6 +537,322 @@ export type BooklandingpageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<
     Simplify<BooklandingpageDocumentData>,
     "booklandingpage",
+    Lang
+  >;
+
+type CommunityDocumentDataSlicesSlice =
+  | BigEventSlice
+  | FormSlice
+  | CardSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | QaSlice
+  | InfoCardSlice
+  | NoteBannerSlice;
+
+/**
+ * Content for Community documents
+ */
+interface CommunityDocumentData {
+  /**
+   * Image field in *Community*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: community.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *Community*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Название общины
+   * - **API ID Path**: community.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: community.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Address field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Адрес
+   * - **API ID Path**: community.address
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  address: prismic.KeyTextField;
+
+  /**
+   * Leader field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Лидер
+   * - **API ID Path**: community.location
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  location: prismic.KeyTextField;
+
+  /**
+   * Service Time field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Служение
+   * - **API ID Path**: community.service_time
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  service_time: prismic.KeyTextField;
+
+  /**
+   * Button 1 Link field in *Community*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the first optional button
+   * - **API ID Path**: community.button_1_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Button 2 Link field in *Community*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the second optional button
+   * - **API ID Path**: community.button_2_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Slice Zone field in *Community*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: community.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<CommunityDocumentDataSlicesSlice>; /**
+   * Meta Title field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: community.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *Community*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: community.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *Community*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: community.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * Community document from Prismic
+ *
+ * - **API ID**: `community`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CommunityDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CommunityDocumentData>,
+    "community",
+    Lang
+  >;
+
+type CommunitylandingpageDocumentDataSlicesSlice =
+  | BigEventSlice
+  | FormSlice
+  | CardSlice
+  | LandingPageHeroSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | QaSlice
+  | InfoCardSlice
+  | NoteBannerSlice;
+
+/**
+ * Content for CommunityLandingPage documents
+ */
+interface CommunitylandingpageDocumentData {
+  /**
+   * Image field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: communitylandingpage.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Название общины
+   * - **API ID Path**: communitylandingpage.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: communitylandingpage.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Button 1 Link field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the first optional button
+   * - **API ID Path**: communitylandingpage.button_1_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Button 2 Link field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the second optional button
+   * - **API ID Path**: communitylandingpage.button_2_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Slice Zone field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: communitylandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<CommunitylandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: communitylandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: communitylandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *CommunityLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: communitylandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * CommunityLandingPage document from Prismic
+ *
+ * - **API ID**: `communitylandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CommunitylandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CommunitylandingpageDocumentData>,
+    "communitylandingpage",
     Lang
   >;
 
@@ -872,44 +1271,9 @@ export type LandingpageDocument<Lang extends string = string> =
   >;
 
 /**
- * Item in *Header → Links*
- */
-export interface NavigationDocumentDataLinksItem {
-  /**
-   * Label field in *Header → Links*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Optional - Label for the link
-   * - **API ID Path**: navigation.links[].label
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  label: prismic.RichTextField;
-
-  /**
-   * Link field in *Header → Links*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: Link for navigation item
-   * - **API ID Path**: navigation.links[].link
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-}
-
-/**
  * Item in *Header → Dropdown items*
  */
 export interface NavigationDocumentDataDropdownItemsItem {
-  /**
-   * Label field in *Header → Dropdown items*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Label for dropdown item
-   * - **API ID Path**: navigation.dropdown_items[].label
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  label: prismic.RichTextField;
-
   /**
    * Link field in *Header → Dropdown items*
    *
@@ -949,17 +1313,6 @@ interface NavigationDocumentData {
   logo: prismic.ImageField<never>;
 
   /**
-   * Links field in *Header*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: navigation.links[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-   */
-  links: prismic.GroupField<Simplify<NavigationDocumentDataLinksItem>>;
-
-  /**
    * Dropdown label field in *Header*
    *
    * - **Field Type**: Rich Text
@@ -969,6 +1322,19 @@ interface NavigationDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   dropdown_label: prismic.RichTextField;
+
+  /**
+   * Nav field in *Header*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: nav
+   * - **API ID Path**: navigation.nav
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  nav: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >;
 
   /**
    * Dropdown link field in *Header*
@@ -1001,17 +1367,6 @@ interface NavigationDocumentData {
   >;
 
   /**
-   * Primary button label field in *Header*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Label for primary action
-   * - **API ID Path**: navigation.action_button_primary_label
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  action_button_primary_label: prismic.RichTextField;
-
-  /**
    * Primary button link field in *Header*
    *
    * - **Field Type**: Link
@@ -1025,32 +1380,8 @@ interface NavigationDocumentData {
     string,
     unknown,
     prismic.FieldState,
-    never
+    "Primary" | "Secondary"
   >;
-
-  /**
-   * Primary button variant field in *Header*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: Choose a button style
-   * - **API ID Path**: navigation.action_button_primary_variant
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  action_button_primary_variant: prismic.SelectField<
-    "primary" | "secondary" | "ghost" | "outline" | "filled"
-  >;
-
-  /**
-   * Secondary button label field in *Header*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Label for secondary action
-   * - **API ID Path**: navigation.action_button_secondary_label
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  action_button_secondary_label: prismic.RichTextField;
 
   /**
    * Secondary button link field in *Header*
@@ -1066,20 +1397,7 @@ interface NavigationDocumentData {
     string,
     unknown,
     prismic.FieldState,
-    never
-  >;
-
-  /**
-   * Secondary button variant field in *Header*
-   *
-   * - **Field Type**: Select
-   * - **Placeholder**: Choose a button style
-   * - **API ID Path**: navigation.action_button_secondary_variant
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/select
-   */
-  action_button_secondary_variant: prismic.SelectField<
-    "primary" | "secondary" | "ghost" | "outline" | "filled"
+    "Primary" | "Secondary"
   >;
 }
 
@@ -1529,50 +1847,11 @@ export type TagDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
 /**
- * Content for Author documents
- */
-interface AuthorDocumentData {
-  /**
-   * Name field in *Author*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Display name
-   * - **API ID Path**: author.name
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  name: prismic.KeyTextField;
-
-  /**
-   * Profile page (optional) field in *Author*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: https://...
-   * - **API ID Path**: author.page
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  page: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-}
-
-/**
- * Author document from Prismic
- *
- * - **API ID**: `author`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type AuthorDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
-
-/**
- * Item in *Video → Tags*
+ * Item in *Video → Tags (optional)*
  */
 export interface VideoDocumentDataTagsItem {
   /**
-   * Tag field in *Video → Tags*
+   * Tag field in *Video → Tags (optional)*
    *
    * - **Field Type**: Content Relationship
    * - **Placeholder**: *None*
@@ -1633,16 +1912,16 @@ interface VideoDocumentData {
   /**
    * Author (optional) field in *Video*
    *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
+   * - **Field Type**: Text
+   * - **Placeholder**: Name
    * - **API ID Path**: video.author
    * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  author: prismic.ContentRelationshipField<"author">;
+  author: prismic.KeyTextField;
 
   /**
-   * Tags field in *Video*
+   * Tags (optional) field in *Video*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
@@ -1755,6 +2034,8 @@ export type AllDocumentTypes =
   | AuthorDocument
   | BookDocument
   | BooklandingpageDocument
+  | CommunityDocument
+  | CommunitylandingpageDocument
   | FooterDocument
   | HomeDocument
   | LandingpageDocument
@@ -2907,11 +3188,20 @@ declare module "@prismicio/client" {
       ArticlelandingpageDocument,
       ArticlelandingpageDocumentData,
       ArticlelandingpageDocumentDataSlicesSlice,
+      AuthorDocument,
+      AuthorDocumentData,
       BookDocument,
       BookDocumentData,
+      BookDocumentDataTagsItem,
       BooklandingpageDocument,
       BooklandingpageDocumentData,
       BooklandingpageDocumentDataSlicesSlice,
+      CommunityDocument,
+      CommunityDocumentData,
+      CommunityDocumentDataSlicesSlice,
+      CommunitylandingpageDocument,
+      CommunitylandingpageDocumentData,
+      CommunitylandingpageDocumentDataSlicesSlice,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataNavigationLinksItem,
@@ -2926,7 +3216,6 @@ declare module "@prismicio/client" {
       LandingpageDocumentDataSlicesSlice,
       NavigationDocument,
       NavigationDocumentData,
-      NavigationDocumentDataLinksItem,
       NavigationDocumentDataDropdownItemsItem,
       NewspaperDocument,
       NewspaperDocumentData,

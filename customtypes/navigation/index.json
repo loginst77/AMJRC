@@ -14,31 +14,6 @@
           "thumbnails": []
         }
       },
-      "links": {
-        "type": "Group",
-        "config": {
-          "label": "Links",
-          "fields": {
-            "label": {
-              "type": "StructuredText",
-              "config": {
-                "label": "Label",
-                "placeholder": "Optional - Label for the link",
-                "allowTargetBlank": false,
-                "single": "heading3"
-              }
-            },
-            "link": {
-              "type": "Link",
-              "config": {
-                "label": "Link",
-                "placeholder": "Link for navigation item",
-                "select": null
-              }
-            }
-          }
-        }
-      },
       "dropdown_label": {
         "type": "StructuredText",
         "config": {
@@ -48,12 +23,24 @@
           "single": "heading3"
         }
       },
+      "nav": {
+        "type": "Link",
+        "config": {
+          "label": "Nav",
+          "placeholder": "nav",
+          "select": null,
+          "allowTargetBlank": true,
+          "allowText": true,
+          "repeat": true
+        }
+      },
       "dropdown_link": {
         "type": "Link",
         "config": {
           "label": "Dropdown link",
           "placeholder": "Link for the dropdown",
-          "select": null
+          "select": null,
+          "allowText": true
         }
       },
       "dropdown_items": {
@@ -61,21 +48,13 @@
         "config": {
           "label": "Dropdown items",
           "fields": {
-            "label": {
-              "type": "StructuredText",
-              "config": {
-                "label": "Label",
-                "placeholder": "Label for dropdown item",
-                "allowTargetBlank": false,
-                "single": "heading3"
-              }
-            },
             "link": {
               "type": "Link",
               "config": {
                 "label": "Link",
                 "placeholder": "Link for dropdown item",
-                "select": null
+                "select": null,
+                "allowText": true
               }
             },
             "icon": {
@@ -83,19 +62,17 @@
               "config": {
                 "label": "Icon",
                 "placeholder": "Select an icon",
-                "options": ["Video", "Mic", "FileText", "BookMarked", "Radio", "Newspaper"]
+                "options": [
+                  "Video",
+                  "Mic",
+                  "FileText",
+                  "BookMarked",
+                  "Radio",
+                  "Newspaper"
+                ]
               }
             }
           }
-        }
-      },
-      "action_button_primary_label": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Primary button label",
-          "placeholder": "Label for primary action",
-          "single": "heading3",
-          "allowTargetBlank": false
         }
       },
       "action_button_primary_link": {
@@ -103,24 +80,9 @@
         "config": {
           "label": "Primary button link",
           "placeholder": "Link for primary action",
-          "select": null
-        }
-      },
-      "action_button_primary_variant": {
-        "type": "Select",
-        "config": {
-          "label": "Primary button variant",
-          "placeholder": "Choose a button style",
-          "options": ["primary", "secondary", "ghost", "outline", "filled"]
-        }
-      },
-      "action_button_secondary_label": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Secondary button label",
-          "placeholder": "Label for secondary action",
-          "single": "heading3",
-          "allowTargetBlank": false
+          "select": null,
+          "variants": ["Primary", "Secondary"],
+          "allowText": true
         }
       },
       "action_button_secondary_link": {
@@ -128,15 +90,10 @@
         "config": {
           "label": "Secondary button link",
           "placeholder": "Link for secondary action",
-          "select": null
-        }
-      },
-      "action_button_secondary_variant": {
-        "type": "Select",
-        "config": {
-          "label": "Secondary button variant",
-          "placeholder": "Choose a button style",
-          "options": ["primary", "secondary", "ghost", "outline", "filled"]
+          "select": null,
+          "variants": ["Primary", "Secondary"],
+          "repeat": false,
+          "allowText": true
         }
       }
     }
