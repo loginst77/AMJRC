@@ -60,13 +60,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const titleField = page?.data ? (page.data as any).meta_title : null;
   const descField = page?.data ? (page.data as any).meta_description : null;
 
-  const title = typeof titleField === "string" ? titleField || "Видео" : page ? asText(titleField) || "Видео" : "Видео";
+  const title =
+    typeof titleField === "string" ? titleField || "Видео"
+    : page ? asText(titleField) || "Видео"
+    : "Видео";
   const description =
-    typeof descField === "string"
-      ? descField || ""
-      : page
-        ? asText(descField) || "Видеоматериалы, записи служений и обучающие ролики."
-        : "Видеоматериалы, записи служений и обучающие ролики.";
+    typeof descField === "string" ? descField || ""
+    : page ? asText(descField) || "Видеоматериалы, записи служений и обучающие ролики."
+    : "Видеоматериалы, записи служений и обучающие ролики.";
 
   return {
     title,
@@ -83,11 +84,9 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
-    Array.isArray(rawTagParam) && rawTagParam.length > 0
-      ? decodeURIComponent(rawTagParam[0]!)
-      : typeof rawTagParam === "string"
-        ? decodeURIComponent(rawTagParam)
-        : undefined;
+    Array.isArray(rawTagParam) && rawTagParam.length > 0 ? decodeURIComponent(rawTagParam[0]!)
+    : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
+    : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
 
   const client = createClient();
@@ -97,7 +96,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       { field: "my.video.date", direction: "desc" },
       { field: "document.first_publication_date", direction: "desc" },
     ],
-    fetchLinks: ["tag.name"],
+    fetchLinks: ["tag.name", "author.name"],
   });
 
   const items: VideoCardItem[] = videos.map((video) => {
@@ -114,7 +113,16 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
     const date = dateRaw ? dateRaw.toISOString() : null;
     const imageSrc = thumbnail || youtubeThumbnail(embedUrl || url) || undefined;
     const featured = Boolean((video.data as { featured?: boolean }).featured);
-    const author = (video.data as { author?: string | null }).author?.trim() || undefined;
+
+    const rawAuthor = (video.data as any).author;
+    let author: string | undefined = undefined;
+    if (rawAuthor) {
+      if (typeof rawAuthor === "string") {
+        author = rawAuthor.trim() || undefined;
+      } else if (typeof rawAuthor === "object" && rawAuthor.link_type === "Document") {
+        author = (rawAuthor.data as any)?.name || rawAuthor.uid || rawAuthor.id || undefined;
+      }
+    }
 
     const tagsGroup = (video.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: MediaTag[] = tagsGroup
@@ -174,25 +182,27 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
         </section>
       )}
 
-      {featuredVideos.length ? <FeaturedVideo videos={featuredVideos} /> : null}
+      {featuredVideos.length ?
+        <FeaturedVideo videos={featuredVideos} />
+      : null}
 
       <section className="bg-zinc-50 py-12 dark:bg-black">
         <Container className="space-y-4">
           <SectionHeader title="Все видео" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
-          {items.length === 0 ? (
+          {items.length === 0 ?
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся видео.</p>
             </div>
-          ) : null}
+          : null}
 
-          {items.length > 0 && regularVideos.length === 0 ? (
+          {items.length > 0 && regularVideos.length === 0 ?
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Пока только закреплённые видео.</p>
             </div>
-          ) : null}
+          : null}
 
-          {regularVideos.length > 0 ? (
+          {regularVideos.length > 0 ?
             <div className="space-y-4">
               <TagFilterBar
                 allCount={regularVideos.length}
@@ -208,21 +218,20 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
               />
 
               <div id="video-list" className="scroll-mt-24">
-                {visibleVideos.length === 0 ? (
+                {visibleVideos.length === 0 ?
                   <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
                     <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет видео для выбранного тега</p>
                     <p className="text-sm text-zinc-500 dark:text-zinc-400">Назначьте видео тег в Prismic или выберите другой фильтр.</p>
                   </div>
-                ) : (
-                  <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                : <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
                     {visibleVideos.map((video) => (
                       <VideoCard key={video.id} video={video} />
                     ))}
                   </div>
-                )}
+                }
               </div>
             </div>
-          ) : null}
+          : null}
         </Container>
       </section>
     </div>
