@@ -7,16 +7,11 @@ type Variant = "primary" | "secondary" | "ghost" | "outline" | "filled";
 type Size = "sm" | "md" | "lg";
 
 const variantClasses: Record<Variant, string> = {
-  primary:
-    "bg-zinc-900 text-white hover:bg-zinc-800",
-  secondary:
-    "border border-sky-200 bg-sky-50 text-sky-950 hover:border-sky-300 hover:bg-sky-100",
-  outline:
-    "bg-white text-white ring-1 ring-inset ring-white/20 hover:bg-white/20",
-  ghost:
-    "bg-transparent text-zinc-900 hover:bg-blue-100",
-  filled:
-    "border border-zinc-200/20 bg-white/10 text-zinc-100 backdrop-blur-sm hover:border-zinc-300 hover:bg-white/20",
+  primary: "bg-zinc-900 text-white hover:bg-zinc-800 border border-zinc-200/30 hover:border-zinc-300",
+  secondary: "border border-sky-200 bg-sky-50 text-sky-950 hover:border-sky-300 hover:bg-sky-100",
+  outline: "bg-white text-white ring-1 ring-inset ring-white/20 hover:bg-white/20",
+  ghost: "bg-transparent text-zinc-900 hover:bg-blue-100",
+  filled: "border border-zinc-200/20 bg-white/10 text-zinc-100 backdrop-blur-sm hover:border-zinc-300 hover:bg-white/20",
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -31,13 +26,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: ReactNode;
 };
 
-export function Button({
-  variant = "primary",
-  size = "md",
-  className,
-  children,
-  ...props
-}: ButtonProps) {
+export function Button({ variant = "primary", size = "md", className, children, ...props }: ButtonProps) {
   return (
     <button
       className={cn(
@@ -46,8 +35,7 @@ export function Button({
         sizeClasses[size],
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </button>
   );
@@ -59,14 +47,7 @@ type ButtonLinkProps = ComponentProps<typeof Link> & {
   children?: ReactNode;
 };
 
-export function ButtonLink({
-  href,
-  variant = "primary",
-  size = "md",
-  className,
-  children,
-  ...props
-}: ButtonLinkProps) {
+export function ButtonLink({ href, variant = "primary", size = "md", className, children, ...props }: ButtonLinkProps) {
   return (
     <Link
       href={href}
@@ -76,8 +57,7 @@ export function ButtonLink({
         sizeClasses[size],
         className,
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </Link>
   );

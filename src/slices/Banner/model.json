@@ -25,18 +25,13 @@
             "placeholder": "Короткое приглашение или сообщение"
           }
         },
-        "actionLabel": {
-          "type": "Text",
-          "config": {
-            "label": "Button Text",
-            "placeholder": "Узнать больше"
-          }
-        },
         "actionLink": {
           "type": "Link",
           "config": {
             "label": "Button Link",
-            "placeholder": "https://example.com"
+            "placeholder": "https://example.com",
+            "select": null,
+            "allowText": true
           }
         },
         "image": {

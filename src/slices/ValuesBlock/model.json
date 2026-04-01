@@ -10,7 +10,17 @@
       "docURL": "...",
       "version": "initial",
       "description": "Default",
-      "primary": {},
+      "primary": {
+        "background": {
+          "type": "Select",
+          "config": {
+            "label": "Background",
+            "placeholder": "Ввести цвет фона",
+            "options": ["Main (white)", "Secondary (grey)"],
+            "default_value": "Main (white)"
+          }
+        }
+      },
       "items": {
         "title": {
           "type": "Text",

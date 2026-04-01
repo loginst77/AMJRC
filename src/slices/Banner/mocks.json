@@ -1,58 +1,55 @@
 [
-  {
-    "__TYPE__": "SharedSliceContent",
-    "variation": "default",
-    "primary": {
-      "title": {
-        "__TYPE__": "FieldContent",
-        "value": "stock",
-        "type": "Text"
-      },
-      "description": {
-        "__TYPE__": "FieldContent",
-        "value": "farm",
-        "type": "Text"
-      },
-      "actionLabel": {
-        "__TYPE__": "FieldContent",
-        "value": "wood",
-        "type": "Text"
-      },
-      "actionLink": {
-        "__TYPE__": "LinkContent",
-        "key": "94f5fa58-207d-41b9-ba50-73b71ea0adeb",
-        "value": {
-          "__TYPE__": "ExternalLink",
-          "url": "http://google.com"
-        }
-      },
-      "image": {
-        "__TYPE__": "ImageContent",
-        "origin": {
-          "id": "main",
-          "url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
-          "width": 4480,
-          "height": 4480
-        },
-        "url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
-        "width": 4480,
-        "height": 4480,
-        "edit": {
-          "zoom": 1,
-          "crop": {
-            "x": 0,
-            "y": 0
-          },
-          "background": "transparent"
-        },
-        "alt": "principal"
-      }
-    },
-    "items": [
-      {
-        "__TYPE__": "GroupItemContent",
-        "value": []
-      }
-    ]
-  }
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "stock",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"value": "farm",
+				"type": "Text"
+			},
+			"actionLink": {
+				"key": "b2f8fd3c-03c9-4a09-8c3d-6ce45f68958d",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io",
+					"text": "describe"
+				}
+			},
+			"image": {
+				"origin": {
+					"id": "main",
+					"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
+					"width": 4480,
+					"height": 4480
+				},
+				"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
+				"width": 4480,
+				"height": 4480,
+				"edit": {
+					"zoom": 1,
+					"crop": {
+						"x": 0,
+						"y": 0
+					},
+					"background": "transparent"
+				},
+				"alt": "principal",
+				"credits": null,
+				"__TYPE__": "ImageContent"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
+	}
 ]

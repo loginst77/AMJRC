@@ -46,7 +46,7 @@
           "placeholder": "Адрес"
         }
       },
-      "location": {
+      "leader": {
         "type": "Text",
         "config": {
           "label": "Leader",

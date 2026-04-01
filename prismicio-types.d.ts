@@ -604,11 +604,11 @@ interface CommunityDocumentData {
    *
    * - **Field Type**: Text
    * - **Placeholder**: Лидер
-   * - **API ID Path**: community.location
+   * - **API ID Path**: community.leader
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
-  location: prismic.KeyTextField;
+  leader: prismic.KeyTextField;
 
   /**
    * Service Time field in *Community*
@@ -2071,16 +2071,6 @@ export interface BannerSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/text
    */
   description: prismic.KeyTextField;
-
-  /**
-   * Button Text field in *Banner → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Узнать больше
-   * - **API ID Path**: banner.default.primary.actionLabel
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  actionLabel: prismic.KeyTextField;
 
   /**
    * Button Link field in *Banner → Default → Primary*
