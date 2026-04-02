@@ -33,10 +33,12 @@
         }
       },
       "description": {
-        "type": "Text",
+        "type": "StructuredText",
         "config": {
           "label": "Description",
-          "placeholder": "Краткое описание"
+          "placeholder": "Краткое описание",
+          "allowTargetBlank": false,
+          "single": "paragraph,strong,em,hyperlink"
         }
       },
       "address": {

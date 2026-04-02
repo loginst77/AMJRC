@@ -23,11 +23,10 @@ export function NavLink({ href, className, children }: NavLinkProps) {
       variant="ghost"
       size="md"
       className={cn(
-        "rounded-full px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-blue-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-900 dark:hover:text-white",
+        "rounded-full px-6 py-2 text-sm !font-medium text-zinc-700 hover:bg-blue-100 hover:text-zinc-950 ",
         active && "bg-zinc-100 text-zinc-950 dark:bg-zinc-900 dark:text-white",
         className,
-      )}
-    >
+      )}>
       {children}
     </ButtonLink>
   );
