@@ -17,7 +17,6 @@ import { SiteFooter, type FooterLinkItem, type FooterServiceTime, type SiteFoote
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-montserrat",
 });
