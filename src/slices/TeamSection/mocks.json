@@ -1,0 +1,143 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"badge": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Руководство"
+			},
+			"heading": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Команда Альянса"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Наша команда — служители с многолетним опытом, объединённые любовью к Богу, Его народу и Его Слову."
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"role",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Председатель Альянса"
+						}
+					],
+					[
+						"description",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Более 20 лет преданного служения еврейскому народу. Александр отвечает за стратегическое развитие Альянса и координацию международных проектов."
+						}
+					],
+					[
+						"name",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Пастор Александр Соловьёв"
+						}
+					],
+					[
+						"responsibilities",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Стратегическое планирование, международные связи, представительство Альянса"
+						}
+					],
+					[
+						"image",
+						{
+							"provider": "imgix",
+							"url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw5fHxQZXJzb258ZW58MHx8fHwxNzc1NDk0MTk0fDA&ixlib=rb-4.1.0&q=85",
+							"alt": "man standing beside wall",
+							"origin": {
+								"id": "pAtA8xe_iVM",
+								"url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw5fHxQZXJzb258ZW58MHx8fHwxNzc1NDk0MTk0fDA&ixlib=rb-4.1.0&q=85",
+								"width": 3149,
+								"height": 4724
+							},
+							"width": 3149,
+							"height": 4724,
+							"edit": {
+								"background": "transparent",
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								}
+							},
+							"credits": null,
+							"__TYPE__": "ImageContent"
+						}
+					]
+				]
+			},
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"role",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Заместитель председателя"
+						}
+					],
+					[
+						"name",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Пастор Давид Ромашко"
+						}
+					],
+					[
+						"description",
+						{
+							"__TYPE__": "FieldContent",
+							"type": "Text",
+							"value": "Давид управляет операционной деятельностью и помогает общинам внедрять библейские принципы наставничества в повседневную жизнь верующих."
+						}
+					],
+					[
+						"image",
+						{
+							"provider": "imgix",
+							"url": "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw3fHxQZXJzb258ZW58MHx8fHwxNzc1NDk0MTk0fDA&ixlib=rb-4.1.0&q=85",
+							"alt": "grayscale photo of man",
+							"origin": {
+								"id": "c_GmwfHBDzk",
+								"url": "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMzc0NjN8MHwxfHNlYXJjaHw3fHxQZXJzb258ZW58MHx8fHwxNzc1NDk0MTk0fDA&ixlib=rb-4.1.0&q=85",
+								"width": 6000,
+								"height": 4000
+							},
+							"width": 6000,
+							"height": 4000,
+							"edit": {
+								"background": "transparent",
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								}
+							},
+							"credits": null,
+							"__TYPE__": "ImageContent"
+						}
+					]
+				]
+			}
+		]
+	}
+]

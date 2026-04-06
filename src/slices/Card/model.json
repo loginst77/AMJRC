@@ -61,18 +61,14 @@
             "label": "Image"
           }
         },
-        "buttonLabel": {
-          "type": "Text",
-          "config": {
-            "label": "Button label",
-            "placeholder": "Узнать больше"
-          }
-        },
         "buttonLink": {
           "type": "Link",
           "config": {
             "label": "Button link",
-            "placeholder": "https://example.com"
+            "placeholder": "https://example.com",
+            "select": null,
+            "allowTargetBlank": false,
+            "allowText": true
           }
         }
       },

@@ -1196,6 +1196,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | TeamSectionSlice
   | HistoryEventsSlice
   | InfoCardSlice
   | QaSlice
@@ -2441,16 +2442,6 @@ export interface CardSliceDefaultItem {
   image: prismic.ImageField<never>;
 
   /**
-   * Button label field in *Card → Items*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Узнать больше
-   * - **API ID Path**: card.items[].buttonLabel
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  buttonLabel: prismic.KeyTextField;
-
-  /**
    * Button link field in *Card → Items*
    *
    * - **Field Type**: Link
@@ -3254,6 +3245,126 @@ export type SubscribeToNewsletterSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *TeamSection → Default → Primary*
+ */
+export interface TeamSectionSliceDefaultPrimary {
+  /**
+   * Badge field in *TeamSection → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Руководство
+   * - **API ID Path**: team_section.default.primary.badge
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  badge: prismic.KeyTextField;
+
+  /**
+   * Heading field in *TeamSection → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Команда Альянса
+   * - **API ID Path**: team_section.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Description field in *TeamSection → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Наша команда...
+   * - **API ID Path**: team_section.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *TeamSection → Items*
+ */
+export interface TeamSectionSliceDefaultItem {
+  /**
+   * Role field in *TeamSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: team_section.items[].role
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  role: prismic.KeyTextField;
+
+  /**
+   * Name field in *TeamSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: team_section.items[].name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Description field in *TeamSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: team_section.items[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Image field in *TeamSection → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: team_section.items[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Responsibilities field in *TeamSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: team_section.items[].responsibilities
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  responsibilities: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for TeamSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TeamSectionSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<TeamSectionSliceDefaultPrimary>,
+  Simplify<TeamSectionSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *TeamSection*
+ */
+type TeamSectionSliceVariation = TeamSectionSliceDefault;
+
+/**
+ * TeamSection Shared Slice
+ *
+ * - **API ID**: `team_section`
+ * - **Description**: TeamSection
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TeamSectionSlice = prismic.SharedSlice<
+  "team_section",
+  TeamSectionSliceVariation
+>;
+
+/**
  * Primary content in *ValuesBlock → Default → Primary*
  */
 export interface ValuesBlockSliceDefaultPrimary {
@@ -3452,6 +3563,11 @@ declare module "@prismicio/client" {
       SubscribeToNewsletterSliceDefaultPrimary,
       SubscribeToNewsletterSliceVariation,
       SubscribeToNewsletterSliceDefault,
+      TeamSectionSlice,
+      TeamSectionSliceDefaultPrimary,
+      TeamSectionSliceDefaultItem,
+      TeamSectionSliceVariation,
+      TeamSectionSliceDefault,
       ValuesBlockSlice,
       ValuesBlockSliceDefaultPrimary,
       ValuesBlockSliceDefaultItem,

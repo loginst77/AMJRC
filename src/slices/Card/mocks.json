@@ -1,97 +1,91 @@
 [
-  {
-    "__TYPE__": "SharedSliceContent",
-    "variation": "default",
-    "primary": {
-      "label": {
-        "__TYPE__": "FieldContent",
-        "value": "news",
-        "type": "Text"
-      },
-      "title": {
-        "__TYPE__": "FieldContent",
-        "value": "clean",
-        "type": "Text"
-      },
-      "description": {
-        "__TYPE__": "FieldContent",
-        "value": "satellites",
-        "type": "Text"
-      }
-    },
-    "items": [
-      {
-        "__TYPE__": "GroupItemContent",
-        "value": [
-          [
-            "description",
-            {
-              "__TYPE__": "FieldContent",
-              "value": "claws",
-              "type": "Text"
-            }
-          ],
-          [
-            "title",
-            {
-              "__TYPE__": "FieldContent",
-              "value": "paid",
-              "type": "Text"
-            }
-          ],
-          [
-            "body",
-            {
-              "__TYPE__": "FieldContent",
-              "value": "thread",
-              "type": "Text"
-            }
-          ],
-          [
-            "image",
-            {
-              "__TYPE__": "ImageContent",
-              "origin": {
-                "id": "main",
-                "url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
-                "width": 4024,
-                "height": 4024
-              },
-              "url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
-              "width": 4024,
-              "height": 4024,
-              "edit": {
-                "zoom": 1,
-                "crop": {
-                  "x": 0,
-                  "y": 0
-                },
-                "background": "transparent"
-              },
-              "alt": "poetry"
-            }
-          ],
-          [
-            "buttonLabel",
-            {
-              "__TYPE__": "FieldContent",
-              "value": "slowly",
-              "type": "Text"
-            }
-          ],
-          [
-            "buttonLink",
-            {
-              "__TYPE__": "LinkContent",
-              "key": "09ffe51e-f9a1-4359-aa5c-378313cc2a02",
-              "value": {
-                "__TYPE__": "ExternalLink",
-                "url": "http://google.com"
-              }
-            }
-          ]
-        ]
-      }
-    ]
-  }
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"label": {
+				"__TYPE__": "FieldContent",
+				"value": "news",
+				"type": "Text"
+			},
+			"title": {
+				"__TYPE__": "FieldContent",
+				"value": "clean",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"value": "satellites",
+				"type": "Text"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"description",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "claws",
+							"type": "Text"
+						}
+					],
+					[
+						"title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "paid",
+							"type": "Text"
+						}
+					],
+					[
+						"body",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "thread",
+							"type": "Text"
+						}
+					],
+					[
+						"image",
+						{
+							"origin": {
+								"id": "main",
+								"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+								"width": 4024,
+								"height": 4024
+							},
+							"url": "https://images.unsplash.com/photo-1607582278043-57198ac8da43",
+							"width": 4024,
+							"height": 4024,
+							"edit": {
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								},
+								"background": "transparent"
+							},
+							"alt": "poetry",
+							"credits": null,
+							"__TYPE__": "ImageContent"
+						}
+					],
+					[
+						"buttonLink",
+						{
+							"key": "46444463-5541-4f4e-878b-a73fc4dd0533",
+							"__TYPE__": "LinkContent",
+							"value": {
+								"__TYPE__": "ExternalLink",
+								"url": "https://prismic.io",
+								"text": "was"
+							}
+						}
+					]
+				]
+			}
+		]
+	}
 ]

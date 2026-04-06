@@ -14,5 +14,6 @@ export const components = {
   note_banner: dynamic(() => import("./NoteBanner")),
   qa: dynamic(() => import("./Qa")),
   subscribe_to_newsletter: dynamic(() => import("./SubscribeToNewsletter")),
+  team_section: dynamic(() => import("./TeamSection")),
   values_block: dynamic(() => import("./ValuesBlock")),
 };
