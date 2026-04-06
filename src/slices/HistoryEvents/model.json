@@ -10,6 +10,52 @@
       "docURL": "...",
       "version": "initial",
       "description": "Default",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "История"
+          }
+        },
+        "heading": {
+          "type": "Text",
+          "config": {
+            "label": "Heading",
+            "placeholder": "Наш путь"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Альянс рождён..."
+          }
+        }
+      },
+      "items": {
+        "year": {
+          "type": "Text",
+          "config": {
+            "label": "Year",
+            "placeholder": "1991"
+          }
+        },
+        "heading": {
+          "type": "Text",
+          "config": {
+            "label": "Milestone Heading",
+            "placeholder": "Зарождение движения"
+          }
+        },
+        "text": {
+          "type": "Text",
+          "config": {
+            "label": "Milestone Text",
+            "placeholder": "Основание первых..."
+          }
+        }
+      },
       "imageUrl": ""
     }
   ]

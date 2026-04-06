@@ -112,44 +112,30 @@ const Card: FC<CardProps> = ({ slice }) => {
       <Container>
         <div className="mx-auto w-full max-w-6xl space-y-12">
           <div className="flex flex-col items-center space-y-4 text-center">
-            {label ? (
-              <Badge variant="outline" size="lg" className="px-3 py-1 font-semibold">
+            {label ?
+              <Badge variant="outline" size="lg">
                 {label}
               </Badge>
-            ) : null}
+            : null}
             <h2 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">{title}</h2>
-            {description ? (
+            {description ?
               <p className="max-w-3xl text-lg leading-8 text-zinc-600">{description}</p>
-            ) : null}
+            : null}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {cards.slice(0, 6).map((card) => (
-              <div
-                key={card.title}
-                className={cn("group flex h-full !overflow-hidden flex-col bg-zinc-50", cardHoverCn)}
-              >
+              <div key={card.title} className={cn("group flex h-full !overflow-hidden flex-col bg-zinc-50", cardHoverCn)}>
                 <div className="relative h-52 w-full shrink-0 overflow-hidden bg-zinc-200 sm:h-72">
                   {(() => {
                     const img = card.image as ImageField | null | undefined;
                     const imgUrl = img?.url;
                     const hasDims = (img as any)?.dimensions;
-                    const imageClass =
-                      "h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]";
+                    const imageClass = "h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]";
                     if (!imgUrl) return null;
-                    return hasDims ? (
-                      <PrismicNextImage
-                        field={img as any}
-                        fill
-                        className={imageClass}
-                      />
-                    ) : (
-                      <img
-                        src={imgUrl}
-                        alt={card.title || ""}
-                        className={imageClass}
-                      />
-                    );
+                    return hasDims ?
+                        <PrismicNextImage field={img as any} fill className={imageClass} />
+                      : <img src={imgUrl} alt={card.title || ""} className={imageClass} />;
                   })()}
                   <div className="absolute inset-0 z-10 rounded-t-3xl bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-500 group-hover:backdrop-blur-sm" />
                   {card.description && (
@@ -170,9 +156,9 @@ const Card: FC<CardProps> = ({ slice }) => {
                 {(card.buttonLabel || card.href) && (
                   <Link
                     href={card.href || "#"}
-                    className="flex items-center border-t border-zinc-200 p-7 text-sm font-medium uppercase tracking-wide text-zinc-700 group/button transition-colors hover:bg-blue-100 sm:p-8"
-                  >
-                    {card.buttonLabel || "Узнать больше"} <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform duration-200" />
+                    className="flex items-center border-t border-zinc-200 p-7 text-sm font-medium uppercase tracking-wide text-zinc-700 group/button transition-colors hover:bg-blue-100 sm:p-8">
+                    {card.buttonLabel || "Узнать больше"}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform duration-200" />
                   </Link>
                 )}
               </div>

@@ -1196,6 +1196,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | HistoryEventsSlice
   | InfoCardSlice
   | QaSlice
   | SubscribeToNewsletterSlice
@@ -2645,6 +2646,76 @@ type HeroSliceVariation = HeroSliceDefault;
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *HistoryEvents → Default → Primary*
+ */
+export interface HistoryEventsSliceDefaultPrimary {
+  /**
+   * Badge Text field in *HistoryEvents → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: История
+   * - **API ID Path**: history_events.default.primary.badge_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  badge_text: prismic.KeyTextField;
+
+  /**
+   * Heading field in *HistoryEvents → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Наш путь
+   * - **API ID Path**: history_events.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Description field in *HistoryEvents → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Альянс рождён...
+   * - **API ID Path**: history_events.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *HistoryEvents → Items*
+ */
+export interface HistoryEventsSliceDefaultItem {
+  /**
+   * Year field in *HistoryEvents → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 1991
+   * - **API ID Path**: history_events.items[].year
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  year: prismic.KeyTextField;
+
+  /**
+   * Milestone Heading field in *HistoryEvents → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Зарождение движения
+   * - **API ID Path**: history_events.items[].heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Milestone Text field in *HistoryEvents → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Основание первых...
+   * - **API ID Path**: history_events.items[].text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  text: prismic.KeyTextField;
+}
+
+/**
  * Default variation for HistoryEvents Slice
  *
  * - **API ID**: `default`
@@ -2653,8 +2724,8 @@ export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
  */
 export type HistoryEventsSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
-  never
+  Simplify<HistoryEventsSliceDefaultPrimary>,
+  Simplify<HistoryEventsSliceDefaultItem>
 >;
 
 /**
@@ -3355,6 +3426,8 @@ declare module "@prismicio/client" {
       HeroSliceVariation,
       HeroSliceDefault,
       HistoryEventsSlice,
+      HistoryEventsSliceDefaultPrimary,
+      HistoryEventsSliceDefaultItem,
       HistoryEventsSliceVariation,
       HistoryEventsSliceDefault,
       InfoCardSlice,

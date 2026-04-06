@@ -68,6 +68,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "history_events": {
+              "type": "SharedSlice"
+            },
             "info_card": {
               "type": "SharedSlice"
             },
