@@ -8,6 +8,7 @@ export const components = {
   card: dynamic(() => import("./Card")),
   form: dynamic(() => import("./Form")),
   hero: dynamic(() => import("./Hero")),
+  history_events: dynamic(() => import("./HistoryEvents")),
   info_card: dynamic(() => import("./InfoCard")),
   landing_page_hero: dynamic(() => import("./LandingPageHero")),
   note_banner: dynamic(() => import("./NoteBanner")),

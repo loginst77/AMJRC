@@ -10,7 +10,13 @@ type PickContentRelationshipFieldData<
     | prismic.CustomTypeModelFetchCustomTypeLevel2
     | prismic.CustomTypeModelFetchGroupLevel1
     | prismic.CustomTypeModelFetchGroupLevel2,
-  TData extends Record<string, prismic.AnyRegularField | prismic.GroupField | prismic.NestedGroupField | prismic.SliceZone>,
+  TData extends Record<
+    string,
+    | prismic.AnyRegularField
+    | prismic.GroupField
+    | prismic.NestedGroupField
+    | prismic.SliceZone
+  >,
   TLang extends string,
 > =
   // Content relationship fields
@@ -18,16 +24,29 @@ type PickContentRelationshipFieldData<
     [TSubRelationship in Extract<
       TRelationship["fields"][number],
       prismic.CustomTypeModelFetchContentRelationshipLevel1
-    > as TSubRelationship["id"]]: ContentRelationshipFieldWithData<TSubRelationship["customtypes"], TLang>;
-  } & { // Group
+    > as TSubRelationship["id"]]: ContentRelationshipFieldWithData<
+      TSubRelationship["customtypes"],
+      TLang
+    >;
+  } & // Group
+  {
     [TGroup in Extract<
       TRelationship["fields"][number],
-      prismic.CustomTypeModelFetchGroupLevel1 | prismic.CustomTypeModelFetchGroupLevel2
-    > as TGroup["id"]]: TData[TGroup["id"]] extends prismic.GroupField<infer TGroupData> ?
-      prismic.GroupField<PickContentRelationshipFieldData<TGroup, TGroupData, TLang>>
-    : never;
-  } & { // Other fields
-    [TFieldKey in Extract<TRelationship["fields"][number], string>]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
+      | prismic.CustomTypeModelFetchGroupLevel1
+      | prismic.CustomTypeModelFetchGroupLevel2
+    > as TGroup["id"]]: TData[TGroup["id"]] extends prismic.GroupField<
+      infer TGroupData
+    >
+      ? prismic.GroupField<
+          PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
+        >
+      : never;
+  } & // Other fields
+  {
+    [TFieldKey in Extract<
+      TRelationship["fields"][number],
+      string
+    >]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
   };
 
 type ContentRelationshipFieldWithData<
@@ -36,7 +55,10 @@ type ContentRelationshipFieldWithData<
     | readonly (prismic.CustomTypeModelFetchCustomTypeLevel2 | string)[],
   TLang extends string = string,
 > = {
-  [ID in Exclude<TCustomType[number], string>["id"]]: prismic.ContentRelationshipField<
+  [ID in Exclude<
+    TCustomType[number],
+    string
+  >["id"]]: prismic.ContentRelationshipField<
     ID,
     TLang,
     PickContentRelationshipFieldData<
@@ -197,7 +219,12 @@ interface ArticleDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ArticleDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<ArticleDocumentData>, "article", Lang>;
+export type ArticleDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ArticleDocumentData>,
+    "article",
+    Lang
+  >;
 
 type ArticlelandingpageDocumentDataSlicesSlice =
   | FormSlice
@@ -266,11 +293,12 @@ interface ArticlelandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type ArticlelandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
-  Simplify<ArticlelandingpageDocumentData>,
-  "articlelandingpage",
-  Lang
->;
+export type ArticlelandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ArticlelandingpageDocumentData>,
+    "articlelandingpage",
+    Lang
+  >;
 
 /**
  * Content for Author documents
@@ -308,7 +336,8 @@ interface AuthorDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type AuthorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
+export type AuthorDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<AuthorDocumentData>, "author", Lang>;
 
 /**
  * Item in *Book → Tags (optional)*
@@ -404,7 +433,13 @@ interface BookDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buy_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buy_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Featured field in *Book*
@@ -428,7 +463,8 @@ interface BookDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type BookDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BookDocumentData>, "book", Lang>;
+export type BookDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<BookDocumentData>, "book", Lang>;
 
 type BooklandingpageDocumentDataSlicesSlice =
   | FormSlice
@@ -497,11 +533,12 @@ interface BooklandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type BooklandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
-  Simplify<BooklandingpageDocumentData>,
-  "booklandingpage",
-  Lang
->;
+export type BooklandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BooklandingpageDocumentData>,
+    "booklandingpage",
+    Lang
+  >;
 
 type CommunityDocumentDataSlicesSlice =
   | BigEventSlice
@@ -593,7 +630,13 @@ interface CommunityDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  button_1_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 
   /**
    * Button 2 Link field in *Community*
@@ -604,7 +647,13 @@ interface CommunityDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  button_2_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 
   /**
    * Slice Zone field in *Community*
@@ -658,11 +707,12 @@ interface CommunityDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type CommunityDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<CommunityDocumentData>,
-  "community",
-  Lang
->;
+export type CommunityDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CommunityDocumentData>,
+    "community",
+    Lang
+  >;
 
 type CommunitylandingpageDocumentDataSlicesSlice =
   | BigEventSlice
@@ -722,7 +772,13 @@ interface CommunitylandingpageDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  button_1_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 
   /**
    * Button 2 Link field in *CommunityLandingPage*
@@ -733,7 +789,13 @@ interface CommunitylandingpageDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  button_2_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 
   /**
    * Slice Zone field in *CommunityLandingPage*
@@ -787,11 +849,12 @@ interface CommunitylandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type CommunitylandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<CommunitylandingpageDocumentData>,
-  "communitylandingpage",
-  Lang
->;
+export type CommunitylandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CommunitylandingpageDocumentData>,
+    "communitylandingpage",
+    Lang
+  >;
 
 /**
  * Item in *Footer → Navigation links*
@@ -972,7 +1035,9 @@ interface FooterDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  navigation_links: prismic.GroupField<Simplify<FooterDocumentDataNavigationLinksItem>>;
+  navigation_links: prismic.GroupField<
+    Simplify<FooterDocumentDataNavigationLinksItem>
+  >;
 
   /**
    * Actions column title field in *Footer*
@@ -1016,7 +1081,9 @@ interface FooterDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  service_times: prismic.GroupField<Simplify<FooterDocumentDataServiceTimesItem>>;
+  service_times: prismic.GroupField<
+    Simplify<FooterDocumentDataServiceTimesItem>
+  >;
 
   /**
    * Social links field in *Footer*
@@ -1050,7 +1117,12 @@ interface FooterDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
+export type FooterDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<FooterDocumentData>,
+    "footer",
+    Lang
+  >;
 
 type HomeDocumentDataSlicesSlice =
   | ValuesBlockSlice
@@ -1120,7 +1192,8 @@ interface HomeDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type HomeDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
+export type HomeDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
   | InfoCardSlice
@@ -1138,6 +1211,73 @@ type LandingpageDocumentDataSlicesSlice =
  * Content for LandingPage documents
  */
 interface LandingpageDocumentData {
+  /**
+   * Image field in *LandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: landingpage.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *LandingPage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Заголовок страницы
+   * - **API ID Path**: landingpage.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *LandingPage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: landingpage.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * Button 1 Link field in *LandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the first optional button
+   * - **API ID Path**: landingpage.button_1_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Button 2 Link field in *LandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the second optional button
+   * - **API ID Path**: landingpage.button_2_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
   /**
    * Slice Zone field in *LandingPage*
    *
@@ -1190,11 +1330,12 @@ interface LandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type LandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<LandingpageDocumentData>,
-  "landingpage",
-  Lang
->;
+export type LandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<LandingpageDocumentData>,
+    "landingpage",
+    Lang
+  >;
 
 /**
  * Item in *Header → Dropdown items*
@@ -1218,7 +1359,9 @@ export interface NavigationDocumentDataDropdownItemsItem {
    * - **API ID Path**: navigation.dropdown_items[].icon
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
-  icon: prismic.SelectField<"Video" | "Mic" | "FileText" | "BookMarked" | "Radio" | "Newspaper">;
+  icon: prismic.SelectField<
+    "Video" | "Mic" | "FileText" | "BookMarked" | "Radio" | "Newspaper"
+  >;
 }
 
 /**
@@ -1256,7 +1399,9 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  nav: prismic.Repeatable<prismic.LinkField<string, string, unknown, prismic.FieldState, never>>;
+  nav: prismic.Repeatable<
+    prismic.LinkField<string, string, unknown, prismic.FieldState, never>
+  >;
 
   /**
    * Dropdown link field in *Header*
@@ -1267,7 +1412,13 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  dropdown_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  dropdown_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Dropdown items field in *Header*
@@ -1278,7 +1429,9 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
    */
-  dropdown_items: prismic.GroupField<Simplify<NavigationDocumentDataDropdownItemsItem>>;
+  dropdown_items: prismic.GroupField<
+    Simplify<NavigationDocumentDataDropdownItemsItem>
+  >;
 
   /**
    * Primary button link field in *Header*
@@ -1289,7 +1442,13 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  action_button_primary_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  action_button_primary_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 
   /**
    * Secondary button link field in *Header*
@@ -1300,7 +1459,13 @@ interface NavigationDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  action_button_secondary_link: prismic.LinkField<string, string, unknown, prismic.FieldState, "Primary" | "Secondary">;
+  action_button_secondary_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
 }
 
 /**
@@ -1312,11 +1477,12 @@ interface NavigationDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NavigationDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
-  Simplify<NavigationDocumentData>,
-  "navigation",
-  Lang
->;
+export type NavigationDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NavigationDocumentData>,
+    "navigation",
+    Lang
+  >;
 
 /**
  * Item in *Newspaper → Tags (optional)*
@@ -1414,11 +1580,12 @@ interface NewspaperDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NewspaperDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<NewspaperDocumentData>,
-  "newspaper",
-  Lang
->;
+export type NewspaperDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<NewspaperDocumentData>,
+    "newspaper",
+    Lang
+  >;
 
 type NewspaperlandingpageDocumentDataSlicesSlice =
   | LandingPageHeroSlice
@@ -1487,11 +1654,12 @@ interface NewspaperlandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type NewspaperlandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<
-  Simplify<NewspaperlandingpageDocumentData>,
-  "newspaperlandingpage",
-  Lang
->;
+export type NewspaperlandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<NewspaperlandingpageDocumentData>,
+    "newspaperlandingpage",
+    Lang
+  >;
 
 /**
  * Item in *Podcast → Tags*
@@ -1565,7 +1733,13 @@ interface PodcastDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  external_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  external_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Featured field in *Podcast*
@@ -1630,7 +1804,12 @@ interface PodcastDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PodcastDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<PodcastDocumentData>, "podcast", Lang>;
+export type PodcastDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PodcastDocumentData>,
+    "podcast",
+    Lang
+  >;
 
 type PodcastlandingpageDocumentDataSlicesSlice =
   | FormSlice
@@ -1699,11 +1878,12 @@ interface PodcastlandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type PodcastlandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<PodcastlandingpageDocumentData>,
-  "podcastlandingpage",
-  Lang
->;
+export type PodcastlandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PodcastlandingpageDocumentData>,
+    "podcastlandingpage",
+    Lang
+  >;
 
 /**
  * Content for Tag documents
@@ -1730,7 +1910,8 @@ interface TagDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type TagDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
+export type TagDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
 /**
  * Item in *Video → Tags (optional)*
@@ -1838,7 +2019,8 @@ interface VideoDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type VideoDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<VideoDocumentData>, "video", Lang>;
+export type VideoDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<VideoDocumentData>, "video", Lang>;
 
 type VideolandingpageDocumentDataSlicesSlice =
   | CardSlice
@@ -1906,11 +2088,12 @@ interface VideolandingpageDocumentData {
  *
  * @typeParam Lang - Language API ID of the document.
  */
-export type VideolandingpageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<
-  Simplify<VideolandingpageDocumentData>,
-  "videolandingpage",
-  Lang
->;
+export type VideolandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<VideolandingpageDocumentData>,
+    "videolandingpage",
+    Lang
+  >;
 
 export type AllDocumentTypes =
   | ArticleDocument
@@ -1964,7 +2147,13 @@ export interface BannerSliceDefaultPrimary {
    * - **API ID Path**: banner.default.primary.actionLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  actionLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  actionLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Background Image field in *Banner → Default → Primary*
@@ -1984,7 +2173,11 @@ export interface BannerSliceDefaultPrimary {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type BannerSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BannerSliceDefaultPrimary>, never>;
+export type BannerSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BannerSliceDefaultPrimary>,
+  never
+>;
 
 /**
  * Slice variation for *Banner*
@@ -2102,7 +2295,13 @@ export interface BigEventSliceDefaultPrimary {
    * - **API ID Path**: big_event.default.primary.primaryButtonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  primaryButtonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  primaryButtonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Secondary button text field in *BigEvent → Default → Primary*
@@ -2122,7 +2321,13 @@ export interface BigEventSliceDefaultPrimary {
    * - **API ID Path**: big_event.default.primary.secondaryButtonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  secondaryButtonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  secondaryButtonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**
@@ -2132,7 +2337,11 @@ export interface BigEventSliceDefaultPrimary {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type BigEventSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BigEventSliceDefaultPrimary>, never>;
+export type BigEventSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BigEventSliceDefaultPrimary>,
+  never
+>;
 
 /**
  * Slice variation for *BigEvent*
@@ -2146,7 +2355,10 @@ type BigEventSliceVariation = BigEventSliceDefault;
  * - **Description**: BigEvent
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type BigEventSlice = prismic.SharedSlice<"big_event", BigEventSliceVariation>;
+export type BigEventSlice = prismic.SharedSlice<
+  "big_event",
+  BigEventSliceVariation
+>;
 
 /**
  * Primary content in *Card → Default → Primary*
@@ -2245,7 +2457,13 @@ export interface CardSliceDefaultItem {
    * - **API ID Path**: card.items[].buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buttonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**
@@ -2255,7 +2473,11 @@ export interface CardSliceDefaultItem {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type CardSliceDefault = prismic.SharedSliceVariation<"default", Simplify<CardSliceDefaultPrimary>, Simplify<CardSliceDefaultItem>>;
+export type CardSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<CardSliceDefaultPrimary>,
+  Simplify<CardSliceDefaultItem>
+>;
 
 /**
  * Slice variation for *Card*
@@ -2278,7 +2500,11 @@ export type CardSlice = prismic.SharedSlice<"card", CardSliceVariation>;
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type FormSliceDefault = prismic.SharedSliceVariation<"default", Record<string, never>, never>;
+export type FormSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
 
 /**
  * Slice variation for *Form*
@@ -2326,7 +2552,13 @@ export interface HeroSliceDefaultPrimary {
    * - **API ID Path**: hero.default.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buttonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button Text field in *Hero → Default → Primary*
@@ -2346,7 +2578,13 @@ export interface HeroSliceDefaultPrimary {
    * - **API ID Path**: hero.default.primary.secondaryButtonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  secondaryButtonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  secondaryButtonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Secondary Button Text field in *Hero → Default → Primary*
@@ -2386,7 +2624,11 @@ export interface HeroSliceDefaultPrimary {
  * - **Description**: Hero
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type HeroSliceDefault = prismic.SharedSliceVariation<"default", Simplify<HeroSliceDefaultPrimary>, never>;
+export type HeroSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<HeroSliceDefaultPrimary>,
+  never
+>;
 
 /**
  * Slice variation for *Hero*
@@ -2401,6 +2643,36 @@ type HeroSliceVariation = HeroSliceDefault;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Default variation for HistoryEvents Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HistoryEventsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *HistoryEvents*
+ */
+type HistoryEventsSliceVariation = HistoryEventsSliceDefault;
+
+/**
+ * HistoryEvents Shared Slice
+ *
+ * - **API ID**: `history_events`
+ * - **Description**: HistoryEvents
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type HistoryEventsSlice = prismic.SharedSlice<
+  "history_events",
+  HistoryEventsSliceVariation
+>;
 
 /**
  * Primary content in *InfoCard → Items*
@@ -2437,16 +2709,6 @@ export interface InfoCardSliceDefaultItem {
   text: prismic.KeyTextField;
 
   /**
-   * Button label field in *InfoCard → Items*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Подробнее
-   * - **API ID Path**: info_card.items[].buttonLabel
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  buttonLabel: prismic.KeyTextField;
-
-  /**
    * Button link field in *InfoCard → Items*
    *
    * - **Field Type**: Link
@@ -2454,7 +2716,13 @@ export interface InfoCardSliceDefaultItem {
    * - **API ID Path**: info_card.items[].buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buttonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Button variant field in *InfoCard → Items*
@@ -2486,7 +2754,11 @@ export interface InfoCardSliceDefaultItem {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type InfoCardSliceDefault = prismic.SharedSliceVariation<"default", Record<string, never>, Simplify<InfoCardSliceDefaultItem>>;
+export type InfoCardSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  Simplify<InfoCardSliceDefaultItem>
+>;
 
 /**
  * Slice variation for *InfoCard*
@@ -2500,7 +2772,10 @@ type InfoCardSliceVariation = InfoCardSliceDefault;
  * - **Description**: InfoCard
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type InfoCardSlice = prismic.SharedSlice<"info_card", InfoCardSliceVariation>;
+export type InfoCardSlice = prismic.SharedSlice<
+  "info_card",
+  InfoCardSliceVariation
+>;
 
 /**
  * Primary content in *LandingPageHero → Default → Primary*
@@ -2554,7 +2829,13 @@ export interface LandingPageHeroSliceDefaultPrimary {
    * - **API ID Path**: landing_page_hero.default.primary.breadcrumbHomeLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  breadcrumbHomeLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  breadcrumbHomeLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 
   /**
    * Breadcrumb current field in *LandingPageHero → Default → Primary*
@@ -2584,7 +2865,13 @@ export interface LandingPageHeroSliceDefaultPrimary {
    * - **API ID Path**: landing_page_hero.default.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buttonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**
@@ -2594,7 +2881,11 @@ export interface LandingPageHeroSliceDefaultPrimary {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type LandingPageHeroSliceDefault = prismic.SharedSliceVariation<"default", Simplify<LandingPageHeroSliceDefaultPrimary>, never>;
+export type LandingPageHeroSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<LandingPageHeroSliceDefaultPrimary>,
+  never
+>;
 
 /**
  * Slice variation for *LandingPageHero*
@@ -2608,7 +2899,10 @@ type LandingPageHeroSliceVariation = LandingPageHeroSliceDefault;
  * - **Description**: LandingPageHero
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type LandingPageHeroSlice = prismic.SharedSlice<"landing_page_hero", LandingPageHeroSliceVariation>;
+export type LandingPageHeroSlice = prismic.SharedSlice<
+  "landing_page_hero",
+  LandingPageHeroSliceVariation
+>;
 
 /**
  * Primary content in *NoteBanner → Default → Primary*
@@ -2682,7 +2976,13 @@ export interface NoteBannerSliceDefaultPrimary {
    * - **API ID Path**: note_banner.default.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
-  buttonLink: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**
@@ -2725,7 +3025,10 @@ type NoteBannerSliceVariation = NoteBannerSliceDefault;
  * - **Description**: NoteBanner
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type NoteBannerSlice = prismic.SharedSlice<"note_banner", NoteBannerSliceVariation>;
+export type NoteBannerSlice = prismic.SharedSlice<
+  "note_banner",
+  NoteBannerSliceVariation
+>;
 
 /**
  * Primary content in *Qa → Default → Primary*
@@ -2784,7 +3087,11 @@ export interface QaSliceDefaultItem {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type QaSliceDefault = prismic.SharedSliceVariation<"default", Simplify<QaSliceDefaultPrimary>, Simplify<QaSliceDefaultItem>>;
+export type QaSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<QaSliceDefaultPrimary>,
+  Simplify<QaSliceDefaultItem>
+>;
 
 /**
  * Slice variation for *Qa*
@@ -2870,7 +3177,29 @@ type SubscribeToNewsletterSliceVariation = SubscribeToNewsletterSliceDefault;
  * - **Description**: SubscribeToNewsletter
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type SubscribeToNewsletterSlice = prismic.SharedSlice<"subscribe_to_newsletter", SubscribeToNewsletterSliceVariation>;
+export type SubscribeToNewsletterSlice = prismic.SharedSlice<
+  "subscribe_to_newsletter",
+  SubscribeToNewsletterSliceVariation
+>;
+
+/**
+ * Primary content in *ValuesBlock → Default → Primary*
+ */
+export interface ValuesBlockSliceDefaultPrimary {
+  /**
+   * Background field in *ValuesBlock → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Ввести цвет фона
+   * - **Default Value**: Main (white)
+   * - **API ID Path**: values_block.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<
+    "Main (white)" | "Secondary (grey)",
+    "filled"
+  >;
+}
 
 /**
  * Primary content in *ValuesBlock → Items*
@@ -2904,7 +3233,11 @@ export interface ValuesBlockSliceDefaultItem {
  * - **Description**: Default
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ValuesBlockSliceDefault = prismic.SharedSliceVariation<"default", Record<string, never>, Simplify<ValuesBlockSliceDefaultItem>>;
+export type ValuesBlockSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ValuesBlockSliceDefaultPrimary>,
+  Simplify<ValuesBlockSliceDefaultItem>
+>;
 
 /**
  * Slice variation for *ValuesBlock*
@@ -2918,15 +3251,24 @@ type ValuesBlockSliceVariation = ValuesBlockSliceDefault;
  * - **Description**: ValuesBlock
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ValuesBlockSlice = prismic.SharedSlice<"values_block", ValuesBlockSliceVariation>;
+export type ValuesBlockSlice = prismic.SharedSlice<
+  "values_block",
+  ValuesBlockSliceVariation
+>;
 
 declare module "@prismicio/client" {
   interface CreateClient {
-    (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
+    (
+      repositoryNameOrEndpoint: string,
+      options?: prismic.ClientConfig,
+    ): prismic.Client<AllDocumentTypes>;
   }
 
   interface CreateWriteClient {
-    (repositoryNameOrEndpoint: string, options: prismic.WriteClientConfig): prismic.WriteClient<AllDocumentTypes>;
+    (
+      repositoryNameOrEndpoint: string,
+      options: prismic.WriteClientConfig,
+    ): prismic.WriteClient<AllDocumentTypes>;
   }
 
   interface CreateMigration {
@@ -3012,6 +3354,9 @@ declare module "@prismicio/client" {
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
       HeroSliceDefault,
+      HistoryEventsSlice,
+      HistoryEventsSliceVariation,
+      HistoryEventsSliceDefault,
       InfoCardSlice,
       InfoCardSliceDefaultItem,
       InfoCardSliceVariation,
@@ -3035,6 +3380,7 @@ declare module "@prismicio/client" {
       SubscribeToNewsletterSliceVariation,
       SubscribeToNewsletterSliceDefault,
       ValuesBlockSlice,
+      ValuesBlockSliceDefaultPrimary,
       ValuesBlockSliceDefaultItem,
       ValuesBlockSliceVariation,
       ValuesBlockSliceDefault,

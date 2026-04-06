@@ -1,0 +1,16 @@
+{
+  "id": "history_events",
+  "type": "SharedSlice",
+  "name": "HistoryEvents",
+  "description": "HistoryEvents",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": ""
+    }
+  ]
+}

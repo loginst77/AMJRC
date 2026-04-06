@@ -33,25 +33,23 @@
             "placeholder": "Краткое описание"
           }
         },
-        "buttonLabel": {
-          "type": "Text",
-          "config": {
-            "label": "Button label",
-            "placeholder": "Подробнее"
-          }
-        },
         "buttonLink": {
           "type": "Link",
           "config": {
             "label": "Button link",
-            "placeholder": "https://example.com"
+            "placeholder": "https://example.com",
+            "select": null,
+            "allowText": true
           }
         },
         "buttonVariant": {
           "type": "Select",
           "config": {
             "label": "Button variant",
-            "options": ["secondary", "ghost"],
+            "options": [
+              "secondary",
+              "ghost"
+            ],
             "default_value": "secondary"
           }
         },
@@ -59,7 +57,10 @@
           "type": "Select",
           "config": {
             "label": "Button target",
-            "options": ["_self", "_blank"],
+            "options": [
+              "_self",
+              "_blank"
+            ],
             "default_value": "_self"
           }
         }

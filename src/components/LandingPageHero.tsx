@@ -55,9 +55,9 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
   const displayTitle =
     typeof title === "string" ? title
     : Array.isArray(title) ? <PrismicText field={title} />
-    : title || "О нас";
+    : title || "Старница";
 
-  const displayBreadcrumbCurrent = breadcrumbCurrent || (typeof displayTitle === "string" ? displayTitle : "О нас");
+  const displayBreadcrumbCurrent = breadcrumbCurrent || (typeof displayTitle === "string" ? displayTitle : "Старница");
 
   const displayDescription = description;
 
