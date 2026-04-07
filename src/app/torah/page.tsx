@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SliceZone } from "@prismicio/react";
+import { asLink } from "@prismicio/client";
 import { Container } from "@/components/ui/container";
 import { getDailyReading, torahPortions, torahVersion } from "@/lib/torah-data";
 import { ReadingPreviewCard } from "@/components/reading-preview-card";
+import { LandingPageHero } from "@/components/LandingPageHero";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
-
-import { cn } from "@/lib/cn";
-import { cardHoverCn } from "@/lib/variants";
 import {
   BookOpen,
   Scroll,
   ChevronLeft,
   ChevronRight,
-  Calendar,
   BookMarked,
   Info,
   MessageSquareQuote,
@@ -96,7 +94,8 @@ export default async function ReadTorahPage({ searchParams }: { searchParams: Pr
   // Fetch Prismic slices for the Torah landing page
   const client = createClient();
   const prismicPage = await client.getSingle("torahlandingpage" as any).catch(() => null);
-  const slices = (prismicPage?.data as any)?.slices ?? [];
+  const pageData = prismicPage?.data as any;
+  const slices = pageData?.slices ?? [];
   const { portion: dailyPortion, chapter: dailyChapter, readingIndex: dailyReadingIndex, totalReadings } = getDailyReading();
 
   // Build flat readings list
@@ -147,38 +146,20 @@ export default async function ReadTorahPage({ searchParams }: { searchParams: Pr
   return (
     <div className="flex flex-col min-h-screen">
       {/* ───── Hero ───── */}
-      <section className="relative min-h-[400px] overflow-hidden py-14 sm:py-24">
-        <img src="/cc-banner.jpg" alt="Read Torah" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-transparent" />
-
-        <Container className="relative z-10 flex h-full flex-col justify-center">
-          <div className="max-w-2xl space-y-4">
-            <nav className="text-sm text-zinc-300">
-              <Link href="/" className="hover:text-white transition-colors">
-                Главная
-              </Link>
-              <span className="mx-2">/</span>
-              <span className="text-white">Тора</span>
-            </nav>
-
-            <div className="border-l-4 border-white pl-4">
-              <h1 className="text-5xl font-semibold tracking-tight text-white">Тора — Хумаш</h1>
-            </div>
-            <p className="text-lg leading-8 text-zinc-200">Ежедневная глава из недельного раздела Торы. Читайте, размышляйте, изучайте.</p>
-
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/20 backdrop-blur-sm">
-                <Scroll className="h-4 w-4" />
-                {torahVersion}
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-zinc-200 ring-1 ring-white/20 backdrop-blur-sm">
-                <Calendar className="h-4 w-4" />
-                {formattedDate}
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <LandingPageHero
+        title={pageData?.title}
+        description={pageData?.description}
+        backgroundImage={pageData?.image}
+        button1Link={asLink(pageData?.button_1_link)}
+        button1Label={(pageData?.button_1_link as any)?.text}
+        button1Variant={(pageData?.button_1_link as any)?.variant}
+        button2Link={asLink(pageData?.button_2_link)}
+        button2Label={(pageData?.button_2_link as any)?.text}
+        button2Variant={(pageData?.button_2_link as any)?.variant}
+        breadcrumbHomeLabel="Главная"
+        breadcrumbHomeLink="/"
+        breadcrumbCurrent="Тора"
+      />
 
       {/* ───── Torah Reader ───── */}
       <section id="reader" className="py-14 sm:py-20 bg-white dark:bg-zinc-950 flex-1 scroll-mt-20">
