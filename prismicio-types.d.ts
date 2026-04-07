@@ -1915,6 +1915,71 @@ interface TagDocumentData {
 export type TagDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
+type TorahlandingpageDocumentDataSlicesSlice = never;
+
+/**
+ * Content for TorahLandingPage documents
+ */
+interface TorahlandingpageDocumentData {
+  /**
+   * Slice Zone field in *TorahLandingPage*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: torahlandingpage.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<TorahlandingpageDocumentDataSlicesSlice>; /**
+   * Meta Title field in *TorahLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: torahlandingpage.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *TorahLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: torahlandingpage.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *TorahLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: torahlandingpage.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * TorahLandingPage document from Prismic
+ *
+ * - **API ID**: `torahlandingpage`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TorahlandingpageDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<TorahlandingpageDocumentData>,
+    "torahlandingpage",
+    Lang
+  >;
+
 /**
  * Item in *Video → Tags (optional)*
  */
@@ -2114,6 +2179,7 @@ export type AllDocumentTypes =
   | PodcastDocument
   | PodcastlandingpageDocument
   | TagDocument
+  | TorahlandingpageDocument
   | VideoDocument
   | VideolandingpageDocument;
 
@@ -3509,6 +3575,9 @@ declare module "@prismicio/client" {
       PodcastlandingpageDocumentDataSlicesSlice,
       TagDocument,
       TagDocumentData,
+      TorahlandingpageDocument,
+      TorahlandingpageDocumentData,
+      TorahlandingpageDocumentDataSlicesSlice,
       VideoDocument,
       VideoDocumentData,
       VideoDocumentDataTagsItem,

@@ -33,11 +33,11 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
           {prismicData.primary?.badge_text && <Badge size="lg">{prismicData.primary.badge_text}</Badge>}
 
           {prismicData.primary?.heading && (
-            <h2 className="mb-4 text-3xl font-bold leading-snug tracking-tight text-zinc-900 sm:text-5xl">{prismicData.primary.heading}</h2>
+            <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">{prismicData.primary.heading}</h2>
           )}
 
           {prismicData.primary?.description && (
-            <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600">{prismicData.primary.description}</p>
+            <p className="mx-auto max-w-xl text-lg text-zinc-600">{prismicData.primary.description}</p>
           )}
         </div>
 

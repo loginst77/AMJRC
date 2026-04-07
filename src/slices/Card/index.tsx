@@ -117,15 +117,17 @@ const Card: FC<CardProps> = ({ slice }) => {
                 {label}
               </Badge>
             : null}
-            <h2 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">{title}</h2>
+            <h2 className="text-4xl font-semibold tracking-tight text-zinc-950">{title}</h2>
             {description ?
-              <p className="max-w-3xl text-lg leading-8 text-zinc-600">{description}</p>
+              <p className="mx-auto max-w-xl text-lg text-zinc-600">{description}</p>
             : null}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {cards.slice(0, 6).map((card) => (
-              <div key={card.title} className={cn("group flex h-full !overflow-hidden flex-col bg-zinc-50", cardHoverCn)}>
+              <div
+                key={card.title}
+                className={cn("group flex h-full !overflow-hidden flex-col bg-zinc-50", cardHoverCn, !card.href && "!cursor-default")}>
                 <div className="relative h-52 w-full shrink-0 overflow-hidden bg-zinc-200 sm:h-72">
                   {(() => {
                     const img = card.image as ImageField | null | undefined;
