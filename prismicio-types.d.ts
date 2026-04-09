@@ -1915,12 +1915,175 @@ interface TagDocumentData {
 export type TagDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<TagDocumentData>, "tag", Lang>;
 
-type TorahlandingpageDocumentDataSlicesSlice = never;
+/**
+ * Item in *Torah → Commentarie*
+ */
+export interface TorahDocumentDataCommentarieItem {
+  /**
+   * Commentary field in *Torah → Commentarie*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Добавить комментарий
+   * - **API ID Path**: torah.commentarie[].commentary
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  commentary: prismic.RichTextField;
+
+  /**
+   * Author field in *Torah → Commentarie*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Автор (опционально)
+   * - **API ID Path**: torah.commentarie[].author
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  author: prismic.KeyTextField;
+}
+
+/**
+ * Content for Torah documents
+ */
+interface TorahDocumentData {
+  /**
+   * Start Date field in *Torah*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: Дата
+   * - **API ID Path**: torah.startDate
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  startDate: prismic.DateField;
+
+  /**
+   * End Date field in *Torah*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: Дата
+   * - **API ID Path**: torah.enddate
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  enddate: prismic.DateField;
+
+  /**
+   * Bible Passage field in *Torah*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Бытия 2:12-29
+   * - **API ID Path**: torah.bible_passage
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  bible_passage: prismic.KeyTextField;
+
+  /**
+   * Commentarie field in *Torah*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: torah.commentarie[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  commentarie: prismic.GroupField<Simplify<TorahDocumentDataCommentarieItem>>;
+}
+
+/**
+ * Torah document from Prismic
+ *
+ * - **API ID**: `torah`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TorahDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<TorahDocumentData>, "torah", Lang>;
+
+type TorahlandingpageDocumentDataSlicesSlice =
+  | BigEventSlice
+  | FormSlice
+  | CardSlice
+  | LandingPageHeroSlice
+  | BannerSlice
+  | SubscribeToNewsletterSlice
+  | ValuesBlockSlice
+  | QaSlice
+  | InfoCardSlice
+  | NoteBannerSlice;
 
 /**
  * Content for TorahLandingPage documents
  */
 interface TorahlandingpageDocumentData {
+  /**
+   * Image field in *TorahLandingPage*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: torahlandingpage.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *TorahLandingPage*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Название общины
+   * - **API ID Path**: torahlandingpage.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  title: prismic.RichTextField;
+
+  /**
+   * Description field in *TorahLandingPage*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание
+   * - **API ID Path**: torahlandingpage.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Button 1 Link field in *TorahLandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the first optional button
+   * - **API ID Path**: torahlandingpage.button_1_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_1_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
+  /**
+   * Button 2 Link field in *TorahLandingPage*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: Link for the second optional button
+   * - **API ID Path**: torahlandingpage.button_2_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button_2_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    "Primary" | "Secondary"
+  >;
+
   /**
    * Slice Zone field in *TorahLandingPage*
    *
@@ -1974,7 +2137,7 @@ interface TorahlandingpageDocumentData {
  * @typeParam Lang - Language API ID of the document.
  */
 export type TorahlandingpageDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithoutUID<
+  prismic.PrismicDocumentWithUID<
     Simplify<TorahlandingpageDocumentData>,
     "torahlandingpage",
     Lang
@@ -2179,6 +2342,7 @@ export type AllDocumentTypes =
   | PodcastDocument
   | PodcastlandingpageDocument
   | TagDocument
+  | TorahDocument
   | TorahlandingpageDocument
   | VideoDocument
   | VideolandingpageDocument;
@@ -3575,6 +3739,9 @@ declare module "@prismicio/client" {
       PodcastlandingpageDocumentDataSlicesSlice,
       TagDocument,
       TagDocumentData,
+      TorahDocument,
+      TorahDocumentData,
+      TorahDocumentDataCommentarieItem,
       TorahlandingpageDocument,
       TorahlandingpageDocumentData,
       TorahlandingpageDocumentDataSlicesSlice,

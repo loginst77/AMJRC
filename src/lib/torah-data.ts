@@ -1,306 +1,220 @@
-export const torahVersion = "Синодальный перевод (SYNO)";
+export type TranslationCode = "NRP" | "NIV" | "CSLAV";
+
+export type BibleCanon = "old_testament" | "new_testament";
+
+export const VERSIONS: Record<TranslationCode, { id: number; name: string; shortName: string; canons: BibleCanon[] }> = {
+  NRP: { id: 143, name: "Новый русский перевод (НРП)", shortName: "NRP", canons: ["old_testament", "new_testament"] },
+  NIV: { id: 111, name: "New International Version (NIV)", shortName: "NIV", canons: ["old_testament", "new_testament"] },
+  CSLAV: { id: 45, name: "Church Slavonic (CSLAV)", shortName: "CSLAV", canons: ["new_testament"] },
+};
+
+const API_BASE = "https://api.youversion.com/v1";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface TorahVerse {
   verse: number;
   text: string;
+  paragraphStart?: boolean; // true if this verse starts a new paragraph
+  chapterRef?: string; // Optional property to record if a verse starts a new chapter
 }
 
-export interface TorahChapter {
-  chapter: number;
+export interface TorahPassage {
+  reference: string;
+  content: string;
   verses: TorahVerse[];
 }
 
-export interface TorahPortion {
-  name: string; // Parsha name (e.g. "Берешит")
-  hebrewName: string; // Hebrew name (e.g. "בְּרֵאשִׁית")
-  book: string; // Book name (e.g. "Бытие")
-  summary: string; // Brief summary of the portion
-  chapters: TorahChapter[];
-}
+// ─── Book name mapping (Russian → YouVersion USFM) ─────────────────────────
 
-// ─── Torah Portions ──────────────────────────────────────────────────────────
-
-export const torahPortions: TorahPortion[] = [
-  {
-    name: "Берешит",
-    hebrewName: "בְּרֵאשִׁית",
-    book: "Бытие",
-    summary: "Сотворение мира, Адам и Ева, Каин и Авель, и поколения человечества.",
-    chapters: [
-      {
-        chapter: 1,
-        verses: [
-          { verse: 1, text: "В начале сотворил Бог небо и землю." },
-          {
-            verse: 2,
-            text: "Земля же была безвидна и пуста, и тьма над бездною, и Дух Божий носился над водою.",
-          },
-          { verse: 3, text: "И сказал Бог: да будет свет. И стал свет." },
-          { verse: 4, text: "И увидел Бог свет, что он хорош, и отделил Бог свет от тьмы." },
-          {
-            verse: 5,
-            text: "И назвал Бог свет днем, а тьму ночью. И был вечер, и было утро: день один.",
-          },
-          { verse: 6, text: "И сказал Бог: да будет твердь посреди воды, и да отделяет она воду от воды. [И стало так.]" },
-          { verse: 7, text: "И создал Бог твердь, и отделил воду, которая под твердью, от воды, которая над твердью. И стало так." },
-          { verse: 8, text: "И назвал Бог твердь небом. [И увидел Бог, что это хорошо.] И был вечер, и было утро: день второй." },
-          {
-            verse: 9,
-            text: "И сказал Бог: да соберется вода, которая под небом, в одно место, и да явится суша. И стало так. [И собралась вода под небом в свои места, и явилась суша.]",
-          },
-          { verse: 10, text: "И назвал Бог сушу землею, а собрание вод назвал морями. И увидел Бог, что это хорошо." },
-          {
-            verse: 11,
-            text: "И сказал Бог: да произрастит земля зелень, траву, сеющую семя [по роду и по подобию ее, и] дерево плодовитое, приносящее по роду своему плод, в котором семя его на земле. И стало так.",
-          },
-          {
-            verse: 12,
-            text: "И произвела земля зелень, траву, сеющую семя по роду [и по подобию] ее, и дерево [плодовитое], приносящее плод, в котором семя его по роду его [на земле]. И увидел Бог, что это хорошо.",
-          },
-          { verse: 13, text: "И был вечер, и было утро: день третий." },
-          {
-            verse: 14,
-            text: "И сказал Бог: да будут светила на тверди небесной [для освещения земли и] для отделения дня от ночи, и для знамений, и времен, и дней, и годов;",
-          },
-          { verse: 15, text: "и да будут они светильниками на тверди небесной, чтобы светить на землю. И стало так." },
-          {
-            verse: 16,
-            text: "И создал Бог два светила великие: светило большее, для управления днем, и светило меньшее, для управления ночью, и звезды;",
-          },
-          { verse: 17, text: "и поставил их Бог на тверди небесной, чтобы светить на землю," },
-          { verse: 18, text: "и управлять днем и ночью, и отделять свет от тьмы. И увидел Бог, что это хорошо." },
-          { verse: 19, text: "И был вечер, и было утро: день четвертый." },
-          {
-            verse: 20,
-            text: "И сказал Бог: да произведет вода пресмыкающихся, душу живую; и птицы да полетят над землею, по тверди небесной. [И стало так.]",
-          },
-          {
-            verse: 21,
-            text: "И сотворил Бог рыб больших и всякую душу животных пресмыкающихся, которых произвела вода, по роду их, и всякую птицу пернатую по роду ее. И увидел Бог, что это хорошо.",
-          },
-          {
-            verse: 22,
-            text: "И благословил их Бог, говоря: плодитесь и размножайтесь, и наполняйте воды в морях, и птицы да размножаются на земле.",
-          },
-          { verse: 23, text: "И был вечер, и было утро: день пятый." },
-          {
-            verse: 24,
-            text: "И сказал Бог: да произведет земля душу живую по роду ее, скотов, и гадов, и зверей земных по роду их. И стало так.",
-          },
-          {
-            verse: 25,
-            text: "И создал Бог зверей земных по роду их, и скот по роду его, и всех гадов земных по роду их. И увидел Бог, что это хорошо.",
-          },
-          {
-            verse: 26,
-            text: "И сказал Бог: сотворим человека по образу Нашему [и] по подобию Нашему, и да владычествуют они над рыбами морскими, и над птицами небесными, [и над зверями,] и над скотом, и над всею землею, и над всеми гадами, пресмыкающимися по земле.",
-          },
-          {
-            verse: 27,
-            text: "И сотворил Бог человека по образу Своему, по образу Божию сотворил его; мужчину и женщину сотворил их.",
-          },
-          {
-            verse: 28,
-            text: "И благословил их Бог, и сказал им Бог: плодитесь и размножайтесь, и наполняйте землю, и обладайте ею, и владычествуйте над рыбами морскими [и над зверями,] и над птицами небесными, [и над всяким скотом, и над всею землею,] и над всяким животным, пресмыкающимся по земле.",
-          },
-          {
-            verse: 29,
-            text: "И сказал Бог: вот, Я дал вам всякую траву, сеющую семя, какая есть на всей земле, и всякое дерево, у которого плод древесный, сеющий семя; - вам сие будет в пищу;",
-          },
-          {
-            verse: 30,
-            text: "а всем зверям земным, и всем птицам небесным, и всякому [гаду,] пресмыкающемуся по земле, в котором душа живая, дал Я всю зелень травную в пищу. И стало так.",
-          },
-          {
-            verse: 31,
-            text: "И увидел Бог все, что Он создал, и вот, хорошо весьма. И был вечер, и было утро: день шестой.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Ноах",
-    hebrewName: "נֹחַ",
-    book: "Бытие",
-    summary: "История о потопе, спасении праведного Ноя и его семьи, и о новом завете с человечеством.",
-    chapters: [
-      {
-        chapter: 6,
-        verses: [
-          {
-            verse: 9,
-            text: "Вот житие Ноя: Ной был человек праведный и непорочный в роде своем; Ной ходил пред Богом.",
-          },
-          { verse: 10, text: "Ной родил трех сынов: Сима, Хама и Иафета." },
-          { verse: 11, text: "Но земля растлилась пред лицем Божиим, и наполнилась земля злодеяниями." },
-          {
-            verse: 12,
-            text: "И воззрел [Господь] Бог на землю, и вот, она растленна, ибо всякая плоть извратила путь свой на земле.",
-          },
-          {
-            verse: 13,
-            text: "И сказал Бог Ною: конец всякой плоти пришел пред лице Мое, ибо земля наполнилась от них злодеяниями; и вот, Я истреблю их с земли.",
-          },
-          {
-            verse: 14,
-            text: "Сделай себе ковчег из дерева гофер; отделения сделай в ковчеге и осмоли его смолою внутри и снаружи.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    name: "Шмот",
-    hebrewName: "שְׁמוֹת",
-    book: "Исход",
-    summary: "Имена сынов Израилевых, их порабощение, и призвание Моисея через горящий куст.",
-    chapters: [
-      {
-        chapter: 3,
-        verses: [
-          {
-            verse: 1,
-            text: "Моисей пас овец у Иофора, тестя своего, священника Мадиамского. Однажды провел он стадо далеко в пустыню и пришел к горе Божией, Хориву.",
-          },
-          {
-            verse: 2,
-            text: "И явился ему Ангел Господень в пламени огня из среды тернового куста. И увидел он, что терновый куст горит огнем, но куст не сгорает.",
-          },
-          {
-            verse: 3,
-            text: "Моисей сказал: пойду и посмотрю на сие великое явление, отчего куст не сгорает.",
-          },
-          {
-            verse: 4,
-            text: "Господь увидел, что он идет смотреть, и воззвал к нему Бог из среды куста, и сказал: Моисей! Моисей! Он сказал: вот я!",
-          },
-          {
-            verse: 5,
-            text: "И сказал Бог: не подходи сюда; сними обувь твою с ног твоих, ибо место, на котором ты стоишь, есть земля святая.",
-          },
-          {
-            verse: 6,
-            text: "И сказал [ему]: Я Бог отца твоего, Бог Авраама, Бог Исаака и Бог Иакова. Моисей закрыл лице свое, потому что боялся воззреть на Бога.",
-          },
-          {
-            verse: 7,
-            text: "И сказал Господь [Моисею]: Я увидел страдание народа Моего в Египте и услышал вопль его от приставников его; Я знаю скорби его",
-          },
-          {
-            verse: 13,
-            text: "И сказал Моисей Богу: вот, я приду к сынам Израилевым и скажу им: Бог отцов ваших послал меня к вам. А они скажут мне: как Ему имя? Что сказать мне им?",
-          },
-          {
-            verse: 14,
-            text: "Бог сказал Моисею: Я есмь Сущий. И сказал: так скажи сынам Израилевым: Сущий [Иегова] послал меня к вам.",
-          },
-        ],
-      },
-    ],
-  },
-];
-
-// ─── Legacy single-verse exports (kept for backwards compatibility) ──────────
-
-export const torahVerses = [
-  { book: "Бытие", chapter: 1, verse: 1, text: "В начале сотворил Бог небо и землю.", version: torahVersion },
-  { book: "Бытие", chapter: 1, verse: 3, text: "И сказал Бог: да будет свет. И стал свет.", version: torahVersion },
-  {
-    book: "Исход",
-    chapter: 3,
-    verse: 14,
-    text: "Бог сказал Моисею: Я есмь Сущий. И сказал: так скажи сынам Израилевым: Сущий [Иегова] послал меня к вам.",
-    version: torahVersion,
-  },
-  {
-    book: "Исход",
-    chapter: 20,
-    verse: 2,
-    text: "Я Господь, Бог твой, Который вывел тебя из земли Египетской, из дома рабства;",
-    version: torahVersion,
-  },
-  {
-    book: "Левит",
-    chapter: 19,
-    verse: 18,
-    text: "Не мсти и не имей злобы на сынов народа твоего, но люби ближнего твоего, как самого себя. Я Господь.",
-    version: torahVersion,
-  },
-  { book: "Числа", chapter: 6, verse: 24, text: "Да благословит тебя Господь и сохранит тебя!", version: torahVersion },
-  { book: "Второзаконие", chapter: 6, verse: 4, text: "Слушай, Израиль: Господь, Бог наш, Господь един есть;", version: torahVersion },
-  {
-    book: "Второзаконие",
-    chapter: 6,
-    verse: 5,
-    text: "И люби Господа, Бога твоего, всем сердцем твоим, и всею душею твоею и всеми силами твоими.",
-    version: torahVersion,
-  },
-  {
-    book: "Второзаконие",
-    chapter: 31,
-    verse: 6,
-    text: "Будьте тверды и мужественны, не бойтесь, и не ужасайтесь их, ибо Господь Бог твой Сам пойдет с тобою и не отступит от тебя и не оставит тебя.",
-    version: torahVersion,
-  },
-  {
-    book: "Бытие",
-    chapter: 12,
-    verse: 1,
-    text: "И сказал Господь Авраму: пойди из земли твоей, от родства твоего и из дома отца твоего, в землю, которую Я укажу тебе;",
-    version: torahVersion,
-  },
-  {
-    book: "Бытие",
-    chapter: 28,
-    verse: 15,
-    text: "И вот Я с тобою, и сохраню тебя везде, куда ты ни пойдешь; и возвращу тебя в сию землю, ибо Я не оставлю тебя, доколе не исполню того, что Я сказал тебе.",
-    version: torahVersion,
-  },
-];
-
-// ─── Daily reading helpers ───────────────────────────────────────────────────
-
-export function getDailyTorahVerse() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now.getTime() - start.getTime();
-  const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
-  return torahVerses[dayOfYear % torahVerses.length];
-}
+const BOOK_MAP: Record<string, string> = {
+  // Russian names (various forms)
+  бытие: "GEN",
+  бытия: "GEN",
+  быт: "GEN",
+  исход: "EXO",
+  исх: "EXO",
+  левит: "LEV",
+  лев: "LEV",
+  числа: "NUM",
+  чис: "NUM",
+  второзаконие: "DEU",
+  втор: "DEU",
+  // English fallbacks
+  genesis: "GEN",
+  gen: "GEN",
+  exodus: "EXO",
+  exo: "EXO",
+  exod: "EXO",
+  leviticus: "LEV",
+  lev: "LEV",
+  numbers: "NUM",
+  num: "NUM",
+  deuteronomy: "DEU",
+  deut: "DEU",
+  deu: "DEU",
+};
 
 /**
- * Returns the daily Torah reading — a full portion + a specific chapter index.
- * Cycles through all portions and their chapters on a daily basis.
+ * Parse a human-readable passage reference into one or more YouVersion passage IDs.
+ * Examples:
+ *   "Бытия 2:12-29"  → ["GEN.2.12-29"]
+ *   "Исход 3"        → ["EXO.3"]
+ *   "Бытия 12-13"    → ["GEN.12", "GEN.13"]  (multi-chapter)
+ *   "GEN.1.1-5"      → ["GEN.1.1-5"] (passthrough)
  */
-export function getDailyReading() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now.getTime() - start.getTime();
-  const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
+export function parsePassageRef(ref: string): string[] {
+  const trimmed = ref.trim();
 
-  // Build a flat list of (portionIndex, chapterIndex) pairs
-  const readings: { portionIndex: number; chapterIndex: number }[] = [];
-  for (let p = 0; p < torahPortions.length; p++) {
-    for (let c = 0; c < torahPortions[p].chapters.length; c++) {
-      readings.push({ portionIndex: p, chapterIndex: c });
+  // Already in USFM format (e.g. "GEN.1.1-5")
+  if (/^[A-Z0-9]{2,5}\.\d/.test(trimmed)) {
+    return [trimmed];
+  }
+
+  // Try multi-chapter: "Book ChapterStart-ChapterEnd"
+  const multiMatch = trimmed.match(/^(.+?)\s+(\d+)-(\d+)$/);
+  if (multiMatch) {
+    const [, bookName, startCh, endCh] = multiMatch;
+    const bookId = BOOK_MAP[bookName.toLowerCase().trim()];
+    if (!bookId) {
+      throw new Error(`Unknown book name: "${bookName}"`);
+    }
+    const start = parseInt(startCh, 10);
+    const end = parseInt(endCh, 10);
+    const ids: string[] = [];
+    for (let ch = start; ch <= end; ch++) {
+      ids.push(`${bookId}.${ch}`);
+    }
+    return ids;
+  }
+
+  // Parse "Book Chapter:VerseStart-VerseEnd" or "Book Chapter"
+  const match = trimmed.match(/^(.+?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/);
+  if (!match) {
+    throw new Error(`Cannot parse passage reference: "${ref}"`);
+  }
+
+  const [, bookName, chapter, verseStart, verseEnd] = match;
+  const bookId = BOOK_MAP[bookName.toLowerCase().trim()];
+  if (!bookId) {
+    throw new Error(`Unknown book name: "${bookName}"`);
+  }
+
+  if (verseStart && verseEnd) {
+    return [`${bookId}.${chapter}.${verseStart}-${verseEnd}`];
+  }
+  if (verseStart) {
+    return [`${bookId}.${chapter}.${verseStart}`];
+  }
+  return [`${bookId}.${chapter}`];
+}
+
+// ─── YouVersion API client ──────────────────────────────────────────────────
+
+/**
+ * Fetch a passage from YouVersion. Returns raw content and reference.
+ */
+async function fetchFromYouVersion(passageId: string, bibleId: number): Promise<{ content: string; reference: string }> {
+  const apiKey = process.env.YVP_APP_KEY;
+  if (!apiKey) {
+    throw new Error("YVP_APP_KEY is not configured in .env.local");
+  }
+
+  const res = await fetch(`${API_BASE}/bibles/${bibleId}/passages/${passageId}?format=html`, {
+    headers: { "X-YVP-App-Key": apiKey },
+    next: { revalidate: 86400 },
+  });
+
+  if (!res.ok) {
+    throw new Error(`YouVersion API error: ${res.status} ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  return {
+    content: data.content ?? "",
+    reference: data.reference ?? passageId,
+  };
+}
+
+// ─── Public API ─────────────────────────────────────────────────────────────
+
+/**
+ * Parse YouVersion HTML into individual verses with paragraph info.
+ * HTML structure:
+ *   <div class="p">  — paragraph
+ *   <div class="q1"> — poetry line 1
+ *   <div class="q2"> — poetry line 2
+ *   <span class="yv-v" v="N"> — verse marker
+ *   <span class="yv-vlbl">N</span> — verse label
+ */
+function parseHtmlToVerses(html: string): TorahVerse[] {
+  const verses: TorahVerse[] = [];
+
+  // Insert a special marker before each paragraph/poetry block
+  // so we can detect paragraph boundaries after splitting by verse
+  const PARA_MARKER = "\u0000PARA\u0000";
+  const marked = html.replace(/<div class="(?:p|q[12])">/g, PARA_MARKER);
+
+  // Split on verse markers
+  const parts = marked.split(/<span class="yv-v" v="(\d+)"><\/span>/);
+
+  for (let i = 1; i < parts.length; i += 2) {
+    const verseNum = parseInt(parts[i], 10);
+    let text = parts[i + 1] || "";
+
+    // Check if this verse starts a new paragraph
+    const paragraphStart = text.indexOf(PARA_MARKER) !== -1 || (i === 1 && parts[0].includes(PARA_MARKER));
+
+    // Strip markers, verse labels, and HTML tags
+    text = text.replace(/\u0000PARA\u0000/g, "");
+    text = text.replace(/<span class="yv-vlbl">\d+<\/span>/g, "");
+    text = text.replace(/<[^>]+>/g, " ");
+    text = text.replace(/\s+/g, " ").trim();
+
+    if (text) {
+      verses.push({
+        verse: verseNum,
+        text,
+        paragraphStart: paragraphStart || i === 1,
+      });
     }
   }
 
-  const idx = dayOfYear % readings.length;
-  const { portionIndex, chapterIndex } = readings[idx];
-  const portion = torahPortions[portionIndex];
-  const chapter = portion.chapters[chapterIndex];
+  return verses;
+}
+
+/**
+ * Fetch a passage by its YouVersion ID (e.g. "GEN.1" or "GEN.2.1-5")
+ * or a human-readable reference (e.g. "Бытия 2:12-29", "Бытия 12-13").
+ * Supports multi-chapter ranges — each chapter is fetched separately and merged.
+ */
+export async function fetchPassage(ref: string, bibleId: number = 143): Promise<TorahPassage> {
+  const passageIds = parsePassageRef(ref);
+
+  // Fetch all chapters in parallel
+  const results = await Promise.all(passageIds.map((id) => fetchFromYouVersion(id, bibleId)));
+
+  // Merge references, content, and verses
+  const references = results.map((r) => r.reference);
+  const allVerses: TorahVerse[] = [];
+
+  for (const result of results) {
+    const chapterVerses = parseHtmlToVerses(result.content);
+    // First verse of each new chapter always starts a new paragraph and holds the chapter title
+    if (chapterVerses.length > 0) {
+      if (allVerses.length > 0) {
+        chapterVerses[0].paragraphStart = true;
+      }
+      chapterVerses[0].chapterRef = result.reference;
+    }
+    allVerses.push(...chapterVerses);
+  }
+
+  const plainText = allVerses.map((v) => v.text).join(" ");
 
   return {
-    portion,
-    chapter,
-    chapterIndex,
-    readingIndex: idx,
-    totalReadings: readings.length,
+    reference: references.join("; "),
+    content: plainText,
+    verses: allVerses,
   };
 }

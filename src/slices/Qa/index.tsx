@@ -26,8 +26,7 @@ type QaItem = {
 };
 
 const FALLBACK_TITLE = "Частые вопросы";
-const FALLBACK_DESCRIPTION =
-  "Ответы на то, что мы слышим чаще всего от новых гостей и друзей общины.";
+const FALLBACK_DESCRIPTION = "Ответы на то, что мы слышим чаще всего от новых гостей и друзей общины.";
 const FALLBACK_ITEMS: QaItem[] = [
   {
     question: "Как выглядит ваше воскресное собрание?",
@@ -39,7 +38,8 @@ const FALLBACK_ITEMS: QaItem[] = [
   },
   {
     question: "Нужно ли регистрироваться заранее?",
-    answer: "Регистрация не обязательна, но если вы заполните форму на сайте, мы подготовим для вас приветственный набор и поможем с парковкой.",
+    answer:
+      "Регистрация не обязательна, но если вы заполните форму на сайте, мы подготовим для вас приветственный набор и поможем с парковкой.",
   },
 ];
 
@@ -57,8 +57,7 @@ function QaAccordionItem({ item }: { item: QaItem }) {
           event.preventDefault();
           setOpen((o) => !o);
         }
-      }}
-    >
+      }}>
       <div className="flex w-full items-center justify-between gap-4 py-3 text-left text-base font-semibold text-zinc-950">
         <span>{item.question}</span>
         <ChevronDown
@@ -90,20 +89,14 @@ const Qa: FC<QaProps> = ({ slice }) => {
 
   const qaItems = normalizedItems.length ? normalizedItems : FALLBACK_ITEMS;
   const title = primary.title && isFilled.keyText(primary.title) ? primary.title : FALLBACK_TITLE;
-  const description =
-    primary.description && isFilled.keyText(primary.description) ? primary.description : FALLBACK_DESCRIPTION;
+  const description = primary.description && isFilled.keyText(primary.description) ? primary.description : FALLBACK_DESCRIPTION;
 
   return (
-    <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="border-t border-zinc-200 bg-white"
-    >
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="border-t border-zinc-200 bg-white">
       <Bounded as="div" yPadding="base">
         <div
-          className="mx-auto max-w-4xl rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] overflow-hidden"
-          style={{ boxShadow: "var(--shadow-secondary)" }}
-        >
+          className="rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] overflow-hidden"
+          style={{ boxShadow: "var(--shadow-secondary)" }}>
           <div className="border-b border-zinc-200 px-6 py-8 sm:px-8">
             <SectionHeader
               title={title}

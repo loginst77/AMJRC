@@ -14,6 +14,7 @@ import type { HeaderNavLinkItem } from "@/components/mobile-nav";
 import { cn } from "@/lib/utils";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter, type FooterLinkItem, type FooterServiceTime, type SiteFooterProps } from "@/components/site-footer";
+import { Toaster } from "sonner";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -61,6 +62,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <SiteFooter {...footerContent} />
         : null}
         <PrismicPreview repositoryName={repositoryName} />
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
