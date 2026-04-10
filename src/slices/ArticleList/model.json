@@ -1,0 +1,42 @@
+{
+  "id": "article_list",
+  "type": "SharedSlice",
+  "name": "ArticleList",
+  "description": "ArticleList",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Название"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Описание"
+          }
+        },
+        "background": {
+          "type": "Boolean",
+          "config": {
+            "label": "Background",
+            "placeholder_false": "Secondary (второстепенный)",
+            "placeholder_true": "Main (основной)",
+            "default_value": true
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

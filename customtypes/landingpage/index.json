@@ -68,6 +68,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "article_list": {
+              "type": "SharedSlice"
+            },
             "podcast_carousel": {
               "type": "SharedSlice"
             },

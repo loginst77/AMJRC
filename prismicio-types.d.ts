@@ -1196,6 +1196,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | ArticleListSlice
   | PodcastCarouselSlice
   | VideoCarouselSlice
   | TeamSectionSlice
@@ -2347,6 +2348,72 @@ export type AllDocumentTypes =
   | TorahlandingpageDocument
   | VideoDocument
   | VideolandingpageDocument;
+
+/**
+ * Primary content in *ArticleList → Default → Primary*
+ */
+export interface ArticleListSliceDefaultPrimary {
+  /**
+   * Title field in *ArticleList → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название
+   * - **API ID Path**: article_list.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *ArticleList → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Описание
+   * - **API ID Path**: article_list.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background field in *ArticleList → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: article_list.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  background: prismic.BooleanField;
+}
+
+/**
+ * Default variation for ArticleList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ArticleListSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ArticleListSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *ArticleList*
+ */
+type ArticleListSliceVariation = ArticleListSliceDefault;
+
+/**
+ * ArticleList Shared Slice
+ *
+ * - **API ID**: `article_list`
+ * - **Description**: ArticleList
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ArticleListSlice = prismic.SharedSlice<
+  "article_list",
+  ArticleListSliceVariation
+>;
 
 /**
  * Primary content in *Banner → Default → Primary*
@@ -3885,6 +3952,10 @@ declare module "@prismicio/client" {
       VideolandingpageDocumentData,
       VideolandingpageDocumentDataSlicesSlice,
       AllDocumentTypes,
+      ArticleListSlice,
+      ArticleListSliceDefaultPrimary,
+      ArticleListSliceVariation,
+      ArticleListSliceDefault,
       BannerSlice,
       BannerSliceDefaultPrimary,
       BannerSliceVariation,
