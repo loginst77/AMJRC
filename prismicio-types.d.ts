@@ -1196,6 +1196,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | PodcastCarouselSlice
   | VideoCarouselSlice
   | TeamSectionSlice
   | HistoryEventsSlice
@@ -3323,6 +3324,42 @@ export type NoteBannerSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *PodcastCarousel → Default → Primary*
+ */
+export interface PodcastCarouselSliceDefaultPrimary {
+  /**
+   * Title field in *PodcastCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название
+   * - **API ID Path**: podcast_carousel.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *PodcastCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Описание
+   * - **API ID Path**: podcast_carousel.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background field in *PodcastCarousel → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: podcast_carousel.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  background: prismic.BooleanField;
+}
+
+/**
  * Default variation for PodcastCarousel Slice
  *
  * - **API ID**: `default`
@@ -3331,7 +3368,7 @@ export type NoteBannerSlice = prismic.SharedSlice<
  */
 export type PodcastCarouselSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
+  Simplify<PodcastCarouselSliceDefaultPrimary>,
   never
 >;
 
@@ -3887,6 +3924,7 @@ declare module "@prismicio/client" {
       NoteBannerSliceVariation,
       NoteBannerSliceDefault,
       PodcastCarouselSlice,
+      PodcastCarouselSliceDefaultPrimary,
       PodcastCarouselSliceVariation,
       PodcastCarouselSliceDefault,
       QaSlice,

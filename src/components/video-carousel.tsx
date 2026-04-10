@@ -57,7 +57,7 @@ export function VideoCarousel({ videos, className }: VideoCarouselProps) {
       {/* Scrollable row */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory p-6 scroll-p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden after:content-[''] after:w-px after:shrink-0">
         {videos.map((video) => (
           <div key={video.id} className="flex h-auto flex-none w-[320px] sm:w-[420px] lg:w-[500px] snap-start">
             <VideoCard video={video} />
