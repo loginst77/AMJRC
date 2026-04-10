@@ -1196,6 +1196,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | VideoCarouselSlice
   | TeamSectionSlice
   | HistoryEventsSlice
   | InfoCardSlice
@@ -1206,7 +1207,6 @@ type LandingpageDocumentDataSlicesSlice =
   | BannerSlice
   | BigEventSlice
   | CardSlice
-  | LandingPageHeroSlice
   | NoteBannerSlice;
 
 /**
@@ -3323,6 +3323,36 @@ export type NoteBannerSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Default variation for PodcastCarousel Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PodcastCarouselSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *PodcastCarousel*
+ */
+type PodcastCarouselSliceVariation = PodcastCarouselSliceDefault;
+
+/**
+ * PodcastCarousel Shared Slice
+ *
+ * - **API ID**: `podcast_carousel`
+ * - **Description**: PodcastCarousel
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PodcastCarouselSlice = prismic.SharedSlice<
+  "podcast_carousel",
+  PodcastCarouselSliceVariation
+>;
+
+/**
  * Primary content in *Qa → Default → Primary*
  */
 export interface QaSliceDefaultPrimary {
@@ -3668,6 +3698,72 @@ export type ValuesBlockSlice = prismic.SharedSlice<
   ValuesBlockSliceVariation
 >;
 
+/**
+ * Primary content in *VideoCarousel → Default → Primary*
+ */
+export interface VideoCarouselSliceDefaultPrimary {
+  /**
+   * Title field in *VideoCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название
+   * - **API ID Path**: video_carousel.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *VideoCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Описание
+   * - **API ID Path**: video_carousel.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background field in *VideoCarousel → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: video_carousel.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  background: prismic.BooleanField;
+}
+
+/**
+ * Default variation for VideoCarousel Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type VideoCarouselSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<VideoCarouselSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *VideoCarousel*
+ */
+type VideoCarouselSliceVariation = VideoCarouselSliceDefault;
+
+/**
+ * VideoCarousel Shared Slice
+ *
+ * - **API ID**: `video_carousel`
+ * - **Description**: VideoCarousel
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type VideoCarouselSlice = prismic.SharedSlice<
+  "video_carousel",
+  VideoCarouselSliceVariation
+>;
+
 declare module "@prismicio/client" {
   interface CreateClient {
     (
@@ -3790,6 +3886,9 @@ declare module "@prismicio/client" {
       NoteBannerSliceDefaultItem,
       NoteBannerSliceVariation,
       NoteBannerSliceDefault,
+      PodcastCarouselSlice,
+      PodcastCarouselSliceVariation,
+      PodcastCarouselSliceDefault,
       QaSlice,
       QaSliceDefaultPrimary,
       QaSliceDefaultItem,
@@ -3809,6 +3908,10 @@ declare module "@prismicio/client" {
       ValuesBlockSliceDefaultItem,
       ValuesBlockSliceVariation,
       ValuesBlockSliceDefault,
+      VideoCarouselSlice,
+      VideoCarouselSliceDefaultPrimary,
+      VideoCarouselSliceVariation,
+      VideoCarouselSliceDefault,
     };
   }
 }

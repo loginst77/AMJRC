@@ -82,7 +82,7 @@ export function VideoCard({ video }: VideoCardProps) {
   };
 
   return (
-    <div className={cn("group flex flex-col overflow-hidden bg-white cursor-pointer", cardHoverCn)}>
+    <div className={cn("group flex h-full flex-col overflow-hidden bg-white cursor-pointer", cardHoverCn)}>
       {/* Thumbnail with play */}
       <button
         type="button"

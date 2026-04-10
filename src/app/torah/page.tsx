@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { TorahDocument } from "../../../prismicio-types";
 import { SliceZone } from "@prismicio/react";
 import { asLink } from "@prismicio/client";
 import { Container } from "@/components/ui/container";
@@ -36,7 +37,7 @@ export default async function ReadTorahPage(props: {
 
   // Fetch current Torah reading from Prismic
   const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-  const allReadings = await client.getAllByType("torah" as any).catch(() => []);
+  const allReadings = await client.getAllByType<TorahDocument>("torah").catch(() => [] as TorahDocument[]);
 
   // Sort by startDate
   allReadings.sort((a: any, b: any) => {
@@ -65,7 +66,7 @@ export default async function ReadTorahPage(props: {
   }
 
   const currentReading = currentIndex !== -1 ? allReadings[currentIndex] : undefined;
-  
+
   // Previous / Next bindings
   const prevIndex = currentIndex - 1;
   const nextIndex = currentIndex + 1;
@@ -148,22 +149,22 @@ export default async function ReadTorahPage(props: {
           <Container>
             <div className="mx-auto max-w-7xl">
               <div className="grid gap-6 sm:grid-cols-2">
-                {prevReading ? (
-                  <ReadingPreviewCard 
-                    direction="prev" 
-                    title={prevReading.data.bible_passage || "Безымянное чтение"} 
-                    dateRange={`${formatDate(prevReading.data.startDate)} — ${formatDate(prevReading.data.enddate)}`} 
+                {prevReading ?
+                  <ReadingPreviewCard
+                    direction="prev"
+                    title={prevReading.data.bible_passage || "Безымянное чтение"}
+                    dateRange={`${formatDate(prevReading.data.startDate || "")} — ${formatDate(prevReading.data.enddate || "")}`}
                     href={`/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader`}
                   />
-                ) : <div />}
-                {nextReading ? (
-                  <ReadingPreviewCard 
-                    direction="next" 
-                    title={nextReading.data.bible_passage || "Безымянное чтение"} 
-                    dateRange={`${formatDate(nextReading.data.startDate)} — ${formatDate(nextReading.data.enddate)}`} 
+                : <div />}
+                {nextReading ?
+                  <ReadingPreviewCard
+                    direction="next"
+                    title={nextReading.data.bible_passage || "Безымянное чтение"}
+                    dateRange={`${formatDate(nextReading.data.startDate || "")} — ${formatDate(nextReading.data.enddate || "")}`}
                     href={`/torah?version=${currentVersionCode}&offset=${nextIndex - baseIndex}#reader`}
                   />
-                ) : <div />}
+                : <div />}
               </div>
             </div>
           </Container>

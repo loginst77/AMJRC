@@ -68,6 +68,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "video_carousel": {
+              "type": "SharedSlice"
+            },
             "team_section": {
               "type": "SharedSlice"
             },
@@ -96,9 +99,6 @@
               "type": "SharedSlice"
             },
             "card": {
-              "type": "SharedSlice"
-            },
-            "landing_page_hero": {
               "type": "SharedSlice"
             },
             "note_banner": {

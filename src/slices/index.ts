@@ -12,8 +12,10 @@ export const components = {
   info_card: dynamic(() => import("./InfoCard")),
   landing_page_hero: dynamic(() => import("./LandingPageHero")),
   note_banner: dynamic(() => import("./NoteBanner")),
+  podcast_carousel: dynamic(() => import("./PodcastCarousel")),
   qa: dynamic(() => import("./Qa")),
   subscribe_to_newsletter: dynamic(() => import("./SubscribeToNewsletter")),
   team_section: dynamic(() => import("./TeamSection")),
   values_block: dynamic(() => import("./ValuesBlock")),
+  video_carousel: dynamic(() => import("./VideoCarousel")),
 };
