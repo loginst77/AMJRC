@@ -1,0 +1,17 @@
+{
+  "format": "custom",
+  "id": "event",
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      }
+    }
+  },
+  "label": "Event",
+  "repeatable": true,
+  "status": true
+}

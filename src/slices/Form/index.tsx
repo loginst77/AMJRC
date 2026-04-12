@@ -15,7 +15,7 @@ import { Container } from "@/components/ui/container";
 
 type FormProps = SliceComponentProps<Content.FormSlice>;
 
-type FieldVisibility = "Hidden" | "optional" | "required";
+type FieldVisibility = "hidden" | "optional" | "required";
 
 type FormPrimary = {
   title?: KeyTextField;
@@ -95,8 +95,8 @@ const Form: FC<FormProps> = ({ slice }) => {
     primary.description || "Есть вопрос, просьба о молитве или хотите спланировать визит? Напишите нам — мы ответим как можно скорее.";
   const buttonText = primary.buttonText || "Отправить сообщение";
   const webhookUrl = primary.excelWebhookUrl;
-  const phoneVisibility: FieldVisibility = (primary.phoneField?.trim() as FieldVisibility) || "Hidden";
-  const messageVisibility: FieldVisibility = (primary.messageField?.trim() as FieldVisibility) || "Hidden";
+  const phoneVisibility: FieldVisibility = (primary.phoneField?.trim() as FieldVisibility) || "hidden";
+  const messageVisibility: FieldVisibility = (primary.messageField?.trim() as FieldVisibility) || "hidden";
   const hasImage = slice.variation === "default" && isFilled.image(primary.image);
 
   const [status, setStatus] = useState<Status>("idle");
@@ -326,7 +326,7 @@ const Form: FC<FormProps> = ({ slice }) => {
         </label>
       </div>
 
-      {phoneVisibility !== "Hidden" && (
+      {phoneVisibility !== "hidden" && (
         <div className="block space-y-2 text-sm">
           <div className="font-medium text-zinc-900">
             Телефон {phoneVisibility === "required" && <span className="text-red-500">*</span>}
@@ -345,7 +345,7 @@ const Form: FC<FormProps> = ({ slice }) => {
 
       {items.map((item, i) => renderDynamicField(item, i))}
 
-      {messageVisibility !== "Hidden" && (
+      {messageVisibility !== "hidden" && (
         <label className="block space-y-2 overflow-hidden text-sm">
           <div className="font-medium text-zinc-900">
             Сообщение {messageVisibility === "required" && <span className="text-red-500">*</span>}

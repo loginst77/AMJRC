@@ -3,11 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Users } from "lucide-react";
 import { asText, asLink } from "@prismicio/client";
+import { SliceZone } from "@prismicio/react";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import { LandingPageHero } from "@/components/LandingPageHero";
 import { PrismicNextLink, PrismicNextImage } from "@prismicio/next";
 
 import { Container } from "@/components/ui/container";
+import { components } from "@/slices";
 import { createClient } from "@/prismicio";
 
 type Params = { uid: string };
@@ -81,6 +83,8 @@ export default async function CommunityPage({ params }: { params: Promise<Params
           </div>
         </Container>
       </section>
+
+      <SliceZone slices={doc.data.slices} components={components} />
     </div>
   );
 }

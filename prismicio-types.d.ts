@@ -541,6 +541,7 @@ export type BooklandingpageDocument<Lang extends string = string> =
   >;
 
 type CommunityDocumentDataSlicesSlice =
+  | EventCardsSlice
   | BigEventSlice
   | FormSlice
   | CardSlice
@@ -855,6 +856,20 @@ export type CommunitylandingpageDocument<Lang extends string = string> =
     "communitylandingpage",
     Lang
   >;
+
+interface EventDocumentData {}
+
+/**
+ * Event document from Prismic
+ *
+ * - **API ID**: `event`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type EventDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<EventDocumentData>, "event", Lang>;
 
 /**
  * Item in *Footer → Navigation links*
@@ -2337,6 +2352,7 @@ export type AllDocumentTypes =
   | BooklandingpageDocument
   | CommunityDocument
   | CommunitylandingpageDocument
+  | EventDocument
   | FooterDocument
   | HomeDocument
   | LandingpageDocument
@@ -2852,6 +2868,172 @@ type CardSliceVariation = CardSliceDefault;
 export type CardSlice = prismic.SharedSlice<"card", CardSliceVariation>;
 
 /**
+ * Primary content in *EventCards → Default → Primary*
+ */
+export interface EventCardsSliceDefaultPrimary {
+  /**
+   * Badge Text field in *EventCards → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: События
+   * - **API ID Path**: event_cards.default.primary.badge_text
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  badge_text: prismic.KeyTextField;
+
+  /**
+   * Heading field in *EventCards → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Наши события
+   * - **API ID Path**: event_cards.default.primary.heading
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Description field in *EventCards → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Краткое описание блока
+   * - **API ID Path**: event_cards.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *EventCards → Items*
+ */
+export interface EventCardsSliceDefaultItem {
+  /**
+   * Image field in *EventCards → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: event_cards.items[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Label field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Конференция
+   * - **API ID Path**: event_cards.items[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Date field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: April 25 / Каждую субботу
+   * - **API ID Path**: event_cards.items[].date
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  date: prismic.KeyTextField;
+
+  /**
+   * Time field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: 10:00
+   * - **API ID Path**: event_cards.items[].time
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  time: prismic.KeyTextField;
+
+  /**
+   * Location field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Москва, ул. Пример, 1
+   * - **API ID Path**: event_cards.items[].location
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  location: prismic.KeyTextField;
+
+  /**
+   * Title field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название события
+   * - **API ID Path**: event_cards.items[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Summary field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Подробное описание события
+   * - **API ID Path**: event_cards.items[].summary
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  summary: prismic.KeyTextField;
+
+  /**
+   * Button link field in *EventCards → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: event_cards.items[].buttonLink
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  buttonLink: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Button label field in *EventCards → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Зарегистрироваться
+   * - **API ID Path**: event_cards.items[].buttonLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonLabel: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for EventCards Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EventCardsSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<EventCardsSliceDefaultPrimary>,
+  Simplify<EventCardsSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *EventCards*
+ */
+type EventCardsSliceVariation = EventCardsSliceDefault;
+
+/**
+ * EventCards Shared Slice
+ *
+ * - **API ID**: `event_cards`
+ * - **Description**: EventCards
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EventCardsSlice = prismic.SharedSlice<
+  "event_cards",
+  EventCardsSliceVariation
+>;
+
+/**
  * Primary content in *Form → Default → Primary*
  */
 export interface FormSliceDefaultPrimary {
@@ -2910,14 +3092,11 @@ export interface FormSliceDefaultPrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: Show phone field?
-   * - **Default Value**: not show
+   * - **Default Value**: hidden
    * - **API ID Path**: form.default.primary.phoneField
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
-  phoneField: prismic.SelectField<
-    "not show" | "optional" | "required",
-    "filled"
-  >;
+  phoneField: prismic.SelectField<"hidden" | "optional" | "required", "filled">;
 
   /**
    * Message / Notes Field field in *Form → Default → Primary*
@@ -2929,7 +3108,7 @@ export interface FormSliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   messageField: prismic.SelectField<
-    "not show" | "optional" | "required",
+    "hidden" | "optional" | "required",
     "filled"
   >;
 }
@@ -3046,14 +3225,11 @@ export interface FormSliceFormWithoutImagePrimary {
    *
    * - **Field Type**: Select
    * - **Placeholder**: Show phone field?
-   * - **Default Value**: not show
+   * - **Default Value**: hidden
    * - **API ID Path**: form.formWithoutImage.primary.phoneField
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
-  phoneField: prismic.SelectField<
-    "not show" | "optional" | "required",
-    "filled"
-  >;
+  phoneField: prismic.SelectField<"hidden" | "optional" | "required", "filled">;
 
   /**
    * Message / Notes Field field in *Form → Form without Image → Primary*
@@ -3065,7 +3241,7 @@ export interface FormSliceFormWithoutImagePrimary {
    * - **Documentation**: https://prismic.io/docs/fields/select
    */
   messageField: prismic.SelectField<
-    "not show" | "optional" | "required",
+    "hidden" | "optional" | "required",
     "filled"
   >;
 }
@@ -4313,6 +4489,8 @@ declare module "@prismicio/client" {
       CommunitylandingpageDocument,
       CommunitylandingpageDocumentData,
       CommunitylandingpageDocumentDataSlicesSlice,
+      EventDocument,
+      EventDocumentData,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataNavigationLinksItem,
@@ -4376,6 +4554,11 @@ declare module "@prismicio/client" {
       CardSliceDefaultItem,
       CardSliceVariation,
       CardSliceDefault,
+      EventCardsSlice,
+      EventCardsSliceDefaultPrimary,
+      EventCardsSliceDefaultItem,
+      EventCardsSliceVariation,
+      EventCardsSliceDefault,
       FormSlice,
       FormSliceDefaultPrimary,
       FormSliceDefaultItem,

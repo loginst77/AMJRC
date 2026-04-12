@@ -89,6 +89,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "event_cards": {
+              "type": "SharedSlice"
+            },
             "big_event": {
               "type": "SharedSlice"
             },

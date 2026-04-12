@@ -1,0 +1,123 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"badge_text": {
+				"__TYPE__": "FieldContent",
+				"value": "warn",
+				"type": "Text"
+			},
+			"heading": {
+				"__TYPE__": "FieldContent",
+				"value": "men",
+				"type": "Text"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"value": "thumb",
+				"type": "Text"
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"image",
+						{
+							"origin": {
+								"id": "main",
+								"url": "https://images.unsplash.com/photo-1586952518485-11b180e92764",
+								"width": 4172,
+								"height": 4000
+							},
+							"url": "https://images.unsplash.com/photo-1586952518485-11b180e92764",
+							"width": 4172,
+							"height": 4000,
+							"edit": {
+								"zoom": 1,
+								"crop": {
+									"x": 0,
+									"y": 0
+								},
+								"background": "transparent"
+							},
+							"alt": "dark",
+							"credits": null,
+							"__TYPE__": "ImageContent",
+							"thumbnails": {}
+						}
+					],
+					[
+						"label",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "palace",
+							"type": "Text"
+						}
+					],
+					[
+						"time",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "hurt",
+							"type": "Text"
+						}
+					],
+					[
+						"location",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "stream",
+							"type": "Text"
+						}
+					],
+					[
+						"title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "rich",
+							"type": "Text"
+						}
+					],
+					[
+						"summary",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "money",
+							"type": "Text"
+						}
+					],
+					[
+						"buttonLink",
+						{
+							"key": "88b2a56a-4730-41f3-a175-c25274736731",
+							"__TYPE__": "LinkContent",
+							"value": {
+								"__TYPE__": "ExternalLink",
+								"url": "http://google.com"
+							}
+						}
+					],
+					[
+						"buttonLabel",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "because",
+							"type": "Text"
+						}
+					],
+					[
+						"date",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "poetry",
+							"type": "Text"
+						}
+					]
+				]
+			}
+		]
+	}
+]

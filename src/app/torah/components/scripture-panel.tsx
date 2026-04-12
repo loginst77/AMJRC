@@ -24,7 +24,7 @@ export function ScripturePanel({
 
   return (
     <div className="lg:w-3/5">
-      <div className="rounded-3xl border border-zinc-200 bg-white shadow-secondary h-[70vh] flex flex-col overflow-hidden">
+      <div className="rounded-3xl border border-zinc-200 bg-white shadow-secondary h-[85vh] flex flex-col overflow-hidden">
         {/* Chapter heading */}
         <div className="flex items-center bg-zinc-50 dark:bg-zinc-900 justify-between border-b border-zinc-200 px-8 py-5 dark:border-zinc-800 sm:px-10">
           <div className="flex items-center gap-3">
