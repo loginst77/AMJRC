@@ -9,10 +9,216 @@
       "name": "Default",
       "docURL": "...",
       "version": "initial",
-      "description": "Default",
+      "description": "Form with image",
       "imageUrl": "",
-      "primary": {},
-      "items": {}
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Свяжитесь с нами"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Есть вопрос? Напишите нам."
+          }
+        },
+        "buttonText": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": "Отправить сообщение"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "excelWebhookUrl": {
+          "type": "Text",
+          "config": {
+            "label": "Excel Webhook URL",
+            "placeholder": "https://... (Power Automate / Make webhook URL)"
+          }
+        },
+        "phoneField": {
+          "type": "Select",
+          "config": {
+            "label": "Phone Number Field",
+            "placeholder": "Show phone field?",
+            "options": [
+              "not show",
+              "optional",
+              "required"
+            ],
+            "default_value": "not show"
+          }
+        },
+        "messageField": {
+          "type": "Select",
+          "config": {
+            "label": "Message / Notes Field",
+            "placeholder": "Show message field?",
+            "options": [
+              "not show",
+              "optional",
+              "required"
+            ],
+            "default_value": "optional"
+          }
+        }
+      },
+      "items": {
+        "fieldLabel": {
+          "type": "Text",
+          "config": {
+            "label": "Field Label",
+            "placeholder": "e.g. Город, Возраст..."
+          }
+        },
+        "fieldType": {
+          "type": "Select",
+          "config": {
+            "label": "Field Type",
+            "placeholder": "Type of input",
+            "options": [
+              "text",
+              "select",
+              "radio",
+              "checkbox",
+              "file"
+            ],
+            "default_value": "text"
+          }
+        },
+        "fieldRequired": {
+          "type": "Boolean",
+          "config": {
+            "label": "Required",
+            "default_value": false,
+            "placeholder_false": "Optional",
+            "placeholder_true": "Required"
+          }
+        },
+        "fieldOptions": {
+          "type": "Text",
+          "config": {
+            "label": "Options (comma-separated)",
+            "placeholder": "Option 1, Option 2, Option 3"
+          }
+        }
+      }
+    },
+    {
+      "id": "formWithoutImage",
+      "name": "Form without Image",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Form without image",
+      "imageUrl": "",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Свяжитесь с нами"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Есть вопрос? Напишите нам."
+          }
+        },
+        "buttonText": {
+          "type": "Text",
+          "config": {
+            "label": "Button Text",
+            "placeholder": "Отправить сообщение"
+          }
+        },
+        "excelWebhookUrl": {
+          "type": "Text",
+          "config": {
+            "label": "Excel Webhook URL",
+            "placeholder": "https://... (Power Automate / Make webhook URL)"
+          }
+        },
+        "phoneField": {
+          "type": "Select",
+          "config": {
+            "label": "Phone Number Field",
+            "placeholder": "Show phone field?",
+            "options": [
+              "not show",
+              "optional",
+              "required"
+            ],
+            "default_value": "not show"
+          }
+        },
+        "messageField": {
+          "type": "Select",
+          "config": {
+            "label": "Message / Notes Field",
+            "placeholder": "Show message field?",
+            "options": [
+              "not show",
+              "optional",
+              "required"
+            ],
+            "default_value": "optional"
+          }
+        }
+      },
+      "items": {
+        "fieldLabel": {
+          "type": "Text",
+          "config": {
+            "label": "Field Label",
+            "placeholder": "e.g. Город, Возраст..."
+          }
+        },
+        "fieldType": {
+          "type": "Select",
+          "config": {
+            "label": "Field Type",
+            "placeholder": "Type of input",
+            "options": [
+              "text",
+              "select",
+              "radio",
+              "checkbox",
+              "file"
+            ],
+            "default_value": "text"
+          }
+        },
+        "fieldRequired": {
+          "type": "Boolean",
+          "config": {
+            "label": "Required",
+            "default_value": false,
+            "placeholder_false": "Optional",
+            "placeholder_true": "Required"
+          }
+        },
+        "fieldOptions": {
+          "type": "Text",
+          "config": {
+            "label": "Options (comma-separated)",
+            "placeholder": "Option 1, Option 2, Option 3"
+          }
+        }
+      }
     }
   ]
 }

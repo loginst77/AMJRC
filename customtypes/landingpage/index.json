@@ -68,6 +68,12 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "newspaper_list": {
+              "type": "SharedSlice"
+            },
+            "book_carousel": {
+              "type": "SharedSlice"
+            },
             "article_list": {
               "type": "SharedSlice"
             },

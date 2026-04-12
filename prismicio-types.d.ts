@@ -1196,6 +1196,8 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | NewspaperListSlice
+  | BookCarouselSlice
   | ArticleListSlice
   | PodcastCarouselSlice
   | VideoCarouselSlice
@@ -2661,6 +2663,72 @@ export type BigEventSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *BookCarousel → Default → Primary*
+ */
+export interface BookCarouselSliceDefaultPrimary {
+  /**
+   * Title field in *BookCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название
+   * - **API ID Path**: book_carousel.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *BookCarousel → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Описание
+   * - **API ID Path**: book_carousel.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background field in *BookCarousel → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: book_carousel.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  background: prismic.BooleanField;
+}
+
+/**
+ * Default variation for BookCarousel Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BookCarouselSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<BookCarouselSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *BookCarousel*
+ */
+type BookCarouselSliceVariation = BookCarouselSliceDefault;
+
+/**
+ * BookCarousel Shared Slice
+ *
+ * - **API ID**: `book_carousel`
+ * - **Description**: BookCarousel
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BookCarouselSlice = prismic.SharedSlice<
+  "book_carousel",
+  BookCarouselSliceVariation
+>;
+
+/**
  * Primary content in *Card → Default → Primary*
  */
 export interface CardSliceDefaultPrimary {
@@ -2784,22 +2852,291 @@ type CardSliceVariation = CardSliceDefault;
 export type CardSlice = prismic.SharedSlice<"card", CardSliceVariation>;
 
 /**
+ * Primary content in *Form → Default → Primary*
+ */
+export interface FormSliceDefaultPrimary {
+  /**
+   * Title field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Свяжитесь с нами
+   * - **API ID Path**: form.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Есть вопрос? Напишите нам.
+   * - **API ID Path**: form.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Button Text field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Отправить сообщение
+   * - **API ID Path**: form.default.primary.buttonText
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonText: prismic.KeyTextField;
+
+  /**
+   * Image field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: form.default.primary.image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Excel Webhook URL field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: https://... (Power Automate / Make webhook URL)
+   * - **API ID Path**: form.default.primary.excelWebhookUrl
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  excelWebhookUrl: prismic.KeyTextField;
+
+  /**
+   * Phone Number Field field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Show phone field?
+   * - **Default Value**: not show
+   * - **API ID Path**: form.default.primary.phoneField
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  phoneField: prismic.SelectField<
+    "not show" | "optional" | "required",
+    "filled"
+  >;
+
+  /**
+   * Message / Notes Field field in *Form → Default → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Show message field?
+   * - **Default Value**: optional
+   * - **API ID Path**: form.default.primary.messageField
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  messageField: prismic.SelectField<
+    "not show" | "optional" | "required",
+    "filled"
+  >;
+}
+
+/**
+ * Primary content in *Form → Items*
+ */
+export interface FormSliceDefaultItem {
+  /**
+   * Field Label field in *Form → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Город, Возраст...
+   * - **API ID Path**: form.items[].fieldLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  fieldLabel: prismic.KeyTextField;
+
+  /**
+   * Field Type field in *Form → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Type of input
+   * - **Default Value**: text
+   * - **API ID Path**: form.items[].fieldType
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  fieldType: prismic.SelectField<
+    "text" | "select" | "radio" | "checkbox" | "file",
+    "filled"
+  >;
+
+  /**
+   * Required field in *Form → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: form.items[].fieldRequired
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  fieldRequired: prismic.BooleanField;
+
+  /**
+   * Options (comma-separated) field in *Form → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Option 1, Option 2, Option 3
+   * - **API ID Path**: form.items[].fieldOptions
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  fieldOptions: prismic.KeyTextField;
+}
+
+/**
  * Default variation for Form Slice
  *
  * - **API ID**: `default`
- * - **Description**: Default
+ * - **Description**: Form with image
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type FormSliceDefault = prismic.SharedSliceVariation<
   "default",
-  Record<string, never>,
-  never
+  Simplify<FormSliceDefaultPrimary>,
+  Simplify<FormSliceDefaultItem>
+>;
+
+/**
+ * Primary content in *Form → Form without Image → Primary*
+ */
+export interface FormSliceFormWithoutImagePrimary {
+  /**
+   * Title field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Свяжитесь с нами
+   * - **API ID Path**: form.formWithoutImage.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Есть вопрос? Напишите нам.
+   * - **API ID Path**: form.formWithoutImage.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Button Text field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Отправить сообщение
+   * - **API ID Path**: form.formWithoutImage.primary.buttonText
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  buttonText: prismic.KeyTextField;
+
+  /**
+   * Excel Webhook URL field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: https://... (Power Automate / Make webhook URL)
+   * - **API ID Path**: form.formWithoutImage.primary.excelWebhookUrl
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  excelWebhookUrl: prismic.KeyTextField;
+
+  /**
+   * Phone Number Field field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Show phone field?
+   * - **Default Value**: not show
+   * - **API ID Path**: form.formWithoutImage.primary.phoneField
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  phoneField: prismic.SelectField<
+    "not show" | "optional" | "required",
+    "filled"
+  >;
+
+  /**
+   * Message / Notes Field field in *Form → Form without Image → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Show message field?
+   * - **Default Value**: optional
+   * - **API ID Path**: form.formWithoutImage.primary.messageField
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  messageField: prismic.SelectField<
+    "not show" | "optional" | "required",
+    "filled"
+  >;
+}
+
+/**
+ * Primary content in *Form → Items*
+ */
+export interface FormSliceFormWithoutImageItem {
+  /**
+   * Field Label field in *Form → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: e.g. Город, Возраст...
+   * - **API ID Path**: form.items[].fieldLabel
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  fieldLabel: prismic.KeyTextField;
+
+  /**
+   * Field Type field in *Form → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Type of input
+   * - **Default Value**: text
+   * - **API ID Path**: form.items[].fieldType
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  fieldType: prismic.SelectField<
+    "text" | "select" | "radio" | "checkbox" | "file",
+    "filled"
+  >;
+
+  /**
+   * Required field in *Form → Items*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: form.items[].fieldRequired
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  fieldRequired: prismic.BooleanField;
+
+  /**
+   * Options (comma-separated) field in *Form → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Option 1, Option 2, Option 3
+   * - **API ID Path**: form.items[].fieldOptions
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  fieldOptions: prismic.KeyTextField;
+}
+
+/**
+ * Form without Image variation for Form Slice
+ *
+ * - **API ID**: `formWithoutImage`
+ * - **Description**: Form without image
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type FormSliceFormWithoutImage = prismic.SharedSliceVariation<
+  "formWithoutImage",
+  Simplify<FormSliceFormWithoutImagePrimary>,
+  Simplify<FormSliceFormWithoutImageItem>
 >;
 
 /**
  * Slice variation for *Form*
  */
-type FormSliceVariation = FormSliceDefault;
+type FormSliceVariation = FormSliceDefault | FormSliceFormWithoutImage;
 
 /**
  * Form Shared Slice
@@ -3262,6 +3599,72 @@ type LandingPageHeroSliceVariation = LandingPageHeroSliceDefault;
 export type LandingPageHeroSlice = prismic.SharedSlice<
   "landing_page_hero",
   LandingPageHeroSliceVariation
+>;
+
+/**
+ * Primary content in *NewspaperList → Default → Primary*
+ */
+export interface NewspaperListSliceDefaultPrimary {
+  /**
+   * Title field in *NewspaperList → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Название
+   * - **API ID Path**: newspaper_list.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *NewspaperList → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Описание
+   * - **API ID Path**: newspaper_list.default.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Background field in *NewspaperList → Default → Primary*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: true
+   * - **API ID Path**: newspaper_list.default.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  background: prismic.BooleanField;
+}
+
+/**
+ * Default variation for NewspaperList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewspaperListSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<NewspaperListSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *NewspaperList*
+ */
+type NewspaperListSliceVariation = NewspaperListSliceDefault;
+
+/**
+ * NewspaperList Shared Slice
+ *
+ * - **API ID**: `newspaper_list`
+ * - **Description**: NewspaperList
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewspaperListSlice = prismic.SharedSlice<
+  "newspaper_list",
+  NewspaperListSliceVariation
 >;
 
 /**
@@ -3964,14 +4367,23 @@ declare module "@prismicio/client" {
       BigEventSliceDefaultPrimary,
       BigEventSliceVariation,
       BigEventSliceDefault,
+      BookCarouselSlice,
+      BookCarouselSliceDefaultPrimary,
+      BookCarouselSliceVariation,
+      BookCarouselSliceDefault,
       CardSlice,
       CardSliceDefaultPrimary,
       CardSliceDefaultItem,
       CardSliceVariation,
       CardSliceDefault,
       FormSlice,
+      FormSliceDefaultPrimary,
+      FormSliceDefaultItem,
+      FormSliceFormWithoutImagePrimary,
+      FormSliceFormWithoutImageItem,
       FormSliceVariation,
       FormSliceDefault,
+      FormSliceFormWithoutImage,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
@@ -3989,6 +4401,10 @@ declare module "@prismicio/client" {
       LandingPageHeroSliceDefaultPrimary,
       LandingPageHeroSliceVariation,
       LandingPageHeroSliceDefault,
+      NewspaperListSlice,
+      NewspaperListSliceDefaultPrimary,
+      NewspaperListSliceVariation,
+      NewspaperListSliceDefault,
       NoteBannerSlice,
       NoteBannerSliceDefaultPrimary,
       NoteBannerSliceDefaultItem,
