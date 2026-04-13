@@ -31,10 +31,10 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
         {/* Header */}
         <div className="mx-auto max-w-6xl space-y-3 shadow-sm bg-white/20 backdrop-blur-sm p-6 rounded-3xl text-start flex flex-col items-start">
           {prismicData.primary?.heading && (
-            <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">{prismicData.primary.heading}</h2>
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">{prismicData.primary.heading}</h2>
           )}
 
-          {prismicData.primary?.description && <p className="max-w-2xl text-lg text-zinc-600">{prismicData.primary.description}</p>}
+          {prismicData.primary?.description && <p className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">{prismicData.primary.description}</p>}
         </div>
 
         {/* Timeline */}
@@ -61,13 +61,13 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
                           "group flex flex-col bg-white overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow dark:border-zinc-800 dark:bg-zinc-900/80",
                         )}>
                         <div className="pt-6 px-6 border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-                          <span className="text-4xl font-bold tracking-wider text-zink-600 dark:text-blue-500 px-6 py-2 bg-blue-200/80 rounded-full">
+                          <span className="text-4xl font-bold tracking-wider text-zinc-950 dark:text-white px-6 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-full">
                             {m.year}
                           </span>{" "}
                         </div>
                         <div className="p-6 flex-1">
-                          <h3 className="text-xl font-bold leading-snug text-zinc-900 mb-2">{m.heading}</h3>
-                          <p className="text-base leading-relaxed text-zinc-500 flex-1">{m.text}</p>
+                          <h3 className="text-xl font-bold leading-snug text-zinc-950 dark:text-white mb-2">{m.heading}</h3>
+                          <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400 flex-1">{m.text}</p>
                         </div>
                       </div>
                     </div>

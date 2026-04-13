@@ -77,15 +77,15 @@ const InfoCard: FC<InfoCardProps> = ({ slice }) => {
     : "grid-cols-1 md:grid-cols-3";
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-zinc-50 py-16 md:py-28">
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-zinc-50 py-16 md:py-28 dark:bg-zinc-950">
       <Container>
         <div
-          className={`grid overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] ${columnsClass} mx-auto`}
+          className={`grid overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] dark:border-zinc-800 dark:bg-zinc-900 ${columnsClass} mx-auto`}
           style={{ boxShadow: "var(--shadow-secondary)" }}>
           {capped.map((card, idx) => (
             <div
               key={`${card.title}-${idx}`}
-              className="flex flex-col border-b border-zinc-200 bg-white last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0">
+              className="flex flex-col border-b border-zinc-200 bg-white last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 dark:border-zinc-800 dark:bg-zinc-900">
               <div className="flex-1 px-5 py-8 sm:px-8 sm:py-12">
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 text-xl text-blue-900">
                   {card.IconComp ?
@@ -109,7 +109,7 @@ const InfoCard: FC<InfoCardProps> = ({ slice }) => {
                 <Link
                   href={card.href}
                   target={card.buttonTarget}
-                  className="group mt-auto flex w-full items-center justify-start gap-2 border-t border-zinc-200 px-5 py-10 text-sm font-medium uppercase tracking-wide text-zinc-600 transition-colors hover:bg-blue-100 hover:text-zinc-900 sm:px-8">
+                  className="group mt-auto flex w-full items-center justify-start gap-2 border-t border-zinc-200 px-5 py-10 text-sm font-medium uppercase tracking-wide text-zinc-600 transition-colors hover:bg-blue-100 hover:text-zinc-900 sm:px-8 dark:border-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white">
                   {card.buttonLabel}
                   <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-2" />
                 </Link>

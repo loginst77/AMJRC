@@ -292,8 +292,8 @@ const Form: FC<FormProps> = ({ slice }) => {
 
   const formContent = (
     <form onSubmit={onSubmit} className="space-y-4">
-      <div className="mb-1 text-2xl font-semibold text-zinc-950">{title}</div>
-      <p className="mb-6 text-zinc-600">{description}</p>
+      <div className="mb-1 text-2xl font-semibold text-zinc-950 dark:text-white sm:text-3xl">{title}</div>
+      <p className="mb-6 text-zinc-600 dark:text-zinc-400">{description}</p>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="space-y-2 text-sm">
@@ -379,7 +379,7 @@ const Form: FC<FormProps> = ({ slice }) => {
   );
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white py-20 md:py-28">
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white py-20 md:py-28 dark:bg-zinc-950">
       <Container>
         <div
           className={`mx-auto overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)]`}

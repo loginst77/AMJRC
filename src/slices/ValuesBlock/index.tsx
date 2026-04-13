@@ -58,7 +58,7 @@ const ValuesBlock: FC<ValuesBlockProps> = ({ slice }) => {
               key={title}
               className="space-y-2 border-t border-zinc-200 px-3 py-10 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:last:border-r-0 sm:px-4 sm:py-12 sm:text-left md:px-6 dark:border-zinc-800">
               <div className="text-lg font-semibold text-zinc-950 dark:text-white">{title}</div>
-              <p className="text-zinc-700 dark:text-zinc-300">{description}</p>
+              <p className="text-zinc-600 dark:text-zinc-400">{description}</p>
             </div>
           ))}
         </div>
