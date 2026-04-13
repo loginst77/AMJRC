@@ -2628,6 +2628,17 @@ export interface BannerSliceNoImagePrimary {
     prismic.FieldState,
     never
   >;
+
+  /**
+   * Background field in *Banner → No Image Banner → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: White
+   * - **Default Value**: White
+   * - **API ID Path**: banner.noImage.primary.background
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  background: prismic.SelectField<"White" | "Secondary (grey)", "filled">;
 }
 
 /**

@@ -23,26 +23,25 @@
 				}
 			},
 			"image": {
+				"__TYPE__": "ImageContent",
 				"origin": {
 					"id": "main",
-					"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
-					"width": 4480,
-					"height": 4480
+					"url": "https://images.unsplash.com/photo-1560762484-813fc97650a0",
+					"width": 3344,
+					"height": 2509
 				},
-				"url": "https://images.unsplash.com/photo-1587840171670-8b850147754e",
-				"width": 4480,
-				"height": 4480,
+				"url": "https://images.unsplash.com/photo-1560762484-813fc97650a0?rect=0%2C819%2C3344%2C871&w=1920&h=500",
+				"width": 1920,
+				"height": 500,
 				"edit": {
 					"zoom": 1,
 					"crop": {
 						"x": 0,
-						"y": 0
+						"y": 819
 					},
 					"background": "transparent"
 				},
-				"alt": "principal",
-				"credits": null,
-				"__TYPE__": "ImageContent"
+				"alt": "steep"
 			}
 		},
 		"items": [

@@ -37,6 +37,10 @@
         "image": {
           "type": "Image",
           "config": {
+            "constraint": {
+              "height": 500,
+              "width": 1920
+            },
             "label": "Background Image"
           }
         }

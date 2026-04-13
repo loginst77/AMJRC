@@ -30,11 +30,7 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
       <Container className="relative z-10 py-20 lg:py-28">
         {/* Header */}
         <div className="space-y-3 text-center">
-          {prismicData.primary?.badge_text && (
-            <Badge variant="outline" size="lg">
-              {prismicData.primary.badge_text}
-            </Badge>
-          )}
+          {prismicData.primary?.badge_text && <Badge size="lg">{prismicData.primary.badge_text}</Badge>}
           {prismicData.primary?.heading && (
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
               {prismicData.primary.heading}
