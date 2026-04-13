@@ -11,9 +11,6 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "landing_page_hero": {
-              "type": "SharedSlice"
-            },
             "form": {
               "type": "SharedSlice"
             },

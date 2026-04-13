@@ -1,8 +1,8 @@
 "use client";
 
 import { FC, useState } from "react";
-import { asLink, isFilled, type ImageField, type KeyTextField, type LinkField } from "@prismicio/client";
-import { PrismicNextImage } from "@prismicio/next";
+import { isFilled, type ImageField, type KeyTextField, type LinkField } from "@prismicio/client";
+import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 import { Dialog } from "radix-ui";
 import { Calendar, Clock, MapPin, X, ArrowRight } from "lucide-react";
@@ -11,6 +11,7 @@ import { Container } from "@/components/ui/container";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
+import { buttonVariants } from "@/components/ui/button";
 
 // Type will be available after Slice Machine sync; using `any` for now
 export type EventCardsProps = SliceComponentProps<any>;
@@ -24,7 +25,6 @@ type EventItem = {
   title?: KeyTextField;
   summary?: KeyTextField;
   buttonLink?: LinkField;
-  buttonLabel?: KeyTextField;
 };
 
 type EventPrimary = {
@@ -110,27 +110,19 @@ const EventCards: FC<EventCardsProps> = ({ slice }) => {
         const time = isFilled.keyText(event.time) ? event.time : null;
         const location = isFilled.keyText(event.location) ? event.location : null;
         const summary = isFilled.keyText(event.summary) ? event.summary : null;
-        const buttonLabel = isFilled.keyText(event.buttonLabel) ? event.buttonLabel : null;
-        const buttonHref = event.buttonLink && isFilled.link(event.buttonLink) ? asLink(event.buttonLink) : null;
+        const hasButton = event.buttonLink && isFilled.link(event.buttonLink);
         const hasImage = isFilled.image(event.image);
 
         return (
           <Dialog.Root key={i} open={openIndex === i} onOpenChange={(open) => !open && setOpenIndex(null)}>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
-              <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto max-w-2xl -translate-y-1/2 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none dark:border-zinc-800 dark:bg-zinc-950 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+              <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto max-w-2xl -translate-y-1/2 flex h-[85vh] md:h-[800px] flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none dark:border-zinc-800 dark:bg-zinc-950 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
                 {/* Image header */}
                 {hasImage && (
-                  <div className="relative h-56 w-full sm:h-78">
+                  <div className="relative h-56 w-full shrink-0 sm:h-72">
                     <PrismicNextImage field={event.image!} fill className="h-full w-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    {label && (
-                      <div className="absolute left-6 top-6">
-                        <Badge variant="filled" className="!bg-white/90 !text-zinc-900">
-                          {label}
-                        </Badge>
-                      </div>
-                    )}
                   </div>
                 )}
 
@@ -144,7 +136,8 @@ const EventCards: FC<EventCardsProps> = ({ slice }) => {
                 </Dialog.Close>
 
                 {/* Content */}
-                <div className="space-y-5 p-8">
+                <div className="flex-1 space-y-5 overflow-y-auto p-8">
+                  {label && <div className="bg-blue-100 w-fit rounded-full px-4 py-3 text-sm font-semibold">{label}</div>}
                   <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{title}</Dialog.Title>
 
                   {/* Details row */}
@@ -179,13 +172,11 @@ const EventCards: FC<EventCardsProps> = ({ slice }) => {
                   )}
 
                   {/* CTA */}
-                  {buttonHref && buttonLabel && (
-                    <a
-                      href={buttonHref}
-                      className="inline-flex items-center gap-2 rounded-xl bg-zinc-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-200">
-                      {buttonLabel}
+                  {hasButton && (
+                    <PrismicNextLink field={event.buttonLink} className={buttonVariants({ variant: "primary", className: "py-3 h-auto" })}>
+                      {(event.buttonLink as any)?.text || "Подробнее"}
                       <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </PrismicNextLink>
                   )}
                 </div>
               </Dialog.Content>

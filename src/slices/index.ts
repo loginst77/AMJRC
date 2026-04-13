@@ -13,7 +13,6 @@ export const components = {
   hero: dynamic(() => import("./Hero")),
   history_events: dynamic(() => import("./HistoryEvents")),
   info_card: dynamic(() => import("./InfoCard")),
-  landing_page_hero: dynamic(() => import("./LandingPageHero")),
   newspaper_list: dynamic(() => import("./NewspaperList")),
   note_banner: dynamic(() => import("./NoteBanner")),
   podcast_carousel: dynamic(() => import("./PodcastCarousel")),

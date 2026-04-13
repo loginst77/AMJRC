@@ -87,16 +87,11 @@
         "buttonLink": {
           "type": "Link",
           "config": {
-            "label": "Button link",
+            "label": "Button link (Optional)",
             "placeholder": "",
-            "select": null
-          }
-        },
-        "buttonLabel": {
-          "type": "Text",
-          "config": {
-            "label": "Button label",
-            "placeholder": "Зарегистрироваться"
+            "select": null,
+            "allowTargetBlank": false,
+            "allowText": true
           }
         }
       },

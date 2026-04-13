@@ -51,8 +51,7 @@
       "featured": {
         "type": "Boolean",
         "config": {
-          "label": "Featured",
-          "placeholder": "Отметить как главный выпуск"
+          "label": "Featured"
         }
       },
       "tags": {

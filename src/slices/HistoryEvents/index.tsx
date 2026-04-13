@@ -29,16 +29,12 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
 
       <Container className="relative z-10 py-20 lg:py-28">
         {/* Header */}
-        <div className="mx-auto max-w-3xl space-y-3 text-center flex flex-col items-center">
-          {prismicData.primary?.badge_text && <Badge size="lg">{prismicData.primary.badge_text}</Badge>}
-
+        <div className="mx-auto max-w-6xl space-y-3 shadow-sm bg-white/20 backdrop-blur-sm p-6 rounded-3xl text-start flex flex-col items-start">
           {prismicData.primary?.heading && (
             <h2 className="text-4xl font-semibold tracking-tight text-zinc-900">{prismicData.primary.heading}</h2>
           )}
 
-          {prismicData.primary?.description && (
-            <p className="mx-auto max-w-xl text-lg text-zinc-600">{prismicData.primary.description}</p>
-          )}
+          {prismicData.primary?.description && <p className="max-w-2xl text-lg text-zinc-600">{prismicData.primary.description}</p>}
         </div>
 
         {/* Timeline */}

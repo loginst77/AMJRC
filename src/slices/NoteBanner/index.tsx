@@ -29,7 +29,7 @@ const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
       className="border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50">
       <Bounded as="div" yPadding="base">
         <div className="mx-auto max-w-5xl">
-          <p className="mx-auto mb-8 w-fit text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 sm:mb-10 sm:text-xs">
+          <p className="mx-auto mb-8 w-fit text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 sm:mb-10 sm:text-sm">
             {label}
           </p>
 

@@ -92,20 +92,13 @@
 					[
 						"buttonLink",
 						{
-							"key": "88b2a56a-4730-41f3-a175-c25274736731",
 							"__TYPE__": "LinkContent",
+							"key": "ca767213-41e5-4405-b669-24b51b1a8366",
 							"value": {
 								"__TYPE__": "ExternalLink",
-								"url": "http://google.com"
+								"url": "https://prismic.io",
+								"text": "eager"
 							}
-						}
-					],
-					[
-						"buttonLabel",
-						{
-							"__TYPE__": "FieldContent",
-							"value": "because",
-							"type": "Text"
 						}
 					],
 					[

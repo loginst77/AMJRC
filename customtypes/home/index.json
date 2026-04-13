@@ -6,6 +6,57 @@
   "status": true,
   "json": {
     "Main": {
+      "hero_title": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Hero Title",
+          "placeholder": "",
+          "allowTargetBlank": false,
+          "single": "heading1"
+        }
+      },
+      "hero_text": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Hero Text",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph,strong,em"
+        }
+      },
+      "primary_button": {
+        "type": "Link",
+        "config": {
+          "label": "Primary Button",
+          "placeholder": "",
+          "select": null,
+          "allowText": true
+        }
+      },
+      "secondary_button": {
+        "type": "Link",
+        "config": {
+          "label": "Secondary Button",
+          "placeholder": "",
+          "select": null,
+          "allowText": true
+        }
+      },
+      "hero_video_embed": {
+        "type": "Embed",
+        "config": {
+          "label": "Hero Video Embed",
+          "placeholder": "YouTube/Vimeo embed"
+        }
+      },
+      "hero_background_image": {
+        "type": "Image",
+        "config": {
+          "label": "Hero Background Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -30,9 +81,6 @@
               "type": "SharedSlice"
             },
             "big_event": {
-              "type": "SharedSlice"
-            },
-            "hero": {
               "type": "SharedSlice"
             },
             "form": {

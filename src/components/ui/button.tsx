@@ -26,16 +26,22 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children?: ReactNode;
 };
 
+export function buttonVariants({
+  variant = "primary",
+  size = "md",
+  className,
+}: { variant?: Variant; size?: Size; className?: string } = {}) {
+  return cn(
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
+    variantClasses[variant],
+    sizeClasses[size],
+    className,
+  );
+}
+
 export function Button({ variant = "primary", size = "md", className, children, ...props }: ButtonProps) {
   return (
-    <button
-      className={cn(
-        "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50",
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-      )}
-      {...props}>
+    <button className={buttonVariants({ variant, size, className })} {...props}>
       {children}
     </button>
   );
@@ -49,15 +55,7 @@ type ButtonLinkProps = ComponentProps<typeof Link> & {
 
 export function ButtonLink({ href, variant = "primary", size = "md", className, children, ...props }: ButtonLinkProps) {
   return (
-    <Link
-      href={href}
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-      )}
-      {...props}>
+    <Link href={href} className={buttonVariants({ variant, size, className })} {...props}>
       {children}
     </Link>
   );

@@ -66,8 +66,7 @@
       "featured": {
         "type": "Boolean",
         "config": {
-          "label": "Featured",
-          "placeholder": "Mark as featured"
+          "label": "Featured"
         }
       }
     }

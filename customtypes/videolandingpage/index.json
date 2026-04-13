@@ -37,9 +37,6 @@
             },
             "info_card": {
               "type": "SharedSlice"
-            },
-            "landing_page_hero": {
-              "type": "SharedSlice"
             }
           }
         }
