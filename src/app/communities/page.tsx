@@ -80,7 +80,7 @@ export default async function CommunitiesPage() {
 
       <section className="py-14">
         <Container className="space-y-6 pb-12">
-          <SectionHeader title="Все общины" size="sm" as="div" className="text-left" descriptionClassName="text-left" />
+          <SectionHeader title="Все общины" as="div" className="text-left" descriptionClassName="text-left" />
 
           {cards.length === 0 ?
             <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 px-6 py-12 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400">

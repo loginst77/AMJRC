@@ -62,6 +62,24 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "video_carousel": {
+              "type": "SharedSlice"
+            },
+            "podcast_carousel": {
+              "type": "SharedSlice"
+            },
+            "newspaper_list": {
+              "type": "SharedSlice"
+            },
+            "event_cards": {
+              "type": "SharedSlice"
+            },
+            "book_carousel": {
+              "type": "SharedSlice"
+            },
+            "article_list": {
+              "type": "SharedSlice"
+            },
             "values_block": {
               "type": "SharedSlice"
             },

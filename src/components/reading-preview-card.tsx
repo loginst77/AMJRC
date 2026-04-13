@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -14,7 +16,16 @@ export function ReadingPreviewCard({ direction, title, dateRange, href }: Readin
   const isPrev = direction === "prev";
 
   return (
-    <Link href={href} className={cn("group relative rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 text-left w-full block transition-colors", cardHoverCn)}>
+    <Link
+      href={href}
+      scroll={false}
+      onClick={() => {
+        setTimeout(() => {
+          document.getElementById("reader")?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }}
+      className={cn("group relative rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 text-left w-full block transition-colors", cardHoverCn)}
+    >
       {/* Label */}
       <div className={`flex items-center gap-2 mb-4 ${isPrev ? "" : "justify-end"}`}>
         {isPrev && <ChevronLeft className="h-4 w-4 text-zinc-400 transition-transform group-hover:-translate-x-1" />}

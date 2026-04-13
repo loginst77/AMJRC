@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SliceZone } from "@prismicio/react";
-import { asLink } from "@prismicio/client";
+import { asLink, asText } from "@prismicio/client";
 
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           button2Variant={(pageData.button_2_link as any)?.variant}
           breadcrumbHomeLabel="Главная"
           breadcrumbHomeLink="/"
-          breadcrumbCurrent={pageData.meta_title || "Страница"}
+          breadcrumbCurrent={asText(pageData.title) || "Страница"}
         />
       </section>
       <SliceZone slices={page.data.slices} components={components} />

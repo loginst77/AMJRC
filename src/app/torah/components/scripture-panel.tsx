@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useRef, useEffect } from "react";
 import { BookOpen } from "lucide-react";
 import { TranslationSelector } from "./translation-selector";
 import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
@@ -12,6 +14,13 @@ export function ScripturePanel({
   passageRef: string;
   currentVersion: TranslationCode;
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Reset scroll position when passage changes
+  useEffect(() => {
+    scrollRef.current?.scrollTo(0, 0);
+  }, [passage.reference, passageRef]);
+
   // Group verses into paragraphs based on paragraphStart flag
   const paragraphs: (typeof passage.verses)[] = [];
   passage.verses.forEach((v) => {
@@ -40,7 +49,7 @@ export function ScripturePanel({
         </div>
 
         {/* Verses */}
-        <div className="px-8 py-8 sm:px-10 sm:py-10 flex-1 bg-white overflow-y-auto scrollbar-thin">
+        <div ref={scrollRef} className="px-8 py-8 sm:px-10 sm:py-10 flex-1 bg-white overflow-y-auto scrollbar-thin">
           {paragraphs.map((group, pIdx) => (
             <React.Fragment key={pIdx}>
               {group[0].chapterRef && (

@@ -43,6 +43,63 @@
       },
       "items": {},
       "imageUrl": ""
+    },
+    {
+      "id": "noImage",
+      "name": "No Image Banner",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Banner without background image, two-column layout with two action buttons",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Пожертвования"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Короткое описание"
+          }
+        },
+        "primaryButton": {
+          "type": "Link",
+          "config": {
+            "label": "Primary Button",
+            "placeholder": "https://example.com",
+            "select": null,
+            "allowText": true
+          }
+        },
+        "secondary_button": {
+          "type": "Link",
+          "config": {
+            "label": "Secondary Button",
+            "placeholder": "",
+            "select": null,
+            "allowTargetBlank": true,
+            "allowText": true,
+            "repeat": false
+          }
+        },
+        "background": {
+          "type": "Select",
+          "config": {
+            "label": "Background",
+            "placeholder": "White",
+            "options": [
+              "White",
+              "Secondary (grey)"
+            ],
+            "default_value": "White"
+          }
+        }
+      },
+      "items": {},
+      "imageUrl": ""
     }
   ]
 }

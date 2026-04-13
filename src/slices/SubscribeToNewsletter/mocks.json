@@ -16,13 +16,13 @@
 			"backgroundImage": {
 				"origin": {
 					"id": "newsletter-bg",
-					"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80",
-					"width": 2400,
-					"height": 1600
+					"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&auto=format&fit=crop&q=80",
+					"width": 1920,
+					"height": 500
 				},
-				"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80",
-				"width": 2400,
-				"height": 1600,
+				"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&auto=format&fit=crop&q=80",
+				"width": 1920,
+				"height": 500,
 				"edit": {
 					"zoom": 1,
 					"crop": {
@@ -36,8 +36,8 @@
 				"__TYPE__": "ImageContent",
 				"thumbnails": {},
 				"dimensions": {
-					"width": 2400,
-					"height": 1600
+					"width": 1920,
+					"height": 500
 				}
 			},
 			"buttonText": {

@@ -29,19 +29,27 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
 
       <Container className="relative z-10 py-20 lg:py-28">
         {/* Header */}
-        <div className="mx-auto max-w-6xl space-y-3 shadow-sm bg-white/20 backdrop-blur-sm p-6 rounded-3xl text-start flex flex-col items-start">
-          {prismicData.primary?.heading && (
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">{prismicData.primary.heading}</h2>
+        <div className="space-y-3 text-center">
+          {prismicData.primary?.badge_text && (
+            <Badge variant="outline" size="lg">
+              {prismicData.primary.badge_text}
+            </Badge>
           )}
-
-          {prismicData.primary?.description && <p className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">{prismicData.primary.description}</p>}
+          {prismicData.primary?.heading && (
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
+              {prismicData.primary.heading}
+            </h2>
+          )}
+          {prismicData.primary?.description && (
+            <p className="mx-auto max-w-xl text-lg text-zinc-600 dark:text-zinc-400">{prismicData.primary.description}</p>
+          )}
         </div>
 
         {/* Timeline */}
         {prismicData.items && prismicData.items.length > 0 && (
           <div className="relative mx-auto mt-16 max-w-5xl">
             {/* Vertical line (aligned to the left) */}
-            <div className="absolute left-6 lg:left-8 top-0 bottom-0 w-px bg-zinc-200 dark:bg-zinc-800" />
+            <div className="absolute left-6 lg:left-8 top-0 bottom-0 w-px bg-zinc-200" />
 
             <div className="space-y-12 sm:space-y-16">
               {prismicData.items.map((m: any, index: number) => {
@@ -49,8 +57,8 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
                   <div key={index} className="relative pl-16 lg:pl-24">
                     {/* Dot on the left line */}
                     <div className="absolute left-6 lg:left-8 top-6 z-10 flex items-center justify-center -translate-x-[calc(50%-0.5px)] sm:-translate-x-[calc(50%-0.5px)]">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-950 ring-[5px] ring-zinc-50 dark:bg-white dark:ring-zinc-950">
-                        <span className="h-2 w-2 rounded-full bg-white dark:bg-zinc-950" />
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-700 ring-[5px] ring-white/50">
+                        <span className="h-2 w-2 rounded-full bg-white" />
                       </span>
                     </div>
 
@@ -61,7 +69,7 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
                           "group flex flex-col bg-white overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow dark:border-zinc-800 dark:bg-zinc-900/80",
                         )}>
                         <div className="pt-6 px-6 border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-                          <span className="text-4xl font-bold tracking-wider text-zinc-950 dark:text-white px-6 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-full">
+                          <span className="text-4xl font-bold tracking-wider text-zinc-950 dark:text-white px-6 py-2 bg-blue-100 rounded-full">
                             {m.year}
                           </span>{" "}
                         </div>

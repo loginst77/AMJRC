@@ -51,5 +51,45 @@
 				"value": []
 			}
 		]
+	},
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "noImage",
+		"primary": {
+			"title": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Пожертвования"
+			},
+			"description": {
+				"__TYPE__": "FieldContent",
+				"type": "Text",
+				"value": "Ваша щедрость помогает нам заботиться о людях, наставлять семьи и служить нашему городу с любовью Иисуса."
+			},
+			"primaryButton": {
+				"key": "e7fcc887-4709-422e-94a6-095c0d8bf344",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "https://prismic.io",
+					"text": "Пожертвовать онлайн"
+				}
+			},
+			"secondary_button": {
+				"key": "016e5240-a06b-4160-bf88-1a54547e9e30",
+				"__TYPE__": "LinkContent",
+				"value": {
+					"__TYPE__": "ExternalLink",
+					"url": "http://twitter.com",
+					"text": "introduced"
+				}
+			}
+		},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": []
+			}
+		]
 	}
 ]

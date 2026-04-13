@@ -30,12 +30,13 @@ export function SectionHeader({
   descriptionClassName,
 }: SectionHeaderProps) {
   const titleColor = tone === "dark" ? "text-white" : "text-zinc-950";
-  const descriptionColor = tone === "dark" ? "text-zinc-300" : size === "sm" ? "text-zinc-600" : "text-zinc-700";
+  const descriptionColor =
+    tone === "dark" ? "text-zinc-300"
+    : size === "sm" ? "text-zinc-600"
+    : "text-zinc-700";
 
   const titleClass =
-    size === "sm"
-      ? `text-2xl font-semibold ${titleColor}`
-      : `text-4xl font-semibold tracking-tight ${titleColor} sm:text-5xl`;
+    size === "sm" ? `text-2xl font-semibold ${titleColor}` : `text-4xl font-semibold tracking-tight ${titleColor} sm:text-4xl`;
 
   const descriptionClass = size === "sm" ? `text-base ${descriptionColor}` : `text-lg ${descriptionColor}`;
 
@@ -44,8 +45,9 @@ export function SectionHeader({
   return (
     <div className={cn("flex flex-col gap-2", alignClass, className)}>
       <TitleTag className={cn(titleClass, titleClassName)}>{title}</TitleTag>
-      {description ? <div className={cn(descriptionClass, descriptionClassName)}>{description}</div> : null}
+      {description ?
+        <div className={cn(descriptionClass, descriptionClassName)}>{description}</div>
+      : null}
     </div>
   );
 }
-

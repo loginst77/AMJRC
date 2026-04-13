@@ -1137,6 +1137,12 @@ export type FooterDocument<Lang extends string = string> =
   >;
 
 type HomeDocumentDataSlicesSlice =
+  | VideoCarouselSlice
+  | PodcastCarouselSlice
+  | NewspaperListSlice
+  | EventCardsSlice
+  | BookCarouselSlice
+  | ArticleListSlice
   | ValuesBlockSlice
   | SubscribeToNewsletterSlice
   | NoteBannerSlice
@@ -2568,9 +2574,79 @@ export type BannerSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
+ * Primary content in *Banner → No Image Banner → Primary*
+ */
+export interface BannerSliceNoImagePrimary {
+  /**
+   * Title field in *Banner → No Image Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Пожертвования
+   * - **API ID Path**: banner.noImage.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Banner → No Image Banner → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Короткое описание
+   * - **API ID Path**: banner.noImage.primary.description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Primary Button field in *Banner → No Image Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: https://example.com
+   * - **API ID Path**: banner.noImage.primary.primaryButton
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  primaryButton: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Secondary Button field in *Banner → No Image Banner → Primary*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.noImage.primary.secondary_button
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  secondary_button: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+}
+
+/**
+ * No Image Banner variation for Banner Slice
+ *
+ * - **API ID**: `noImage`
+ * - **Description**: Banner without background image, two-column layout with two action buttons
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BannerSliceNoImage = prismic.SharedSliceVariation<
+  "noImage",
+  Simplify<BannerSliceNoImagePrimary>,
+  never
+>;
+
+/**
  * Slice variation for *Banner*
  */
-type BannerSliceVariation = BannerSliceDefault;
+type BannerSliceVariation = BannerSliceDefault | BannerSliceNoImage;
 
 /**
  * Banner Shared Slice
@@ -3382,130 +3458,6 @@ type FormSliceVariation = FormSliceDefault | FormSliceFormWithoutImage;
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type FormSlice = prismic.SharedSlice<"form", FormSliceVariation>;
-
-/**
- * Primary content in *Hero → Default → Primary*
- */
-export interface HeroSliceDefaultPrimary {
-  /**
-   * Title field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.title
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  title: prismic.RichTextField;
-
-  /**
-   * Text field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.text
-   * - **Documentation**: https://prismic.io/docs/fields/rich-text
-   */
-  text: prismic.RichTextField;
-
-  /**
-   * Button Link field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.buttonLink
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  buttonLink: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
-
-  /**
-   * Button Text field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.buttonText
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  buttonText: prismic.KeyTextField;
-
-  /**
-   * Secondary Button Link field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.secondaryButtonLink
-   * - **Documentation**: https://prismic.io/docs/fields/link
-   */
-  secondaryButtonLink: prismic.LinkField<
-    string,
-    string,
-    unknown,
-    prismic.FieldState,
-    never
-  >;
-
-  /**
-   * Secondary Button Text field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.secondaryButtonText
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  secondaryButtonText: prismic.KeyTextField;
-
-  /**
-   * Video Embed field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Embed
-   * - **Placeholder**: YouTube/Vimeo embed
-   * - **API ID Path**: hero.default.primary.videoEmbed
-   * - **Documentation**: https://prismic.io/docs/fields/embed
-   */
-  videoEmbed: prismic.EmbedField;
-
-  /**
-   * Background Image field in *Hero → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: hero.default.primary.backgroundImage
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  backgroundImage: prismic.ImageField<never>;
-}
-
-/**
- * Default variation for Hero Slice
- *
- * - **API ID**: `default`
- * - **Description**: Hero
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type HeroSliceDefault = prismic.SharedSliceVariation<
-  "default",
-  Simplify<HeroSliceDefaultPrimary>,
-  never
->;
-
-/**
- * Slice variation for *Hero*
- */
-type HeroSliceVariation = HeroSliceDefault;
-
-/**
- * Hero Shared Slice
- *
- * - **API ID**: `hero`
- * - **Description**: Hero
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
  * Primary content in *HistoryEvents → Default → Primary*
@@ -4472,8 +4424,10 @@ declare module "@prismicio/client" {
       ArticleListSliceDefault,
       BannerSlice,
       BannerSliceDefaultPrimary,
+      BannerSliceNoImagePrimary,
       BannerSliceVariation,
       BannerSliceDefault,
+      BannerSliceNoImage,
       BigEventSlice,
       BigEventSliceDefaultPrimary,
       BigEventSliceVariation,
@@ -4500,10 +4454,6 @@ declare module "@prismicio/client" {
       FormSliceVariation,
       FormSliceDefault,
       FormSliceFormWithoutImage,
-      HeroSlice,
-      HeroSliceDefaultPrimary,
-      HeroSliceVariation,
-      HeroSliceDefault,
       HistoryEventsSlice,
       HistoryEventsSliceDefaultPrimary,
       HistoryEventsSliceDefaultItem,

@@ -10,7 +10,6 @@ export const components = {
   card: dynamic(() => import("./Card")),
   event_cards: dynamic(() => import("./EventCards")),
   form: dynamic(() => import("./Form")),
-  hero: dynamic(() => import("./Hero")),
   history_events: dynamic(() => import("./HistoryEvents")),
   info_card: dynamic(() => import("./InfoCard")),
   newspaper_list: dynamic(() => import("./NewspaperList")),
