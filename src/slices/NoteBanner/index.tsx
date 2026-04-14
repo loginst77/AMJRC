@@ -3,7 +3,7 @@ import { asLink, type Content, isFilled } from "@prismicio/client";
 import { PrismicNextImage } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 
-import { Bounded } from "@/components/Bounded";
+import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 
 /**
@@ -27,21 +27,21 @@ const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900/50">
-      <Bounded as="div" yPadding="base">
+      <Container className="py-16 sm:py-20 md:py-28">
         <div className="mx-auto max-w-5xl">
-          <p className="mx-auto mb-8 w-fit text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 sm:mb-10 sm:text-sm">
+          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-500 sm:mb-10 sm:text-sm">
             {label}
           </p>
 
-          <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-start md:gap-12 lg:gap-16">
-            <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 text-center sm:gap-5 md:mx-0 md:w-52 lg:w-60">
-              <div className="relative h-96 w-full shrink-0 overflow-hidden rounded-3xl bg-zinc-200 ring-1 ring-zinc-900/10 dark:bg-zinc-800 dark:ring-white/10 sm:h-[26rem] md:h-72 lg:h-80">
+          <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-10 md:gap-12 lg:gap-16">
+            <div className="mx-auto flex w-full max-w-xs flex-col items-center gap-4 text-center sm:mx-0 sm:w-48 md:w-52 lg:w-60">
+              <div className="relative h-64 w-full shrink-0 overflow-hidden rounded-3xl bg-zinc-200 ring-1 ring-zinc-900/10 dark:bg-zinc-800 dark:ring-white/10 sm:h-64 md:h-72 lg:h-80">
                 {isFilled.image(slice.primary.image) && (
                   <PrismicNextImage field={slice.primary.image} fill={true} className="object-cover" />
                 )}
               </div>
 
-              <div className="md:mt-3">
+              <div className="sm:mt-2">
                 {name && <p className="font-semibold text-zinc-950 dark:text-white">{name}</p>}
                 {title && <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">{title}</p>}
               </div>
@@ -72,7 +72,7 @@ const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
             </div>
           </div>
         </div>
-      </Bounded>
+      </Container>
     </section>
   );
 };
