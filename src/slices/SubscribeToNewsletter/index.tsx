@@ -61,18 +61,24 @@ const SubscribeToNewsletter: FC<SubscribeToNewsletterProps> = ({ slice }) => {
       : <div className="absolute inset-0 bg-zinc-900" />}
 
       <Bounded as="div" yPadding="sm" className="relative z-10 px-4 sm:px-6">
-        <div className="flex flex-col items-center gap-8 text-center sm:gap-9">
-          <SectionHeader title={title} description={description} tone="dark" align="center" descriptionClassName="leading-relaxed" />
+        <div className="flex flex-col items-center gap-6 text-center sm:gap-8 md:gap-9">
+          <SectionHeader
+            title={title}
+            description={description}
+            tone="dark"
+            align="center"
+            descriptionClassName="max-w-lg leading-relaxed"
+          />
 
           <form
             onSubmit={onSubmit}
-            className="flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-white/10 sm:p-1 p-2 backdrop-blur-sm sm:flex-row sm:items-center sm:gap-2 sm:rounded-full">
+            className="flex w-full max-w-xl flex-col gap-2 rounded-2xl bg-white/10 p-2 backdrop-blur-sm md:flex-row md:items-center md:gap-2 md:rounded-full md:p-1">
             <label className="sr-only" htmlFor="newsletter-email">
               Email
             </label>
             <input
               id="newsletter-email"
-              className="h-16 w-full flex-1 rounded-full border border-white/20 bg-white/10 px-5 text-white outline-none ring-0 placeholder:text-zinc-400 focus:border-white/40 backdrop-blur-sm min-h-16 sm:min-w-0"
+              className="h-16 w-full md:flex-1 rounded-xl sm:rounded-full border border-white/20 bg-white/10 px-5 text-base text-white outline-none ring-0 placeholder:text-zinc-400 focus:border-white/40 backdrop-blur-sm md:min-w-0"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
@@ -80,7 +86,7 @@ const SubscribeToNewsletter: FC<SubscribeToNewsletterProps> = ({ slice }) => {
               inputMode="email"
               required
             />
-            <Button type="submit" className="h-16 shrink-0 px-6 rounded-full sm:px-8" size="md" disabled={!canSubmit}>
+            <Button type="submit" className="h-12 shrink-0 rounded-full px-6 h-16" size="md" disabled={!canSubmit}>
               {status === "submitting" ? "Отправка..." : buttonLabel}
             </Button>
           </form>

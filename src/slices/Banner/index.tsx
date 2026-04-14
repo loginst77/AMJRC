@@ -40,11 +40,13 @@ const Banner: FC<BannerProps> = ({ slice }) => {
             <div className="space-y-6 sm:space-y-8">
               <div className="max-w-2xl space-y-3 sm:space-y-4">
                 <h2 className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-white">{displayTitle}</h2>
-                {displayDescription && <p className="max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">{displayDescription}</p>}
+                {displayDescription && (
+                  <p className="max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">{displayDescription}</p>
+                )}
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 {primaryHref && (
-                  <ButtonLink href={primaryHref} size="lg">
+                  <ButtonLink href={primaryHref} size="lg" variant="secondary">
                     {primaryLabel}
                   </ButtonLink>
                 )}
@@ -89,18 +91,30 @@ const Banner: FC<BannerProps> = ({ slice }) => {
       )}
 
       <Container className="relative z-10 flex flex-col items-center py-12 text-center sm:py-16 md:py-20">
-        <h2 className={cn("max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl", hasBackgroundImage ? "text-white" : undefined)}>
+        <h2
+          className={cn(
+            "max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl",
+            hasBackgroundImage ? "text-white" : undefined,
+          )}>
           {displayTitle}
         </h2>
 
         {displayDescription && (
-          <p className={cn("mt-3 max-w-xl text-base leading-relaxed sm:mt-4 sm:text-lg", hasBackgroundImage ? "text-zinc-200" : "text-zinc-600")}>
+          <p
+            className={cn(
+              "mt-3 max-w-xl text-base leading-relaxed sm:mt-4 sm:text-lg",
+              hasBackgroundImage ? "text-zinc-200" : "text-zinc-600",
+            )}>
             {displayDescription}
           </p>
         )}
 
         {actionHref && (
-          <ButtonLink href={actionHref} variant={hasBackgroundImage ? "filled" : "primary"} size="lg" className="mt-6 w-full sm:mt-8 sm:w-auto">
+          <ButtonLink
+            href={actionHref}
+            variant={hasBackgroundImage ? "filled" : "primary"}
+            size="lg"
+            className="mt-6 w-full sm:mt-8 sm:w-auto">
             {actionLabel}
           </ButtonLink>
         )}
