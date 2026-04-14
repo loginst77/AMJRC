@@ -47,7 +47,7 @@ export function SiteHeader({
             : <Image src="/logo.svg" alt="Logo" width={70} height={70} />}
           </Link>
 
-          <nav className="ml-10 hidden items-center gap-1 md:flex">
+          <nav className="ml-10 hidden items-center gap-1 lg:flex">
             {navigationLinks.map((item) => (
               <NavLink key={`${item.href}-${item.label}`} href={item.href}>
                 {item.label}
@@ -59,7 +59,7 @@ export function SiteHeader({
 
         <div className="flex items-center gap-2">
           <MobileNav items={navigationLinks} dropdownItems={dropdownItems} logo={logo} />
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-2">
             {primaryAction ?
               <ButtonLink href={primaryAction.href} variant={primaryAction.variant} size="md">
                 {primaryAction.label}
