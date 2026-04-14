@@ -89,6 +89,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "image_blocks": {
+              "type": "SharedSlice"
+            },
             "event_cards": {
               "type": "SharedSlice"
             },

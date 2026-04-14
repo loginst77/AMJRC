@@ -539,6 +539,7 @@ export type BooklandingpageDocument<Lang extends string = string> =
   >;
 
 type CommunityDocumentDataSlicesSlice =
+  | ImageBlocksSlice
   | EventCardsSlice
   | BigEventSlice
   | FormSlice
@@ -714,6 +715,9 @@ export type CommunityDocument<Lang extends string = string> =
   >;
 
 type CommunitylandingpageDocumentDataSlicesSlice =
+  | TeamSectionSlice
+  | EventCardsSlice
+  | ImageBlocksSlice
   | BigEventSlice
   | FormSlice
   | CardSlice
@@ -1137,6 +1141,8 @@ export type FooterDocument<Lang extends string = string> =
   >;
 
 type HomeDocumentDataSlicesSlice =
+  | ImageBlocksSlice
+  | TeamSectionSlice
   | VideoCarouselSlice
   | PodcastCarouselSlice
   | NewspaperListSlice
@@ -1291,6 +1297,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | ImageBlocksSlice
   | NewspaperListSlice
   | BookCarouselSlice
   | ArticleListSlice
@@ -3571,6 +3578,91 @@ export type HistoryEventsSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Primary content in *ImageBlocks → Items*
+ */
+export interface ImageBlocksSliceDefaultItem {
+  /**
+   * Image field in *ImageBlocks → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: image_blocks.items[].image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *ImageBlocks → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Section heading
+   * - **API ID Path**: image_blocks.items[].title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *ImageBlocks → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Body text
+   * - **API ID Path**: image_blocks.items[].description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  description: prismic.KeyTextField;
+
+  /**
+   * Button field in *ImageBlocks → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: image_blocks.items[].button
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  button: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+
+  /**
+   * Image Position field in *ImageBlocks → Items*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Image side
+   * - **API ID Path**: image_blocks.items[].image_position
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  image_position: prismic.SelectField<"left" | "right">;
+}
+
+/**
+ * Default variation for ImageBlocks Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Alternating image-text rows
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageBlocksSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  Simplify<ImageBlocksSliceDefaultItem>
+>;
+
+/**
+ * Slice variation for *ImageBlocks*
+ */
+type ImageBlocksSliceVariation = ImageBlocksSliceDefault;
+
+/**
+ * ImageBlocks Shared Slice
+ *
+ * - **API ID**: `image_blocks`
+ * - **Description**: Zigzag image + text rows
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ImageBlocksSlice = prismic.SharedSlice<
+  "image_blocks",
+  ImageBlocksSliceVariation
+>;
+
+/**
  * Primary content in *InfoCard → Items*
  */
 export interface InfoCardSliceDefaultItem {
@@ -4470,6 +4562,10 @@ declare module "@prismicio/client" {
       HistoryEventsSliceDefaultItem,
       HistoryEventsSliceVariation,
       HistoryEventsSliceDefault,
+      ImageBlocksSlice,
+      ImageBlocksSliceDefaultItem,
+      ImageBlocksSliceVariation,
+      ImageBlocksSliceDefault,
       InfoCardSlice,
       InfoCardSliceDefaultItem,
       InfoCardSliceVariation,

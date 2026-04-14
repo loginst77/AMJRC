@@ -66,6 +66,15 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "team_section": {
+              "type": "SharedSlice"
+            },
+            "event_cards": {
+              "type": "SharedSlice"
+            },
+            "image_blocks": {
+              "type": "SharedSlice"
+            },
             "big_event": {
               "type": "SharedSlice"
             },

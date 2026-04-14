@@ -68,6 +68,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "image_blocks": {
+              "type": "SharedSlice"
+            },
             "newspaper_list": {
               "type": "SharedSlice"
             },

@@ -33,12 +33,21 @@ const InfoCard: FC<InfoCardProps> = ({ slice }) => {
     if (!raw) return undefined;
     const key = raw.trim();
     if (!key) return undefined;
+    const iconsMap = Icons as unknown as Record<string, LucideIcon | undefined>;
+
+    // 1. Exact match — "CreditCard" typed as-is
+    if (iconsMap[key]) return iconsMap[key];
+
+    // 2. Split on spaces/dashes/underscores → "credit card" / "credit-card" → "CreditCard"
     const pascal = key
       .split(/[\s_-]+/)
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
       .join("");
-    const IconComp = (Icons as unknown as Record<string, LucideIcon | undefined>)[pascal];
-    return IconComp;
+    if (iconsMap[pascal]) return iconsMap[pascal];
+
+    // 3. camelCase → PascalCase — "creditCard" → "CreditCard" (preserves inner caps)
+    const camelToPascal = key.charAt(0).toUpperCase() + key.slice(1);
+    return iconsMap[camelToPascal];
   };
 
   const normalized = cards
@@ -77,7 +86,10 @@ const InfoCard: FC<InfoCardProps> = ({ slice }) => {
     : "grid-cols-1 md:grid-cols-3";
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-zinc-50 py-16 md:py-28 dark:bg-zinc-950">
+    <section
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="bg-zinc-50 py-16 md:py-28 dark:bg-zinc-950">
       <Container>
         <div
           className={`grid overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] dark:border-zinc-800 dark:bg-zinc-900 ${columnsClass} mx-auto`}

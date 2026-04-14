@@ -11,6 +11,7 @@ export const components = {
   event_cards: dynamic(() => import("./EventCards")),
   form: dynamic(() => import("./Form")),
   history_events: dynamic(() => import("./HistoryEvents")),
+  image_blocks: dynamic(() => import("./ImageBlocks")),
   info_card: dynamic(() => import("./InfoCard")),
   newspaper_list: dynamic(() => import("./NewspaperList")),
   note_banner: dynamic(() => import("./NoteBanner")),

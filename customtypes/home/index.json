@@ -62,6 +62,12 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "image_blocks": {
+              "type": "SharedSlice"
+            },
+            "team_section": {
+              "type": "SharedSlice"
+            },
             "video_carousel": {
               "type": "SharedSlice"
             },

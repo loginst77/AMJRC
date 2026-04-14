@@ -1,0 +1,62 @@
+{
+  "id": "image_blocks",
+  "type": "SharedSlice",
+  "name": "ImageBlocks",
+  "description": "Zigzag image + text rows",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Alternating image-text rows",
+      "imageUrl": "",
+      "primary": {},
+      "items": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Section heading"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Description",
+            "placeholder": "Body text"
+          }
+        },
+        "button": {
+          "type": "Link",
+          "config": {
+            "label": "Button",
+            "placeholder": "",
+            "allowTargetBlank": true,
+            "select": null,
+            "allowText": true
+          }
+        },
+        "image_position": {
+          "type": "Select",
+          "config": {
+            "label": "Image Position",
+            "placeholder": "Image side",
+            "options": [
+              "left",
+              "right"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

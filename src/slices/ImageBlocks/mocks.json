@@ -1,0 +1,107 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {},
+		"items": [
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Why We Exist",
+							"type": "Text"
+						}
+					],
+					[
+						"description",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "We are a movement of churches committed to planting, growing, and multiplying communities of faith across the region.",
+							"type": "Text"
+						}
+					],
+					[
+						"button_label",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Learn more",
+							"type": "Text"
+						}
+					],
+					[
+						"button_link",
+						{
+							"key": "a1b2c3d4-0000-0000-0000-000000000001",
+							"__TYPE__": "LinkContent",
+							"value": {
+								"__TYPE__": "ExternalLink",
+								"url": "http://example.com",
+								"text": "Learn more"
+							}
+						}
+					],
+					[
+						"image_position",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "left",
+							"type": "Select"
+						}
+					]
+				]
+			},
+			{
+				"__TYPE__": "GroupItemContent",
+				"value": [
+					[
+						"title",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Our Mission",
+							"type": "Text"
+						}
+					],
+					[
+						"description",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "To know Christ and to make Him known — through discipleship, community, and service to the city.",
+							"type": "Text"
+						}
+					],
+					[
+						"button_label",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "Get involved",
+							"type": "Text"
+						}
+					],
+					[
+						"button_link",
+						{
+							"key": "a1b2c3d4-0000-0000-0000-000000000002",
+							"__TYPE__": "LinkContent",
+							"value": {
+								"__TYPE__": "ExternalLink",
+								"url": "http://example.com",
+								"text": "Get involved"
+							}
+						}
+					],
+					[
+						"image_position",
+						{
+							"__TYPE__": "FieldContent",
+							"value": "right",
+							"type": "Select"
+						}
+					]
+				]
+			}
+		]
+	}
+]
