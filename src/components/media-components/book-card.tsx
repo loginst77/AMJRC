@@ -8,7 +8,7 @@ import { cardHoverCn } from "@/lib/variants";
 export function BookCard({ book }: { book: MediaItem }) {
   return (
     <Link href={book.href || "#"} className={cn("group flex min-w-[120px] flex-col bg-white dark:bg-zinc-900", cardHoverCn)}>
-      <div className="relative flex h-100 shrink-0 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50 shadow-inner transition-transform duration-300 ring-1 ring-blue-200/50 group-hover:scale-[1.02] dark:from-blue-900/40 dark:to-blue-950/30 dark:ring-blue-900/60">
+      <div className="relative flex h-[350px] sm:h-100 shrink-0 items-center justify-center overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50 shadow-inner transition-transform duration-300 ring-1 ring-blue-200/50 group-hover:scale-[1.02] dark:from-blue-900/40 dark:to-blue-950/30 dark:ring-blue-900/60">
         {book.imageSrc ?
           <Image
             src={book.imageSrc}
@@ -18,6 +18,14 @@ export function BookCard({ book }: { book: MediaItem }) {
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
           />
         : <BookOpen className="h-16 w-16 text-blue-500/80 drop-shadow-sm dark:text-blue-300/80" strokeWidth={1} />}
+
+        <div className="flex items-center z-50 w-full bottom-2 absolute justify-between px-2">
+          {book.author && (
+            <span className="text-base font-medium rounded-full bg-white/80 backdrop-blur-sm px-4 py-2 text-zinc-800 dark:text-zinc-300">
+              {book.author} {typeof book.date === "number" ? `| ${book.date}` : ""}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col justify-between">
@@ -35,10 +43,6 @@ export function BookCard({ book }: { book: MediaItem }) {
               </span>
             ))}
           </div>
-        </div>
-        <div className="flex items-center justify-between border-t border-zinc-200 p-6">
-          {book.author && <span className="font-medium text-zinc-700 text-base dark:text-zinc-300 text-base">{book.author}</span>}
-          <span className="text-base tabular-nums text-zinc-400">{typeof book.date === "number" ? book.date : ""}</span>
         </div>
       </div>
     </Link>

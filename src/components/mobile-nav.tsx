@@ -125,7 +125,7 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
                   <Link
                     key={`${item.href}-${item.label}`}
                     href={item.href}
-                    className="rounded-xl px-3 py-4 bg-blue-100 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-800"
+                    className="rounded-xl px-3 py-4 border border-zinc-100 bg-blue-100/50 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-800"
                     onClick={() => setOpen(false)}>
                     {item.label}
                   </Link>
@@ -141,7 +141,7 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="flex items-center gap-3 rounded-xl bg-blue-100 px-3 py-4 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-800"
+                          className="flex items-center gap-3 rounded-xl bg-zinc-200/50 px-3 py-4 text-base font-semibold text-zinc-900 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-zinc-800"
                           onClick={() => setOpen(false)}>
                           {item.icon ?
                             <DynamicIcon name={item.icon} className="size-5 shrink-0" strokeWidth={1.5} />

@@ -103,11 +103,11 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
           ) ?
             <div className="max-w-3xl text-zinc-200 backdrop-blur-sm p-4 rounded-3xl bg-white/15">
               {typeof displayDescription === "string" ?
-                <p className="text-lg leading-8 text-zinc-100">{displayDescription}</p>
+                <p className="text-lg md:text-xl leading-8 text-zinc-100">{displayDescription}</p>
               : <PrismicRichText
                   field={displayDescription as RichTextField}
                   components={{
-                    paragraph: ({ children }) => <p className="text-lg leading-8 text-zinc-100">{children}</p>,
+                    paragraph: ({ children }) => <p className="text-lg md:text-xl leading-8 text-zinc-100">{children}</p>,
                   }}
                 />
               }
