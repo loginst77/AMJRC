@@ -33,15 +33,15 @@ const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
             {label}
           </p>
 
-          <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-16">
-            <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 text-center sm:gap-5 lg:mx-0 lg:w-60">
-              <div className="relative h-76 w-full shrink-0 overflow-hidden rounded-3xl bg-zinc-200 ring-1 ring-zinc-900/10 dark:bg-zinc-800 dark:ring-white/10 sm:h-72 lg:h-80">
+          <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-start md:gap-12 lg:gap-16">
+            <div className="mx-auto flex w-full max-w-sm flex-col items-center gap-4 text-center sm:gap-5 md:mx-0 md:w-52 lg:w-60">
+              <div className="relative h-96 w-full shrink-0 overflow-hidden rounded-3xl bg-zinc-200 ring-1 ring-zinc-900/10 dark:bg-zinc-800 dark:ring-white/10 sm:h-[26rem] md:h-72 lg:h-80">
                 {isFilled.image(slice.primary.image) && (
                   <PrismicNextImage field={slice.primary.image} fill={true} className="object-cover" />
                 )}
               </div>
 
-              <div className="lg:mt-3">
+              <div className="md:mt-3">
                 {name && <p className="font-semibold text-zinc-950 dark:text-white">{name}</p>}
                 {title && <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">{title}</p>}
               </div>
@@ -50,7 +50,7 @@ const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
             <div className="relative">
               <span
                 aria-hidden={true}
-                className="pointer-events-none absolute -left-1 -top-3 select-none text-6xl font-serif leading-none text-zinc-200 dark:text-zinc-800 sm:-left-2 sm:-top-4 sm:text-8xl">
+                className="pointer-events-none absolute -left-1 -top-3 select-none font-serif text-6xl leading-none text-zinc-200 dark:text-zinc-800 sm:-left-2 sm:-top-4 sm:text-7xl md:text-8xl">
                 &ldquo;
               </span>
 
