@@ -35,7 +35,7 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
             field={data.hero_title}
             components={{
               heading1: ({ children }) => (
-                <h1 className="max-w-2xl text-balance text-start text-4xl font-bold leading-tight tracking-wide text-white sm:text-5xl md:text-5xl lg:text-6xl">
+                <h1 className="lg:max-w-2xl w-full text-balance text-start text-4xl font-bold leading-tight tracking-wide text-white sm:text-5xl md:text-5xl lg:text-6xl">
                   {children}
                 </h1>
               ),

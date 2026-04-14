@@ -43,8 +43,13 @@ const ValuesBlock: FC<ValuesBlockProps> = ({ slice }) => {
 
   const gridColsClass =
     valuesToRender.length === 2 ? "grid-cols-1 sm:grid-cols-2"
-    : valuesToRender.length === 3 ? "grid-cols-1 sm:grid-cols-3"
-    : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4";
+    : valuesToRender.length === 3 ? "grid-cols-1 md:grid-cols-3"
+    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4";
+
+  const cardClass =
+    valuesToRender.length <= 3 ?
+      "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:px-5 sm:py-8 sm:text-left md:border-r md:px-6 md:py-10 md:last:border-r-0 dark:border-zinc-800"
+    : "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:px-5 sm:py-8 sm:text-left sm:even:border-r-0 md:px-6 md:py-10 lg:border-r lg:last:border-r-0 dark:border-zinc-800";
 
   return (
     <section
@@ -52,13 +57,11 @@ const ValuesBlock: FC<ValuesBlockProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className={`border-t border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 ${isSecondary ? "bg-zinc-50" : "bg-white"}`}>
       <Bounded as="div" yPadding="sm">
-        <div className={`mx-auto grid gap-8 sm:gap-10 md:gap-12 ${gridColsClass}`}>
+        <div className={`mx-auto grid gap-6 sm:gap-x-0 sm:gap-y-6 ${gridColsClass}`}>
           {valuesToRender.map(({ title, description }) => (
-            <div
-              key={title}
-              className="space-y-2 border-t border-zinc-200 px-3 py-10 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:last:border-r-0 sm:px-4 sm:py-12 sm:text-left md:px-6 dark:border-zinc-800">
-              <div className="text-lg font-semibold text-zinc-950 dark:text-white">{title}</div>
-              <p className="text-zinc-600 dark:text-zinc-400">{description}</p>
+            <div key={title} className={cardClass}>
+              <div className="text-base font-semibold text-zinc-950 sm:text-lg dark:text-white">{title}</div>
+              <p className="text-sm text-zinc-600 sm:text-base dark:text-zinc-400">{description}</p>
             </div>
           ))}
         </div>
