@@ -83,7 +83,7 @@ const NewspaperList: FC<NewspaperListProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary?.title || "Газеты"}</h2>
             {slice.primary?.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/newspapers" variant="primary" size="md">
+          <ButtonLink href="/media/newspapers" variant="primary" size="md" className="hidden sm:inline-flex">
             Все газеты →
           </ButtonLink>
         </div>
@@ -93,6 +93,12 @@ const NewspaperList: FC<NewspaperListProps> = async ({ slice }) => {
           {items.map((newspaper) => (
             <NewspaperCard key={newspaper.id} issue={newspaper} />
           ))}
+        </div>
+
+        <div className="mt-6 sm:hidden">
+          <ButtonLink href="/media/newspapers" variant="primary" size="md" className="w-full">
+            Все газеты →
+          </ButtonLink>
         </div>
       </Container>
     </section>

@@ -85,13 +85,13 @@ const PodcastCarousel: FC<PodcastCarouselProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary?.title || "Подкасты"}</h2>
             {slice.primary?.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/podcasts" variant="primary" size="md">
+          <ButtonLink href="/media/podcasts" variant="primary" size="md" className="hidden sm:inline-flex">
             Все подкасты →
           </ButtonLink>
         </div>
 
         <div className="mt-8">
-          <PodcastCarouselClient episodes={items} />
+          <PodcastCarouselClient episodes={items} allHref="/media/podcasts" allLabel="Все подкасты →" />
         </div>
       </Container>
     </section>

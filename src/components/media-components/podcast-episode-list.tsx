@@ -38,17 +38,17 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
       {episodes.map((episode) => (
         <div key={episode.id} className={cn("group flex items-stretch overflow-hidden rounded-2xl bg-white", cardHoverCn)}>
           <Link href={episode.href || "#"} className="group flex min-w-0 flex-1 items-center gap-4 p-4 sm:px-6 sm:py-6">
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-sm font-bold text-zinc-600 dark:bg-blue-900/30 dark:text-zinc-400">
+            <div className="flex md:h-24 md:w-24 w-10 shrink-0 items-center justify-center rounded-2xl md:bg-blue-100 text-sm font-bold text-zinc-600 dark:bg-blue-900/30 dark:text-zinc-400">
               <Mic size={30} strokeWidth={1.5} />
             </div>
 
             <div className="min-w-0 flex-1 text-left">
               <div className="flex h-full flex-col items-start justify-center space-y-1 min-h-[80px]">
-                <h3 className="truncate text-xl font-semibold text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+                <h3 className="line-clamp-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
                   {episode.title}
                 </h3>
                 {episode.description ?
-                  <p className="line-clamp-2 text-base text-zinc-500 dark:text-zinc-400">{episode.description}</p>
+                  <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{episode.description}</p>
                 : null}
 
                 <div>
@@ -77,7 +77,7 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
 
           <Link
             href={episode.href || "#"}
-            className="group/play hidden sm:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100 dark:border-zinc-700 dark:hover:bg-blue-950/30">
+            className="group/play hidden lg:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100 dark:border-zinc-700 dark:hover:bg-blue-950/30">
             <SquareArrowOutUpRight className="h-5 w-5 transition-transform group-hover/play:scale-110" strokeWidth={1.7} />
           </Link>
         </div>

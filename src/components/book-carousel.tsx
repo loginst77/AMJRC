@@ -3,16 +3,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { BookCard } from "@/components/media-components/book-card";
 import { type MediaItem } from "@/lib/media-data";
 
 interface BookCarouselProps {
   books: MediaItem[];
   className?: string;
+  allHref?: string;
+  allLabel?: string;
 }
 
-export function BookCarouselClient({ books, className }: BookCarouselProps) {
+export function BookCarouselClient({ books, className, allHref, allLabel }: BookCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -43,7 +45,10 @@ export function BookCarouselClient({ books, className }: BookCarouselProps) {
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = el.clientWidth * 0.8;
+    const card = el.querySelector<HTMLElement>(":scope > div");
+    const cardWidth = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
+    const isSmall = window.innerWidth < 640;
+    const amount = isSmall ? cardWidth : el.clientWidth * 0.8;
     el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
   };
 
@@ -54,9 +59,9 @@ export function BookCarouselClient({ books, className }: BookCarouselProps) {
       {/* Scrollable row */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory p-6 scroll-p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden after:content-[''] after:w-px after:shrink-0">
+        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-6 px-1 sm:p-6 scroll-p-1 sm:scroll-p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden after:content-[''] after:w-px after:shrink-0">
         {books.map((book) => (
-          <div key={book.id} className="flex h-auto flex-none w-[280px] sm:w-[350px] lg:w-[420px] snap-start">
+          <div key={book.id} className="flex h-auto flex-none w-[calc(100%-8px)] sm:w-[350px] lg:w-[420px] snap-center sm:snap-start">
             <BookCard book={book} />
           </div>
         ))}
@@ -98,6 +103,12 @@ export function BookCarouselClient({ books, className }: BookCarouselProps) {
           <ChevronRight strokeWidth={1.2} className="group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
       </div>
+
+      {allHref && (
+        <ButtonLink href={allHref} variant="primary" size="md" className="w-full sm:hidden">
+          {allLabel || "Все книги →"}
+        </ButtonLink>
+      )}
     </div>
   );
 }

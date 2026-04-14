@@ -5,14 +5,17 @@ import { ChevronLeft, ChevronRight, Play, Mic } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { PodcastEpisodeList, type PodcastEpisode } from "@/components/media-components/podcast-episode-list";
 
 interface PodcastCarouselProps {
   episodes: PodcastEpisode[];
   className?: string;
+  allHref?: string;
+  allLabel?: string;
 }
 
-export function PodcastCarouselClient({ episodes, className }: PodcastCarouselProps) {
+export function PodcastCarouselClient({ episodes, className, allHref, allLabel }: PodcastCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -65,7 +68,7 @@ export function PodcastCarouselClient({ episodes, className }: PodcastCarouselPr
         ref={scrollRef}
         className="flex items-stretch overflow-x-auto scroll-smooth snap-x snap-mandatory py-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {chunkedEpisodes.map((chunk, chunkIdx) => (
-          <div key={`chunk-${chunkIdx}`} className="flex-none w-full px-6 snap-start">
+          <div key={`chunk-${chunkIdx}`} className="flex-none w-full md:px-6 snap-start">
             <PodcastEpisodeList episodes={chunk} />
           </div>
         ))}
@@ -107,6 +110,12 @@ export function PodcastCarouselClient({ episodes, className }: PodcastCarouselPr
           <ChevronRight strokeWidth={1.2} className="group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
       </div>
+
+      {allHref && (
+        <ButtonLink href={allHref} variant="primary" size="md" className="w-full sm:hidden">
+          {allLabel || "Все подкасты →"}
+        </ButtonLink>
+      )}
     </div>
   );
 }

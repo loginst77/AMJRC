@@ -20,9 +20,7 @@ const BookCarousel: FC<BookCarouselProps> = async ({ slice }) => {
   const client = createClient();
   const response = await client
     .getByType<Content.BookDocument>("book", {
-      orderings: [
-        { field: "document.first_publication_date", direction: "desc" },
-      ],
+      orderings: [{ field: "document.first_publication_date", direction: "desc" }],
       fetchLinks: ["tag.name"],
       pageSize: 6,
     })
@@ -84,13 +82,13 @@ const BookCarousel: FC<BookCarouselProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary?.title || "Книги"}</h2>
             {slice.primary?.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/books" variant="primary" size="md">
+          <ButtonLink href="/media/books" variant="primary" size="md" className="hidden sm:inline-flex">
             Все книги →
           </ButtonLink>
         </div>
 
         <div className="mt-8">
-          <BookCarouselClient books={items} />
+          <BookCarouselClient books={items} allHref="/media/books" allLabel="Все книги →" />
         </div>
       </Container>
     </section>

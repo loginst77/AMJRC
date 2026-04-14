@@ -23,12 +23,12 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
       <div className="flex flex-col p-6">
         <div className="flex flex-col gap-2">
           {/* Title */}
-          <h3 className="mb-2 text-xl font-bold leading-snug text-zinc-900 transition-colors duration-200 group-hover:text-blue-500 dark:text-white">
+          <h3 className="mb-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
             {issue.title}
           </h3>
 
           {/* Description */}
-          <p className="line-clamp-5 flex-1 text-base leading-relaxed text-zinc-500 dark:text-zinc-400">{issue.description}</p>
+          <p className="mt-2 line-clamp-2 flex-1 text-base leading-relaxed text-zinc-500">{issue.description}</p>
         </div>
       </div>
 
