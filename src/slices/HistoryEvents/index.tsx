@@ -27,7 +27,7 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
       {/* Light Rays Background */}
       <LightRays />
 
-      <Container className="relative z-10 py-20 lg:py-28">
+      <Container className="relative z-10 py-16 sm:py-20 md:py-28">
         {/* Header */}
         <div className="space-y-3 text-center">
           {prismicData.primary?.badge_text && <Badge size="lg">{prismicData.primary.badge_text}</Badge>}
@@ -43,35 +43,35 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
 
         {/* Timeline */}
         {prismicData.items && prismicData.items.length > 0 && (
-          <div className="relative mx-auto mt-16 max-w-5xl">
+          <div className="relative mx-auto mt-12 max-w-5xl sm:mt-14 md:mt-16">
             {/* Vertical line (aligned to the left) */}
-            <div className="absolute left-6 lg:left-8 top-0 bottom-0 w-px bg-zinc-200" />
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-zinc-200 md:left-7 lg:left-8" />
 
-            <div className="space-y-12 sm:space-y-16">
+            <div className="space-y-10 sm:space-y-12 md:space-y-16">
               {prismicData.items.map((m: any, index: number) => {
                 return (
-                  <div key={index} className="relative pl-16 lg:pl-24">
+                  <div key={index} className="relative pl-16 md:pl-20 lg:pl-24">
                     {/* Dot on the left line */}
-                    <div className="absolute left-6 lg:left-8 top-6 z-10 flex items-center justify-center -translate-x-[calc(50%-0.5px)] sm:-translate-x-[calc(50%-0.5px)]">
+                    <div className="absolute left-6 top-6 z-10 flex -translate-x-[calc(50%-0.5px)] items-center justify-center md:left-7 lg:left-8">
                       <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-700 ring-[5px] ring-white/50">
                         <span className="h-2 w-2 rounded-full bg-white" />
                       </span>
                     </div>
 
                     {/* Card (all aligned to the right side of the line) */}
-                    <div className="w-full sm:w-[85%] lg:w-[75%]">
+                    <div className="w-full md:w-[85%] lg:w-[75%]">
                       <div
                         className={cn(
-                          "group flex flex-col bg-white overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow dark:border-zinc-800 dark:bg-zinc-900/80",
+                          "group flex flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow dark:border-zinc-800 dark:bg-zinc-900/80",
                         )}>
-                        <div className="pt-6 px-6 border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-                          <span className="text-4xl font-bold tracking-wider text-zinc-950 dark:text-white px-6 py-2 bg-blue-100 rounded-full">
+                        <div className="flex items-center justify-between border-zinc-200 px-5 pt-5 sm:px-6 sm:pt-6 dark:border-zinc-800">
+                          <span className="rounded-full bg-blue-100 px-4 py-1.5 text-3xl font-bold tracking-wider text-zinc-950 sm:px-6 sm:py-2 sm:text-4xl dark:text-white">
                             {m.year}
                           </span>{" "}
                         </div>
-                        <div className="p-6 flex-1">
-                          <h3 className="text-xl font-bold leading-snug text-zinc-950 dark:text-white mb-2">{m.heading}</h3>
-                          <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400 flex-1">{m.text}</p>
+                        <div className="flex-1 p-5 sm:p-6">
+                          <h3 className="mb-2 text-lg font-bold leading-snug text-zinc-950 sm:text-xl dark:text-white">{m.heading}</h3>
+                          <p className="flex-1 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">{m.text}</p>
                         </div>
                       </div>
                     </div>
