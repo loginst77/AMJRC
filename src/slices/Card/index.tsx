@@ -108,9 +108,12 @@ const Card: FC<CardProps> = ({ slice }) => {
   const cards: CardDisplay[] = normalized.length ? normalized : FALLBACK_CARDS;
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white pb-20 pt-16 md:pb-28 md:pt-24 dark:bg-zinc-950">
+    <section
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="bg-white pb-16 pt-14 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 dark:bg-zinc-950">
       <Container>
-        <div className="mx-auto w-full max-w-6xl space-y-12">
+        <div className="mx-auto w-full max-w-6xl space-y-10 sm:space-y-12">
           <div className="flex flex-col items-center space-y-4 text-center">
             {label ?
               <Badge variant="outline" size="lg">
@@ -127,8 +130,12 @@ const Card: FC<CardProps> = ({ slice }) => {
             {cards.slice(0, 6).map((card) => (
               <div
                 key={card.title}
-                className={cn("group flex h-full !overflow-hidden flex-col bg-zinc-50 dark:bg-zinc-900", cardHoverCn, !card.href && "!cursor-default")}>
-                <div className="relative h-52 w-full shrink-0 overflow-hidden bg-zinc-200 sm:h-72">
+                className={cn(
+                  "group flex h-full !overflow-hidden flex-col bg-zinc-50 dark:bg-zinc-900",
+                  cardHoverCn,
+                  !card.href && "!cursor-default",
+                )}>
+                <div className="relative h-48 w-full shrink-0 overflow-hidden bg-zinc-200 sm:h-56 md:h-72">
                   {(() => {
                     const img = card.image as ImageField | null | undefined;
                     const imgUrl = img?.url;
@@ -141,16 +148,16 @@ const Card: FC<CardProps> = ({ slice }) => {
                   })()}
                   <div className="absolute inset-0 z-10 rounded-t-3xl bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-500 group-hover:backdrop-blur-sm" />
                   {card.description && (
-                    <p className="absolute bottom-6 left-6 right-6 z-20 text-lg font-medium leading-relaxed text-white">
+                    <p className="absolute bottom-4 left-4 right-4 z-20 text-base font-medium leading-relaxed text-white sm:bottom-5 sm:left-5 sm:right-5 md:bottom-6 md:left-6 md:right-6 md:text-lg">
                       <Quote className="mr-1.5 inline-block -translate-y-0.5 text-blue-300" size={20} fill="currentColor" />
                       {card.description}
                     </p>
                   )}
                 </div>
 
-                <div className="flex flex-1 flex-col px-7 pb-8 pt-6 sm:px-8">
-                  <div className="space-y-4">
-                    <h3 className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{card.title}</h3>
+                <div className="flex flex-1 flex-col px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6 md:px-8 md:pb-8">
+                  <div className="space-y-3 sm:space-y-4">
+                    <h3 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl dark:text-white">{card.title}</h3>
                     {card.body && <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{card.body}</p>}
                   </div>
                 </div>
@@ -158,9 +165,9 @@ const Card: FC<CardProps> = ({ slice }) => {
                 {(card.buttonLabel || card.href) && (
                   <Link
                     href={card.href || "#"}
-                    className="flex items-center border-t border-zinc-200 p-7 text-sm font-medium uppercase tracking-wide text-zinc-700 group/button transition-colors hover:bg-blue-100 sm:p-8 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800">
+                    className="flex items-center border-t border-zinc-200 p-5 text-sm font-medium uppercase tracking-wide text-zinc-700 transition-colors group/button hover:bg-blue-100 sm:p-6 md:p-8 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800">
                     {card.buttonLabel || "Узнать больше"}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover/button:translate-x-1 transition-transform duration-200" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover/button:translate-x-1" />
                   </Link>
                 )}
               </div>
