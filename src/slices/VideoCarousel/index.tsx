@@ -139,13 +139,13 @@ const VideoCarousel: FC<VideoCarouselProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary.title || "Видео"} </h2>
             {slice.primary.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/videos" variant="primary" size="md">
+          <ButtonLink href="/media/videos" variant="primary" size="md" className="hidden sm:inline-flex">
             Все видео →
           </ButtonLink>
         </div>
 
         <div className="mt-8">
-          <VideoCarouselClient videos={items} />
+          <VideoCarouselClient videos={items} allHref="/media/videos" allLabel="Все видео →" />
         </div>
       </Container>
     </section>

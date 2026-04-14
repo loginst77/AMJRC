@@ -5,14 +5,17 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button";
 import { VideoCard, type VideoCardItem } from "@/components/media-components/video-card";
 
 interface VideoCarouselProps {
   videos: VideoCardItem[];
   className?: string;
+  allHref?: string;
+  allLabel?: string;
 }
 
-export function VideoCarousel({ videos, className }: VideoCarouselProps) {
+export function VideoCarousel({ videos, className, allHref, allLabel }: VideoCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -46,7 +49,10 @@ export function VideoCarousel({ videos, className }: VideoCarouselProps) {
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = el.clientWidth * 0.8;
+    const card = el.querySelector<HTMLElement>(":scope > div");
+    const cardWidth = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
+    const isSmall = window.innerWidth < 640;
+    const amount = isSmall ? cardWidth : el.clientWidth * 0.8;
     el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
   };
 
@@ -57,9 +63,9 @@ export function VideoCarousel({ videos, className }: VideoCarouselProps) {
       {/* Scrollable row */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory p-6 scroll-p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden after:content-[''] after:w-px after:shrink-0">
+        className="flex items-stretch gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-6 px-1 sm:p-6 scroll-p-1 sm:scroll-p-6 rounded-4xl [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden after:content-[''] after:w-px after:shrink-0">
         {videos.map((video) => (
-          <div key={video.id} className="flex h-auto flex-none w-[320px] sm:w-[420px] lg:w-[500px] snap-start">
+          <div key={video.id} className="flex h-auto flex-none w-[calc(100%-8px)] sm:w-[420px] lg:w-[500px] snap-center sm:snap-start">
             <VideoCard video={video} />
           </div>
         ))}
@@ -101,6 +107,14 @@ export function VideoCarousel({ videos, className }: VideoCarouselProps) {
           <ChevronRight strokeWidth={1.2} className="group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
       </div>
+
+      {allHref && (
+        <div className="sm:hidden">
+          <ButtonLink href={allHref} variant="primary" size="md" className="w-full">
+            {allLabel || "Все видео →"}
+          </ButtonLink>
+        </div>
+      )}
     </div>
   );
 }
