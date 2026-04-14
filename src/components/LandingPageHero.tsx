@@ -103,11 +103,11 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
           ) ?
             <div className="max-w-3xl text-zinc-200 backdrop-blur-sm p-4 rounded-3xl bg-white/15">
               {typeof displayDescription === "string" ?
-                <p className="text-lg md:text-xl leading-8 text-zinc-100">{displayDescription}</p>
+                <p className="text-base leading-relaxed sm:text-lg text-zinc-100">{displayDescription}</p>
               : <PrismicRichText
                   field={displayDescription as RichTextField}
                   components={{
-                    paragraph: ({ children }) => <p className="text-lg md:text-xl leading-8 text-zinc-100">{children}</p>,
+                    paragraph: ({ children }) => <p className="text-base leading-relaxed sm:text-lg text-zinc-100">{children}</p>,
                   }}
                 />
               }
@@ -135,14 +135,14 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
           )}
 
           {(hasButton1 || hasButton2) && (
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3">
               {hasButton1 && button1Link && (
-                <ButtonLink href={button1Link} size="lg" variant={resolveVariant(button1Variant, "primary") as any}>
+                <ButtonLink href={button1Link} size="lg" variant={resolveVariant(button1Variant, "primary") as any} className="w-full sm:w-auto">
                   {button1Label}
                 </ButtonLink>
               )}
               {hasButton2 && button2Link && (
-                <ButtonLink href={button2Link} size="lg" variant={resolveVariant(button2Variant, "filled") as any}>
+                <ButtonLink href={button2Link} size="lg" variant={resolveVariant(button2Variant, "filled") as any} className="w-full sm:w-auto">
                   {button2Label}
                 </ButtonLink>
               )}
