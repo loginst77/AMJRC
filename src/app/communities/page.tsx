@@ -87,7 +87,7 @@ export default async function CommunitiesPage() {
               <p className="font-semibold text-zinc-800 dark:text-zinc-100">Пока нет добавленных общин</p>
               <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Создайте новую общину в Prismic, чтобы она появилась здесь.</p>
             </div>
-          : <div className="grid gap-6 grid-cols-2">
+          : <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
               {cards.map((comm) => (
                 <CommunityCard
                   key={comm.id}

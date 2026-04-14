@@ -46,7 +46,7 @@ export function TranslationSelector({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="hidden items-center gap-1.5 rounded-full bg-blue-100 px-5 py-3 text-xs font-medium text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400 sm:flex border border-blue-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors outline-none cursor-pointer">
+      <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-full bg-blue-100 px-5 py-3 text-xs font-medium text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400 border border-blue-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors outline-none cursor-pointer">
         <Scroll className="h-4 w-4 shrink-0" strokeWidth={1.5} />
         <span className="text-zinc-900 dark:text-zinc-100">{VERSIONS[currentVersion].shortName}</span>
         <ChevronDown className="h-3 w-3 opacity-50" strokeWidth={2} />
@@ -55,7 +55,7 @@ export function TranslationSelector({
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="z-50 min-w-48 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950 flex flex-col outline-none">
+        className="z-[100] min-w-48 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950 flex flex-col outline-none">
         {/* @ts-expect-error Animate-UI's Highlight typings incorrectly require children */}
         <DropdownMenuHighlight className="rounded-xl bg-zinc-100 dark:bg-zinc-900" />
         <DropdownMenuRadioGroup

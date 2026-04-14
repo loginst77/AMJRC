@@ -36,7 +36,7 @@ const ImageBlocks: FC<ImageBlocksProps> = ({ slice }) => {
       data-slice-variation={slice.variation}
       className="bg-zinc-50 py-16 dark:bg-zinc-950 md:py-24">
       <Container>
-        <div className="flex flex-col gap-16 md:gap-14">
+        <div className="flex flex-col gap-10 sm:gap-12 md:gap-16">
           {items.map((item, idx) => {
             const imageRight = item.image_position === "right";
             const href = item.button && isFilled.link(item.button) ? asLink(item.button) : null;
@@ -47,11 +47,11 @@ const ImageBlocks: FC<ImageBlocksProps> = ({ slice }) => {
               <div
                 key={`${item.title}-${idx}`}
                 className={cn(
-                  "group flex flex-col items-stretch gap-8 overflow-hidden rounded-3xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 md:flex-row md:gap-0",
+                  "group flex flex-col items-stretch overflow-hidden rounded-3xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 md:flex-row",
                   imageRight && "md:flex-row-reverse",
                 )}>
                 {/* Image column — ~55% */}
-                <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-800 md:aspect-auto md:h-auto md:min-h-[400px] md:w-[55%]">
+                <div className="relative aspect-[4/3] sm:aspect-video w-full shrink-0 overflow-hidden bg-zinc-100 dark:bg-zinc-800 md:aspect-auto md:h-auto md:min-h-[400px] md:w-[55%]">
                   {hasImage ?
                     <PrismicNextImage
                       field={item.image}
@@ -65,13 +65,13 @@ const ImageBlocks: FC<ImageBlocksProps> = ({ slice }) => {
                 </div>
 
                 {/* Text column */}
-                <div className="flex w-full flex-col justify-center gap-6 px-8 py-10 md:w-[45%] md:px-10 md:py-14 lg:px-14">
+                <div className="flex w-full flex-col justify-center gap-5 sm:gap-6 p-6 sm:p-8 md:w-[45%] md:px-10 md:py-14 lg:p-14">
                   {item.title && (
                     <h2 className="text-3xl font-semibold leading-tight tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
                       {item.title}
                     </h2>
                   )}
-                  {item.description && <p className="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{item.description}</p>}
+                  {item.description && <p className="text-base sm:text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{item.description}</p>}
                   {href && label && (
                     <Link
                       href={href}

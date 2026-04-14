@@ -3,7 +3,7 @@ import { PrismicRichText } from "@/components/PrismicRichText";
 
 export function CommentariesPanel({ commentaries }: { commentaries: any[] }) {
   return (
-    <div className="lg:absolute lg:top-0 lg:bottom-0 lg:right-0 lg:w-[calc(40%-0.75rem)] flex flex-col h-[85vh]">
+    <div className="lg:absolute lg:top-0 lg:bottom-0 lg:right-0 lg:w-[calc(40%-0.75rem)] flex flex-col h-auto max-h-[60vh] sm:max-h-[65vh] lg:max-h-none lg:h-[85vh]">
       <div className="rounded-3xl shadow-secondary border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 overflow-hidden flex flex-col flex-1">
         <div className="flex items-center gap-3 border-b border-zinc-200 px-6 py-6 dark:border-zinc-800 shrink-0 bg-zinc-50">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-blue-600">

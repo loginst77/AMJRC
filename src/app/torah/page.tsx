@@ -7,11 +7,13 @@ import { fetchPassage, VERSIONS, TranslationCode } from "@/lib/torah-data";
 import { TranslationSelector } from "./components/translation-selector";
 import { CommentariesPanel } from "./components/commentaries-panel";
 import { ScripturePanel } from "./components/scripture-panel";
+import { TorahMobileReader } from "./components/torah-mobile-reader";
 import { LandingPageHero } from "@/components/LandingPageHero";
 import { ReadingPreviewCard } from "@/components/reading-preview-card";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import { BookOpen } from "lucide-react";
+import { FullscreenReaderButton } from "./components/fullscreen-reader";
 
 export const metadata: Metadata = {
   title: "Чтение Торы — Ежедневная глава",
@@ -119,9 +121,34 @@ export default async function ReadTorahPage(props: {
         <Container>
           {currentReading && passage ?
             <div className="mx-auto max-w-7xl relative">
-              <div className="flex flex-col lg:flex-row gap-6">
+              {/* Mobile reader (below md) */}
+              <TorahMobileReader
+                passage={passage}
+                passageRef={passageRef!}
+                currentVersion={currentVersionCode}
+                commentaries={commentaries}
+                prevHref={prevReading ? `/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader` : undefined}
+                nextHref={nextReading ? `/torah?version=${currentVersionCode}&offset=${nextIndex - baseIndex}#reader` : undefined}
+              />
+
+              {/* Desktop reader (lg and above) */}
+              <div className="hidden lg:flex flex-col lg:flex-row gap-6">
                 {/* ── Scripture (left) ── */}
-                <ScripturePanel passage={passage} passageRef={passageRef!} currentVersion={currentVersionCode} />
+                <ScripturePanel
+                  passage={passage}
+                  passageRef={passageRef!}
+                  currentVersion={currentVersionCode}
+                  actions={
+                    <FullscreenReaderButton
+                      passage={passage}
+                      passageRef={passageRef!}
+                      currentVersion={currentVersionCode}
+                      commentaries={commentaries}
+                      prevHref={prevReading ? `/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader` : undefined}
+                      nextHref={nextReading ? `/torah?version=${currentVersionCode}&offset=${nextIndex - baseIndex}#reader` : undefined}
+                    />
+                  }
+                />
 
                 {/* ── Commentaries (right) ── */}
                 <CommentariesPanel commentaries={commentaries} />
@@ -148,7 +175,7 @@ export default async function ReadTorahPage(props: {
         <section className="py-14 sm:py-20 bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-900">
           <Container>
             <div className="mx-auto max-w-7xl">
-              <div className="grid gap-6 sm:grid-cols-2">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
                 {prevReading ?
                   <ReadingPreviewCard
                     direction="prev"

@@ -24,7 +24,7 @@ export function ReadingPreviewCard({ direction, title, dateRange, href }: Readin
           document.getElementById("reader")?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }}
-      className={cn("group relative rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-8 text-left w-full block transition-colors", cardHoverCn)}
+      className={cn("group relative rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 sm:p-8 text-left w-full block transition-colors", cardHoverCn)}
     >
       {/* Label */}
       <div className={`flex items-center gap-2 mb-4 ${isPrev ? "" : "justify-end"}`}>

@@ -9,10 +9,12 @@ export function ScripturePanel({
   passage,
   passageRef,
   currentVersion,
+  actions,
 }: {
   passage: TorahPassage;
   passageRef: string;
   currentVersion: TranslationCode;
+  actions?: React.ReactNode;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -33,9 +35,9 @@ export function ScripturePanel({
 
   return (
     <div className="lg:w-3/5">
-      <div className="rounded-3xl border border-zinc-200 bg-white shadow-secondary h-[85vh] flex flex-col overflow-hidden">
+      <div className="rounded-3xl border border-zinc-200 bg-white shadow-secondary h-[70vh] sm:h-[75vh] lg:h-[85vh] flex flex-col overflow-hidden">
         {/* Chapter heading */}
-        <div className="flex items-center bg-zinc-50 dark:bg-zinc-900 justify-between border-b border-zinc-200 px-8 py-5 dark:border-zinc-800 sm:px-10">
+        <div className="flex items-center bg-zinc-50 dark:bg-zinc-900 justify-between border-b border-zinc-200 px-5 py-4 dark:border-zinc-800 sm:px-8 sm:py-5 md:px-10">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 dark:bg-white">
               <BookOpen className="h-5 w-5 text-white dark:text-zinc-900" strokeWidth={1.5} />
@@ -45,11 +47,14 @@ export function ScripturePanel({
               <p className="text-sm text-blue-500 dark:text-zinc-500">{passageRef}</p>
             </div>
           </div>
-          <TranslationSelector currentVersion={currentVersion} canon="old_testament" />
+          <div className="flex items-center gap-2">
+            <TranslationSelector currentVersion={currentVersion} canon="old_testament" />
+            {actions}
+          </div>
         </div>
 
         {/* Verses */}
-        <div ref={scrollRef} className="px-8 py-8 sm:px-10 sm:py-10 flex-1 bg-white overflow-y-auto scrollbar-thin">
+        <div ref={scrollRef} className="px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 flex-1 bg-white overflow-y-auto scrollbar-thin">
           {paragraphs.map((group, pIdx) => (
             <React.Fragment key={pIdx}>
               {group[0].chapterRef && (
