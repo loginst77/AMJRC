@@ -81,7 +81,7 @@ const ArticleList: FC<ArticleListProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary?.title || "Статьи"}</h2>
             {slice.primary?.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/articles" variant="primary" size="md">
+          <ButtonLink href="/media/articles" variant="primary" size="md" className="hidden sm:inline-flex">
             Все статьи →
           </ButtonLink>
         </div>
@@ -91,6 +91,12 @@ const ArticleList: FC<ArticleListProps> = async ({ slice }) => {
           {items.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
+        </div>
+
+        <div className="mt-6 sm:hidden">
+          <ButtonLink href="/media/articles" variant="primary" size="md" className="w-full">
+            Все статьи →
+          </ButtonLink>
         </div>
       </Container>
     </section>

@@ -35,12 +35,12 @@ const Banner: FC<BannerProps> = ({ slice }) => {
         data-slice-type={slice.slice_type}
         data-slice-variation={slice.variation}
         className={isSecondaryBg ? "bg-zinc-50 dark:bg-zinc-900" : "bg-white dark:bg-zinc-950"}>
-        <Container className="py-16">
-          <div className="grid items-center gap-10">
-            <div className="space-y-8">
-              <div className="space-y-4 max-w-2xl">
-                <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{displayTitle}</h2>
-                {displayDescription && <p className="max-w-2xl text-lg text-zinc-600 dark:text-zinc-400">{displayDescription}</p>}
+        <Container className="py-12 sm:py-14 md:py-16">
+          <div className="grid items-center gap-8 md:gap-10">
+            <div className="space-y-6 sm:space-y-8">
+              <div className="max-w-2xl space-y-3 sm:space-y-4">
+                <h2 className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-white">{displayTitle}</h2>
+                {displayDescription && <p className="max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">{displayDescription}</p>}
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 {primaryHref && (
@@ -88,19 +88,19 @@ const Banner: FC<BannerProps> = ({ slice }) => {
         </>
       )}
 
-      <Container className="relative z-10 py-16 sm:py-20 flex flex-col items-center text-center">
-        <h2 className={cn("max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl", hasBackgroundImage ? "text-white" : undefined)}>
+      <Container className="relative z-10 flex flex-col items-center py-12 text-center sm:py-16 md:py-20">
+        <h2 className={cn("max-w-2xl text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl", hasBackgroundImage ? "text-white" : undefined)}>
           {displayTitle}
         </h2>
 
         {displayDescription && (
-          <p className={cn("mt-4 max-w-xl text-lg leading-relaxed", hasBackgroundImage ? "text-zinc-200" : "text-zinc-600")}>
+          <p className={cn("mt-3 max-w-xl text-base leading-relaxed sm:mt-4 sm:text-lg", hasBackgroundImage ? "text-zinc-200" : "text-zinc-600")}>
             {displayDescription}
           </p>
         )}
 
         {actionHref && (
-          <ButtonLink href={actionHref} variant={hasBackgroundImage ? "filled" : "primary"} size="lg" className="mt-8">
+          <ButtonLink href={actionHref} variant={hasBackgroundImage ? "filled" : "primary"} size="lg" className="mt-6 w-full sm:mt-8 sm:w-auto">
             {actionLabel}
           </ButtonLink>
         )}
