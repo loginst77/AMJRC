@@ -58,7 +58,13 @@ export function SiteHeader({
         </div>
 
         <div className="flex items-center gap-2">
-          <MobileNav items={navigationLinks} dropdownItems={dropdownItems} logo={logo} />
+          <MobileNav
+            items={navigationLinks}
+            dropdownItems={dropdownItems}
+            logo={logo}
+            primaryAction={primaryAction}
+            secondaryAction={secondaryAction}
+          />
           <div className="hidden lg:flex items-center gap-2">
             {primaryAction ?
               <ButtonLink href={primaryAction.href} variant={primaryAction.variant} size="md">

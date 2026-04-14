@@ -8,7 +8,9 @@ import { Menu, X, icons as lucideIcons } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+import { ButtonLink } from "@/components/ui/button";
 import type { NavDropdownItem } from "./nav-dropdown";
+import type { ActionButton } from "./site-header";
 
 export type HeaderNavLinkItem = { href: string; label: string };
 
@@ -16,6 +18,8 @@ type MobileNavProps = {
   items: HeaderNavLinkItem[];
   dropdownItems?: NavDropdownItem[];
   logo?: any;
+  primaryAction?: ActionButton;
+  secondaryAction?: ActionButton;
 };
 
 function DynamicIcon({ name, className, strokeWidth }: { name: string; className?: string; strokeWidth?: number }) {
@@ -30,7 +34,7 @@ function DynamicIcon({ name, className, strokeWidth }: { name: string; className
   return <Icon className={className} strokeWidth={strokeWidth} />;
 }
 
-export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
+export function MobileNav({ items, dropdownItems = [], logo, primaryAction, secondaryAction }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -77,10 +81,13 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}>
         {open ?
-          <X className="h-5 w-5" aria-hidden />
+          <>
+            <X className="h-5 w-5" aria-hidden />
+            <span>Закрыть</span>
+          </>
         : <span className="flex items-center gap-2">
-            <Menu className="h-5 w-5" aria-hidden />
-            Menu
+            <Menu className="h-5 w-5" aria-hidden strokeWidth={1.2} />
+            Меню
           </span>
         }
       </button>
@@ -102,7 +109,7 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
             <div
               ref={panelRef}
               className={cn(
-                "fixed inset-y-0 right-0 z-[80] w-[80%] max-w-sm overflow-y-auto border-l border-zinc-200 bg-white p-5 transition-transform duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-950",
+                "fixed inset-y-0 right-0 z-[80] w-full max-w-none overflow-y-auto border-l border-zinc-200 bg-white p-5 transition-transform duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-950",
                 open ? "translate-x-0" : "translate-x-full pointer-events-none",
               )}
               role="dialog"
@@ -114,10 +121,11 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
                 : <span className="text-base font-semibold text-zinc-900 dark:text-white">Меню</span>}
                 <button
                   type="button"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-zinc-800 dark:text-white dark:hover:bg-zinc-900 dark:focus-visible:ring-offset-zinc-950"
+                  className="inline-flex h-12 px-5 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-zinc-800 dark:text-white dark:hover:bg-zinc-900 dark:focus-visible:ring-offset-zinc-950"
                   aria-label="Close navigation menu"
                   onClick={() => setOpen(false)}>
-                  <X className="h-5 w-5" aria-hidden />
+                  Закрыть
+                  <X className="h-5 w-5" aria-hidden strokeWidth={1.2} />
                 </button>
               </div>
               <nav className="flex flex-col gap-2">
@@ -130,13 +138,37 @@ export function MobileNav({ items, dropdownItems = [], logo }: MobileNavProps) {
                     {item.label}
                   </Link>
                 ))}
+                {(primaryAction || secondaryAction) && (
+                  <div className="flex flex-row gap-2 border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl dark:border-zinc-800">
+                    {primaryAction && (
+                      <ButtonLink
+                        href={primaryAction.href}
+                        variant={primaryAction.variant}
+                        size="md"
+                        className="w-full justify-start rounded-xl bg-white border-zinc-200 !h-auto !py-4 !px-3 !text-base font-semibold"
+                        onClick={() => setOpen(false)}>
+                        {primaryAction.label}
+                      </ButtonLink>
+                    )}
+                    {secondaryAction && (
+                      <ButtonLink
+                        href={secondaryAction.href}
+                        variant={secondaryAction.variant}
+                        size="md"
+                        className="w-full justify-start rounded-xl !h-auto !py-4 !px-3 !text-base font-semibold"
+                        onClick={() => setOpen(false)}>
+                        {secondaryAction.label}
+                      </ButtonLink>
+                    )}
+                  </div>
+                )}
 
                 {dropdownItems.length > 0 ?
-                  <div className="border-zinc-100 p-2 bg-zinc-100/60 border rounded-xl">
+                  <div className="border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl">
                     <div className="px-1 mt-2 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400 ">
                       Медия
                     </div>
-                    <div className="flex flex-col gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       {dropdownItems.map((item) => (
                         <Link
                           key={item.href}
