@@ -17,7 +17,7 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
   const hasSecondaryButton = isFilled.link(data.secondary_button) && !!secondaryButtonHref;
 
   return (
-    <section className="relative h-[calc(100vh-88px)] overflow-hidden bg-slate-950 text-white">
+    <section className="relative min-h-[calc(100vh-88px)] overflow-hidden bg-slate-950 py-12 text-white md:py-16 lg:h-[calc(100vh-88px)] lg:py-0">
       {isFilled.image(data.hero_background_image) && (
         <PrismicNextImage
           field={data.hero_background_image}
@@ -30,12 +30,12 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/70 to-transparent" />
 
       <Container className="relative grid h-full items-center gap-8 lg:grid-cols-2">
-        <div className="space-y-6">
+        <div className="space-y-6 md:space-y-8">
           <PrismicRichText
             field={data.hero_title}
             components={{
               heading1: ({ children }) => (
-                <h1 className="max-w-2xl text-balance text-start text-4xl font-bold leading-tight tracking-wide text-white sm:text-5xl md:text-6xl">
+                <h1 className="max-w-2xl text-balance text-start text-4xl font-bold leading-tight tracking-wide text-white sm:text-5xl md:text-5xl lg:text-6xl">
                   {children}
                 </h1>
               ),
@@ -45,7 +45,9 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
           <PrismicRichText
             field={data.hero_text}
             components={{
-              paragraph: ({ children }) => <p className="max-w-xl mt-20 !text-base font-semibold uppercase tracking-[0.2em]">{children}</p>,
+              paragraph: ({ children }) => (
+                <p className="max-w-xl mt-8 !text-base font-semibold uppercase tracking-[0.2em] md:mt-12 lg:mt-20">{children}</p>
+              ),
             }}
           />
 
@@ -67,7 +69,7 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
 
         <div className="relative flex w-full items-center justify-center">
           <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
-          <div className="relative aspect-[9/12] w-full max-w-lg overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15">
+          <div className="relative aspect-[9/12] w-full overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15 md:aspect-video lg:aspect-[9/12] lg:max-w-lg">
             {isFilled.embed(data.hero_video_embed) ?
               <iframe
                 src={`${data.hero_video_embed.embed_url?.replace("watch?v=", "embed/") ?? data.hero_video_embed.embed_url}?autoplay=1&mute=1&rel=0`}
