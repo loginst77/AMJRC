@@ -1,0 +1,16 @@
+{
+  "id": "event_list",
+  "type": "SharedSlice",
+  "name": "EventList",
+  "description": "EventList",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": ""
+    }
+  ]
+}

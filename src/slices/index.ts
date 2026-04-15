@@ -9,6 +9,7 @@ export const components = {
   book_carousel: dynamic(() => import("./BookCarousel")),
   card: dynamic(() => import("./Card")),
   event_cards: dynamic(() => import("./EventCards")),
+  event_list: dynamic(() => import("./EventList")),
   form: dynamic(() => import("./Form")),
   history_events: dynamic(() => import("./HistoryEvents")),
   image_blocks: dynamic(() => import("./ImageBlocks")),

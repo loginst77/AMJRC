@@ -1283,6 +1283,7 @@ export type HomeDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithoutUID<Simplify<HomeDocumentData>, "home", Lang>;
 
 type LandingpageDocumentDataSlicesSlice =
+  | EventListSlice
   | ImageBlocksSlice
   | NewspaperListSlice
   | BookCarouselSlice
@@ -3173,6 +3174,36 @@ export type EventCardsSlice = prismic.SharedSlice<
 >;
 
 /**
+ * Default variation for EventList Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EventListSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *EventList*
+ */
+type EventListSliceVariation = EventListSliceDefault;
+
+/**
+ * EventList Shared Slice
+ *
+ * - **API ID**: `event_list`
+ * - **Description**: EventList
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type EventListSlice = prismic.SharedSlice<
+  "event_list",
+  EventListSliceVariation
+>;
+
+/**
  * Primary content in *Form → Default → Primary*
  */
 export interface FormSliceDefaultPrimary {
@@ -4532,6 +4563,9 @@ declare module "@prismicio/client" {
       EventCardsSliceDefaultItem,
       EventCardsSliceVariation,
       EventCardsSliceDefault,
+      EventListSlice,
+      EventListSliceVariation,
+      EventListSliceDefault,
       FormSlice,
       FormSliceDefaultPrimary,
       FormSliceDefaultItem,
