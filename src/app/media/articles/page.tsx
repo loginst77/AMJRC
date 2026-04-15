@@ -98,12 +98,6 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   return (
     <div className="bg-white">
       <MediaPageHero title="Статьи" />
-      {landing && (
-        <section className="w-full">
-          <SliceZone slices={landing.data.slices} components={components} />
-        </section>
-      )}
-
       {featured.length > 0 ?
         <div className="flex flex-col gap-2 pb-10 sm:gap-8 sm:pb-12">
           {featured.map((article, index) => (
@@ -147,6 +141,12 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
           </div>
         </Container>
       </section>
+
+      {landing && (
+        <section className="w-full">
+          <SliceZone slices={landing.data.slices} components={components} />
+        </section>
+      )}
     </div>
   );
 }

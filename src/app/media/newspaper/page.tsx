@@ -119,12 +119,6 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Газета" />
-      {landing && (
-        <section className="w-full">
-          <SliceZone slices={landing.data.slices} components={components} />
-        </section>
-      )}
-
       {featuredIssue ?
         <FeaturedNewspaperCard issue={featuredIssue} />
       : null}
@@ -179,6 +173,12 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
           }
         </Container>
       </section>
+
+      {landing && (
+        <section className="w-full">
+          <SliceZone slices={landing.data.slices} components={components} />
+        </section>
+      )}
     </div>
   );
 }

@@ -178,12 +178,6 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
   return (
     <div className="bg-white">
       <MediaPageHero title="Видео" />
-      {landing && (
-        <section className="w-full">
-          <SliceZone slices={landing.data.slices} components={components} />
-        </section>
-      )}
-
       {featuredVideos.length ?
         <FeaturedVideo videos={featuredVideos} />
       : null}
@@ -236,6 +230,12 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
           : null}
         </Container>
       </section>
+
+      {landing && (
+        <section className="w-full">
+          <SliceZone slices={landing.data.slices} components={components} />
+        </section>
+      )}
     </div>
   );
 }

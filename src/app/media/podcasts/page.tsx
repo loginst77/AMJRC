@@ -106,12 +106,6 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
   return (
     <div className="flex flex-col">
       <MediaPageHero title="Подкасты" />
-      {landing && (
-        <section className="w-full">
-          <SliceZone slices={landing.data.slices} components={components} />
-        </section>
-      )}
-
       {fallbackFeatured.length ?
         <FeaturedEpisode episodes={fallbackFeatured} />
       : null}
@@ -146,6 +140,12 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
           </div>
         </Container>
       </section>
+
+      {landing && (
+        <section className="w-full">
+          <SliceZone slices={landing.data.slices} components={components} />
+        </section>
+      )}
     </div>
   );
 }

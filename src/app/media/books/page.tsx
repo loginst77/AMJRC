@@ -95,12 +95,6 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Книги" />
-      {landing && (
-        <section className="w-full">
-          <SliceZone slices={landing.data.slices} components={components} />
-        </section>
-      )}
-
       {featured ?
         <FeaturedBook book={featured} />
       : null}
@@ -153,6 +147,12 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
           : null}
         </Container>
       </section>
+
+      {landing && (
+        <section className="w-full">
+          <SliceZone slices={landing.data.slices} components={components} />
+        </section>
+      )}
     </div>
   );
 }
