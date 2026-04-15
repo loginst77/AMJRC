@@ -67,7 +67,7 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
       <div className="flex flex-col gap-3 lg:hidden">
         <div className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-white px-5 py-4">
           <span className="text-sm font-semibold text-zinc-950">Перевод</span>
-          <div className="relative z-[95]">
+          <div>
             <TranslationSelector currentVersion={currentVersion} canon="old_testament" />
           </div>
         </div>
@@ -126,7 +126,6 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
                   {activeTab === "scripture" ? passage.reference : "Комментарии"}
                 </h2>
                 <div className="flex items-center gap-2">
-                  {activeTab === "scripture" && <TranslationSelector currentVersion={currentVersion} canon="old_testament" />}
                   <button
                     type="button"
                     onClick={() => setOpen(false)}

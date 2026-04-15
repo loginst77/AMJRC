@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Maximize2, X, BookOpen, MessageSquareQuote, Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { TranslationSelector } from "./translation-selector";
 import { PrismicRichText } from "@/components/PrismicRichText";
 import { cn } from "@/lib/cn";
 import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
@@ -99,7 +98,6 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <TranslationSelector currentVersion={currentVersion} canon="old_testament" />
                   <button
                     type="button"
                     onClick={() => setOpen(false)}

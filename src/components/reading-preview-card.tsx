@@ -24,27 +24,32 @@ export function ReadingPreviewCard({ direction, title, dateRange, href }: Readin
           document.getElementById("reader")?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }}
-      className={cn("group relative rounded-3xl bg-white border border-zinc-200 p-5 sm:p-8 text-left w-full block transition-colors", cardHoverCn)}
+      className={cn(
+        "group relative block w-full rounded-3xl border border-zinc-200 bg-white p-4 text-left transition-colors sm:p-8",
+        cardHoverCn,
+      )}
     >
       {/* Label */}
-      <div className={`flex items-center gap-2 mb-4 ${isPrev ? "" : "justify-end"}`}>
+      <div className={`mb-3 flex items-center gap-2 sm:mb-4 ${isPrev ? "" : "justify-end"}`}>
         {isPrev && <ChevronLeft className="h-4 w-4 text-zinc-400 transition-transform group-hover:-translate-x-1" />}
-        <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
+        <span className="text-xs hidden sm:block font-semibold uppercase sm:tracking-widest text-zinc-400">
           {isPrev ? "Предыдущее чтение" : "Следующее чтение"}
         </span>
         {!isPrev && <ChevronRight className="h-4 w-4 text-zinc-400 transition-transform group-hover:translate-x-1" />}
       </div>
 
       {/* Title */}
-      <div className={`flex items-center gap-2 mb-1 ${isPrev ? "" : "justify-end"}`}>
-        <h3 className="text-xl font-bold text-zinc-950 group-hover:text-blue-600 transition-colors">{title}</h3>
+      <div className={`mb-1 flex items-center gap-2 ${isPrev ? "" : "sm:justify-end"}`}>
+        <h3 className="text-lg font-bold leading-snug text-zinc-950 transition-colors group-hover:text-blue-600 sm:text-xl">{title}</h3>
       </div>
-      <p className={`text-sm text-zinc-500 mb-4 ${isPrev ? "" : "text-right"}`}>
-        {dateRange}
-      </p>
+      <p className={`mb-4 text-sm text-zinc-500 ${isPrev ? "" : "sm:text-right"}`}>{dateRange}</p>
 
       {/* Read more hint */}
-      <div className={`mt-4 flex items-center gap-2 text-sm font-medium text-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${isPrev ? "" : "justify-end"}`}>
+      <div
+        className={`mt-4 flex hidden sm:flex items-center gap-2 text-sm font-medium text-blue-600 opacity-100 transition-opacity duration-300 sm:opacity-0 sm:group-hover:opacity-100 ${
+          isPrev ? "" : "sm:justify-end"
+        }`}
+      >
         <BookOpen className="h-4 w-4" />
         Нажмите, чтобы прочитать
       </div>
