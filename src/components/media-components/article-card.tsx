@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
+import { Clock } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 import { truncateWords } from "@/lib/text";
@@ -19,6 +19,11 @@ export type MediaItem = {
   href?: string;
   featured?: boolean;
   tags?: ArticleTag[];
+  community?: {
+    id: string;
+    name: string;
+    href: string;
+  };
 };
 
 type ArticleCardProps = {
@@ -59,15 +64,17 @@ export function authorColor(name?: string) {
 
 export function ArticleCard({ article, className = "" }: ArticleCardProps) {
   return (
-    <Link
-      href={`/media/${article.href || getArticleHref(article.id)}`}
-      aria-label={`Открыть статью: ${article.title}`}
+    <div
       className={cn(
-        "group flex flex-col bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50",
+        "group flex h-full flex-col overflow-hidden bg-white",
         cardHoverCn,
         className,
       )}>
-      <div className="p-6 flex-1">
+      <Link
+        href={`/media/${article.href || getArticleHref(article.id)}`}
+        aria-label={`Открыть статью: ${article.title}`}
+        className="block flex-1 p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-50"
+      >
         {/* Tags + reading time */}
         <div className="flex flex-wrap items-center gap-2 mb-4 justify-between">
           <span className="inline-flex items-center gap-1 text-sm text-zinc-400">
@@ -80,6 +87,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
         <h3 className="text-xl font-bold leading-snug text-zinc-900 group-hover:text-blue-600 transition-colors duration-200 mb-2">
           {article.title}
         </h3>
+        {article.author ? <p className="mb-3 text-sm font-semibold text-zinc-800 sm:text-base">{article.author}</p> : null}
 
         {/* Description */}
         <p className="text-base leading-relaxed text-zinc-500 line-clamp-3 flex-1">{truncateWords(article.description)}</p>
@@ -92,17 +100,22 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
             </span>
           ))}
         </div>
-      </div>
+      </Link>
 
       {/* Footer */}
-      <div className="p-6 border-t border-zinc-200 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {article.author && <span className="font-medium text-zinc-700 text-base">{article.author}</span>}
+      {article.community ? (
+        <Link
+          href={article.community.href}
+          className="mt-auto flex flex-col items-start gap-2 border-t border-zinc-200 p-6 text-zinc-950 transition-colors duration-200 hover:bg-blue-100 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <span className="min-w-0 text-sm font-medium leading-snug sm:text-base">{article.community.name}</span>
+          {article.date ? <span className="text-sm text-zinc-400 sm:text-base">{formatDate(article.date)}</span> : null}
+        </Link>
+      ) : (
+        <div className="mt-auto flex justify-end border-t border-zinc-200 p-6">
+          {article.date ? <span className="text-right text-sm text-zinc-400 sm:text-base">{formatDate(article.date)}</span> : null}
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-base text-zinc-400">{formatDate(article.date)}</span>
-        </div>
-      </div>
-    </Link>
+      )}
+    </div>
   );
 }

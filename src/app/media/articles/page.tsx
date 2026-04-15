@@ -19,9 +19,11 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
-    Array.isArray(rawTagParam) && rawTagParam.length > 0 ? decodeURIComponent(rawTagParam[0]!)
-    : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
-    : undefined;
+    Array.isArray(rawTagParam) && rawTagParam.length > 0
+      ? decodeURIComponent(rawTagParam[0]!)
+      : typeof rawTagParam === "string"
+        ? decodeURIComponent(rawTagParam)
+        : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
 
   const client = createClient();
@@ -98,13 +100,13 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   return (
     <div className="bg-white">
       <MediaPageHero title="Статьи" />
-      {featured.length > 0 ?
+      {featured.length > 0 ? (
         <div className="flex flex-col gap-2 pb-10 sm:gap-8 sm:pb-12">
           {featured.map((article, index) => (
             <FeaturedArticle key={article.id} article={article} showPinnedLabel={index === 0} featuredCount={featured.length} />
           ))}
         </div>
-      : null}
+      ) : null}
 
       <section className="py-12 bg-zinc-50">
         <Container className="space-y-4">
@@ -123,21 +125,22 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
           />
 
           <div id="article-list" className="scroll-mt-24">
-            {totalVisible === 0 ?
+            {totalVisible === 0 ? (
               <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
                 <p className="font-semibold text-zinc-800">Нет статей для выбранного тега</p>
                 <p className="text-sm text-zinc-500">Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.</p>
               </div>
-            : rest.length === 0 ?
+            ) : rest.length === 0 ? (
               <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm">
                 Пока нет несекреплённых статей для выбранного тега.
               </div>
-            : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {rest.map((article) => (
                   <ArticleCard key={article.id} article={article} />
                 ))}
               </div>
-            }
+            )}
           </div>
         </Container>
       </section>

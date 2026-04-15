@@ -144,7 +144,11 @@ function FeaturedVideoItem({ video, onOpen }: FeaturedVideoItemProps) {
             {video.title}
           </h3>
           {video.author ? <p className="mt-2 text-base font-semibold text-zinc-800 sm:mt-3 sm:text-lg">{video.author}</p> : null}
-          {video.description ? <p className="mt-2 text-sm leading-relaxed text-zinc-500 line-clamp-3 sm:text-lg">{video.description}</p> : null}
+          {video.description ? (
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500 line-clamp-3 sm:text-lg">{video.description}</p>
+          ) : (
+            <span className="mt-10 text-sm leading-relaxed text-zinc-500 line-clamp-3 sm:text-lg" />
+          )}
         </button>
 
         {video.tags && video.tags.length > 0 && (
@@ -197,8 +201,7 @@ function FeaturedVideoItem({ video, onOpen }: FeaturedVideoItemProps) {
             {video.date && <span className="text-sm text-zinc-400 sm:text-base">{formatDate(video.date)}</span>}
           </Link>
         ) : (
-          <div className="mt-auto flex flex-col items-start gap-2 border-t border-zinc-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-6">
-            <span />
+          <div className="mt-auto flex flex-col items-start gap-2 border-t border-zinc-100 px-4 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-6">
             {video.date && <span className="text-sm text-zinc-400 sm:text-base">{formatDate(video.date)}</span>}
           </div>
         )}
