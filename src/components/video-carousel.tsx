@@ -17,17 +17,54 @@ interface VideoCarouselProps {
 
 export function VideoCarousel({ videos, className, allHref, allLabel }: VideoCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const getCards = useCallback((el: HTMLDivElement) => {
+    return Array.from(el.children).filter((child): child is HTMLDivElement => child instanceof HTMLDivElement);
+  }, []);
+
+  const getClosestCardIndex = useCallback(
+    (el: HTMLDivElement) => {
+      const cards = getCards(el);
+      if (!cards.length) return 0;
+
+      const isSmall = window.innerWidth < 640;
+      const currentPosition = isSmall ? el.scrollLeft + el.clientWidth / 2 : el.scrollLeft;
+
+      return cards.reduce((closestIndex, card, index) => {
+        const cardPosition = isSmall ? card.offsetLeft + card.offsetWidth / 2 : card.offsetLeft;
+        const closestCard = cards[closestIndex];
+        const closestPosition = isSmall ? closestCard.offsetLeft + closestCard.offsetWidth / 2 : closestCard.offsetLeft;
+
+        return Math.abs(cardPosition - currentPosition) < Math.abs(closestPosition - currentPosition)
+          ? index
+          : closestIndex;
+      }, 0);
+    },
+    [getCards],
+  );
+
+  const getScrollLeftForCard = useCallback((el: HTMLDivElement, card: HTMLDivElement) => {
+    const isSmall = window.innerWidth < 640;
+    const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+    const centeredLeft = card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2;
+    const alignedLeft = isSmall ? centeredLeft : card.offsetLeft;
+
+    return Math.min(Math.max(0, alignedLeft), maxScrollLeft);
+  }, []);
 
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
+
+    activeIndexRef.current = getClosestCardIndex(el);
     // Use a small 24px threshold (matching the p-6 padding) to prevent
     // fractional pixel/padding snap points from keeping the button active.
     setCanScrollLeft(el.scrollLeft > 24);
     setCanScrollRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 24);
-  }, []);
+  }, [getClosestCardIndex]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -49,11 +86,16 @@ export function VideoCarousel({ videos, className, allHref, allLabel }: VideoCar
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>(":scope > div");
-    const cardWidth = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
-    const isSmall = window.innerWidth < 640;
-    const amount = isSmall ? cardWidth : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
+
+    const cards = getCards(el);
+    if (!cards.length) return;
+
+    const offset = direction === "left" ? -1 : 1;
+    const nextIndex = Math.min(Math.max(activeIndexRef.current + offset, 0), cards.length - 1);
+    const nextCard = cards[nextIndex];
+
+    activeIndexRef.current = nextIndex;
+    el.scrollTo({ left: getScrollLeftForCard(el, nextCard), behavior: "smooth" });
   };
 
   if (!videos.length) return null;

@@ -17,17 +17,50 @@ interface PodcastCarouselProps {
 
 export function PodcastCarouselClient({ episodes, className, allHref, allLabel }: PodcastCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const getCards = useCallback((el: HTMLDivElement) => {
+    return Array.from(el.children).filter((child): child is HTMLDivElement => child instanceof HTMLDivElement);
+  }, []);
+
+  const getClosestCardIndex = useCallback(
+    (el: HTMLDivElement) => {
+      const cards = getCards(el);
+      if (!cards.length) return 0;
+
+      const currentPosition = el.scrollLeft + el.clientWidth / 2;
+
+      return cards.reduce((closestIndex, card, index) => {
+        const cardPosition = card.offsetLeft + card.offsetWidth / 2;
+        const closestCard = cards[closestIndex];
+        const closestPosition = closestCard.offsetLeft + closestCard.offsetWidth / 2;
+
+        return Math.abs(cardPosition - currentPosition) < Math.abs(closestPosition - currentPosition)
+          ? index
+          : closestIndex;
+      }, 0);
+    },
+    [getCards],
+  );
+
+  const getScrollLeftForCard = useCallback((el: HTMLDivElement, card: HTMLDivElement) => {
+    const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+
+    return Math.min(Math.max(0, card.offsetLeft), maxScrollLeft);
+  }, []);
 
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
+
+    activeIndexRef.current = getClosestCardIndex(el);
     // Use a small 24px threshold (matching the p-6 padding) to prevent
     // fractional pixel/padding snap points from keeping the button active.
     setCanScrollLeft(el.scrollLeft > 24);
     setCanScrollRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 24);
-  }, []);
+  }, [getClosestCardIndex]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -49,9 +82,16 @@ export function PodcastCarouselClient({ episodes, className, allHref, allLabel }
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    // Since each chunk is 'w-full', scroll by exactly one full page width
-    const amount = el.clientWidth;
-    el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
+
+    const cards = getCards(el);
+    if (!cards.length) return;
+
+    const offset = direction === "left" ? -1 : 1;
+    const nextIndex = Math.min(Math.max(activeIndexRef.current + offset, 0), cards.length - 1);
+    const nextCard = cards[nextIndex];
+
+    activeIndexRef.current = nextIndex;
+    el.scrollTo({ left: getScrollLeftForCard(el, nextCard), behavior: "smooth" });
   };
 
   const chunkedEpisodes = [];
