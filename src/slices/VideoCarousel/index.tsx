@@ -67,7 +67,7 @@ const VideoCarousel: FC<VideoCarouselProps> = async ({ slice }) => {
         { field: "my.video.date", direction: "desc" },
         { field: "document.first_publication_date", direction: "desc" },
       ],
-      fetchLinks: ["tag.name"],
+      fetchLinks: ["tag.name", "community.title"],
       pageSize: 6,
     })
     .catch(() => null);
@@ -98,6 +98,26 @@ const VideoCarousel: FC<VideoCarouselProps> = async ({ slice }) => {
       }
     }
 
+    const rawCommunity = (video.data as { community?: unknown }).community;
+    let community: VideoCardItem["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
+
     const tagsGroup = (video.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: MediaTag[] = tagsGroup
       .map((item) => {
@@ -121,6 +141,7 @@ const VideoCarousel: FC<VideoCarouselProps> = async ({ slice }) => {
       imageSrc,
       date,
       author,
+      community,
       tags,
     };
   });

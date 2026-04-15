@@ -97,7 +97,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       { field: "my.video.date", direction: "desc" },
       { field: "document.first_publication_date", direction: "desc" },
     ],
-    fetchLinks: ["tag.name", "author.name"],
+    fetchLinks: ["tag.name", "author.name", "community.title"],
   });
 
   const items: VideoCardItem[] = videos.map((video) => {
@@ -125,6 +125,26 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       }
     }
 
+    const rawCommunity = (video.data as { community?: unknown }).community;
+    let community: VideoCardItem["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
+
     const tagsGroup = (video.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: MediaTag[] = tagsGroup
       .map((item) => {
@@ -149,6 +169,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
       date: date ?? undefined,
       featured,
       author,
+      community,
       tags,
     };
   });

@@ -48,7 +48,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                 {issue.tags.map((tag, index) => (
                   <div
                     key={`${tag.name}-${index}`}
-                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200">
+                    className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
                     {tag.name}
                   </div>
                 ))}

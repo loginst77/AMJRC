@@ -139,7 +139,7 @@ export function EventCardsSection({
       )}
 
       <div className={showHeader ? "space-y-6" : undefined}>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {normalizedEvents.map((event, index) => (
             <div key={event.raw.id} className="min-w-0">
               {renderEventCard(event, index)}
@@ -172,14 +172,8 @@ export function EventCardsSection({
 
               <div className="border-b border-zinc-200 p-6 pr-16 sm:p-8 sm:pr-20">
                 <div className="space-y-3">
-                  {heading && (
-                    <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl">
-                      {heading}
-                    </Dialog.Title>
-                  )}
-                  {description && (
-                    <Dialog.Description className="max-w-2xl text-base text-zinc-600">{description}</Dialog.Description>
-                  )}
+                  {heading && <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl">{heading}</Dialog.Title>}
+                  {description && <Dialog.Description className="max-w-2xl text-base text-zinc-600">{description}</Dialog.Description>}
                 </div>
               </div>
 
@@ -226,9 +220,7 @@ export function EventCardsSection({
 
                 <div className="space-y-5 p-8">
                   {event.communityName && (
-                    <div className="text-sm font-semibold uppercase tracking-[0.15em] text-zinc-500">
-                      {event.communityName}
-                    </div>
+                    <div className="text-sm font-semibold uppercase tracking-[0.15em] text-zinc-500">{event.communityName}</div>
                   )}
                   {event.label && <div className="w-fit rounded-full bg-blue-100 px-4 py-3 text-sm font-semibold">{event.label}</div>}
                   <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950">{event.title}</Dialog.Title>
@@ -256,11 +248,7 @@ export function EventCardsSection({
                     </div>
                   )}
 
-                  {event.summary && (
-                    <Dialog.Description className="text-base leading-relaxed text-zinc-600">
-                      {event.summary}
-                    </Dialog.Description>
-                  )}
+                  {event.summary && <Dialog.Description className="text-base leading-relaxed text-zinc-600">{event.summary}</Dialog.Description>}
 
                   {event.hasButton && (
                     <PrismicNextLink field={event.raw.buttonLink} className={buttonVariants({ variant: "primary", className: "h-auto py-3" })}>

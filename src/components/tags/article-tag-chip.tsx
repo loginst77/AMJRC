@@ -14,7 +14,7 @@ type ArticleTagChipProps = {
 
 export function ArticleTagChip({ href, label, active, layoutId = "tag-chip-highlight" }: ArticleTagChipProps) {
   const chipClassName = cn(
-    "relative inline-flex items-center justify-center rounded-full px-5 py-2 text-base font-medium whitespace-nowrap transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2",
+    "relative inline-flex min-w-0 max-w-full items-center justify-center rounded-full px-5 py-2 text-base font-medium whitespace-nowrap transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2",
     active ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-900",
   );
 
@@ -27,14 +27,14 @@ export function ArticleTagChip({ href, label, active, layoutId = "tag-chip-highl
           transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.9 }}
           style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}
         />
-        <span className="relative z-10">{label}</span>
+        <span className="relative z-10 block max-w-full truncate font-semibold">{label}</span>
       </span>
     );
   }
 
   return (
     <Link href={href} scroll={false} className={chipClassName}>
-      {label}
+      <span className="block max-w-full truncate">{label}</span>
     </Link>
   );
 }

@@ -47,6 +47,14 @@
           "placeholder": "Name"
         }
       },
+      "community": {
+        "type": "Link",
+        "config": {
+          "label": "Community (optional)",
+          "select": "document",
+          "customtypes": ["community"]
+        }
+      },
       "tags": {
         "type": "Group",
         "config": {
