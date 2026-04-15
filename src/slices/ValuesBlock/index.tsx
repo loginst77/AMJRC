@@ -49,7 +49,7 @@ const ValuesBlock: FC<ValuesBlockProps> = ({ slice }) => {
   const cardClass =
     valuesToRender.length <= 3 ?
       "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:px-5 sm:py-8 sm:text-left md:border-r md:px-6 md:py-10 md:last:border-r-0"
-    : "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:px-5 sm:py-8 sm:text-left sm:even:border-r-0 md:px-6 md:py-10 lg:border-r lg:last:border-r-0";
+    : "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:px-5 sm:py-8 sm:text-left sm:even:border-r-0 md:px-6 md:py-10 lg:even:border-r lg:last:even:border-r-0";
 
   return (
     <section
