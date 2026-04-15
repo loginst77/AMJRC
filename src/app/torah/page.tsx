@@ -117,7 +117,7 @@ export default async function ReadTorahPage(props: {
       />
 
       {/* ───── Torah Reader ───── */}
-      <section id="reader" className="py-14 sm:py-20 bg-white dark:bg-zinc-950 flex-1 scroll-mt-20">
+      <section id="reader" className="py-14 sm:py-20 bg-white flex-1 scroll-mt-20">
         <Container>
           {currentReading && passage ?
             <div className="mx-auto max-w-7xl relative">
@@ -157,10 +157,10 @@ export default async function ReadTorahPage(props: {
           : <div className="mx-auto max-w-2xl text-center py-20">
               {fetchFailed && <TranslationSelector currentVersion={currentVersionCode} fetchFailed={true} canon="old_testament" />}
               <BookOpen className="h-12 w-12 text-zinc-300 mx-auto mb-4 animate-pulse" />
-              <h2 className="text-2xl font-bold text-zinc-950 dark:text-white mb-2">
+              <h2 className="text-2xl font-bold text-zinc-950 mb-2">
                 {fetchFailed ? "Ошибка при загрузке" : "Нет текущего чтения"}
               </h2>
-              <p className="text-zinc-500 dark:text-zinc-400">
+              <p className="text-zinc-500">
                 {fetchFailed ?
                   "Не удалось загрузить выбранный перевод. Возвращаемся к предыдущему..."
                 : "На эту неделю чтение ещё не назначено. Пожалуйста, проверьте позже."}
@@ -172,7 +172,7 @@ export default async function ReadTorahPage(props: {
 
       {/* ───── Previous & Next Readings ───── */}
       {(prevReading || nextReading) && (
-        <section className="py-14 sm:py-20 bg-zinc-50 dark:bg-black border-t border-zinc-200 dark:border-zinc-900">
+        <section className="py-14 sm:py-20 bg-zinc-50 border-t border-zinc-200">
           <Container>
             <div className="mx-auto max-w-7xl">
               <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">

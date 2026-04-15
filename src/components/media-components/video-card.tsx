@@ -112,7 +112,7 @@ export function VideoCard({ video }: VideoCardProps) {
       {/* Info */}
       <div className="flex flex-1 flex-col justify-between">
         <button type="button" onClick={handleOpen} className="block w-full p-6 text-left cursor-pointer">
-          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
+          <h3 className="text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 line-clamp-2 group-hover:text-blue-600">
             {video.title}
           </h3>
           {video.description ?
@@ -123,7 +123,7 @@ export function VideoCard({ video }: VideoCardProps) {
               {video.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                  className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
                   {tag.name}
                 </span>
               ))}

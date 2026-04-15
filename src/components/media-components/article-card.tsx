@@ -45,11 +45,11 @@ export function readingTime(text: string): string {
 
 /** Deterministic accent colour per author initial */
 export const ACCENT_COLORS = [
-  { bg: "bg-violet-100 dark:bg-violet-900/30", text: "text-violet-600 dark:text-violet-400" },
-  { bg: "bg-sky-100 dark:bg-sky-900/30", text: "text-sky-600 dark:text-sky-400" },
-  { bg: "bg-emerald-100 dark:bg-emerald-900/30", text: "text-emerald-600 dark:text-emerald-400" },
-  { bg: "bg-rose-100 dark:bg-rose-900/30", text: "text-rose-600 dark:text-rose-400" },
-  { bg: "bg-amber-100 dark:bg-amber-900/30", text: "text-amber-600 dark:text-amber-400" },
+  { bg: "bg-violet-100", text: "text-violet-600" },
+  { bg: "bg-sky-100", text: "text-sky-600" },
+  { bg: "bg-emerald-100", text: "text-emerald-600" },
+  { bg: "bg-rose-100", text: "text-rose-600" },
+  { bg: "bg-amber-100", text: "text-amber-600" },
 ];
 
 export function authorColor(name?: string) {
@@ -70,7 +70,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
       <div className="p-6 flex-1">
         {/* Tags + reading time */}
         <div className="flex flex-wrap items-center gap-2 mb-4 justify-between">
-          <span className="inline-flex items-center gap-1 text-sm text-zinc-400 dark:text-zinc-500">
+          <span className="inline-flex items-center gap-1 text-sm text-zinc-400">
             <Clock className="h-4 w-4 mb-0.5" />
             {readingTime(article.description)}
           </span>
@@ -87,7 +87,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
           {article.tags?.map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
               {tag.name}
             </span>
           ))}
@@ -95,7 +95,7 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
       </div>
 
       {/* Footer */}
-      <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+      <div className="p-6 border-t border-zinc-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
           {article.author && <span className="font-medium text-zinc-700 text-base">{article.author}</span>}
         </div>

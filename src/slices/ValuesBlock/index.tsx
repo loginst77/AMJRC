@@ -48,20 +48,20 @@ const ValuesBlock: FC<ValuesBlockProps> = ({ slice }) => {
 
   const cardClass =
     valuesToRender.length <= 3 ?
-      "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:px-5 sm:py-8 sm:text-left md:border-r md:px-6 md:py-10 md:last:border-r-0 dark:border-zinc-800"
-    : "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:px-5 sm:py-8 sm:text-left sm:even:border-r-0 md:px-6 md:py-10 lg:border-r lg:last:border-r-0 dark:border-zinc-800";
+      "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:px-5 sm:py-8 sm:text-left md:border-r md:px-6 md:py-10 md:last:border-r-0"
+    : "space-y-2 border-t border-zinc-200 px-3 py-6 text-center first:border-t-0 sm:border-t-0 sm:border-r sm:px-5 sm:py-8 sm:text-left sm:even:border-r-0 md:px-6 md:py-10 lg:border-r lg:last:border-r-0";
 
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className={`border-t border-zinc-200 dark:border-zinc-800 dark:bg-zinc-950 ${isSecondary ? "bg-zinc-50" : "bg-white"}`}>
+      className={`border-t border-zinc-200 ${isSecondary ? "bg-zinc-50" : "bg-white"}`}>
       <Bounded as="div" yPadding="sm">
         <div className={`mx-auto grid gap-6 sm:gap-x-0 sm:gap-y-6 ${gridColsClass}`}>
           {valuesToRender.map(({ title, description }) => (
             <div key={title} className={cardClass}>
-              <div className="text-base font-semibold text-zinc-950 sm:text-lg dark:text-white">{title}</div>
-              <p className="text-sm text-zinc-600 sm:text-base dark:text-zinc-400">{description}</p>
+              <div className="text-base font-semibold text-zinc-950 sm:text-lg">{title}</div>
+              <p className="text-sm text-zinc-600 sm:text-base">{description}</p>
             </div>
           ))}
         </div>

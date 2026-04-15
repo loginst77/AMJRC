@@ -74,13 +74,13 @@ const BookCarousel: FC<BookCarouselProps> = async ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className={slice.primary?.background ? "bg-white dark:bg-zinc-950" : "bg-zinc-50 dark:bg-black"}>
+      className={slice.primary?.background ? "bg-white" : "bg-zinc-50"}>
       <Container className="py-14 sm:py-20">
         {/* Section header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-2">
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white">{slice.primary?.title || "Книги"}</h2>
-            {slice.primary?.description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{slice.primary.description}</p>}
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950">{slice.primary?.title || "Книги"}</h2>
+            {slice.primary?.description && <p className="max-w-xl text-zinc-600">{slice.primary.description}</p>}
           </div>
           <ButtonLink href="/media/books" variant="primary" size="md" className="hidden sm:inline-flex">
             Все книги →

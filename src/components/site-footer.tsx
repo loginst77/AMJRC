@@ -31,7 +31,7 @@ export type SiteFooterProps = {
 
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="text-sm text-zinc-600 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white">
+    <Link href={href} className="text-sm text-zinc-600 hover:text-zinc-950">
       {children}
     </Link>
   );
@@ -53,14 +53,14 @@ export function SiteFooter({
   copyrightText,
 }: SiteFooterProps) {
   return (
-    <footer className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <footer className="border-t border-zinc-200 bg-white">
       <Container className="py-10">
         <div className="grid gap-10 md:grid-cols-3">
           <div className="space-y-3">
-            <div className="font-semibold tracking-tight text-zinc-950 dark:text-white">
+            <div className="font-semibold tracking-tight text-zinc-950">
               {logo?.url ? <PrismicNextImage field={logo} alt={logo?.alt || "Логотип"} className="h-[100px] w-auto" /> : null}
             </div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="text-sm text-zinc-600">
               {addressLine1}
               {addressLine2 ? (
                 <>
@@ -69,7 +69,7 @@ export function SiteFooter({
                 </>
               ) : null}
             </div>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="text-sm text-zinc-600">
               {email ? (
                 <a className="hover:underline" href={`mailto:${email}`}>
                   {email}
@@ -84,49 +84,55 @@ export function SiteFooter({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <div className="text-sm font-semibold text-zinc-950 dark:text-white">{navigationTitle}</div>
-              <div className="flex flex-col gap-2">
-                {navigationLinks.map((item) => (
-                  <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
-                    {item.label}
-                  </FooterLink>
-                ))}
-              </div>
+          {navigationLinks.length || actionLinks.length ? (
+            <div className="grid auto-rows-max grid-cols-2 gap-6">
+              {navigationLinks.length ? (
+                <div className="space-y-2">
+                  {navigationTitle ? <div className="text-sm font-semibold text-zinc-950">{navigationTitle}</div> : null}
+                  <div className="flex flex-col gap-2">
+                    {navigationLinks.map((item) => (
+                      <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
+                        {item.label}
+                      </FooterLink>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
+              {actionLinks.length ? (
+                <div className="space-y-2">
+                  {actionsTitle ? <div className="text-sm font-semibold text-zinc-950">{actionsTitle}</div> : null}
+                  <div className="flex flex-col gap-2">
+                    {actionLinks.map((item) => (
+                      <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
+                        {item.label}
+                      </FooterLink>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
-            <div className="space-y-2">
-              <div className="text-sm font-semibold text-zinc-950 dark:text-white">{actionsTitle}</div>
-              <div className="flex flex-col gap-2">
-                {actionLinks.map((item) => (
-                  <FooterLink key={`${item.label}-${item.href}`} href={item.href}>
-                    {item.label}
-                  </FooterLink>
-                ))}
-              </div>
-            </div>
-          </div>
+          ) : null}
 
           <div className="space-y-3">
-            <div className="text-sm font-semibold text-zinc-950 dark:text-white">{serviceTimesTitle}</div>
-            <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="text-sm font-semibold text-zinc-950">{serviceTimesTitle}</div>
+            <ul className="space-y-2 text-sm text-zinc-600">
               {serviceTimes.map((service) => (
                 <li key={`${service.label}-${service.time}`} className="flex items-center gap-2">
                   <span>{service.label}</span>
-                  <span className="font-medium text-zinc-950 dark:text-white">{service.time}</span>
+                  <span className="font-medium text-zinc-950">{service.time}</span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-zinc-200 pt-6 text-sm text-zinc-600 dark:border-zinc-800 dark:text-zinc-400 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-2 border-t border-zinc-200 pt-6 text-sm text-zinc-600 md:flex-row md:items-center md:justify-between">
           <div>{copyrightText}</div>
           <div className="flex flex-wrap gap-4">
             {socialLinks.map((item) => (
               <a
                 key={`${item.label}-${item.href}`}
-                className="hover:text-zinc-950 dark:hover:text-white"
+                className="hover:text-zinc-950"
                 href={item.href}
                 target="_blank"
                 rel="noreferrer"

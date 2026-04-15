@@ -74,8 +74,8 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
       <button
         type="button"
         className={cn(
-          "inline-flex w-fit px-4 py-3 items-center justify-center rounded-full text-zinc-900 transition-colors !bg-blue-100 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-800 dark:bg-zinc-950 dark:text-white dark:hover:bg-zinc-900",
-          open && "bg-zinc-100 dark:bg-zinc-900",
+          "inline-flex w-fit px-4 py-3 items-center justify-center rounded-full text-zinc-900 transition-colors !bg-blue-100 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          open && "bg-zinc-100",
         )}
         aria-label="Toggle navigation menu"
         aria-expanded={open}
@@ -109,7 +109,7 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
             <div
               ref={panelRef}
               className={cn(
-                "fixed inset-y-0 right-0 z-[80] w-full max-w-none overflow-y-auto border-l border-zinc-200 bg-white p-5 transition-transform duration-300 ease-in-out dark:border-zinc-800 dark:bg-zinc-950",
+                "fixed inset-y-0 right-0 z-[80] w-full max-w-none overflow-y-auto border-l border-zinc-200 bg-white p-5 transition-transform duration-300 ease-in-out",
                 open ? "translate-x-0" : "translate-x-full pointer-events-none",
               )}
               role="dialog"
@@ -118,10 +118,10 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
               <div className="mb-4 flex items-center justify-between">
                 {logo?.url ?
                   <PrismicNextImage field={logo} alt={logo?.alt || "Logo"} className="h-10 w-auto" />
-                : <span className="text-base font-semibold text-zinc-900 dark:text-white">Меню</span>}
+                : <span className="text-base font-semibold text-zinc-900">Меню</span>}
                 <button
                   type="button"
-                  className="inline-flex h-12 px-5 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:border-zinc-800 dark:text-white dark:hover:bg-zinc-900 dark:focus-visible:ring-offset-zinc-950"
+                  className="inline-flex h-12 px-5 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                   aria-label="Close navigation menu"
                   onClick={() => setOpen(false)}>
                   Закрыть
@@ -133,13 +133,13 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
                   <Link
                     key={`${item.href}-${item.label}`}
                     href={item.href}
-                    className="rounded-xl px-3 py-4 border border-zinc-100 bg-blue-100/50 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-800"
+                    className="rounded-xl px-3 py-4 border border-zinc-100 bg-blue-100/50 text-base font-semibold text-zinc-900 transition-colors hover:bg-zinc-100"
                     onClick={() => setOpen(false)}>
                     {item.label}
                   </Link>
                 ))}
                 {(primaryAction || secondaryAction) && (
-                  <div className="flex flex-row gap-2 border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl dark:border-zinc-800">
+                  <div className="flex flex-row gap-2 border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl">
                     {primaryAction && (
                       <ButtonLink
                         href={primaryAction.href}
@@ -165,7 +165,7 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
 
                 {dropdownItems.length > 0 ?
                   <div className="border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl">
-                    <div className="px-1 mt-2 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400 ">
+                    <div className="px-1 mt-2 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-600 ">
                       Медия
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -173,7 +173,7 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
                         <Link
                           key={item.href}
                           href={item.href}
-                          className="flex items-center gap-3 rounded-xl bg-zinc-200/50 px-3 py-4 text-base font-semibold text-zinc-900 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-zinc-800"
+                          className="flex items-center gap-3 rounded-xl bg-zinc-200/50 px-3 py-4 text-base font-semibold text-zinc-900 transition-colors hover:bg-blue-100"
                           onClick={() => setOpen(false)}>
                           {item.icon ?
                             <DynamicIcon name={item.icon} className="size-5 shrink-0" strokeWidth={1.5} />

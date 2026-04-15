@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
   const pageData = page.data as any;
 
   return (
-    <div className="bg-white dark:bg-zinc-950 min-h-screen">
+    <div className="bg-white min-h-screen">
       <section className="w-full">
         <LandingPageHero
           title={pageData.title}

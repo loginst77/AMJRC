@@ -74,23 +74,23 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
 
   return (
     <div className="flex flex-col">
-      <section className="border-b border-zinc-200 bg-white py-4 dark:border-zinc-800 dark:bg-zinc-950">
+      <section className="border-b border-zinc-200 bg-white py-4">
         <Container>
           <div className="flex items-center justify-between gap-3">
-            <nav className="text-sm text-zinc-500 dark:text-zinc-400">
-              <Link href="/" className="transition-colors hover:text-zinc-900 dark:hover:text-white">
+            <nav className="text-sm text-zinc-500">
+              <Link href="/" className="transition-colors hover:text-zinc-900">
                 Главная
               </Link>
               <span className="mx-2 opacity-40">/</span>
-              <Link href="/media/articles" className="transition-colors hover:text-zinc-900 dark:hover:text-white">
+              <Link href="/media/articles" className="transition-colors hover:text-zinc-900">
                 Статьи
               </Link>
               <span className="mx-2 opacity-40">/</span>
-              <span className="inline-block max-w-xs align-bottom text-zinc-900 line-clamp-1 dark:text-white">{title}</span>
+              <span className="inline-block max-w-xs align-bottom text-zinc-900 line-clamp-1">{title}</span>
             </nav>
             <Link
               href="/media/articles"
-              className="inline-flex items-center gap-1.5 text-sm text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+              className="inline-flex items-center gap-1.5 text-sm text-zinc-500 transition-colors hover:text-zinc-900"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               Все статьи
@@ -99,28 +99,28 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
         </Container>
       </section>
 
-      <section className="bg-white dark:bg-zinc-950">
+      <section className="bg-white">
         <Container className="py-12 sm:py-12">
           <div className="mx-auto max-w-3xl space-y-8">
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-4 py-2 text-base font-medium text-black ring-1 ring-white/20 dark:text-white">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-4 py-2 text-base font-medium text-black ring-1 ring-white/20">
                   <BookOpen className="h-4 w-4" />
                   Статья
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-sm text-zinc-800 dark:text-zinc-300">
+                <span className="inline-flex items-center gap-1.5 text-sm text-zinc-800">
                   <Clock className="h-3.5 w-3.5" />
                   {mins} мин чтения
                 </span>
-                {date ? <span className="text-sm text-zinc-800 dark:text-zinc-300">{date.toLocaleDateString("ru-RU")}</span> : null}
+                {date ? <span className="text-sm text-zinc-800">{date.toLocaleDateString("ru-RU")}</span> : null}
               </div>
             </div>
-            <div className="space-y-4 border-b border-zinc-200 pb-6 dark:border-zinc-800">
-              <h1 className="text-4xl font-bold leading-tight tracking-tight text-zinc-900 dark:text-white sm:text-5xl">{title}</h1>
-              {description ? <p className="max-w-2xl text-lg leading-8 text-zinc-800 dark:text-zinc-300">{description}</p> : null}
+            <div className="space-y-4 border-b border-zinc-200 pb-6">
+              <h1 className="text-4xl font-bold leading-tight tracking-tight text-zinc-900 sm:text-5xl">{title}</h1>
+              {description ? <p className="max-w-2xl text-lg leading-8 text-zinc-800">{description}</p> : null}
               {author ? (
                 <p className="text-base font-medium text-zinc-700">
-                  Автор: <span className="text-zinc-800 font-bold dark:text-white p-1">{author}</span>
+                  Автор: <span className="text-zinc-800 font-bold p-1">{author}</span>
                 </p>
               ) : null}
               {tags.length ? (
@@ -129,7 +129,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                     <Link
                       key={tag.slug}
                       href={`/media/articles?tag=${encodeURIComponent(tag.slug)}`}
-                      className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70"
+                      className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200"
                     >
                       {tag.name}
                     </Link>
@@ -137,21 +137,21 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                 </div>
               ) : null}
             </div>
-            <article className="prose prose-zinc max-w-none dark:prose-invert prose-headings:mt-0 prose-headings:mb-0 prose-p:my-0 prose-p:leading-8 prose-strong:font-semibold">
+            <article className="prose prose-zinc max-w-none prose-headings:mt-0 prose-headings:mb-0 prose-p:my-0 prose-p:leading-8 prose-strong:font-semibold">
               <PrismicRichText field={article.data.content} />
             </article>
 
-            <div className="mt-12 grid overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800 sm:grid-cols-2">
+            <div className="mt-12 grid overflow-hidden rounded-2xl border border-zinc-200 sm:grid-cols-2">
               {prev ? (
                 <Link
                   href={`/media/articles/${prev.uid}`}
-                  className="group flex flex-col gap-1 p-4 transition-all duration-200 hover:bg-blue-50 dark:hover:bg-blue-900/40"
+                  className="group flex flex-col gap-1 p-4 transition-all duration-200 hover:bg-blue-50"
                 >
                   <span className="ml-1 flex items-center gap-1 text-sm text-zinc-400">
                     <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
                     Предыдущая
                   </span>
-                  <span className="line-clamp-2 text-sm font-semibold text-zinc-700 transition-colors group-hover:text-blue-600 dark:text-zinc-300 dark:group-hover:text-blue-400">
+                  <span className="line-clamp-2 text-sm font-semibold text-zinc-700 transition-colors group-hover:text-blue-600">
                     {asText(prev.data.title) || "Статья"}
                   </span>
                 </Link>
@@ -161,13 +161,13 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               {next ? (
                 <Link
                   href={`/media/articles/${next.uid}`}
-                  className="group flex flex-col gap-1 border-t border-zinc-200 p-4 text-right transition-all duration-200 hover:bg-blue-50 dark:border-zinc-800 dark:hover:bg-blue-900/40 sm:border-t-0 sm:border-l sm:text-left sm:items-end"
+                  className="group flex flex-col gap-1 border-t border-zinc-200 p-4 text-right transition-all duration-200 hover:bg-blue-50 sm:border-t-0 sm:border-l sm:text-left sm:items-end"
                 >
                   <span className="mr-1 flex items-center gap-1 text-sm text-zinc-400 sm:justify-end">
                     Следующая
                     <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </span>
-                  <span className="line-clamp-2 text-sm font-semibold text-zinc-700 transition-colors group-hover:text-blue-600 dark:text-zinc-300 dark:group-hover:text-blue-400">
+                  <span className="line-clamp-2 text-sm font-semibold text-zinc-700 transition-colors group-hover:text-blue-600">
                     {asText(next.data.title) || "Статья"}
                   </span>
                 </Link>

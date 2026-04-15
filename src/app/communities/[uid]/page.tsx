@@ -52,7 +52,7 @@ export default async function CommunityPage({ params }: { params: Promise<Params
   const description = doc.data?.description || doc.data?.meta_description || "";
 
   return (
-    <div className="flex flex-col min-h-screen pb-12 bg-white dark:bg-zinc-950">
+    <div className="flex flex-col min-h-screen pb-12 bg-white">
       <LandingPageHero
         title={doc.data?.title}
         description={doc.data?.description}
@@ -76,7 +76,7 @@ export default async function CommunityPage({ params }: { params: Promise<Params
       <section className="bg-white !bg-red-200">
         <Container>
           <div className="mx-auto max-w-3xl space-y-8">
-            <article className="prose prose-zinc prose-lg max-w-none dark:prose-invert prose-headings:mt-8 prose-headings:mb-4 prose-p:my-4 prose-p:leading-8 prose-strong:font-semibold">
+            <article className="prose prose-zinc prose-lg max-w-none prose-headings:mt-8 prose-headings:mb-4 prose-p:my-4 prose-p:leading-8 prose-strong:font-semibold">
               <PrismicRichText field={doc.data?.content} />
             </article>
           </div>

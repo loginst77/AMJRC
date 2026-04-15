@@ -126,8 +126,8 @@ export function EventCardsSection({
       {showHeader && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-3">
-            {heading && <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">{heading}</h2>}
-            {description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{description}</p>}
+            {heading && <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">{heading}</h2>}
+            {description && <p className="max-w-xl text-zinc-600">{description}</p>}
           </div>
 
           {showAllButton && (
@@ -139,7 +139,7 @@ export function EventCardsSection({
       )}
 
       <div className={showHeader ? "space-y-6" : undefined}>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {normalizedEvents.map((event, index) => (
             <div key={event.raw.id} className="min-w-0">
               {renderEventCard(event, index)}
@@ -160,7 +160,7 @@ export function EventCardsSection({
         <Dialog.Root open={allOpen} onOpenChange={setAllOpen}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
-            <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto flex h-[85vh] max-w-6xl -translate-y-1/2 flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none dark:border-zinc-800 dark:bg-zinc-950 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
+            <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto flex h-[85vh] max-w-6xl -translate-y-1/2 flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95">
               <Dialog.Close asChild>
                 <button
                   type="button"
@@ -170,15 +170,15 @@ export function EventCardsSection({
                 </button>
               </Dialog.Close>
 
-              <div className="border-b border-zinc-200 p-6 pr-16 dark:border-zinc-800 sm:p-8 sm:pr-20">
+              <div className="border-b border-zinc-200 p-6 pr-16 sm:p-8 sm:pr-20">
                 <div className="space-y-3">
                   {heading && (
-                    <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white sm:text-3xl">
+                    <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl">
                       {heading}
                     </Dialog.Title>
                   )}
                   {description && (
-                    <Dialog.Description className="max-w-2xl text-base text-zinc-600 dark:text-zinc-400">{description}</Dialog.Description>
+                    <Dialog.Description className="max-w-2xl text-base text-zinc-600">{description}</Dialog.Description>
                   )}
                 </div>
               </div>
@@ -206,7 +206,7 @@ export function EventCardsSection({
         <Dialog.Root key={event.raw.id} open={openIndex === index} onOpenChange={(open) => !open && setOpenIndex(null)}>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0" />
-            <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto flex h-[85vh] max-w-2xl -translate-y-1/2 flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none dark:border-zinc-800 dark:bg-zinc-950 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 md:h-[800px]">
+            <Dialog.Content className="fixed inset-x-4 top-[50%] z-50 mx-auto flex h-[85vh] max-w-2xl -translate-y-1/2 flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl focus:outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 md:h-[800px]">
               <Dialog.Close asChild>
                 <button
                   type="button"
@@ -226,15 +226,15 @@ export function EventCardsSection({
 
                 <div className="space-y-5 p-8">
                   {event.communityName && (
-                    <div className="text-sm font-semibold uppercase tracking-[0.15em] text-zinc-500 dark:text-zinc-400">
+                    <div className="text-sm font-semibold uppercase tracking-[0.15em] text-zinc-500">
                       {event.communityName}
                     </div>
                   )}
                   {event.label && <div className="w-fit rounded-full bg-blue-100 px-4 py-3 text-sm font-semibold">{event.label}</div>}
-                  <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">{event.title}</Dialog.Title>
+                  <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950">{event.title}</Dialog.Title>
 
                   {(event.date || event.time || event.location) && (
-                    <div className="flex flex-wrap gap-4 text-sm text-zinc-500 dark:text-zinc-400">
+                    <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
                       {event.date && (
                         <span className="flex items-center gap-1.5">
                           <Calendar className="h-4 w-4" />
@@ -257,7 +257,7 @@ export function EventCardsSection({
                   )}
 
                   {event.summary && (
-                    <Dialog.Description className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+                    <Dialog.Description className="text-base leading-relaxed text-zinc-600">
                       {event.summary}
                     </Dialog.Description>
                   )}

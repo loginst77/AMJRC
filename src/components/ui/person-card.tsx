@@ -19,7 +19,7 @@ export function PersonCard({ name, role, imageSrc, description, responsibilities
   return (
     <div
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-secondary backdrop-blur-sm transition-shadow sm:flex-row dark:bg-zinc-900/80",
+        "group relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-secondary backdrop-blur-sm transition-shadow sm:flex-row",
         className,
       )}>
       {/* Left Media Area */}

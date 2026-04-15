@@ -96,7 +96,7 @@ const BigEvent: FC<BigEventProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-950 text-white dark:border-zinc-800">
+      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-950 text-white">
       {isFilled.image(primary.backgroundImage) && (
         <PrismicNextImage field={primary.backgroundImage} fill priority className="z-0 object-cover" />
       )}

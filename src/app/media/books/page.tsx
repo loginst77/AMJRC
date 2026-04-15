@@ -95,7 +95,7 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
   const listHeading = matchedTag?.name ? `Книги · ${matchedTag.name}` : "Все книги";
 
   return (
-    <div className="flex flex-col bg-white dark:bg-zinc-950">
+    <div className="flex flex-col bg-white">
       {landing ? (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
@@ -104,19 +104,19 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
 
       {featured ? <FeaturedBook book={featured} /> : null}
 
-      <section className="bg-zinc-50 py-12 dark:bg-black">
+      <section className="bg-zinc-50 py-12">
         <Container className="space-y-4">
           <SectionHeader title="Все книги" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           {books.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся книги.</p>
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+              <p className="font-semibold text-zinc-800">Скоро здесь появятся книги.</p>
             </div>
           ) : null}
 
           {books.length > 0 && regularBooks.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появится больше книг.</p>
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+              <p className="font-semibold text-zinc-800">Скоро здесь появится больше книг.</p>
             </div>
           ) : null}
 
@@ -137,9 +137,9 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
 
               <div id="book-list" className="scroll-mt-24">
                 {visibleBooks.length === 0 ? (
-                  <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                    <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет книг для выбранного тега</p>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">Добавьте книги с этим тегом в Prismic, и они появятся здесь.</p>
+                  <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
+                    <p className="font-semibold text-zinc-800">Нет книг для выбранного тега</p>
+                    <p className="text-sm text-zinc-500">Добавьте книги с этим тегом в Prismic, и они появятся здесь.</p>
                   </div>
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

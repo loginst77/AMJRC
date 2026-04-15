@@ -31,7 +31,7 @@ const defaultComponents: JSXMapSerializer = {
     </Heading>
   ),
   heading6: ({ children }) => (
-    <h6 className="mb-3 mt-8 text-sm font-semibold uppercase tracking-wide text-zinc-600 first:mt-0 last:mb-0 dark:text-zinc-400 md:text-base">
+    <h6 className="mb-3 mt-8 text-sm font-semibold uppercase tracking-wide text-zinc-600 first:mt-0 last:mb-0 md:text-base">
       {children}
     </h6>
   ),
@@ -42,7 +42,7 @@ const defaultComponents: JSXMapSerializer = {
           <div className="flex gap-3">
             <Quote className="mt-1.5 h-5 w-5 shrink-0 text-blue-400" />
             <div>
-              <p className="italic leading-8 text-zinc-700 dark:text-zinc-300">{children}</p>
+              <p className="italic leading-8 text-zinc-700">{children}</p>
             </div>
           </div>
         </blockquote>
@@ -50,10 +50,10 @@ const defaultComponents: JSXMapSerializer = {
     }
     return <span className={node.data.label}>{children}</span>;
   },
-  paragraph: ({ children }) => <p className="mb-2 leading-8 text-zinc-700 last:mb-0 dark:text-zinc-300">{children}</p>,
-  oList: ({ children }) => <ol className="mb-9 space-y-2 pl-4 leading-8 last:mb-0 md:pl-6 text-zinc-700 dark:text-zinc-300">{children}</ol>,
+  paragraph: ({ children }) => <p className="mb-2 leading-8 text-zinc-700 last:mb-0">{children}</p>,
+  oList: ({ children }) => <ol className="mb-9 space-y-2 pl-4 leading-8 last:mb-0 md:pl-6 text-zinc-700">{children}</ol>,
   oListItem: ({ children }) => <li className="mb-0 list-decimal pl-1 last:mb-0 md:pl-2">{children}</li>,
-  list: ({ children }) => <ul className="mb-9 space-y-2 pl-4 leading-8 last:mb-0 md:pl-6 text-zinc-700 dark:text-zinc-300">{children}</ul>,
+  list: ({ children }) => <ul className="mb-9 space-y-2 pl-4 leading-8 last:mb-0 md:pl-6 text-zinc-700">{children}</ul>,
   listItem: ({ children }) => <li className="mb-0 list-disc pl-1 last:mb-0 md:pl-2">{children}</li>,
   preformatted: ({ children }) => (
     <pre className="mb-9 rounded-sm bg-slate-100 p-4 text-sm leading-relaxed last:mb-0 md:p-8 md:text-lg">

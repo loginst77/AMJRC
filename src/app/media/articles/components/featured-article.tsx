@@ -35,8 +35,8 @@ export function FeaturedArticle({ article, className, showPinnedLabel = true }: 
             "group relative block bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none transition-all duration-300 hover:-translate-y-1",
             cardHoverCn,
           )}>
-          <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-800/10" />
-          <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-800/10" />
+          <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl" />
 
           <div className="relative ">
             <div className="p-8 sm:p-10">
@@ -53,7 +53,7 @@ export function FeaturedArticle({ article, className, showPinnedLabel = true }: 
               <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600">{truncateWords(article.description, 48)}</p>
               <div className="flex flex-wrap items-center gap-2">
                 {article.tags?.map((tag) => (
-                  <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                  <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200">
                     {tag.name}
                   </div>
                 ))}

@@ -95,16 +95,16 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   const totalVisible = rest.length;
 
   return (
-    <div className="bg-white dark:bg-zinc-950">
+    <div className="bg-white">
       {landing ?
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
         </section>
       : <section className="py-12">
           <Container className="space-y-2">
-            <p className="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400">Медия</p>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Статьи</h1>
-            <p className="text-zinc-600 dark:text-zinc-400">Новые публикации и материалы</p>
+            <p className="text-sm uppercase tracking-wide text-zinc-500">Медия</p>
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Статьи</h1>
+            <p className="text-zinc-600">Новые публикации и материалы</p>
           </Container>
         </section>
       }
@@ -117,7 +117,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
         </div>
       : null}
 
-      <section className="py-12 bg-zinc-50 dark:bg-zinc-900/50">
+      <section className="py-12 bg-zinc-50">
         <Container className="space-y-4">
           <SectionHeader title="Все статьи" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
           <TagFilterBar
@@ -135,14 +135,14 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
 
           <div id="article-list" className="scroll-mt-24">
             {totalVisible === 0 ?
-              <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет статей для выбранного тега</p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
+                <p className="font-semibold text-zinc-800">Нет статей для выбранного тега</p>
+                <p className="text-sm text-zinc-500">
                   Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.
                 </p>
               </div>
             : rest.length === 0 ?
-              <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">
+              <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm">
                 Пока нет несекреплённых статей для выбранного тега.
               </div>
             : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">

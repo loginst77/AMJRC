@@ -146,7 +146,7 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
 
       {fallbackFeatured.length ? <FeaturedEpisode episodes={fallbackFeatured} /> : null}
 
-      <section className="bg-zinc-50 py-12 dark:bg-black">
+      <section className="bg-zinc-50 py-12">
         <Container className="space-y-4">
           <SectionHeader title="Все выпуски" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
@@ -164,12 +164,12 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
 
           <div id="podcast-list" className="scroll-mt-24">
             {totalVisible === 0 ? (
-              <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет выпусков для выбранного тега</p>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">Добавьте тег к выпуску в Prismic, чтобы он появился в этом фильтре.</p>
+              <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+                <p className="font-semibold text-zinc-800">Нет выпусков для выбранного тега</p>
+                <p className="text-sm text-zinc-500">Добавьте тег к выпуску в Prismic, чтобы он появился в этом фильтре.</p>
               </div>
             ) : rest.length === 0 ? (
-              <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-300">
+              <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm">
                 Пока нет незакреплённых выпусков для выбранного тега.
               </div>
             ) : (

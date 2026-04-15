@@ -31,7 +31,7 @@ export function CommunityCard({ imageSrc, imageAlt, name, address, leader, servi
         className,
       )}>
       {/* Image area — ~65% of card height */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100">
         {imageSrc ?
           <img
             src={imageSrc}
@@ -46,16 +46,16 @@ export function CommunityCard({ imageSrc, imageAlt, name, address, leader, servi
 
       {/* Info area */}
       <div className="flex flex-1 flex-col justify-center p-6">
-        <h3 className="text-xl font-semibold leading-snug text-zinc-950 group-hover:text-blue-600 dark:text-white">{name}</h3>
-        <p className="mt-1 leading-relaxed text-zinc-500 dark:text-zinc-400">{address}</p>
+        <h3 className="text-xl font-semibold leading-snug text-zinc-950 group-hover:text-blue-600">{name}</h3>
+        <p className="mt-1 leading-relaxed text-zinc-500">{address}</p>
         {leader && (
           <p className="mt-4 text-zinc-600">
-            <span className="font-medium text-zinc-700 dark:text-zinc-300">Лидер:</span> {leader}
+            <span className="font-medium text-zinc-700">Лидер:</span> {leader}
           </p>
         )}
         {serviceTime && (
           <p className="mt-1 text-zinc-600">
-            <span className="font-medium text-zinc-700 dark:text-zinc-300">Служение:</span> {serviceTime}
+            <span className="font-medium text-zinc-700">Служение:</span> {serviceTime}
           </p>
         )}
       </div>

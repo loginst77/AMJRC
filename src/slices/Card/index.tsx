@@ -111,7 +111,7 @@ const Card: FC<CardProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="bg-white pb-16 pt-14 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 dark:bg-zinc-950">
+      className="bg-white pb-16 pt-14 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24">
       <Container>
         <div className="mx-auto w-full max-w-6xl space-y-10 sm:space-y-12">
           <div className="flex flex-col items-center space-y-4 text-center">
@@ -120,9 +120,9 @@ const Card: FC<CardProps> = ({ slice }) => {
                 {label}
               </Badge>
             : null}
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">{title}</h2>
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">{title}</h2>
             {description ?
-              <p className="mx-auto max-w-xl text-lg text-zinc-600 dark:text-zinc-400">{description}</p>
+              <p className="mx-auto max-w-xl text-lg text-zinc-600">{description}</p>
             : null}
           </div>
 
@@ -131,7 +131,7 @@ const Card: FC<CardProps> = ({ slice }) => {
               <div
                 key={card.title}
                 className={cn(
-                  "group flex h-full !overflow-hidden flex-col bg-zinc-50 dark:bg-zinc-900",
+                  "group flex h-full !overflow-hidden flex-col bg-zinc-50",
                   cardHoverCn,
                   !card.href && "!cursor-default",
                 )}>
@@ -157,15 +157,15 @@ const Card: FC<CardProps> = ({ slice }) => {
 
                 <div className="flex flex-1 flex-col px-5 pb-6 pt-5 sm:px-6 sm:pb-7 sm:pt-6 md:px-8 md:pb-8">
                   <div className="space-y-3 sm:space-y-4">
-                    <h3 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl dark:text-white">{card.title}</h3>
-                    {card.body && <p className="text-base leading-7 text-zinc-600 dark:text-zinc-400">{card.body}</p>}
+                    <h3 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl">{card.title}</h3>
+                    {card.body && <p className="text-base leading-7 text-zinc-600">{card.body}</p>}
                   </div>
                 </div>
 
                 {(card.buttonLabel || card.href) && (
                   <Link
                     href={card.href || "#"}
-                    className="flex items-center border-t border-zinc-200 p-5 text-sm font-medium uppercase tracking-wide text-zinc-700 transition-colors group/button hover:bg-blue-100 sm:p-6 md:p-8 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800">
+                    className="flex items-center border-t border-zinc-200 p-5 text-sm font-medium uppercase tracking-wide text-zinc-700 transition-colors group/button hover:bg-blue-100 sm:p-6 md:p-8">
                     {card.buttonLabel || "Узнать больше"}{" "}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover/button:translate-x-1" />
                   </Link>

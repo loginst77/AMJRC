@@ -22,18 +22,18 @@ interface FeaturedNewspaperCardProps {
 
 export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
   return (
-    <section className="bg-white dark:bg-zinc-950">
+    <section className="bg-white">
       <Container className="py-16 sm:py-20">
-        <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">
+        <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400">
           <PinIcon className="h-5 w-5" /> Закрепленные выпуски
         </p>
         <div
           className={cn(
-            "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none dark:border-zinc-800 dark:from-blue-950/20 dark:via-zinc-950 dark:to-sky-950/10 !cursor-default",
+            "group relative block overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-blue-50 via-white to-sky-50 shadow-none !cursor-default",
             cardHoverCn,
           )}>
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl dark:bg-blue-800/10" />
-          <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl dark:bg-sky-800/10" />
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-sky-200/40 blur-3xl" />
 
           <div className="relative">
             <div className="p-8">
@@ -48,13 +48,13 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                 {issue.tags.map((tag, index) => (
                   <div
                     key={`${tag.name}-${index}`}
-                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                    className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200">
                     {tag.name}
                   </div>
                 ))}
               </div>
             : <div className="mb-8" />}
-            <div className="flex items-stretch justify-between border-t border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-stretch justify-between border-t border-zinc-200">
               {issue.author ?
                 <div className="w-full px-8">
                   <div className="flex w-full items-center justify-between gap-4 py-6">
@@ -68,7 +68,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
                         {issue.author.charAt(0)}
                       </div>
                       <div>
-                        <p className="text-base font™-semibold text-zinc-800 dark:text-zinc-200">{issue.author}</p>
+                        <p className="text-base font™-semibold text-zinc-800">{issue.author}</p>
                         <p className="text-sm text-zinc-500">Автор</p>
                       </div>
                     </div>

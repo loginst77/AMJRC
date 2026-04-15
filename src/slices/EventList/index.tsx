@@ -51,7 +51,7 @@ const EventList: FC<EventListProps> = async ({ slice }) => {
   if (!communitiesWithEvents.length) return null;
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white dark:bg-zinc-950">
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white">
       <Container className="py-14 sm:py-20">
         <div className="mx-auto w-full max-w-6xl space-y-12">
           {communitiesWithEvents.map((community) => (

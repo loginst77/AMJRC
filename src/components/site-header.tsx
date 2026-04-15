@@ -38,7 +38,7 @@ export function SiteHeader({
   secondaryAction,
 }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur duration-300 hover:bg-white dark:border-zinc-800/70 dark:bg-zinc-950/70">
+    <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur duration-300 hover:bg-white">
       <Container className="flex h-[88px] items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="inline-flex items-center" aria-label="Go to homepage">

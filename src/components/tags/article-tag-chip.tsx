@@ -14,15 +14,15 @@ type ArticleTagChipProps = {
 
 export function ArticleTagChip({ href, label, active, layoutId = "tag-chip-highlight" }: ArticleTagChipProps) {
   const chipClassName = cn(
-    "relative inline-flex items-center justify-center rounded-full px-5 py-2 text-base font-medium whitespace-nowrap transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950",
-    active ? "text-zinc-900 dark:text-zinc-100" : "text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100",
+    "relative inline-flex items-center justify-center rounded-full px-5 py-2 text-base font-medium whitespace-nowrap transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-500 focus-visible:ring-offset-2",
+    active ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-900",
   );
 
   if (active) {
     return (
       <span aria-current="page" className={chipClassName}>
         <motion.span
-          className="absolute inset-0 z-0 rounded-full border border-transparent bg-white dark:border-zinc-700 dark:bg-zinc-800/90"
+          className="absolute inset-0 z-0 rounded-full border border-transparent bg-white"
           layoutId={layoutId}
           transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.9 }}
           style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}

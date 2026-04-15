@@ -47,7 +47,7 @@ export default async function CommunitiesPage() {
   });
 
   return (
-    <div className="bg-white dark:bg-zinc-950 min-h-screen">
+    <div className="bg-white min-h-screen">
       {landing ?
         (() => {
           const landingData = landing.data as any;
@@ -70,10 +70,10 @@ export default async function CommunitiesPage() {
             </section>
           );
         })()
-      : <section className="py-12 border-b border-zinc-200 dark:border-zinc-800 ">
+      : <section className="py-12 border-b border-zinc-200 ">
           <Container className="space-y-2">
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Общины</h1>
-            <p className="text-zinc-600 dark:text-zinc-400">Наши общины и домашние группы</p>
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Общины</h1>
+            <p className="text-zinc-600">Наши общины и домашние группы</p>
           </Container>
         </section>
       }
@@ -83,9 +83,9 @@ export default async function CommunitiesPage() {
           <SectionHeader title="Все общины" as="div" className="text-left" descriptionClassName="text-left" />
 
           {cards.length === 0 ?
-            <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 px-6 py-12 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Пока нет добавленных общин</p>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Создайте новую общину в Prismic, чтобы она появилась здесь.</p>
+            <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 px-6 py-12 text-center text-zinc-600 shadow-sm">
+              <p className="font-semibold text-zinc-800">Пока нет добавленных общин</p>
+              <p className="text-sm text-zinc-500 mt-1">Создайте новую общину в Prismic, чтобы она появилась здесь.</p>
             </div>
           : <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
               {cards.map((comm) => (

@@ -16,15 +16,57 @@ interface BookCarouselProps {
 
 export function BookCarouselClient({ books, className, allHref, allLabel }: BookCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(0);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const getCards = useCallback((el: HTMLDivElement) => {
+    return Array.from(el.children).filter((child): child is HTMLDivElement => child instanceof HTMLDivElement);
+  }, []);
+
+  const getClosestCardIndex = useCallback(
+    (el: HTMLDivElement) => {
+      const cards = getCards(el);
+      if (!cards.length) return 0;
+
+      const isSmall = window.innerWidth < 640;
+      const currentPosition =
+        isSmall ? el.scrollLeft + el.clientWidth / 2 : el.scrollLeft;
+
+      return cards.reduce((closestIndex, card, index) => {
+        const cardPosition =
+          isSmall ? card.offsetLeft + card.offsetWidth / 2 : card.offsetLeft;
+        const closestCard = cards[closestIndex];
+        const closestPosition =
+          isSmall
+            ? closestCard.offsetLeft + closestCard.offsetWidth / 2
+            : closestCard.offsetLeft;
+
+        return Math.abs(cardPosition - currentPosition) < Math.abs(closestPosition - currentPosition)
+          ? index
+          : closestIndex;
+      }, 0);
+    },
+    [getCards],
+  );
+
+  const getScrollLeftForCard = useCallback((el: HTMLDivElement, card: HTMLDivElement) => {
+    const isSmall = window.innerWidth < 640;
+    const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+    const centeredLeft = card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2;
+    const alignedLeft = isSmall ? centeredLeft : card.offsetLeft;
+
+    return Math.min(Math.max(0, alignedLeft), maxScrollLeft);
+  }, []);
 
   const updateScrollState = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
+
+    activeIndexRef.current = getClosestCardIndex(el);
     setCanScrollLeft(el.scrollLeft > 24);
     setCanScrollRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 24);
-  }, []);
+  }, [getClosestCardIndex]);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -45,11 +87,16 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
   const scrollByAmount = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>(":scope > div");
-    const cardWidth = card ? card.offsetWidth + 24 : el.clientWidth * 0.8;
-    const isSmall = window.innerWidth < 640;
-    const amount = isSmall ? cardWidth : el.clientWidth * 0.8;
-    el.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
+
+    const cards = getCards(el);
+    if (!cards.length) return;
+
+    const offset = direction === "left" ? -1 : 1;
+    const nextIndex = Math.min(Math.max(activeIndexRef.current + offset, 0), cards.length - 1);
+    const nextCard = cards[nextIndex];
+
+    activeIndexRef.current = nextIndex;
+    el.scrollTo({ left: getScrollLeftForCard(el, nextCard), behavior: "smooth" });
   };
 
   if (!books.length) return null;
@@ -75,10 +122,10 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
           variant="outline"
           size="md"
           className={cn(
-            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200 dark:disabled:border-zinc-800",
+            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200",
             canScrollLeft ?
-              "text-zinc-900 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-900"
-            : "!bg-white !text-zinc-300 dark:bg-zinc-900 dark:text-zinc-700 cursor-default",
+              "text-zinc-900 hover:bg-zinc-100"
+            : "!bg-white !text-zinc-300 cursor-default",
           )}
           aria-label="Назад">
           <ChevronLeft
@@ -93,10 +140,10 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
           variant="outline"
           size="md"
           className={cn(
-            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200 dark:disabled:border-zinc-800",
+            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200",
             canScrollRight ?
-              "text-zinc-900 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-900"
-            : "!bg-white !text-zinc-300 dark:bg-zinc-900 dark:text-zinc-700 cursor-default",
+              "text-zinc-900 hover:bg-zinc-100"
+            : "!bg-white !text-zinc-300 cursor-default",
           )}
           aria-label="Вперёд">
           Вперед

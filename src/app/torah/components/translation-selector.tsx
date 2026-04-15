@@ -46,18 +46,18 @@ export function TranslationSelector({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-full bg-blue-100 px-5 py-3 text-xs font-medium text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400 border border-blue-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors outline-none cursor-pointer">
+      <DropdownMenuTrigger className="flex items-center gap-1.5 rounded-full bg-blue-100 px-5 py-3 text-xs font-medium text-zinc-500 border border-blue-200 hover:border-zinc-300 transition-colors outline-none cursor-pointer">
         <Scroll className="h-4 w-4 shrink-0" strokeWidth={1.5} />
-        <span className="text-zinc-900 dark:text-zinc-100">{VERSIONS[currentVersion].shortName}</span>
+        <span className="text-zinc-900">{VERSIONS[currentVersion].shortName}</span>
         <ChevronDown className="h-3 w-3 opacity-50" strokeWidth={2} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="z-[100] min-w-48 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl dark:border-zinc-800 dark:bg-zinc-950 flex flex-col outline-none">
+        className="z-[100] min-w-48 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl flex flex-col outline-none">
         {/* @ts-expect-error Animate-UI's Highlight typings incorrectly require children */}
-        <DropdownMenuHighlight className="rounded-xl bg-zinc-100 dark:bg-zinc-900" />
+        <DropdownMenuHighlight className="rounded-xl bg-zinc-100" />
         <DropdownMenuRadioGroup
           value={currentVersion}
           onValueChange={(val) => {
@@ -73,10 +73,10 @@ export function TranslationSelector({
                 key={code}
                 value={code}
                 data-value={code}
-                className="relative z-10 flex cursor-pointer select-none hover:bg-zinc-100 dark:hover:bg-zinc-900 items-center rounded-xl px-4 py-2.5 text-sm font-medium outline-none text-zinc-600 dark:text-zinc-400 focus:text-zinc-900 dark:focus:text-white transition-colors group">
+                className="relative z-10 flex cursor-pointer select-none hover:bg-zinc-100 items-center rounded-xl px-4 py-2.5 text-sm font-medium outline-none text-zinc-600 focus:text-zinc-900 transition-colors group">
                 <div className="flex flex-col">
-                  <span className="text-zinc-950 dark:text-zinc-50 group-hover:text-blue-600">{shortName}</span>
-                  <span className="text-xs font-normal text-zinc-500 dark:text-zinc-500">{name}</span>
+                  <span className="text-zinc-950 group-hover:text-blue-600">{shortName}</span>
+                  <span className="text-xs font-normal text-zinc-500">{name}</span>
                 </div>
               </DropdownMenuRadioItem>
             ))}

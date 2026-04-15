@@ -34,14 +34,14 @@ const Banner: FC<BannerProps> = ({ slice }) => {
       <section
         data-slice-type={slice.slice_type}
         data-slice-variation={slice.variation}
-        className={isSecondaryBg ? "bg-zinc-50 dark:bg-zinc-900" : "bg-white dark:bg-zinc-950"}>
+        className={isSecondaryBg ? "bg-zinc-50" : "bg-white"}>
         <Container className="py-12 sm:py-14 md:py-16">
           <div className="grid items-center gap-8 md:gap-10">
             <div className="space-y-6 sm:space-y-8">
               <div className="max-w-2xl space-y-3 sm:space-y-4">
-                <h2 className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-white">{displayTitle}</h2>
+                <h2 className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl">{displayTitle}</h2>
                 {displayDescription && (
-                  <p className="max-w-2xl text-base text-zinc-600 sm:text-lg dark:text-zinc-400">{displayDescription}</p>
+                  <p className="max-w-2xl text-base text-zinc-600 sm:text-lg">{displayDescription}</p>
                 )}
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">

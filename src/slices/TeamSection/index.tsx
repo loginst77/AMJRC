@@ -17,7 +17,7 @@ const TeamSection: FC<TeamSectionProps> = ({ slice }) => {
   const prismicData: any = slice;
 
   return (
-    <section id="team" className="bg-zinc-950/90 dark:bg-black" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
+    <section id="team" className="bg-zinc-950/90" data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
       <Container className="py-16 sm:py-20 md:py-28">
         <div className="space-y-3 text-center">
           {prismicData.primary?.badge && (

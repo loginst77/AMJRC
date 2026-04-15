@@ -175,7 +175,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
   const visibleVideos = activeTagKey ? regularVideos.filter((v) => matchesTag(v)) : regularVideos;
 
   return (
-    <div className="bg-white dark:bg-zinc-950">
+    <div className="bg-white">
       {landing && (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
@@ -186,19 +186,19 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
         <FeaturedVideo videos={featuredVideos} />
       : null}
 
-      <section className="bg-zinc-50 py-12 dark:bg-black">
+      <section className="bg-zinc-50 py-12">
         <Container className="space-y-4">
           <SectionHeader title="Все видео" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
           {items.length === 0 ?
-            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Скоро здесь появятся видео.</p>
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+              <p className="font-semibold text-zinc-800">Скоро здесь появятся видео.</p>
             </div>
           : null}
 
           {items.length > 0 && regularVideos.length === 0 ?
-            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-              <p className="font-semibold text-zinc-800 dark:text-zinc-100">Пока только закреплённые видео.</p>
+            <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+              <p className="font-semibold text-zinc-800">Пока только закреплённые видео.</p>
             </div>
           : null}
 
@@ -219,9 +219,9 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
 
               <div id="video-list" className="scroll-mt-24">
                 {visibleVideos.length === 0 ?
-                  <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-400">
-                    <p className="font-semibold text-zinc-800 dark:text-zinc-100">Нет видео для выбранного тега</p>
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">Назначьте видео тег в Prismic или выберите другой фильтр.</p>
+                  <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
+                    <p className="font-semibold text-zinc-800">Нет видео для выбранного тега</p>
+                    <p className="text-sm text-zinc-500">Назначьте видео тег в Prismic или выберите другой фильтр.</p>
                   </div>
                 : <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
                     {visibleVideos.map((video) => (

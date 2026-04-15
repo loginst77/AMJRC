@@ -23,7 +23,7 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
-      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
+      className="relative overflow-hidden border-t border-zinc-200 bg-zinc-50">
       {/* Light Rays Background */}
       <LightRays />
 
@@ -32,12 +32,12 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
         <div className="space-y-3 text-center">
           {prismicData.primary?.badge_text && <Badge size="lg">{prismicData.primary.badge_text}</Badge>}
           {prismicData.primary?.heading && (
-            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
               {prismicData.primary.heading}
             </h2>
           )}
           {prismicData.primary?.description && (
-            <p className="mx-auto max-w-xl text-lg text-zinc-600 dark:text-zinc-400">{prismicData.primary.description}</p>
+            <p className="mx-auto max-w-xl text-lg text-zinc-600">{prismicData.primary.description}</p>
           )}
         </div>
 
@@ -62,16 +62,16 @@ const HistoryEvents: FC<HistoryEventsProps> = ({ slice }) => {
                     <div className="w-full md:w-[85%] lg:w-[75%]">
                       <div
                         className={cn(
-                          "group flex flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow dark:border-zinc-800 dark:bg-zinc-900/80",
+                          "group flex flex-col overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/80 shadow-secondary backdrop-blur-sm transition-shadow",
                         )}>
-                        <div className="flex items-center justify-between border-zinc-200 px-5 pt-5 sm:px-6 sm:pt-6 dark:border-zinc-800">
-                          <span className="rounded-full bg-blue-100 px-4 py-1.5 text-3xl font-bold tracking-wider text-zinc-950 sm:px-6 sm:py-2 sm:text-4xl dark:text-white">
+                        <div className="flex items-center justify-between border-zinc-200 px-5 pt-5 sm:px-6 sm:pt-6">
+                          <span className="rounded-full bg-blue-100 px-4 py-1.5 text-3xl font-bold tracking-wider text-zinc-950 sm:px-6 sm:py-2 sm:text-4xl">
                             {m.year}
                           </span>{" "}
                         </div>
                         <div className="flex-1 p-5 sm:p-6">
-                          <h3 className="mb-2 text-lg font-bold leading-snug text-zinc-950 sm:text-xl dark:text-white">{m.heading}</h3>
-                          <p className="flex-1 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">{m.text}</p>
+                          <h3 className="mb-2 text-lg font-bold leading-snug text-zinc-950 sm:text-xl">{m.heading}</h3>
+                          <p className="flex-1 text-base leading-relaxed text-zinc-600">{m.text}</p>
                         </div>
                       </div>
                     </div>

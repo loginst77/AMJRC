@@ -260,8 +260,8 @@ function buildFooterLinks(items: any[] | undefined): FooterLinkItem[] {
 
   const parsed = items
     .map((item) => {
-      const label = asText(item.label);
-      const href = asLink(item.link, linkResolver);
+      const href = ensureAbsoluteHref(asLink(item.link, linkResolver) as string | null);
+      const label = item?.link?.text?.trim() || asText(item.label) || deriveNavLabelFromHref(href);
       if (!label || !href) return null;
       return { label, href };
     })
@@ -290,8 +290,8 @@ function buildSocialLinks(items: any[] | undefined): FooterLinkItem[] {
 
   const parsed = items
     .map((item) => {
-      const label = item?.label;
-      const href = asLink(item.link);
+      const href = ensureAbsoluteHref(asLink(item.link, linkResolver) as string | null);
+      const label = item?.link?.text?.trim() || item?.label || deriveNavLabelFromHref(href);
       if (!label || !href) return null;
       return { label, href };
     })

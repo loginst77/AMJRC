@@ -11,7 +11,7 @@ interface NewspaperCardProps {
 export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
   return (
     <div className={cn("group flex h-full flex-col overflow-hidden bg-white !cursor-default", cardHoverCn, className)}>
-      <div className="flex items-center justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6 dark:border-zinc-800">
+      <div className="flex items-center justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6">
         {issue.author && <div className="flex items-center gap-2 rounded-full text-base font-medium text-zinc-700">{issue.author}</div>}
 
         {issue.date && (
@@ -23,7 +23,7 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
       <div className="flex flex-col p-6">
         <div className="flex flex-col gap-2">
           {/* Title */}
-          <h3 className="mb-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
+          <h3 className="mb-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600">
             {issue.title}
           </h3>
 
@@ -38,7 +38,7 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
             {issue.tags.map((tag: MediaTag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
                 {tag.name}
               </span>
             ))}
@@ -47,7 +47,7 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto flex items-center justify-between border-t border-zinc-200 dark:border-zinc-800">
+      <div className="mt-auto flex items-center justify-between border-t border-zinc-200">
         <a
           href={issue.href}
           download

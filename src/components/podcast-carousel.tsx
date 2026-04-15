@@ -82,10 +82,10 @@ export function PodcastCarouselClient({ episodes, className, allHref, allLabel }
           variant="outline"
           size="md"
           className={cn(
-            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200 dark:disabled:border-zinc-800",
+            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200",
             canScrollLeft ?
-              "text-zinc-900 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-900"
-            : "!bg-white !text-zinc-300 dark:bg-zinc-900 dark:text-zinc-700 cursor-default",
+              "text-zinc-900 hover:bg-zinc-100"
+            : "!bg-white !text-zinc-300 cursor-default",
           )}
           aria-label="Назад">
           <ChevronLeft
@@ -100,10 +100,10 @@ export function PodcastCarouselClient({ episodes, className, allHref, allLabel }
           variant="outline"
           size="md"
           className={cn(
-            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200 dark:disabled:border-zinc-800",
+            "flex h-12 flex-1 items-center justify-center group rounded-full border border-zinc-200 transition-colors disabled:opacity-100 disabled:border-zinc-200",
             canScrollRight ?
-              "text-zinc-900 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-900"
-            : "!bg-white !text-zinc-300 dark:bg-zinc-900 dark:text-zinc-700 cursor-default",
+              "text-zinc-900 hover:bg-zinc-100"
+            : "!bg-white !text-zinc-300 cursor-default",
           )}
           aria-label="Вперёд">
           Вперед

@@ -38,13 +38,13 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
       {episodes.map((episode) => (
         <div key={episode.id} className={cn("group flex items-stretch overflow-hidden rounded-2xl bg-white", cardHoverCn)}>
           <Link href={episode.href || "#"} className="group flex min-w-0 flex-1 items-center gap-4 p-4 sm:px-6 sm:py-6">
-            <div className="flex md:h-24 md:w-24 w-10 shrink-0 items-center justify-center rounded-2xl md:bg-blue-100 text-sm font-bold text-zinc-600 dark:bg-blue-900/30 dark:text-zinc-400">
+            <div className="flex md:h-24 md:w-24 w-10 shrink-0 items-center justify-center rounded-2xl md:bg-blue-100 text-sm font-bold text-zinc-600">
               <Mic size={30} strokeWidth={1.5} />
             </div>
 
             <div className="min-w-0 flex-1 text-left">
               <div className="flex h-full flex-col items-start justify-center space-y-1 min-h-[80px]">
-                <h3 className="line-clamp-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600 dark:text-zinc-100 dark:group-hover:text-blue-300">
+                <h3 className="line-clamp-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600">
                   {episode.title}
                 </h3>
                 {episode.description ?
@@ -57,7 +57,7 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
                       {episode.tags.map((tag) => (
                         <span
                           key={tag.id}
-                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 dark:bg-blue-900/40 dark:text-blue-200 dark:ring-blue-800/70">
+                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
                           {tag.name}
                         </span>
                       ))}
@@ -77,7 +77,7 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
 
           <Link
             href={episode.href || "#"}
-            className="group/play hidden lg:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100 dark:border-zinc-700 dark:hover:bg-blue-950/30">
+            className="group/play hidden lg:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100">
             <SquareArrowOutUpRight className="h-5 w-5 transition-transform group-hover/play:scale-110" strokeWidth={1.7} />
           </Link>
         </div>

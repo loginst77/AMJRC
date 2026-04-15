@@ -58,7 +58,7 @@ function QaAccordionItem({ item }: { item: QaItem }) {
           setOpen((o) => !o);
         }
       }}>
-      <div className="flex w-full items-center justify-between gap-4 py-3 text-left text-base font-semibold text-zinc-950 dark:text-white">
+      <div className="flex w-full items-center justify-between gap-4 py-3 text-left text-base font-semibold text-zinc-950">
         <span>{item.question}</span>
         <ChevronDown
           className={`h-5 w-5 shrink-0 text-zinc-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
@@ -67,7 +67,7 @@ function QaAccordionItem({ item }: { item: QaItem }) {
       </div>
       <div className={`grid transition-all duration-200 ease-in-out ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
-          <p className="pb-5 text-base leading-relaxed text-zinc-600 dark:text-zinc-400">{item.answer}</p>
+          <p className="pb-5 text-base leading-relaxed text-zinc-600">{item.answer}</p>
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@ const Qa: FC<QaProps> = ({ slice }) => {
   const description = primary.description && isFilled.keyText(primary.description) ? primary.description : FALLBACK_DESCRIPTION;
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="border-t border-zinc-200 bg-white">
       <Bounded as="div" yPadding="base">
         <div
           className="rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)] overflow-hidden"
