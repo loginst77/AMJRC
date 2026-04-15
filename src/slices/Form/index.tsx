@@ -35,6 +35,13 @@ type FormItem = {
 };
 
 type Status = "idle" | "submitting" | "error";
+type Web3FormsResponse = {
+  success?: boolean;
+  message?: string;
+};
+
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+const DEFAULT_WEB3FORMS_ACCESS_KEY = "efa55d87-4cea-459d-bc87-08266b1648bb";
 
 const inputClasses =
   "h-12 w-full rounded-xl border border-zinc-200 bg-white px-4 text-zinc-950 outline-none ring-0 placeholder:text-zinc-400 focus:border-zinc-400";
@@ -94,7 +101,11 @@ const Form: FC<FormProps> = ({ slice }) => {
   const description =
     primary.description || "Есть вопрос, просьба о молитве или хотите спланировать визит? Напишите нам — мы ответим как можно скорее.";
   const buttonText = primary.buttonText || "Отправить сообщение";
-  const webhookUrl = primary.excelWebhookUrl;
+  const configuredAccessKey = primary.excelWebhookUrl?.trim();
+  const web3FormsAccessKey =
+    (configuredAccessKey && !configuredAccessKey.includes("://") ? configuredAccessKey : "") ||
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+    DEFAULT_WEB3FORMS_ACCESS_KEY;
   const phoneVisibility: FieldVisibility = (primary.phoneField?.trim() as FieldVisibility) || "hidden";
   const messageVisibility: FieldVisibility = (primary.messageField?.trim() as FieldVisibility) || "hidden";
   const hasImage = slice.variation === "default" && isFilled.image(primary.image);
@@ -103,8 +114,13 @@ const Form: FC<FormProps> = ({ slice }) => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [form, setForm] = useState<Record<string, string>>({ name: "", email: "", phone: "", message: "" });
+  const [files, setFiles] = useState<Record<string, File | null>>({});
 
   const updateField = (key: string, value: string) => setForm((f) => ({ ...f, [key]: value }));
+  const updateFile = (key: string, file: File | null) => {
+    setFiles((f) => ({ ...f, [key]: file }));
+    updateField(key, file?.name ?? "");
+  };
 
   const canSubmit = useMemo(() => {
     if (status === "submitting") return false;
@@ -123,34 +139,54 @@ const Form: FC<FormProps> = ({ slice }) => {
     return true;
   }, [form, status, phoneVisibility, messageVisibility, items]);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("submitting");
     setError(null);
     setSuccess(null);
-
-    const url = webhookUrl || "/api/contact";
-
-    const isGoogleScript = url.includes("script.google.com");
+    const formElement = e.currentTarget;
 
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        headers: isGoogleScript ? {} : { "content-type": "application/json" },
-        body: JSON.stringify(form),
-        ...(isGoogleScript ? { mode: "no-cors" as const } : {}),
-      });
+      if (!web3FormsAccessKey) {
+        throw new Error("Не найден ключ Web3Forms.");
+      }
 
-      if (!isGoogleScript && !res.ok) {
-        const data = (await res.json().catch(() => null)) as { error?: string } | null;
-        throw new Error(data?.error || "Что-то пошло не так. Попробуйте снова.");
+      const formData = new FormData();
+      formData.append("access_key", web3FormsAccessKey);
+      formData.append("subject", `Новая заявка: ${title}`);
+
+      for (const [key, value] of Object.entries(form)) {
+        const file = files[key];
+
+        if (file) {
+          formData.append(key, file);
+          continue;
+        }
+
+        const trimmedValue = value.trim();
+        if (trimmedValue) {
+          formData.append(key, trimmedValue);
+        }
+      }
+
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await res.json().catch(() => null)) as Web3FormsResponse | null;
+
+      if (!res.ok || !data?.success) {
+        throw new Error(data?.message || "Что-то пошло не так. Попробуйте снова.");
       }
 
       const resetForm: Record<string, string> = { name: "", email: "", phone: "", message: "" };
       for (const item of items) {
         if (item.fieldLabel) resetForm[item.fieldLabel] = "";
       }
+
+      formElement.reset();
       setForm(resetForm);
+      setFiles({});
       setStatus("idle");
       setSuccess("Сообщение отправлено! Мы скоро свяжемся.");
     } catch (err) {
@@ -266,7 +302,7 @@ const Form: FC<FormProps> = ({ slice }) => {
             type="file"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              updateField(label, file?.name ?? "");
+              updateFile(label, file ?? null);
             }}
             required={required}
             className="block w-full text-sm text-zinc-500 file:mr-4 file:rounded-full file:border-0 file:bg-zinc-100 file:px-4 file:py-2 file:text-sm file:font-medium file:text-zinc-700 hover:file:bg-zinc-200"
@@ -302,6 +338,8 @@ const Form: FC<FormProps> = ({ slice }) => {
           </div>
           <input
             className={inputClasses}
+            type="text"
+            name="name"
             value={form.name}
             onChange={(e) => updateField("name", e.target.value)}
             placeholder="Ваше имя"
@@ -316,6 +354,8 @@ const Form: FC<FormProps> = ({ slice }) => {
           </div>
           <input
             className={inputClasses}
+            type="email"
+            name="email"
             value={form.email}
             onChange={(e) => updateField("email", e.target.value)}
             placeholder="you@example.com"
@@ -335,10 +375,11 @@ const Form: FC<FormProps> = ({ slice }) => {
             international
             defaultCountry="US"
             countryCallingCodeEditable={false}
-            value={form.phone || "+1"}
+            value={form.phone || undefined}
             onChange={(val) => updateField("phone", val ?? "")}
             inputComponent={PhoneNumberInput}
             className="phone-input"
+            required={phoneVisibility === "required"}
           />
         </div>
       )}
@@ -352,6 +393,7 @@ const Form: FC<FormProps> = ({ slice }) => {
           </div>
           <textarea
             className="box-border block min-h-[120px] max-h-[220px] w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-zinc-950 outline-none ring-0 placeholder:text-zinc-400 focus:border-zinc-400"
+            name="message"
             value={form.message}
             onChange={(e) => updateField("message", e.target.value)}
             placeholder="Как мы можем помочь?"

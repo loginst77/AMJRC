@@ -45,7 +45,7 @@
       "excelWebhookUrl": {
         "__TYPE__": "FieldContent",
         "type": "Text",
-        "value": "https://docs.google.com/spreadsheets/d/1QSLqXniGlBDomtkt_Ye6tkr_E-pcjdy68GG0JIGgkpQ/edit?usp=sharing"
+        "value": "efa55d87-4cea-459d-bc87-08266b1648bb"
       },
       "phoneField": {
         "__TYPE__": "FieldContent",
@@ -210,7 +210,7 @@
       },
       "excelWebhookUrl": {
         "__TYPE__": "FieldContent",
-        "value": "related",
+        "value": "efa55d87-4cea-459d-bc87-08266b1648bb",
         "type": "Text"
       },
       "phoneField": {

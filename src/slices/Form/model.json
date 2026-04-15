@@ -44,8 +44,8 @@
         "excelWebhookUrl": {
           "type": "Text",
           "config": {
-            "label": "Excel Webhook URL",
-            "placeholder": "https://... (Power Automate / Make webhook URL)"
+            "label": "Web3Forms Access Key",
+            "placeholder": "efa55d87-4cea-459d-bc87-08266b1648bb"
           }
         },
         "phoneField": {
@@ -148,8 +148,8 @@
         "excelWebhookUrl": {
           "type": "Text",
           "config": {
-            "label": "Excel Webhook URL",
-            "placeholder": "https://... (Power Automate / Make webhook URL)"
+            "label": "Web3Forms Access Key",
+            "placeholder": "efa55d87-4cea-459d-bc87-08266b1648bb"
           }
         },
         "phoneField": {
