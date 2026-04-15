@@ -37,14 +37,17 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
   return (
     <div className="space-y-4">
       {episodes.map((episode) => (
-        <div key={episode.id} className={cn("group flex items-stretch overflow-hidden rounded-2xl bg-white", cardHoverCn)}>
-          <Link href={episode.href || "#"} className="group flex min-w-0 flex-1 items-center gap-4 p-4 sm:px-6 sm:py-6">
-            <div className="flex md:h-24 md:w-24 w-10 shrink-0 items-center justify-center rounded-2xl md:bg-blue-100 text-sm font-bold text-zinc-600">
+        <div
+          key={episode.id}
+          className={cn("group flex flex-col overflow-hidden rounded-2xl bg-white md:flex-row md:items-stretch", cardHoverCn)}
+        >
+          <Link href={episode.href || "#"} className="group flex min-w-0 flex-1 items-start gap-4 p-4 sm:px-6 sm:py-6 md:items-center">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-sm font-bold text-zinc-600 sm:h-18 sm:w-18 md:h-24 md:w-24">
               <Mic size={30} strokeWidth={1.5} />
             </div>
 
             <div className="min-w-0 flex-1 text-left">
-              <div className="flex h-full flex-col items-start justify-center space-y-1 min-h-[80px]">
+              <div className="flex h-full min-h-[80px] flex-col items-start justify-center space-y-1">
                 <h3 className="line-clamp-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600">
                   {episode.title}
                 </h3>
@@ -53,11 +56,11 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
 
                 <div>
                   {!!episode.tags?.length ? (
-                    <div className="mt-1 flex flex-wrap items-center justify-start gap-2">
+                    <div className="mt-2 flex flex-wrap items-center justify-start gap-1.5 sm:gap-2">
                       {episode.tags.map((tag) => (
                         <span
                           key={tag.id}
-                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200"
+                          className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 sm:px-3 sm:py-1.5 sm:text-xs"
                         >
                           {tag.name}
                         </span>
@@ -70,17 +73,36 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
           </Link>
 
           {episode.community ? (
+            <div>
+              {/* Mobile */}
+              <Link
+                href={episode.community.href}
+                className="flex flex-row items-start gap-2 border-t border-zinc-200 p-6 text-zinc-950 transition-colors duration-200 hover:bg-blue-100 justify-between sm:hidden"
+              >
+                <span className="min-w-0 text-sm font-medium leading-snug">
+                  <span className="truncate">{episode.community.name}</span>
+                </span>
+                <span className="text-sm text-zinc-400">{formatDate(episode.date)}</span>
+              </Link>
+            </div>
+          ) : (
+            <div className="border-t border-zinc-200 px-4 py-6 text-right sm:hidden">
+              <div className="text-sm text-zinc-400">{formatDate(episode.date)}</div>
+            </div>
+          )}
+
+          {episode.community ? (
             <Link
               href={episode.community.href}
-              className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end group sm:justify-center sm:gap-0.5 sm:px-6"
+              className="hidden shrink-0 text-right group-hover:text-blue-600 md:flex md:flex-col md:items-end md:justify-center md:gap-0.5 md:px-6"
             >
-              <div className="text-base font-medium group-hover:text-blue-600 text-zinc-700 transition-colors duration-200">
+              <div className="text-base font-medium text-zinc-700 transition-colors duration-200 group-hover:text-blue-600">
                 {episode.community.name}
               </div>
               <div className="text-base text-zinc-400">{formatDate(episode.date)}</div>
             </Link>
           ) : (
-            <div className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end sm:justify-center sm:gap-0.5 sm:px-6">
+            <div className="hidden shrink-0 text-right md:flex md:flex-col md:items-end md:justify-center md:gap-0.5 md:px-6">
               <div className="text-base text-zinc-400">{formatDate(episode.date)}</div>
             </div>
           )}

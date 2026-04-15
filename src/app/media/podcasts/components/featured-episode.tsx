@@ -15,7 +15,7 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
 
   return (
     <section className="bg-white">
-      <Container className="py-16 sm:py-20">
+      <Container className="py-12 sm:py-16 md:py-20">
         <p className="mb-6 flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-zinc-400">
           <PinIcon className="h-5 w-5" /> Закрепленные выпуски
         </p>
@@ -25,15 +25,15 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
               key={episode.id}
               className={cn("overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-white", cardHoverCn)}
             >
-              <div className="group flex h-full flex-col sm:flex-row sm:items-stretch">
+              <div className="group flex h-full flex-col md:flex-row md:items-stretch">
                 {/* Content: artwork + info */}
-                <div className="flex flex-col flex-1 gap-0 sm:flex-row sm:items-center">
+                <div className="flex flex-1 flex-col">
                   {/* Info */}
-                  <div className="flex flex-col w-full">
-                    <div className="flex-1 space-y-2 p-8">
-                      <div className="flex items-start gap-6">
+                  <div className="flex w-full flex-col">
+                    <div className="flex-1 space-y-2 p-6 sm:p-8">
+                      <div className="flex items-start gap-4 sm:gap-6">
                         {/* Podcast artwork */}
-                        <div className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-sky-300 via-blue-400 to-blue-500">
+                        <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br from-sky-300 via-blue-400 to-blue-500 sm:h-24 sm:w-24">
                           {/* Decorative rings */}
                           <span className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/20" />
                           <span className="absolute h-16 w-16 rounded-full bg-white/10 shadow-inner shadow-white/20" />
@@ -44,7 +44,7 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                             {episode.title}
                           </h3>
                           {episode.author ? <p className="text-base font-semibold text-zinc-800 sm:text-lg">{episode.author}</p> : null}
-                          <p className="max-w-2xl text-lg leading-relaxed text-zinc-600">{episode.description}</p>
+                          <p className="max-w-2xl text-base leading-relaxed text-zinc-600 sm:text-lg">{episode.description}</p>
                         </div>
                       </div>
                       <div className="mt-4">
@@ -65,7 +65,7 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                     {episode.community ? (
                       <Link
                         href={episode.community.href}
-                        className="flex items-center justify-between gap-4 border-t border-zinc-200 px-8 py-6 transition-colors duration-200 hover:bg-blue-100"
+                        className="flex items-center justify-between gap-4 border-t border-zinc-200 px-6 py-6 transition-colors duration-200 hover:bg-blue-100 sm:px-8"
                       >
                         <span className="min-w-0 text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
                           {episode.community.name}
@@ -73,16 +73,16 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                         <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
                       </Link>
                     ) : (
-                      <div className="flex items-center justify-end gap-4 border-t border-zinc-200 px-8 py-6">
+                      <div className="flex items-center justify-end gap-4 border-t border-zinc-200 px-6 py-4 sm:px-8 sm:py-6">
                         <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="flex items-center border-l border-zinc-200 duration-200">
+                <div className="flex items-center hidden md:flex border-t border-zinc-200 duration-200 md:border-l md:border-t-0">
                   <Link
                     href={episode.href || "#"}
-                    className="flex h-full w-full shrink-0 items-center justify-center sm:px-10 md:px-14 py-4 text-gray-800 hover:bg-blue-100 group/link"
+                    className="group/link flex h-full w-full shrink-0 items-center justify-center px-6 py-4 text-gray-800 hover:bg-blue-100 sm:px-8 md:px-14"
                   >
                     <SquareArrowOutUpRight className="h-6 w-6 transition-transform group-hover/link:scale-110" strokeWidth={1.7} />
                   </Link>

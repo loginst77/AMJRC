@@ -64,7 +64,7 @@ export function TagFilterBar({ allCount, tags, anchorId = "podcast-list", allHre
                 onClick={() => setOpen(true)}
                 className="ml-auto inline-flex items-center gap-2 rounded-full bg-zinc-200 px-4 py-2 text-base text-blue-600 transition-colors hover:bg-zinc-200/70 hover:text-blue-700 font-semibold"
               >
-                <FilterIcon className="h-5 w-5" strokeWidth={1.8} />
+                <FilterIcon className="h-6 w-6" strokeWidth={1.8} />
                 <span className="hidden sm:inline">Фильтры</span>
               </button>
             </div>
