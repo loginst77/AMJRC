@@ -161,7 +161,7 @@ function FeaturedVideoItem({ video, onOpen }: FeaturedVideoItemProps) {
               {video.tags.map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 sm:px-3 sm:py-1.5 sm:text-xs"
+                  className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 sm:px-4 sm:py-2 sm:text-base md:px-3 md:py-1.5 md:text-xs"
                 >
                   {tag.name}
                 </span>
@@ -171,7 +171,7 @@ function FeaturedVideoItem({ video, onOpen }: FeaturedVideoItemProps) {
               {visibleTags.map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 sm:px-3 sm:py-1.5 sm:text-xs"
+                  className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 sm:px-4 sm:py-2 sm:text-base md:px-3 md:py-1.5 md:text-xs"
                 >
                   {tag.name}
                 </span>
@@ -182,7 +182,7 @@ function FeaturedVideoItem({ video, onOpen }: FeaturedVideoItemProps) {
                 {overflowTags.slice(0, 5).map((tag) => (
                   <span
                     key={tag.id}
-                    className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 shadow-sm transition-transform duration-200 hover:z-10 sm:px-3 sm:py-1.5 sm:text-xs"
+                    className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-100 shadow-sm transition-transform duration-200 hover:z-10 sm:px-4 sm:py-2 sm:text-base md:px-3 md:py-1.5 md:text-xs"
                   >
                     {tag.name}
                   </span>

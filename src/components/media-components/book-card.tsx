@@ -38,7 +38,7 @@ export function BookCard({ book }: { book: MediaItem }) {
             {book.tags?.slice(0, 3).map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
+                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200 sm:px-4 sm:py-2 sm:text-base md:px-3 md:py-1.5 md:text-xs">
                 {tag.name}
               </span>
             ))}

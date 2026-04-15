@@ -72,7 +72,7 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
     };
   });
 
-  const featured = books.find((book) => book.featured);
+  const featuredBooks = books.filter((book) => book.featured);
   const regularBooks = books.filter((book) => !book.featured);
   const tagStats = new Map<string, { tag: MediaTag; count: number }>();
   regularBooks.forEach((book) => {
@@ -95,8 +95,8 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Книги" />
-      {featured ?
-        <FeaturedBook book={featured} />
+      {featuredBooks.length ?
+        <FeaturedBook books={featuredBooks} />
       : null}
 
       <section className="bg-zinc-50 py-12">

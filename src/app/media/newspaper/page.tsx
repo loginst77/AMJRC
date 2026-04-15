@@ -35,14 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const titleField = page?.data ? (page.data as any).meta_title : null;
   const descField = page?.data ? (page.data as any).meta_description : null;
 
-  const title =
-    typeof titleField === "string" ? titleField || "Газета"
-    : page ? asText(titleField) || "Газета"
-    : "Газета";
+  const title = typeof titleField === "string" ? titleField || "Газета" : page ? asText(titleField) || "Газета" : "Газета";
   const description =
-    typeof descField === "string" ? descField || "Архив выпусков газеты."
-    : page ? asText(descField) || "Архив выпусков газеты."
-    : "Архив выпусков газеты.";
+    typeof descField === "string"
+      ? descField || "Архив выпусков газеты."
+      : page
+        ? asText(descField) || "Архив выпусков газеты."
+        : "Архив выпусков газеты.";
 
   return {
     title,
@@ -59,9 +58,11 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
-    Array.isArray(rawTagParam) && rawTagParam.length > 0 ? decodeURIComponent(rawTagParam[0]!)
-    : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
-    : undefined;
+    Array.isArray(rawTagParam) && rawTagParam.length > 0
+      ? decodeURIComponent(rawTagParam[0]!)
+      : typeof rawTagParam === "string"
+        ? decodeURIComponent(rawTagParam)
+        : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
 
   const client = createClient();
@@ -88,10 +89,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
       const uid = typeof rel.uid === "string" ? rel.uid : null;
       if (rel.link_type === "Document" && id && uid) {
         const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
-        const name =
-          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
-          : typeof linkedTitle === "string" ? linkedTitle
-          : uid;
+        const name = Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField) : typeof linkedTitle === "string" ? linkedTitle : uid;
         community = {
           id,
           name: name || uid,
@@ -117,8 +115,8 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
     return { id: issue.id, title, description, pdfUrl, author, date, featured, tags, community };
   });
 
-  const featuredIssue = cards.find((card) => card.featured) ?? null;
-  const regularCards = featuredIssue ? cards.filter((card) => card.id !== featuredIssue.id) : cards;
+  const featuredIssues = cards.filter((card) => card.featured);
+  const regularCards = cards.filter((card) => !card.featured);
   const tagStats = new Map<string, { tag: IssueTag; count: number }>();
 
   regularCards.forEach((card) => {
@@ -137,15 +135,14 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
   const activeTagKey = matchedTag?.slug.toLowerCase();
   const activeTagLabel = matchedTag?.name;
 
-  const filteredCards =
-    activeTagKey ? regularCards.filter((card) => card.tags.some((tag) => tag.slug.toLowerCase() === activeTagKey)) : regularCards;
+  const filteredCards = activeTagKey
+    ? regularCards.filter((card) => card.tags.some((tag) => tag.slug.toLowerCase() === activeTagKey))
+    : regularCards;
 
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Газета" />
-      {featuredIssue ?
-        <FeaturedNewspaperCard issue={featuredIssue} />
-      : null}
+      {featuredIssues.length ? <FeaturedNewspaperCard issues={featuredIssues} /> : null}
 
       <section className="bg-zinc-50 py-12">
         <Container className="space-y-4">
@@ -164,18 +161,20 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
             }))}
           />
 
-          {regularCards.length === 0 ?
+          {regularCards.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 ">
               <p className="font-semibold text-zinc-800">Скоро здесь появятся выпуски.</p>
             </div>
-          : filteredCards.length === 0 ?
+          ) : filteredCards.length === 0 ? (
             <div
               id="newspaper-list"
-              className="scroll-mt-24 rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
+              className="scroll-mt-24 rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600"
+            >
               <p className="font-semibold text-zinc-800">Нет выпусков для выбранного тега</p>
               <p className="text-sm text-zinc-500">Попробуйте выбрать другой тег или показать все выпуски.</p>
             </div>
-          : <div id="newspaper-list" className="scroll-mt-24">
+          ) : (
+            <div id="newspaper-list" className="scroll-mt-24">
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredCards.map((issue) => (
                   <div key={issue.id} className="flex h-full flex-col">
@@ -195,7 +194,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
                 ))}
               </div>
             </div>
-          }
+          )}
         </Container>
       </section>
 
