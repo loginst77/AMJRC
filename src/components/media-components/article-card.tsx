@@ -64,12 +64,7 @@ export function authorColor(name?: string) {
 
 export function ArticleCard({ article, className = "" }: ArticleCardProps) {
   return (
-    <div
-      className={cn(
-        "group flex h-full flex-col overflow-hidden bg-white",
-        cardHoverCn,
-        className,
-      )}>
+    <div className={cn("group flex h-full flex-col overflow-hidden bg-white", cardHoverCn, className)}>
       <Link
         href={`/media/${article.href || getArticleHref(article.id)}`}
         aria-label={`Открыть статью: ${article.title}`}
@@ -95,7 +90,8 @@ export function ArticleCard({ article, className = "" }: ArticleCardProps) {
           {article.tags?.map((tag) => (
             <span
               key={tag.id}
-              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
+              className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200"
+            >
               {tag.name}
             </span>
           ))}

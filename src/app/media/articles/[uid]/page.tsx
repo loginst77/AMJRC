@@ -15,6 +15,35 @@ function readingTime(text: string) {
   return Math.max(1, Math.ceil(words / 180));
 }
 
+function getUidCandidates(uid: string) {
+  const candidates = new Set<string>([uid]);
+
+  try {
+    candidates.add(decodeURIComponent(uid));
+  } catch {
+    // UID is already decoded or malformed; keep original value.
+  }
+
+  return [...candidates].map((value) => value.trim()).filter(Boolean);
+}
+
+async function getArticleByUid(
+  client: ReturnType<typeof createClient>,
+  uid: string,
+  options: Parameters<ReturnType<typeof createClient>["getByUID"]>[2] = {},
+) {
+  const queryVariants = [options, { ...options, lang: "*" }];
+
+  for (const candidate of getUidCandidates(uid)) {
+    for (const query of queryVariants) {
+      const article = await client.getByUID("article", candidate, query).catch(() => null);
+      if (article) return article;
+    }
+  }
+
+  return null;
+}
+
 export async function generateStaticParams() {
   const client = createClient();
   const articles = await client.getAllByType("article");
@@ -24,7 +53,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { uid } = await params;
   const client = createClient();
-  const article = await client.getByUID("article", uid).catch(() => null);
+  const article = await getArticleByUid(client, uid);
   if (!article) return { title: "Статья не найдена" };
 
   const title = asText(article.data.title) || "Статья";
@@ -43,7 +72,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function ArticlePage({ params }: { params: Promise<Params> }) {
   const { uid } = await params;
   const client = createClient();
-  const article = await client.getByUID("article", uid, { fetchLinks: ["tag.name"] }).catch(() => null);
+  const article = await getArticleByUid(client, uid, { fetchLinks: ["tag.name"] });
   if (!article) notFound();
 
   const all = await client.getAllByType("article", {
@@ -141,13 +170,15 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
               <PrismicRichText field={article.data.content} />
             </article>
 
-            <div className="mt-12 grid overflow-hidden rounded-2xl border border-zinc-200 sm:grid-cols-2">
+            <div className="mt-12 grid grid-cols-2 overflow-hidden rounded-2xl border border-zinc-200">
               {prev ? (
                 <Link
                   href={`/media/articles/${prev.uid}`}
-                  className="group flex flex-col gap-1 p-4 transition-all duration-200 hover:bg-blue-50"
+                  className={`group flex flex-col gap-3 p-4 transition-all duration-200 hover:bg-blue-50 sm:gap-1 ${
+                    !next ? "col-span-2" : ""
+                  }`}
                 >
-                  <span className="ml-1 flex items-center gap-1 text-sm text-zinc-400">
+                  <span className="flex items-center gap-1 text-sm text-zinc-400 sm:ml-1">
                     <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
                     Предыдущая
                   </span>
@@ -155,15 +186,15 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                     {asText(prev.data.title) || "Статья"}
                   </span>
                 </Link>
-              ) : (
-                <div />
-              )}
+              ) : null}
               {next ? (
                 <Link
                   href={`/media/articles/${next.uid}`}
-                  className="group flex flex-col gap-1 border-t border-zinc-200 p-4 text-right transition-all duration-200 hover:bg-blue-50 sm:border-t-0 sm:border-l sm:text-left sm:items-end"
+                  className={`group flex flex-col gap-3 p-4 transition-all duration-200 hover:bg-blue-50 sm:items-end sm:gap-1 sm:text-left ${
+                    prev ? "border-l border-zinc-200" : "col-span-2"
+                  }`}
                 >
-                  <span className="mr-1 flex items-center gap-1 text-sm text-zinc-400 sm:justify-end">
+                  <span className="flex items-center gap-1 text-sm text-zinc-400 sm:mr-1 sm:justify-end">
                     Следующая
                     <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </span>
@@ -171,9 +202,7 @@ export default async function ArticlePage({ params }: { params: Promise<Params> 
                     {asText(next.data.title) || "Статья"}
                   </span>
                 </Link>
-              ) : (
-                <div />
-              )}
+              ) : null}
             </div>
           </div>
         </Container>

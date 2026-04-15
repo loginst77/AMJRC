@@ -42,12 +42,14 @@ export function SiteHeader({
       <Container className="flex h-[88px] items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="inline-flex items-center" aria-label="Go to homepage">
-            {logo?.url ?
+            {logo?.url ? (
               <PrismicNextImage field={logo} alt={logo?.alt || "Logo"} className="h-[70px] w-auto" />
-            : <Image src="/logo.svg" alt="Logo" width={70} height={70} />}
+            ) : (
+              <Image src="/logo.svg" alt="Logo" width={70} height={70} />
+            )}
           </Link>
 
-          <nav className="ml-10 hidden items-center gap-1 lg:flex">
+          <nav className="ml-4 hidden items-center gap-1 lg:flex">
             {navigationLinks.map((item) => (
               <NavLink key={`${item.href}-${item.label}`} href={item.href}>
                 {item.label}
@@ -66,16 +68,16 @@ export function SiteHeader({
             secondaryAction={secondaryAction}
           />
           <div className="hidden lg:flex items-center gap-2">
-            {primaryAction ?
+            {primaryAction ? (
               <ButtonLink href={primaryAction.href} variant={primaryAction.variant} size="md">
                 {primaryAction.label}
               </ButtonLink>
-            : null}
-            {secondaryAction ?
+            ) : null}
+            {secondaryAction ? (
               <ButtonLink href={secondaryAction.href} variant={secondaryAction.variant} size="md">
                 {secondaryAction.label}
               </ButtonLink>
-            : null}
+            ) : null}
           </div>
         </div>
       </Container>
