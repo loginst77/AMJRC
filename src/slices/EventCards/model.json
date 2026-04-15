@@ -11,13 +11,6 @@
       "version": "initial",
       "description": "Default",
       "primary": {
-        "badge_text": {
-          "type": "Text",
-          "config": {
-            "label": "Badge Text",
-            "placeholder": "События"
-          }
-        },
         "heading": {
           "type": "Text",
           "config": {
@@ -42,13 +35,6 @@
             "thumbnails": []
           }
         },
-        "label": {
-          "type": "Text",
-          "config": {
-            "label": "Label",
-            "placeholder": "Конференция"
-          }
-        },
         "date": {
           "type": "Text",
           "config": {
@@ -67,7 +53,7 @@
           "type": "Text",
           "config": {
             "label": "Location",
-            "placeholder": "Москва, ул. Пример, 1"
+            "placeholder": "181 st, Chicago, IL, US"
           }
         },
         "title": {

@@ -3,11 +3,6 @@
 		"__TYPE__": "SharedSliceContent",
 		"variation": "default",
 		"primary": {
-			"badge_text": {
-				"__TYPE__": "FieldContent",
-				"value": "warn",
-				"type": "Text"
-			},
 			"heading": {
 				"__TYPE__": "FieldContent",
 				"value": "men",
@@ -47,14 +42,6 @@
 							"credits": null,
 							"__TYPE__": "ImageContent",
 							"thumbnails": {}
-						}
-					],
-					[
-						"label",
-						{
-							"__TYPE__": "FieldContent",
-							"value": "palace",
-							"type": "Text"
 						}
 					],
 					[

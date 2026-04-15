@@ -13,7 +13,6 @@ const EventCards: FC<EventCardsProps> = ({ slice }) => {
   const events: EventCardSectionItem[] = slice.items.map((event, index) => ({
     id: `${slice.id}-${index}`,
     image: event.image,
-    label: event.label,
     date: event.date,
     time: event.time,
     location: event.location,

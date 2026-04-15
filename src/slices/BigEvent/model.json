@@ -50,7 +50,7 @@
           "type": "Text",
           "config": {
             "label": "Location",
-            "placeholder": "Москва, ул. Пример, 1"
+            "placeholder": "181 st, Chicago, IL, US"
           }
         },
         "countdownTarget": {

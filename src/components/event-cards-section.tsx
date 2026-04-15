@@ -6,7 +6,6 @@ import { PrismicNextImage, PrismicNextLink } from "@prismicio/next";
 import { Dialog } from "radix-ui";
 import { ArrowRight, Calendar, Clock, MapPin, X } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
@@ -26,11 +25,11 @@ export type EventCardSectionItem = {
 
 type EventCardsSectionProps = {
   events: EventCardSectionItem[];
-  badgeText?: string | null;
   heading?: string | null;
   description?: string | null;
   showHeader?: boolean;
   showAllButton?: boolean;
+  showCommunityNameInCard?: boolean;
 };
 
 type EventViewModel = {
@@ -55,11 +54,11 @@ function getTextValue(field?: KeyTextField | string | null) {
 
 export function EventCardsSection({
   events,
-  badgeText,
   heading,
   description,
   showHeader = false,
   showAllButton = false,
+  showCommunityNameInCard = true,
 }: EventCardsSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [allOpen, setAllOpen] = useState(false);
@@ -107,7 +106,7 @@ export function EventCardsSection({
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
 
         <div className="relative z-10 flex flex-col gap-1 p-6 text-xs font-semibold uppercase tracking-[0.15em] text-white/70 group-hover:text-white">
-          {event.communityName && <div>{event.communityName}</div>}
+          {showCommunityNameInCard && event.communityName && <div>{event.communityName}</div>}
           {event.label && <div>{event.label}</div>}
           {event.date && <div>{event.date}</div>}
         </div>
@@ -127,11 +126,6 @@ export function EventCardsSection({
       {showHeader && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-3">
-            {badgeText && (
-              <Badge variant="outline" size="lg">
-                {badgeText}
-              </Badge>
-            )}
             {heading && <h2 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">{heading}</h2>}
             {description && <p className="max-w-xl text-zinc-600 dark:text-zinc-400">{description}</p>}
           </div>
@@ -178,11 +172,6 @@ export function EventCardsSection({
 
               <div className="border-b border-zinc-200 p-6 pr-16 dark:border-zinc-800 sm:p-8 sm:pr-20">
                 <div className="space-y-3">
-                  {badgeText && (
-                    <Badge variant="outline" size="lg">
-                      {badgeText}
-                    </Badge>
-                  )}
                   {heading && (
                     <Dialog.Title className="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white sm:text-3xl">
                       {heading}

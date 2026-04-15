@@ -56,21 +56,13 @@
         "config": {
           "label": "Navigation links",
           "fields": {
-            "label": {
-              "type": "StructuredText",
-              "config": {
-                "label": "Label",
-                "placeholder": "Link label",
-                "single": "heading4",
-                "allowTargetBlank": false
-              }
-            },
             "link": {
               "type": "Link",
               "config": {
                 "label": "Link",
                 "placeholder": "Link URL",
-                "select": null
+                "select": null,
+                "allowText": true
               }
             }
           }
@@ -90,21 +82,13 @@
         "config": {
           "label": "Action links",
           "fields": {
-            "label": {
-              "type": "StructuredText",
-              "config": {
-                "label": "Label",
-                "placeholder": "Link label",
-                "single": "heading4",
-                "allowTargetBlank": false
-              }
-            },
             "link": {
               "type": "Link",
               "config": {
                 "label": "Link",
                 "placeholder": "Link URL",
-                "select": null
+                "select": null,
+                "allowText": true
               }
             }
           }
@@ -146,19 +130,13 @@
         "config": {
           "label": "Social links",
           "fields": {
-            "label": {
-              "type": "Text",
-              "config": {
-                "label": "Label",
-                "placeholder": "YouTube"
-              }
-            },
             "link": {
               "type": "Link",
               "config": {
                 "label": "Link",
                 "placeholder": "https://...",
-                "select": null
+                "select": null,
+                "allowText": true
               }
             }
           }
