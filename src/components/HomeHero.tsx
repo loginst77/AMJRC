@@ -69,8 +69,8 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
 
         <div className="relative flex w-full items-center justify-center">
           <div className="absolute -inset-3 rounded-3xl bg-white/5 blur-xl" />
-          <div className="relative aspect-[9/12] w-full overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15 md:aspect-video lg:aspect-[9/12] lg:max-w-lg">
-            {isFilled.embed(data.hero_video_embed) ?
+          <div className="relative aspect-video lg:aspect-square w-full overflow-hidden rounded-2xl bg-black/50 shadow-2xl ring-1 ring-white/15  lg:max-w-lg">
+            {isFilled.embed(data.hero_video_embed) ? (
               <iframe
                 src={`${data.hero_video_embed.embed_url?.replace("watch?v=", "embed/") ?? data.hero_video_embed.embed_url}?autoplay=1&mute=1&rel=0`}
                 title={data.hero_video_embed.title ?? "Embedded video"}
@@ -80,7 +80,9 @@ export const HomeHero: FC<HomeHeroProps> = ({ data }) => {
                 className="h-full w-full"
                 referrerPolicy="no-referrer-when-downgrade"
               />
-            : <div className="flex h-full items-center justify-center text-sm text-white/40">Video goes here</div>}
+            ) : (
+              <div className="flex h-full items-center justify-center text-sm text-white/40">Video goes here</div>
+            )}
           </div>
         </div>
       </Container>
