@@ -211,6 +211,11 @@ export default async function CommunityPage({ params }: { params: Promise<Params
         author: getTextValue(article.data?.author) || undefined,
         date: date?.toISOString(),
         tags,
+        community: {
+          id: communityId,
+          name: title,
+          href: `/communities/${communityUid}`,
+        },
       };
     });
 

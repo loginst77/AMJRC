@@ -25,24 +25,30 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
 
   return (
     <div className={cn("group flex h-full flex-col overflow-hidden bg-white !cursor-default", cardHoverCn, className)}>
-      <div className="flex items-center justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6">
-        {issue.community ? (
-          <Link
-            href={issue.community.href}
-            className="rounded-full text-sm font-medium leading-snug text-zinc-700 transition-colors duration-200 hover:text-blue-600 sm:text-base"
-          >
+      {issue.community ? (
+        <Link
+          href={issue.community.href}
+          className="flex items-center group justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6 text-zinc-950 transition-colors duration-200 hover:bg-blue-100"
+        >
+          <span className="rounded-full text-sm font-medium leading-snug text-zinc-700 transition-colors duration-200 group-hover:text-blue-600 sm:text-base">
             {issue.community.name}
-          </Link>
-        ) : (
-          <span />
-        )}
-
-        {issue.date && (
-          <span className="text-sm text-zinc-400 sm:text-base">
-            {formatDate(issue.date instanceof Date || typeof issue.date === "string" ? issue.date : String(issue.date))}
           </span>
-        )}
-      </div>
+          {issue.date && (
+            <span className="text-sm text-zinc-400 sm:text-base">
+              {formatDate(issue.date instanceof Date || typeof issue.date === "string" ? issue.date : String(issue.date))}
+            </span>
+          )}
+        </Link>
+      ) : (
+        <div className="flex items-center justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6">
+          <span />
+          {issue.date && (
+            <span className="text-sm text-zinc-400 sm:text-base">
+              {formatDate(issue.date instanceof Date || typeof issue.date === "string" ? issue.date : String(issue.date))}
+            </span>
+          )}
+        </div>
+      )}
       <div className="flex flex-col p-6">
         <div className="flex flex-col gap-2">
           {/* Title */}
@@ -106,7 +112,8 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
         <a
           href={issue.href}
           download
-          className="inline-flex w-full items-center justify-center whitespace-nowrap p-6 !text-sm font-medium text-zinc-700 underline-offset-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-blue-100 disabled:pointer-events-none disabled:opacity-50 sm:!text-base">
+          className="inline-flex w-full items-center justify-center whitespace-nowrap p-6 !text-sm font-medium text-zinc-700 underline-offset-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-blue-100 disabled:pointer-events-none disabled:opacity-50 sm:!text-base"
+        >
           Скачать PDF
           <Download className="ml-1.5 h-3.5 w-3.5" />
         </a>

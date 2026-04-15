@@ -23,7 +23,7 @@ const ArticleList: FC<ArticleListProps> = async ({ slice }) => {
         { field: "my.article.date", direction: "desc" },
         { field: "document.first_publication_date", direction: "desc" },
       ],
-      fetchLinks: ["tag.name"],
+      fetchLinks: ["tag.name", "community.title"],
       pageSize: 6,
     })
     .catch(() => null);
@@ -41,6 +41,25 @@ const ArticleList: FC<ArticleListProps> = async ({ slice }) => {
     const date = dateRaw ? dateRaw.toISOString() : undefined;
 
     const author = (article.data as any).author as string | undefined;
+    const rawCommunity = (article.data as { community?: unknown }).community;
+    let community: MediaItem["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
 
     const tagsGroup = (article.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags = tagsGroup
@@ -64,6 +83,7 @@ const ArticleList: FC<ArticleListProps> = async ({ slice }) => {
       date,
       author: author || undefined,
       tags,
+      community,
     };
   });
 
