@@ -49,35 +49,46 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
                   {episode.title}
                 </h3>
                 {episode.author ? <p className="text-base font-medium text-zinc-700">{episode.author}</p> : null}
-                {episode.description ?
-                  <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{episode.description}</p>
-                : null}
+                {episode.description ? <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{episode.description}</p> : null}
 
                 <div>
-                  {!!episode.tags?.length ?
+                  {!!episode.tags?.length ? (
                     <div className="mt-1 flex flex-wrap items-center justify-start gap-2">
                       {episode.tags.map((tag) => (
                         <span
                           key={tag.id}
-                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
+                          className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200"
+                        >
                           {tag.name}
                         </span>
                       ))}
                     </div>
-                  : null}
+                  ) : null}
                 </div>
               </div>
             </div>
+          </Link>
 
-            <div className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end sm:gap-0.5">
-              {episode.community ? <div className="text-base font-medium text-zinc-700">{episode.community.name}</div> : null}
+          {episode.community ? (
+            <Link
+              href={episode.community.href}
+              className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end group sm:justify-center sm:gap-0.5 sm:px-6"
+            >
+              <div className="text-base font-medium group-hover:text-blue-600 text-zinc-700 transition-colors duration-200">
+                {episode.community.name}
+              </div>
+              <div className="text-base text-zinc-400">{formatDate(episode.date)}</div>
+            </Link>
+          ) : (
+            <div className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end sm:justify-center sm:gap-0.5 sm:px-6">
               <div className="text-base text-zinc-400">{formatDate(episode.date)}</div>
             </div>
-          </Link>
+          )}
 
           <Link
             href={episode.href || "#"}
-            className="group/play hidden lg:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100">
+            className="group/play hidden lg:flex items-center border-l border-zinc-200 sm:px-10 md:px-14 text-gray-800 transition-colors duration-200 hover:bg-blue-100"
+          >
             <SquareArrowOutUpRight className="h-5 w-5 transition-transform group-hover/play:scale-110" strokeWidth={1.7} />
           </Link>
         </div>

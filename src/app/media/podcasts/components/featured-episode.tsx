@@ -23,7 +23,8 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
           {episodes.map((episode) => (
             <div
               key={episode.id}
-              className={cn("overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-white", cardHoverCn)}>
+              className={cn("overflow-hidden rounded-3xl border border-zinc-200 bg-gradient-to-br from-purple-50 to-white", cardHoverCn)}
+            >
               <div className="group flex h-full flex-col sm:flex-row sm:items-stretch">
                 {/* Content: artwork + info */}
                 <div className="flex flex-col flex-1 gap-0 sm:flex-row sm:items-center">
@@ -52,7 +53,8 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                             {episode.tags.map((tag) => (
                               <span
                                 key={tag.id}
-                                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
+                                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200"
+                              >
                                 {tag.name}
                               </span>
                             ))}
@@ -60,20 +62,28 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center justify-between px-8 py-6 gap-4 border-t border-zinc-200">
-                      {episode.community ?
-                        <Link href={episode.community.href} className="min-w-0 text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
+                    {episode.community ? (
+                      <Link
+                        href={episode.community.href}
+                        className="flex items-center justify-between gap-4 border-t border-zinc-200 px-8 py-6 transition-colors duration-200 hover:bg-blue-100"
+                      >
+                        <span className="min-w-0 text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
                           {episode.community.name}
-                        </Link>
-                      : <span />}
-                      <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
-                    </div>
+                        </span>
+                        <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
+                      </Link>
+                    ) : (
+                      <div className="flex items-center justify-end gap-4 border-t border-zinc-200 px-8 py-6">
+                        <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center border-l border-zinc-200 duration-200">
                   <Link
                     href={episode.href || "#"}
-                    className="flex h-full w-full shrink-0 items-center justify-center sm:px-10 md:px-14 py-4 text-gray-800 hover:bg-blue-100 group/link">
+                    className="flex h-full w-full shrink-0 items-center justify-center sm:px-10 md:px-14 py-4 text-gray-800 hover:bg-blue-100 group/link"
+                  >
                     <SquareArrowOutUpRight className="h-6 w-6 transition-transform group-hover/link:scale-110" strokeWidth={1.7} />
                   </Link>
                 </div>
