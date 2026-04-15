@@ -45,7 +45,7 @@ export default async function CommunityPage({ params }: { params: Promise<Params
   const client = createClient();
   const community = await client.getByUID("community" as any, uid).catch(() => null);
   if (!community) notFound();
-  
+
   const doc = community as any;
 
   const title = asText(doc.data?.title) || "Община";
@@ -73,10 +73,9 @@ export default async function CommunityPage({ params }: { params: Promise<Params
         }}
       />
 
-      <section className="bg-white dark:bg-zinc-950">
-        <Container className="py-12 sm:py-16">
+      <section className="bg-white !bg-red-200">
+        <Container>
           <div className="mx-auto max-w-3xl space-y-8">
-
             <article className="prose prose-zinc prose-lg max-w-none dark:prose-invert prose-headings:mt-8 prose-headings:mb-4 prose-p:my-4 prose-p:leading-8 prose-strong:font-semibold">
               <PrismicRichText field={doc.data?.content} />
             </article>

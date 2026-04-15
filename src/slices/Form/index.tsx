@@ -182,7 +182,7 @@ const Form: FC<FormProps> = ({ slice }) => {
 
     if (type === "select") {
       return (
-        <div key={index} className={`block space-y-2 text-sm ${!hasImage ? "max-w-[50%]" : ""}`}>
+        <div key={index} className={`block space-y-2 text-sm ${!hasImage ? "sm:max-w-[50%]" : ""}`}>
           {labelEl}
           <SelectDropdown value={value} options={options} onChange={(val) => updateField(label, val)} />
         </div>
@@ -379,19 +379,20 @@ const Form: FC<FormProps> = ({ slice }) => {
   );
 
   return (
-    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="bg-white py-20 md:py-28 dark:bg-zinc-950">
-      <Container>
-        <div
-          className={`mx-auto overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-[var(--shadow-secondary)]`}
-          style={{ boxShadow: "var(--shadow-secondary)" }}>
+    <section
+      data-slice-type={slice.slice_type}
+      data-slice-variation={slice.variation}
+      className="bg-white py-16 sm:py-20 md:py-28 dark:bg-zinc-950">
+      <Container className="!px-0 sm:!px-6">
+        <div className={`mx-auto overflow-hidden md:border border-zinc-200 bg-white sm:rounded-3xl sm:shadow-[var(--shadow-secondary)]`}>
           {hasImage ?
-            <div className="grid lg:grid-cols-2">
-              <div className="p-8 sm:p-10">{formContent}</div>
-              <div className="relative hidden lg:block">
+            <div className="grid md:grid-cols-2">
+              <div className="p-5 sm:p-8 md:p-10">{formContent}</div>
+              <div className="relative hidden md:block">
                 <PrismicNextImage field={primary.image!} fill className="absolute inset-0 h-full w-full object-cover" alt="" />
               </div>
             </div>
-          : <div className="p-8 sm:p-10">{formContent}</div>}
+          : <div className="p-5 sm:p-8 md:p-10">{formContent}</div>}
         </div>
       </Container>
     </section>
