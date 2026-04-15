@@ -1,10 +1,17 @@
+import Link from "next/link";
 import { Download, Newspaper } from "lucide-react";
 import { type MediaItem, type MediaTag, formatDate } from "@/lib/media-data";
 import { cn } from "@/lib/cn";
 import { cardHoverCn } from "@/lib/variants";
 
 interface NewspaperCardProps {
-  issue: MediaItem;
+  issue: MediaItem & {
+    community?: {
+      id: string;
+      name: string;
+      href: string;
+    };
+  };
   className?: string;
 }
 
@@ -12,7 +19,13 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
   return (
     <div className={cn("group flex h-full flex-col overflow-hidden bg-white !cursor-default", cardHoverCn, className)}>
       <div className="flex items-center justify-between gap-2 border-b border-zinc-200 bg-gradient-to-r from-blue-200/90 via-blue-200/70 to-blue-100/80 p-6">
-        {issue.author && <div className="flex items-center gap-2 rounded-full text-base font-medium text-zinc-700">{issue.author}</div>}
+        {issue.community ? (
+          <Link href={issue.community.href} className="rounded-full text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
+            {issue.community.name}
+          </Link>
+        ) : (
+          <span />
+        )}
 
         {issue.date && (
           <span className="text-base text-zinc-400">
@@ -26,6 +39,7 @@ export function NewspaperCard({ issue, className = "" }: NewspaperCardProps) {
           <h3 className="mb-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600">
             {issue.title}
           </h3>
+          {issue.author ? <p className="text-base font-medium text-zinc-700">{issue.author}</p> : null}
 
           {/* Description */}
           <p className="mt-2 line-clamp-2 flex-1 text-base leading-relaxed text-zinc-500">{issue.description}</p>

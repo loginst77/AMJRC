@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { asDate, asText, type Content } from "@prismicio/client";
+import { asDate, asText, type Content, type RichTextField } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 
 import { FeaturedNewspaperCard } from "@/app/media/newspaper/components/featured-newspaper-card";
@@ -21,6 +21,11 @@ type IssueCard = {
   date?: Date | null;
   featured: boolean;
   tags: IssueTag[];
+  community?: {
+    id: string;
+    name: string;
+    href: string;
+  };
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -64,7 +69,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
     client.getSingle("newspaperlandingpage").catch(() => null),
     client.getAllByType<Content.NewspaperDocument>("newspaper", {
       orderings: [{ field: "document.first_publication_date", direction: "desc" }],
-      fetchLinks: ["tag.name"],
+      fetchLinks: ["tag.name", "community.title"],
     }),
   ]);
 
@@ -75,6 +80,25 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
     const pdfUrl = pdfField?.url;
     const author = (issue.data as { author?: string }).author || undefined;
     const featured = Boolean((issue.data as { featured?: boolean }).featured);
+    const rawCommunity = (issue.data as { community?: unknown }).community;
+    let community: IssueCard["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
     const tagsGroup = (issue.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: IssueTag[] = tagsGroup
       .map((item) => {
@@ -90,7 +114,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
       .filter(Boolean) as IssueTag[];
     const date = asDate(issue.first_publication_date);
 
-    return { id: issue.id, title, description, pdfUrl, author, date, featured, tags };
+    return { id: issue.id, title, description, pdfUrl, author, date, featured, tags, community };
   });
 
   const featuredIssue = cards.find((card) => card.featured) ?? null;
@@ -163,6 +187,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
                         href: issue.pdfUrl || "#",
                         author: issue.author,
                         date: issue.date,
+                        community: issue.community,
                         tags: issue.tags,
                       }}
                     />

@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/container";
 import { formatDate } from "@/lib/media-data";
 import type { PodcastEpisode } from "@/components/media-components/podcast-episode-list";
 import { cn } from "@/lib/cn";
-import { authorColor } from "@/components/media-components/article-card";
 import { cardHoverCn } from "@/lib/variants";
 
 interface FeaturedEpisodeProps {
@@ -43,6 +42,7 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                           <h3 className="text-2xl font-bold leading-snug tracking-tight text-zinc-900 group-hover:text-blue-600 sm:text-3xl">
                             {episode.title}
                           </h3>
+                          {episode.author ? <p className="text-base font-semibold text-zinc-800 sm:text-lg">{episode.author}</p> : null}
                           <p className="max-w-2xl text-lg leading-relaxed text-zinc-600">{episode.description}</p>
                         </div>
                       </div>
@@ -52,7 +52,7 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                             {episode.tags.map((tag) => (
                               <span
                                 key={tag.id}
-                                className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-200 transition-colors duration-200">
+                                className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-100 transition-colors duration-200">
                                 {tag.name}
                               </span>
                             ))}
@@ -61,16 +61,10 @@ export function FeaturedEpisode({ episodes = [] }: FeaturedEpisodeProps) {
                       </div>
                     </div>
                     <div className="flex items-center justify-between px-8 py-6 gap-4 border-t border-zinc-200">
-                      {episode.author ?
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold bg-blue-100 text-blue-700">
-                            {episode.author.charAt(0)}
-                          </div>
-                          <div>
-                            <p className="text-base font-semibold text-zinc-800">{episode.author}</p>
-                            <p className="text-sm text-zinc-500">Автор</p>
-                          </div>
-                        </div>
+                      {episode.community ?
+                        <Link href={episode.community.href} className="min-w-0 text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
+                          {episode.community.name}
+                        </Link>
                       : <span />}
                       <span className="text-base text-zinc-400">{formatDate(episode.date)}</span>
                     </div>

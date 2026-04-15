@@ -15,9 +15,10 @@ export interface PodcastEpisode {
   date: string;
   href?: string;
   tags?: PodcastTag[];
-  alliance?: {
+  community?: {
+    id: string;
     name: string;
-    href?: string;
+    href: string;
   };
   featured?: boolean;
 }
@@ -47,6 +48,7 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
                 <h3 className="line-clamp-2 text-xl font-semibold leading-snug text-zinc-950 transition-colors duration-200 group-hover:text-blue-600">
                   {episode.title}
                 </h3>
+                {episode.author ? <p className="text-base font-medium text-zinc-700">{episode.author}</p> : null}
                 {episode.description ?
                   <p className="mt-2 text-base leading-relaxed text-zinc-500 line-clamp-2">{episode.description}</p>
                 : null}
@@ -67,10 +69,8 @@ export function PodcastEpisodeList({ episodes }: PodcastEpisodeListProps) {
               </div>
             </div>
 
-            <div className="hidden shrink-0 text-righ sm:flex sm:flex-col sm:items-end sm:gap-0.5">
-              {episode.author ?
-                <div className="text-base font-medium text-zinc-700">{episode.author}</div>
-              : null}
+            <div className="hidden shrink-0 text-right sm:flex sm:flex-col sm:items-end sm:gap-0.5">
+              {episode.community ? <div className="text-base font-medium text-zinc-700">{episode.community.name}</div> : null}
               <div className="text-base text-zinc-400">{formatDate(episode.date)}</div>
             </div>
           </Link>

@@ -24,7 +24,7 @@ const PodcastCarousel: FC<PodcastCarouselProps> = async ({ slice }) => {
         { field: "my.podcast.date", direction: "desc" },
         { field: "document.first_publication_date", direction: "desc" },
       ],
-      fetchLinks: ["tag.name"],
+      fetchLinks: ["tag.name", "community.title"],
       pageSize: 6,
     })
     .catch(() => null);
@@ -45,6 +45,25 @@ const PodcastCarousel: FC<PodcastCarouselProps> = async ({ slice }) => {
     const date = dateRaw ? dateRaw.toISOString() : new Date().toISOString();
 
     const author = (podcast.data as any).author as string | undefined;
+    const rawCommunity = (podcast.data as { community?: unknown }).community;
+    let community: PodcastEpisode["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
 
     const tagsGroup = (podcast.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags = tagsGroup
@@ -67,6 +86,7 @@ const PodcastCarousel: FC<PodcastCarouselProps> = async ({ slice }) => {
       href: href || "#",
       date,
       author: author || undefined,
+      community,
       tags,
     };
   });

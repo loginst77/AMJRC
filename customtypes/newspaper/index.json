@@ -39,6 +39,14 @@
           "placeholder": "Author name"
         }
       },
+      "community": {
+        "type": "Link",
+        "config": {
+          "label": "Community (optional)",
+          "select": "document",
+          "customtypes": ["community"]
+        }
+      },
       "featured": {
         "type": "Boolean",
         "config": {

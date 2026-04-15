@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { Download, FileDown, Newspaper, PinIcon } from "lucide-react";
 
-import { authorColor } from "@/components/media-components/article-card";
 import { Container } from "@/components/ui/container";
 import { cn } from "@/lib/cn";
 import { formatDate } from "@/lib/media-data";
@@ -14,6 +14,11 @@ export type FeaturedNewspaperIssue = {
   author?: string;
   date?: Date | null;
   tags?: { name: string }[];
+  community?: {
+    id: string;
+    name: string;
+    href: string;
+  };
 };
 
 interface FeaturedNewspaperCardProps {
@@ -40,6 +45,7 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
               <h2 className="py-4 flex items-center gap-2 text-3xl font-bold leading-snug tracking-tight text-zinc-900 group-hover:text-blue-600 sm:text-3xl">
                 {issue.title}
               </h2>
+              {issue.author ? <p className="mb-3 text-base font-semibold text-zinc-800 sm:text-lg">{issue.author}</p> : null}
 
               <p className="mb-2 max-w-2xl text-lg leading-relaxed text-zinc-600">{issue.description}</p>
             </div>
@@ -55,28 +61,18 @@ export function FeaturedNewspaperCard({ issue }: FeaturedNewspaperCardProps) {
               </div>
             : <div className="mb-8" />}
             <div className="flex items-stretch justify-between border-t border-zinc-200">
-              {issue.author ?
-                <div className="w-full px-8">
-                  <div className="flex w-full items-center justify-between gap-4 py-6">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={cn(
-                          "flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold",
-                          authorColor(issue.author).bg,
-                          authorColor(issue.author).text,
-                        )}>
-                        {issue.author.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-base font™-semibold text-zinc-800">{issue.author}</p>
-                        <p className="text-sm text-zinc-500">Автор</p>
-                      </div>
-                    </div>
-
-                    <span className="text-base text-zinc-400">{formatDate(issue.date)}</span>
-                  </div>
+              <div className="w-full px-8">
+                <div className="flex w-full items-center justify-between gap-4 py-6">
+                  {issue.community ? (
+                    <Link href={issue.community.href} className="min-w-0 text-base font-medium text-zinc-700 transition-colors duration-200 hover:text-blue-600">
+                      {issue.community.name}
+                    </Link>
+                  ) : (
+                    <span />
+                  )}
+                  <span className="text-base text-zinc-400">{formatDate(issue.date)}</span>
                 </div>
-              : <div className="px-8 py-6 text-base text-zinc-400">{formatDate(issue.date)}</div>}
+              </div>
               <a
                 href={issue.pdfUrl || "#"}
                 download

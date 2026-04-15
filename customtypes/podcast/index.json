@@ -40,6 +40,14 @@
           "placeholder": "Имя ведущего или гостя"
         }
       },
+      "community": {
+        "type": "Link",
+        "config": {
+          "label": "Community (optional)",
+          "select": "document",
+          "customtypes": ["community"]
+        }
+      },
       "external_link": {
         "type": "Link",
         "config": {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { asDate, asText, type Content } from "@prismicio/client";
+import { asDate, asText, type Content, type RichTextField } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 
 import { FeaturedEpisode } from "./components/featured-episode";
@@ -34,7 +34,7 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
         { field: "my.podcast.date", direction: "desc" },
         { field: "document.first_publication_date", direction: "desc" },
       ],
-      fetchLinks: ["tag.name"],
+      fetchLinks: ["tag.name", "community.title"],
     }),
   ]);
 
@@ -51,6 +51,25 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
     const date = asDate((episode.data as { date?: any }).date ?? episode.first_publication_date) || null;
     const author = (episode.data as { author?: string }).author || undefined;
     const featured = Boolean((episode.data as { featured?: boolean }).featured);
+    const rawCommunity = (episode.data as { community?: unknown }).community;
+    let community: PodcastEpisode["community"] | undefined = undefined;
+    if (rawCommunity && typeof rawCommunity === "object") {
+      const rel = rawCommunity as Record<string, unknown>;
+      const id = typeof rel.id === "string" ? rel.id : null;
+      const uid = typeof rel.uid === "string" ? rel.uid : null;
+      if (rel.link_type === "Document" && id && uid) {
+        const linkedTitle = (rel.data as { title?: RichTextField | string | null } | undefined)?.title;
+        const name =
+          Array.isArray(linkedTitle) ? asText(linkedTitle as RichTextField)
+          : typeof linkedTitle === "string" ? linkedTitle
+          : uid;
+        community = {
+          id,
+          name: name || uid,
+          href: `/communities/${uid}`,
+        };
+      }
+    }
     const tagsGroup = (episode.data as { tags?: { tag?: unknown }[] }).tags ?? [];
     const tags: PodcastTag[] = tagsGroup
       .map((item) => {
@@ -73,7 +92,7 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
       date: date ? date.toISOString() : "",
       href: href || undefined,
       tags,
-      alliance: undefined,
+      community,
       featured,
     };
   });
