@@ -15,6 +15,8 @@ export type LandingPageHeroProps = {
 
   breadcrumbHomeLabel?: string | null;
   breadcrumbHomeLink?: string | null;
+  breadcrumbMiddleLabel?: string | null;
+  breadcrumbMiddleLink?: string | null;
   breadcrumbCurrent?: string | null;
 
   button1Label?: string | null;
@@ -41,6 +43,8 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
   backgroundImage,
   breadcrumbHomeLabel = "Главная",
   breadcrumbHomeLink = "/",
+  breadcrumbMiddleLabel,
+  breadcrumbMiddleLink,
   breadcrumbCurrent,
   button1Label,
   button1Link,
@@ -89,6 +93,14 @@ export const LandingPageHero: FC<LandingPageHeroProps> = ({
                 {breadcrumbHomeLabel}
               </Link>
             : <span className="text-white">{breadcrumbHomeLabel}</span>}
+            {breadcrumbMiddleLabel && (<>
+              <span className="mx-2 text-zinc-400">/</span>
+              {breadcrumbMiddleLink ?
+                <Link href={breadcrumbMiddleLink} className="transition-colors hover:text-white">
+                  {breadcrumbMiddleLabel}
+                </Link>
+              : <span className="text-white">{breadcrumbMiddleLabel}</span>}
+            </>)}
             <span className="mx-2 text-zinc-400">/</span>
             <span className="text-white">{displayBreadcrumbCurrent}</span>
           </nav>

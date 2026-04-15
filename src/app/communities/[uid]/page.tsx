@@ -65,6 +65,8 @@ export default async function CommunityPage({ params }: { params: Promise<Params
         button2Variant={doc.data?.button_2_link?.variant}
         breadcrumbHomeLabel="Главная"
         breadcrumbHomeLink="/"
+        breadcrumbMiddleLabel="Общины"
+        breadcrumbMiddleLink="/communities"
         breadcrumbCurrent={title}
         community={{
           leader: doc.data?.location,

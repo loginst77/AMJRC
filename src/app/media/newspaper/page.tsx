@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { asDate, asText, type Content } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 
@@ -8,6 +7,7 @@ import { NewspaperCard } from "@/components/media-components/newspaper-card";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
+import { MediaPageHero } from "@/components/media-components/media-page-hero";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
@@ -93,12 +93,6 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
     return { id: issue.id, title, description, pdfUrl, author, date, featured, tags };
   });
 
-  const landingTitle =
-    landing && (asText((landing.data as { title?: any }).title) || (landing.data as any)?.meta_title) ?
-      asText((landing.data as { title?: any }).title) || (landing.data as any)?.meta_title
-    : "Газета";
-  const landingDescription =
-    (landing?.data as { description?: string })?.description || (landing?.data as any)?.meta_description || "Архив выпусков газеты.";
   const featuredIssue = cards.find((card) => card.featured) ?? null;
   const regularCards = featuredIssue ? cards.filter((card) => card.id !== featuredIssue.id) : cards;
   const tagStats = new Map<string, { tag: IssueTag; count: number }>();
@@ -124,34 +118,12 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
 
   return (
     <div className="flex flex-col bg-white">
-      {landing ?
+      <MediaPageHero title="Газета" />
+      {landing && (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
         </section>
-      : <section className="relative min-h-[360px] overflow-hidden py-14 sm:py-24">
-          <img src="/church1.jpg" alt="Газета" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
-          <Container className="relative z-10">
-            <div className="max-w-2xl space-y-4">
-              <nav className="text-sm text-zinc-300">
-                <Link href="/" className="transition-colors hover:text-white">
-                  Главная
-                </Link>
-                <span className="mx-2">/</span>
-                <Link href="/media" className="transition-colors hover:text-white">
-                  Медия
-                </Link>
-                <span className="mx-2">/</span>
-                <span className="text-white">Газета</span>
-              </nav>
-              <div className="border-l-4 border-white pl-4">
-                <h1 className="text-5xl font-semibold tracking-tight text-white">{landingTitle}</h1>
-              </div>
-              <p className="text-lg leading-8 text-zinc-200">{landingDescription}</p>
-            </div>
-          </Container>
-        </section>
-      }
+      )}
 
       {featuredIssue ?
         <FeaturedNewspaperCard issue={featuredIssue} />

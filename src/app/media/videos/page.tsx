@@ -3,6 +3,7 @@ import { SliceZone } from "@prismicio/react";
 import { asDate, asText, type Content, type RichTextField } from "@prismicio/client";
 
 import { Container } from "@/components/ui/container";
+import { MediaPageHero } from "@/components/media-components/media-page-hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { FeaturedVideo } from "@/app/media/videos/components/featured-video";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
@@ -176,6 +177,7 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
 
   return (
     <div className="bg-white">
+      <MediaPageHero title="Видео" />
       {landing && (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />

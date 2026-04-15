@@ -20,9 +20,7 @@ const NewspaperList: FC<NewspaperListProps> = async ({ slice }) => {
   const client = createClient();
   const response = await client
     .getByType<Content.NewspaperDocument>("newspaper", {
-      orderings: [
-        { field: "document.first_publication_date", direction: "desc" },
-      ],
+      orderings: [{ field: "document.first_publication_date", direction: "desc" }],
       fetchLinks: ["tag.name"],
       pageSize: 6,
     })
@@ -83,7 +81,7 @@ const NewspaperList: FC<NewspaperListProps> = async ({ slice }) => {
             <h2 className="text-3xl font-semibold tracking-tight text-zinc-950">{slice.primary?.title || "Газеты"}</h2>
             {slice.primary?.description && <p className="max-w-xl text-zinc-600">{slice.primary.description}</p>}
           </div>
-          <ButtonLink href="/media/newspapers" variant="primary" size="md" className="hidden sm:inline-flex">
+          <ButtonLink href="/media/newspaper" variant="primary" size="md" className="hidden sm:inline-flex">
             Все газеты →
           </ButtonLink>
         </div>
@@ -96,7 +94,7 @@ const NewspaperList: FC<NewspaperListProps> = async ({ slice }) => {
         </div>
 
         <div className="mt-6 sm:hidden">
-          <ButtonLink href="/media/newspapers" variant="primary" size="md" className="w-full">
+          <ButtonLink href="/media/newspaper" variant="primary" size="md" className="w-full">
             Все газеты →
           </ButtonLink>
         </div>

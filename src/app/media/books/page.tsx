@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { asText, isFilled, type Content, type RichTextField } from "@prismicio/client";
 import { SliceZone } from "@prismicio/react";
 import { Container } from "@/components/ui/container";
+import { MediaPageHero } from "@/components/media-components/media-page-hero";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { type MediaItem, type MediaTag } from "@/lib/media-data";
@@ -19,11 +20,9 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
-    Array.isArray(rawTagParam) && rawTagParam.length > 0
-      ? decodeURIComponent(rawTagParam[0]!)
-      : typeof rawTagParam === "string"
-        ? decodeURIComponent(rawTagParam)
-        : undefined;
+    Array.isArray(rawTagParam) && rawTagParam.length > 0 ? decodeURIComponent(rawTagParam[0]!)
+    : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
+    : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
 
   const client = createClient();
@@ -89,38 +88,40 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
   const tagFilters = Array.from(tagStats.values()).sort((a, b) => a.tag.name.localeCompare(b.tag.name, "ru"));
   const matchedTag = selectedTagKey ? tagFilters.find((item) => item.tag.slug.toLowerCase() === selectedTagKey)?.tag : undefined;
   const activeTagKey = matchedTag?.slug.toLowerCase();
-  const visibleBooks = activeTagKey
-    ? regularBooks.filter((book) => book.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey))
-    : regularBooks;
+  const visibleBooks =
+    activeTagKey ? regularBooks.filter((book) => book.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey)) : regularBooks;
   const listHeading = matchedTag?.name ? `Книги · ${matchedTag.name}` : "Все книги";
 
   return (
     <div className="flex flex-col bg-white">
-      {landing ? (
+      <MediaPageHero title="Книги" />
+      {landing && (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
         </section>
-      ) : null}
+      )}
 
-      {featured ? <FeaturedBook book={featured} /> : null}
+      {featured ?
+        <FeaturedBook book={featured} />
+      : null}
 
       <section className="bg-zinc-50 py-12">
         <Container className="space-y-4">
           <SectionHeader title="Все книги" size="sm" as="div" className="text-center" descriptionClassName="text-center" />
 
-          {books.length === 0 ? (
+          {books.length === 0 ?
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
               <p className="font-semibold text-zinc-800">Скоро здесь появятся книги.</p>
             </div>
-          ) : null}
+          : null}
 
-          {books.length > 0 && regularBooks.length === 0 ? (
+          {books.length > 0 && regularBooks.length === 0 ?
             <div className="rounded-2xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600">
               <p className="font-semibold text-zinc-800">Скоро здесь появится больше книг.</p>
             </div>
-          ) : null}
+          : null}
 
-          {regularBooks.length > 0 ? (
+          {regularBooks.length > 0 ?
             <div className="space-y-4">
               <TagFilterBar
                 allCount={regularBooks.length}
@@ -136,21 +137,20 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
               />
 
               <div id="book-list" className="scroll-mt-24">
-                {visibleBooks.length === 0 ? (
+                {visibleBooks.length === 0 ?
                   <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
                     <p className="font-semibold text-zinc-800">Нет книг для выбранного тега</p>
                     <p className="text-sm text-zinc-500">Добавьте книги с этим тегом в Prismic, и они появятся здесь.</p>
                   </div>
-                ) : (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {visibleBooks.map((book) => (
                       <BookCard key={book.id} book={book} />
                     ))}
                   </div>
-                )}
+                }
               </div>
             </div>
-          ) : null}
+          : null}
         </Container>
       </section>
     </div>

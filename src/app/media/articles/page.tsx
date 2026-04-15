@@ -5,6 +5,7 @@ import { ArticleCard, type ArticleTag, type MediaItem } from "@/components/media
 import { FeaturedArticle } from "@/app/media/articles/components/featured-article";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
+import { MediaPageHero } from "@/components/media-components/media-page-hero";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -96,18 +97,12 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
 
   return (
     <div className="bg-white">
-      {landing ?
+      <MediaPageHero title="Статьи" />
+      {landing && (
         <section className="w-full">
           <SliceZone slices={landing.data.slices} components={components} />
         </section>
-      : <section className="py-12">
-          <Container className="space-y-2">
-            <p className="text-sm uppercase tracking-wide text-zinc-500">Медия</p>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Статьи</h1>
-            <p className="text-zinc-600">Новые публикации и материалы</p>
-          </Container>
-        </section>
-      }
+      )}
 
       {featured.length > 0 ?
         <div className="flex flex-col gap-2 pb-10 sm:gap-8 sm:pb-12">
@@ -137,9 +132,7 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
             {totalVisible === 0 ?
               <div className="rounded-xl border border-dashed border-zinc-200 bg-white px-6 py-10 text-center text-zinc-600 shadow-sm">
                 <p className="font-semibold text-zinc-800">Нет статей для выбранного тега</p>
-                <p className="text-sm text-zinc-500">
-                  Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.
-                </p>
+                <p className="text-sm text-zinc-500">Создайте статью в Prismic и назначьте ей тег, чтобы она появилась здесь.</p>
               </div>
             : rest.length === 0 ?
               <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm">
