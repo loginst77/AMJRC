@@ -6,7 +6,7 @@
       "uid": {
         "type": "UID",
         "config": {
-          "label": "community"
+          "label": "UID"
         }
       },
       "image": {

@@ -12,6 +12,12 @@
           "label": "UID"
         }
       },
+      "date": {
+        "type": "Date",
+        "config": {
+          "label": "Date"
+        }
+      },
       "title": {
         "type": "StructuredText",
         "config": {
@@ -27,10 +33,18 @@
           "placeholder": "Краткое описание"
         }
       },
-      "date": {
-        "type": "Date",
+      "featured": {
+        "type": "Boolean",
         "config": {
-          "label": "Date"
+          "label": "Featured"
+        }
+      },
+      "external_link": {
+        "type": "Link",
+        "config": {
+          "label": "Ссылка на выпуск (Spotify/Apple/др.)",
+          "placeholder": "https://open.spotify.com/...",
+          "select": "web"
         }
       },
       "author": {
@@ -46,20 +60,6 @@
           "label": "Community (optional)",
           "select": "document",
           "customtypes": ["community"]
-        }
-      },
-      "external_link": {
-        "type": "Link",
-        "config": {
-          "label": "Ссылка на выпуск (Spotify/Apple/др.)",
-          "placeholder": "https://open.spotify.com/...",
-          "select": "web"
-        }
-      },
-      "featured": {
-        "type": "Boolean",
-        "config": {
-          "label": "Featured"
         }
       },
       "tags": {

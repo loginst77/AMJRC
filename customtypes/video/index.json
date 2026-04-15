@@ -12,6 +12,12 @@
           "label": "UID"
         }
       },
+      "date": {
+        "type": "Date",
+        "config": {
+          "label": "Publish date"
+        }
+      },
       "title": {
         "type": "Text",
         "config": {
@@ -27,17 +33,17 @@
           "multi": "paragraph,heading3,heading4,strong,em,hyperlink,list-item,o-list-item"
         }
       },
+      "featured": {
+        "type": "Boolean",
+        "config": {
+          "label": "Featured"
+        }
+      },
       "youtube_url": {
         "type": "Embed",
         "config": {
           "label": "YouTube URL",
           "placeholder": "https://www.youtube.com/watch?v=..."
-        }
-      },
-      "date": {
-        "type": "Date",
-        "config": {
-          "label": "Publish date"
         }
       },
       "author": {
@@ -69,12 +75,6 @@
               }
             }
           }
-        }
-      },
-      "featured": {
-        "type": "Boolean",
-        "config": {
-          "label": "Featured"
         }
       }
     }

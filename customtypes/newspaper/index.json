@@ -25,6 +25,13 @@
           "placeholder": "Short description"
         }
       },
+      "featured": {
+        "type": "Boolean",
+        "config": {
+          "label": "Featured",
+          "default_value": false
+        }
+      },
       "pdf": {
         "type": "Link",
         "config": {
@@ -45,13 +52,6 @@
           "label": "Community (optional)",
           "select": "document",
           "customtypes": ["community"]
-        }
-      },
-      "featured": {
-        "type": "Boolean",
-        "config": {
-          "label": "Featured",
-          "default_value": false
         }
       },
       "tags": {

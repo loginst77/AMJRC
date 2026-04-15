@@ -9,7 +9,13 @@
       "uid": {
         "type": "UID",
         "config": {
-          "label": "article"
+          "label": "UID"
+        }
+      },
+      "date": {
+        "type": "Date",
+        "config": {
+          "label": "Date"
         }
       },
       "title": {
@@ -28,10 +34,10 @@
           "placeholder": "Краткое описание"
         }
       },
-      "date": {
-        "type": "Date",
+      "featured": {
+        "type": "Boolean",
         "config": {
-          "label": "Date"
+          "label": "Featured"
         }
       },
       "author": {
@@ -49,10 +55,21 @@
           "customtypes": ["community"]
         }
       },
-      "featured": {
-        "type": "Boolean",
+      "content": {
+        "type": "StructuredText",
         "config": {
-          "label": "Featured"
+          "label": "Content",
+          "placeholder": "Основной текст статьи",
+          "allowTargetBlank": false,
+          "multi": "paragraph,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
+          "labels": ["quote"]
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
         }
       },
       "tags": {
@@ -69,23 +86,6 @@
               }
             }
           }
-        }
-      },
-      "content": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Content",
-          "placeholder": "Основной текст статьи",
-          "allowTargetBlank": false,
-          "multi": "paragraph,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,list-item,o-list-item",
-          "labels": ["quote"]
-        }
-      },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {}
         }
       }
     },

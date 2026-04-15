@@ -17,6 +17,13 @@
           "thumbnails": []
         }
       },
+      "date_of_release": {
+        "type": "Number",
+        "config": {
+          "label": "Year of Release",
+          "placeholder": "2026"
+        }
+      },
       "title": {
         "type": "StructuredText",
         "config": {
@@ -33,27 +40,11 @@
           "placeholder": "Short description"
         }
       },
-      "tags": {
-        "type": "Group",
+      "featured": {
+        "type": "Boolean",
         "config": {
-          "label": "Tags (optional)",
-          "fields": {
-            "tag": {
-              "type": "Link",
-              "config": {
-                "label": "Tag",
-                "select": "document",
-                "customtypes": ["tag"]
-              }
-            }
-          }
-        }
-      },
-      "date_of_release": {
-        "type": "Number",
-        "config": {
-          "label": "Year of Release",
-          "placeholder": "2026"
+          "label": "Featured",
+          "default_value": false
         }
       },
       "author": {
@@ -71,11 +62,20 @@
           "select": "web"
         }
       },
-      "featured": {
-        "type": "Boolean",
+      "tags": {
+        "type": "Group",
         "config": {
-          "label": "Featured",
-          "default_value": false
+          "label": "Tags (optional)",
+          "fields": {
+            "tag": {
+              "type": "Link",
+              "config": {
+                "label": "Tag",
+                "select": "document",
+                "customtypes": ["tag"]
+              }
+            }
+          }
         }
       }
     }

@@ -36,7 +36,7 @@
       "commentarie": {
         "type": "Group",
         "config": {
-          "label": "Commentarie",
+          "label": "Commentaries",
           "repeat": true,
           "fields": {
             "commentary": {
