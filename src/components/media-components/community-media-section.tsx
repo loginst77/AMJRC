@@ -36,6 +36,32 @@ function ViewAllButton({ expanded, onClick, className }: { expanded: boolean; on
   );
 }
 
+function MediaSectionHeader({
+  title,
+  description,
+  href,
+  allLabel,
+}: {
+  title: string;
+  description: string;
+  href: string;
+  allLabel: string;
+}) {
+  return (
+    <SectionHeader
+      title={title}
+      description={description}
+      size="sm"
+      as="div"
+      afterTitle={
+        <ButtonLink href={href} size="md" className="hidden w-fit lg:inline-flex">
+          {allLabel} →
+        </ButtonLink>
+      }
+    />
+  );
+}
+
 function SectionButtons({
   href,
   allLabel,
@@ -51,12 +77,18 @@ function SectionButtons({
 }) {
   return (
     <>
-      <div className="hidden sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3">
+      <div className="hidden sm:flex sm:flex-wrap sm:items-center sm:justify-end sm:gap-3 lg:hidden">
         {showToggle ? <ViewAllButton expanded={expanded} onClick={onToggle} /> : null}
         <ButtonLink href={href} size="md">
           {allLabel} →
         </ButtonLink>
       </div>
+
+      {showToggle ? (
+        <div className="hidden lg:flex lg:justify-end">
+          <ViewAllButton expanded={expanded} onClick={onToggle} />
+        </div>
+      ) : null}
 
       <div className="flex flex-col gap-3 sm:hidden">
         {showToggle ? <ViewAllButton expanded={expanded} onClick={onToggle} className="w-full" /> : null}
@@ -90,7 +122,12 @@ export function CommunityMediaSection({ articles, books, podcasts, videos, newsp
       <Container className="space-y-10">
         {articles.length ? (
           <section className="space-y-6">
-            <SectionHeader title="Статьи" description="Статьи и заметки, связанные с этой общиной." size="sm" as="div" />
+            <MediaSectionHeader
+              title="Статьи"
+              description="Статьи и заметки, связанные с этой общиной."
+              href="/media/articles"
+              allLabel="Все статьи"
+            />
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visibleArticles.map((article) => (
@@ -110,7 +147,12 @@ export function CommunityMediaSection({ articles, books, podcasts, videos, newsp
 
         {videos.length ? (
           <section className="space-y-6">
-            <SectionHeader title="Видео" description="Видео и записи, прикреплённые к этой общине." size="sm" as="div" />
+            <MediaSectionHeader
+              title="Видео"
+              description="Видео и записи, прикреплённые к этой общине."
+              href="/media/videos"
+              allLabel="Все видео"
+            />
 
             <div className="grid gap-6 sm:grid-cols-2">
               {visibleVideos.map((video) => (
@@ -130,7 +172,12 @@ export function CommunityMediaSection({ articles, books, podcasts, videos, newsp
 
         {podcasts.length ? (
           <section className="space-y-6">
-            <SectionHeader title="Подкасты" description="Аудиовыпуски, связанные с этой общиной." size="sm" as="div" />
+            <MediaSectionHeader
+              title="Подкасты"
+              description="Аудиовыпуски, связанные с этой общиной."
+              href="/media/podcasts"
+              allLabel="Все подкасты"
+            />
 
             <PodcastEpisodeList episodes={visiblePodcasts} />
 
@@ -146,7 +193,12 @@ export function CommunityMediaSection({ articles, books, podcasts, videos, newsp
 
         {newspapers.length ? (
           <section className="space-y-6">
-            <SectionHeader title="Газета" description="Выпуски газеты, связанные с этой общиной." size="sm" as="div" />
+            <MediaSectionHeader
+              title="Газета"
+              description="Выпуски газеты, связанные с этой общиной."
+              href="/media/newspaper"
+              allLabel="Все выпуски"
+            />
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visibleNewspapers.map((issue) => (
@@ -166,7 +218,12 @@ export function CommunityMediaSection({ articles, books, podcasts, videos, newsp
 
         {books.length ? (
           <section className="space-y-6">
-            <SectionHeader title="Книги" description="Книги, рекомендованные или связанные с этой общиной." size="sm" as="div" />
+            <MediaSectionHeader
+              title="Книги"
+              description="Книги, рекомендованные или связанные с этой общиной."
+              href="/media/books"
+              allLabel="Все книги"
+            />
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {visibleBooks.map((book) => (

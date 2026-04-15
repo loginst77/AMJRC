@@ -8,6 +8,7 @@ type Tone = "light" | "dark";
 
 type SectionHeaderProps = {
   title: ReactNode;
+  afterTitle?: ReactNode;
   description?: ReactNode;
   align?: Align;
   size?: Size;
@@ -20,6 +21,7 @@ type SectionHeaderProps = {
 
 export function SectionHeader({
   title,
+  afterTitle,
   description,
   align = "left",
   size = "lg",
@@ -45,6 +47,7 @@ export function SectionHeader({
   return (
     <div className={cn("flex flex-col gap-2", alignClass, className)}>
       <TitleTag className={cn(titleClass, titleClassName)}>{title}</TitleTag>
+      {afterTitle}
       {description ?
         <div className={cn(descriptionClass, descriptionClassName)}>{description}</div>
       : null}
