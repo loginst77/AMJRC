@@ -858,20 +858,6 @@ export type CommunitylandingpageDocument<Lang extends string = string> =
     Lang
   >;
 
-interface EventDocumentData {}
-
-/**
- * Event document from Prismic
- *
- * - **API ID**: `event`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type EventDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<Simplify<EventDocumentData>, "event", Lang>;
-
 /**
  * Item in *Footer → Navigation links*
  */
@@ -2435,7 +2421,6 @@ export type AllDocumentTypes =
   | BooklandingpageDocument
   | CommunityDocument
   | CommunitylandingpageDocument
-  | EventDocument
   | FooterDocument
   | HomeDocument
   | LandingpageDocument
@@ -4477,8 +4462,6 @@ declare module "@prismicio/client" {
       CommunitylandingpageDocument,
       CommunitylandingpageDocumentData,
       CommunitylandingpageDocumentDataSlicesSlice,
-      EventDocument,
-      EventDocumentData,
       FooterDocument,
       FooterDocumentData,
       FooterDocumentDataNavigationLinksItem,

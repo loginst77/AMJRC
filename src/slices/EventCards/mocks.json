@@ -92,8 +92,8 @@
 					[
 						"buttonLink",
 						{
-							"__TYPE__": "LinkContent",
 							"key": "ca767213-41e5-4405-b669-24b51b1a8366",
+							"__TYPE__": "LinkContent",
 							"value": {
 								"__TYPE__": "ExternalLink",
 								"url": "https://prismic.io",
