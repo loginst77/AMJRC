@@ -14,6 +14,13 @@ interface BookCarouselProps {
   allLabel?: string;
 }
 
+/** Left edge of `card` in the scroller’s content coordinate system (matches `scrollLeft`). */
+function getCardLeftInScroller(scroller: HTMLDivElement, card: HTMLDivElement) {
+  const scrollerRect = scroller.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  return cardRect.left - scrollerRect.left + scroller.scrollLeft;
+}
+
 export function BookCarouselClient({ books, className, allHref, allLabel }: BookCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef(0);
@@ -34,13 +41,13 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
         isSmall ? el.scrollLeft + el.clientWidth / 2 : el.scrollLeft;
 
       return cards.reduce((closestIndex, card, index) => {
-        const cardPosition =
-          isSmall ? card.offsetLeft + card.offsetWidth / 2 : card.offsetLeft;
+        const left = getCardLeftInScroller(el, card);
+        const cardPosition = isSmall ? left + card.offsetWidth / 2 : left;
         const closestCard = cards[closestIndex];
-        const closestPosition =
-          isSmall
-            ? closestCard.offsetLeft + closestCard.offsetWidth / 2
-            : closestCard.offsetLeft;
+        const closestLeft = getCardLeftInScroller(el, closestCard);
+        const closestPosition = isSmall
+          ? closestLeft + closestCard.offsetWidth / 2
+          : closestLeft;
 
         return Math.abs(cardPosition - currentPosition) < Math.abs(closestPosition - currentPosition)
           ? index
@@ -53,8 +60,9 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
   const getScrollLeftForCard = useCallback((el: HTMLDivElement, card: HTMLDivElement) => {
     const isSmall = window.innerWidth < 640;
     const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
-    const centeredLeft = card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2;
-    const alignedLeft = isSmall ? centeredLeft : card.offsetLeft;
+    const left = getCardLeftInScroller(el, card);
+    const centeredLeft = left - (el.clientWidth - card.offsetWidth) / 2;
+    const alignedLeft = isSmall ? centeredLeft : left;
 
     return Math.min(Math.max(0, alignedLeft), maxScrollLeft);
   }, []);
@@ -64,8 +72,8 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
     if (!el) return;
 
     activeIndexRef.current = getClosestCardIndex(el);
-    setCanScrollLeft(el.scrollLeft > 24);
-    setCanScrollRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 24);
+    setCanScrollLeft(el.scrollLeft > 1);
+    setCanScrollRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 1);
   }, [getClosestCardIndex]);
 
   useEffect(() => {
@@ -91,8 +99,9 @@ export function BookCarouselClient({ books, className, allHref, allLabel }: Book
     const cards = getCards(el);
     if (!cards.length) return;
 
+    const currentIndex = getClosestCardIndex(el);
     const offset = direction === "left" ? -1 : 1;
-    const nextIndex = Math.min(Math.max(activeIndexRef.current + offset, 0), cards.length - 1);
+    const nextIndex = Math.min(Math.max(currentIndex + offset, 0), cards.length - 1);
     const nextCard = cards[nextIndex];
 
     activeIndexRef.current = nextIndex;
