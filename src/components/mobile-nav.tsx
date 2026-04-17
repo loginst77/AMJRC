@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { PrismicNextImage } from "@prismicio/next";
-import { Menu, X, icons as lucideIcons } from "lucide-react";
+import { ListIcon, Menu, TextAlignStart, X, icons as lucideIcons } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/cn";
@@ -17,6 +17,7 @@ export type HeaderNavLinkItem = { href: string; label: string };
 type MobileNavProps = {
   items: HeaderNavLinkItem[];
   dropdownItems?: NavDropdownItem[];
+  dropdownHref?: string;
   logo?: any;
   primaryAction?: ActionButton;
   secondaryAction?: ActionButton;
@@ -34,7 +35,7 @@ function DynamicIcon({ name, className, strokeWidth }: { name: string; className
   return <Icon className={className} strokeWidth={strokeWidth} />;
 }
 
-export function MobileNav({ items, dropdownItems = [], logo, primaryAction, secondaryAction }: MobileNavProps) {
+export function MobileNav({ items, dropdownItems = [], dropdownHref = "/media", logo, primaryAction, secondaryAction }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -176,6 +177,14 @@ export function MobileNav({ items, dropdownItems = [], logo, primaryAction, seco
                     <div className="border-zinc-100 p-2 bg-zinc-100/60 border rounded-2xl">
                       <div className="px-1 mt-2 pb-2 text-xs font-semibold uppercase tracking-wide text-zinc-600 ">Медия</div>
                       <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          href={dropdownHref}
+                          className="flex items-center gap-3 rounded-xl bg-zinc-200/50 px-3 py-4 text-base font-semibold text-zinc-900 transition-colors hover:bg-blue-100"
+                          onClick={() => setOpen(false)}
+                        >
+                          <TextAlignStart className="size-5 shrink-0" strokeWidth={1.5} />
+                          Все
+                        </Link>
                         {dropdownItems.map((item) => (
                           <Link
                             key={item.href}

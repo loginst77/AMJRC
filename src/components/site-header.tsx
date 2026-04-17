@@ -63,6 +63,7 @@ export function SiteHeader({
           <MobileNav
             items={navigationLinks}
             dropdownItems={dropdownItems}
+            dropdownHref={dropdownHref}
             logo={logo}
             primaryAction={primaryAction}
             secondaryAction={secondaryAction}
