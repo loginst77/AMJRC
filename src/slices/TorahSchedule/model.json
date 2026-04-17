@@ -1,0 +1,69 @@
+{
+  "id": "torah_schedule",
+  "type": "SharedSlice",
+  "name": "TorahSchedule",
+  "description": "TorahSchedule",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "initial",
+      "description": "Default",
+      "imageUrl": "",
+      "primary": {
+        "section_title": {
+          "type": "Text",
+          "config": {
+            "label": "Section title",
+            "placeholder": "Расписание чтений Торы"
+          }
+        }
+      },
+      "items": {
+        "date": {
+          "type": "Text",
+          "config": {
+            "label": "Дата",
+            "placeholder": "12 апр."
+          }
+        },
+        "name": {
+          "type": "Text",
+          "config": {
+            "label": "Название",
+            "placeholder": "Шемини"
+          }
+        },
+        "translation": {
+          "type": "Text",
+          "config": {
+            "label": "Перевод",
+            "placeholder": "НРП"
+          }
+        },
+        "torah": {
+          "type": "Text",
+          "config": {
+            "label": "Тора",
+            "placeholder": "Левит 9:1–11:47"
+          }
+        },
+        "haftarah": {
+          "type": "Text",
+          "config": {
+            "label": "Хафтара",
+            "placeholder": "2 Царств 6:1–7:17"
+          }
+        },
+        "brit_hadasha": {
+          "type": "Text",
+          "config": {
+            "label": "Брит Хадаша",
+            "placeholder": "Марк 7:1–23"
+          }
+        }
+      }
+    }
+  ]
+}

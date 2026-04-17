@@ -20,6 +20,7 @@ export const components = {
   qa: dynamic(() => import("./Qa")),
   subscribe_to_newsletter: dynamic(() => import("./SubscribeToNewsletter")),
   team_section: dynamic(() => import("./TeamSection")),
+  torah_schedule: dynamic(() => import("./TorahSchedule")),
   values_block: dynamic(() => import("./ValuesBlock")),
   video_carousel: dynamic(() => import("./VideoCarousel")),
 };

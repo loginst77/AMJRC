@@ -1,6 +1,9 @@
 {
   "format": "page",
   "id": "torahlandingpage",
+  "label": "TorahLandingPage",
+  "repeatable": false,
+  "status": true,
   "json": {
     "Main": {
       "uid": {
@@ -63,6 +66,9 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
+            "torah_schedule": {
+              "type": "SharedSlice"
+            },
             "big_event": {
               "type": "SharedSlice"
             },
@@ -121,8 +127,5 @@
         "type": "Image"
       }
     }
-  },
-  "label": "TorahLandingPage",
-  "repeatable": false,
-  "status": true
+  }
 }
