@@ -55,12 +55,16 @@ const BOOK_MAP: Record<string, string> = {
   deu: "DEU",
 };
 
+/** Verse endpoint above real chapter lengths; YouVersion clamps to the last verse in chapter. */
+const YV_TAIL_VERSE = 99999;
+
 /**
  * Parse a human-readable passage reference into one or more YouVersion passage IDs.
  * Examples:
  *   "Бытия 2:12-29"  → ["GEN.2.12-29"]
  *   "Исход 3"        → ["EXO.3"]
  *   "Бытия 12-13"    → ["GEN.12", "GEN.13"]  (multi-chapter)
+ *   "Числа 1:1-4:20" → ["NUM.1.1-99999", "NUM.2", "NUM.3", "NUM.4.1-20"] (cross-chapter span)
  *   "GEN.1.1-5"      → ["GEN.1.1-5"] (passthrough)
  */
 export function parsePassageRef(ref: string): string[] {
@@ -69,6 +73,34 @@ export function parsePassageRef(ref: string): string[] {
   // Already in USFM format (e.g. "GEN.1.1-5")
   if (/^[A-Z0-9]{2,5}\.\d/.test(trimmed)) {
     return [trimmed];
+  }
+
+  // Cross-chapter span: "Book Ch:Verse-Ch:Verse" (e.g. weekly Torah readings "Числа 1:1-4:20")
+  const crossMatch = trimmed.match(/^(.+?)\s+(\d+):(\d+)-(\d+):(\d+)$/);
+  if (crossMatch) {
+    const [, bookName, startChapterStr, startVerseStr, endChapterStr, endVerseStr] = crossMatch;
+    const bookId = BOOK_MAP[bookName.toLowerCase().trim()];
+    if (!bookId) {
+      throw new Error(`Unknown book name: "${bookName}"`);
+    }
+    const startCh = parseInt(startChapterStr, 10);
+    const startV = parseInt(startVerseStr, 10);
+    const endCh = parseInt(endChapterStr, 10);
+    const endV = parseInt(endVerseStr, 10);
+    if (startCh > endCh || (startCh === endCh && startV > endV)) {
+      throw new Error(`Invalid passage range: "${ref}"`);
+    }
+    if (startCh === endCh) {
+      return [`${bookId}.${startCh}.${startV}-${endV}`];
+    }
+
+    const ids: string[] = [];
+    ids.push(`${bookId}.${startCh}.${startV}-${YV_TAIL_VERSE}`);
+    for (let ch = startCh + 1; ch <= endCh - 1; ch++) {
+      ids.push(`${bookId}.${ch}`);
+    }
+    ids.push(`${bookId}.${endCh}.1-${endV}`);
+    return ids;
   }
 
   // Try multi-chapter: "Book ChapterStart-ChapterEnd"
@@ -198,13 +230,25 @@ export async function fetchPassage(ref: string, bibleId: number = 143): Promise<
   const references = results.map((r) => r.reference);
   const allVerses: TorahVerse[] = [];
 
-  for (const result of results) {
+  // For multi-segment fetches, derive the translated book name once and pair it with the
+  // chapter number from each passage ID, so headings read "Числа 1" instead of the API's
+  // literal "Числа 1:1-99999" (where 99999 is our internal clamp).
+  const bookNameMatch = results[0]?.reference.match(/^(.+?)\s+\d/);
+  const bookName = bookNameMatch ? bookNameMatch[1] : "";
+
+  for (let i = 0; i < results.length; i++) {
+    const result = results[i];
     const chapterVerses = parseHtmlToVerses(result.content);
-    // First verse of each new chapter always starts a new paragraph and holds the chapter title
-    if (chapterVerses.length > 0) {
-      if (allVerses.length > 0) {
-        chapterVerses[0].paragraphStart = true;
-      }
+    if (chapterVerses.length === 0) continue;
+
+    if (allVerses.length > 0) {
+      chapterVerses[0].paragraphStart = true;
+    }
+    if (results.length > 1) {
+      const chapterMatch = passageIds[i].match(/\.(\d+)/);
+      const chapterNum = chapterMatch ? chapterMatch[1] : "";
+      chapterVerses[0].chapterRef = `${bookName} ${chapterNum}`.trim();
+    } else {
       chapterVerses[0].chapterRef = result.reference;
     }
     allVerses.push(...chapterVerses);
@@ -212,8 +256,11 @@ export async function fetchPassage(ref: string, bibleId: number = 143): Promise<
 
   const plainText = allVerses.map((v) => v.text).join(" ");
 
+  // Multi-segment merges use verbose API titles (including verse-range clamps like "1:1-99999").
+  const displayReference = passageIds.length > 1 ? ref.trim() : (references[0] ?? ref.trim());
+
   return {
-    reference: references.join("; "),
+    reference: displayReference,
     content: plainText,
     verses: allVerses,
   };

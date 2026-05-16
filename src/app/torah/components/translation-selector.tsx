@@ -28,18 +28,23 @@ export function TranslationSelector({
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (fetchFailed) {
-      toast.error(`Не удалось загрузить перевод: ${VERSIONS[currentVersion].shortName}`);
-      const fallback = searchParams.get("fallback") || "NRP";
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("version", fallback);
-      params.delete("fallback");
+    if (!fetchFailed) return;
 
-      // Delay replace slightly to ensure the toast registers correctly during error hydration
-      setTimeout(() => {
-        router.replace(pathname + "?" + params.toString(), { scroll: false });
-      }, 50);
+    toast.error(`Не удалось загрузить перевод: ${VERSIONS[currentVersion].shortName}`);
+    const fallbackVersion = (searchParams.get("fallback") || "NRP").toUpperCase() as TranslationCode;
+    // If we'd only replace with the same version (e.g. NRP fails and default fallback is also NRP),
+    // skipping navigation avoids an infinite Next.js RSC reload loop.
+    if (fallbackVersion === currentVersion) {
+      return;
     }
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("version", fallbackVersion);
+    params.delete("fallback");
+
+    setTimeout(() => {
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    }, 50);
   }, [fetchFailed, currentVersion, searchParams, pathname, router]);
 
   if (fetchFailed) return null;

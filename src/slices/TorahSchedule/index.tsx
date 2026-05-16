@@ -1,37 +1,103 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
+import type { TorahDocument } from "../../../prismicio-types";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/container";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { BookOpen, X } from "lucide-react";
 
-/**
- * Props for `TorahSchedule`.
- */
-export type TorahScheduleProps = SliceComponentProps<Content.TorahScheduleSlice>;
+type TorahScheduleContext = {
+  readings?: TorahDocument[];
+  today?: string;
+};
+
+export type TorahScheduleProps = SliceComponentProps<Content.TorahScheduleSlice, TorahScheduleContext>;
 
 const ROWS_PER_PAGE = 10;
 
-const HEADERS = ["Дата", "Название", "Перевод", "Тора", "Хафтара", "Брит Хадаша"] as const;
+const HEADERS = ["Дата", "Тора"] as const;
 
-/**
- * Component for "TorahSchedule" Slices.
- */
-const TorahSchedule: FC<TorahScheduleProps> = ({ slice }) => {
+const formatDate = (dateStr: string | null | undefined) => {
+  if (!dateStr) return "";
+  // Parse "YYYY-MM-DD" as a local calendar date — `new Date("YYYY-MM-DD")` is UTC midnight,
+  // which displays as the previous day for any negative-UTC timezone.
+  const [y, m, d] = dateStr.split("-").map(Number);
+  if (!y || !m || !d) return dateStr;
+  try {
+    return new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long" }).format(new Date(y, m - 1, d));
+  } catch {
+    return dateStr;
+  }
+};
+
+const formatDateRange = (start: string | null | undefined, end: string | null | undefined) => {
+  const startStr = formatDate(start);
+  const endStr = formatDate(end);
+  if (startStr && endStr) return `${startStr} — ${endStr}`;
+  return startStr || endStr || "-";
+};
+
+type ScheduleRow = {
+  key: string;
+  startDate: string;
+  endDate: string;
+  passage: string;
+  isCurrent: boolean;
+  isSelected: boolean;
+  href: string;
+};
+
+const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
   const [isMobileTableOpen, setIsMobileTableOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const tablePageParam = searchParams.get("torahSchedulePage");
   const currentPage = Math.max(Number.parseInt(tablePageParam || "1", 10) || 1, 1);
 
-  const rawRows = (slice as any).items ?? [];
-  const rows = rawRows.filter(
-    (row: Record<string, string | null | undefined>) => row.date || row.name || row.translation || row.torah || row.haftarah || row.brit_hadasha,
-  );
+  const readings = context?.readings ?? [];
+  const today = context?.today ?? new Date().toISOString().slice(0, 10);
+
+  const rows: ScheduleRow[] = useMemo(() => {
+    const sorted = [...readings].sort((a, b) => {
+      const startA = (a.data?.startDate as string | null) || "";
+      const startB = (b.data?.startDate as string | null) || "";
+      return startA.localeCompare(startB);
+    });
+
+    // Real "current" reading = the one that contains today. Used for the "сейчас" badge.
+    const currentIndex = sorted.findIndex((doc) => {
+      const start = (doc.data?.startDate as string | null) || "";
+      const end = (doc.data?.enddate as string | null) || "";
+      return !!start && !!end && today >= start && today <= end;
+    });
+    // Base for offset math mirrors page.tsx: fall back to the latest reading when today is out of range.
+    const baseIndex = currentIndex !== -1 ? currentIndex : Math.max(0, sorted.length - 1);
+
+    const offsetParam = Number.parseInt(searchParams.get("offset") || "0", 10) || 0;
+    const selectedIndex = sorted.length > 0 ? Math.max(0, Math.min(sorted.length - 1, baseIndex + offsetParam)) : -1;
+
+    const versionParam = (searchParams.get("version") || "NRP").toUpperCase();
+
+    return sorted.map((doc, idx) => {
+      const offset = idx - baseIndex;
+      const params = new URLSearchParams();
+      params.set("version", versionParam);
+      params.set("offset", String(offset));
+      return {
+        key: doc.id,
+        startDate: (doc.data?.startDate as string | null) || "",
+        endDate: (doc.data?.enddate as string | null) || "",
+        passage: (doc.data?.bible_passage as string | null) || "",
+        isCurrent: idx === currentIndex,
+        isSelected: idx === selectedIndex,
+        href: `/torah?${params.toString()}#reader`,
+      };
+    });
+  }, [readings, today, searchParams]);
 
   const totalPages = Math.max(1, Math.ceil(rows.length / ROWS_PER_PAGE));
   const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -45,8 +111,6 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice }) => {
   };
 
   const sectionTitle = ((slice as any).primary?.section_title as string | null) ?? "";
-  const tableSummary =
-    rows.length > 0 ? `${rows.length} ${rows.length === 1 ? "запись" : rows.length < 5 ? "записи" : "записей"}` : "Расписание чтений";
 
   useEffect(() => {
     if (!isMobileTableOpen) return;
@@ -59,6 +123,16 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice }) => {
     };
   }, [isMobileTableOpen]);
 
+  const cellPadding = "px-4 py-4 sm:px-5";
+  const cellBase = `border-b border-zinc-200 text-center whitespace-normal break-words`;
+  const linkBase = `block ${cellPadding} transition-colors`;
+
+  const rowBg = (row: ScheduleRow) => {
+    if (row.isSelected) return "bg-blue-100/70 hover:bg-blue-100";
+    if (row.isCurrent) return "bg-blue-50/50 hover:bg-blue-50";
+    return "bg-white hover:bg-zinc-50/80";
+  };
+
   const renderTableMarkup = ({ fullscreen = false }: { fullscreen?: boolean } = {}) => (
     <div
       className={
@@ -68,13 +142,11 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice }) => {
       <Table className={`border-separate border-spacing-0 text-sm sm:text-base ${fullscreen ? "min-w-max" : "min-w-full"}`}>
         <TableHeader>
           <TableRow className="bg-zinc-50 hover:bg-white">
-            {HEADERS.map((header, index) => (
+            {HEADERS.map((header) => (
               <TableHead
                 key={header}
                 scope="col"
-                className={`border-b border-zinc-200 px-4 py-3 text-center text-sm font-semibold tracking-tight text-zinc-900 sm:px-5 sm:text-base ${
-                  index < HEADERS.length - 1 ? "border-r border-zinc-200" : ""
-                }`}
+                className={`border-b border-zinc-200 px-4 py-3 text-center text-sm font-semibold tracking-tight text-zinc-900 sm:px-5 sm:text-base`}
               >
                 {header}
               </TableHead>
@@ -83,35 +155,35 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice }) => {
         </TableHeader>
         <TableBody>
           {pagedRows.length > 0 ? (
-            pagedRows.map((row: Record<string, string | null | undefined>, index: number) => (
+            pagedRows.map((row) => (
               <TableRow
-                key={`${row.date ?? "date"}-${row.name ?? "name"}-${startIndex + index}`}
-                className="border-zinc-200 bg-white hover:bg-zinc-50/80"
+                key={row.key}
+                aria-current={row.isSelected ? "page" : undefined}
+                className={`${rowBg(row)} transition-colors`}
               >
-                <TableCell className="max-w-34 md:max-w-none border-b last:border-b-0 border-r border-zinc-200 px-4 py-4 text-center font-medium text-zinc-900 whitespace-normal break-words sm:px-5">
-                  {row.date || "-"}
+                <TableCell className={`${cellBase} max-w-34 md:max-w-none p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "font-medium text-zinc-900"}`}>
+                  <Link href={row.href} className={`${linkBase} text-zinc-900`} aria-label={`Перейти к чтению: ${row.passage}`}>
+                    <span className="inline-flex items-center justify-center gap-2 flex-wrap">
+                      <span>{formatDateRange(row.startDate, row.endDate)}</span>
+                      {row.isCurrent ? (
+                        <span className="inline-flex items-center rounded-full bg-blue-500 px-2 py-0.5 text-xs font-semibold text-white">
+                          сейчас
+                        </span>
+                      ) : null}
+                    </span>
+                  </Link>
                 </TableCell>
-                <TableCell className="border-b last:border-b-0 border-r border-zinc-200 px-4 py-4 text-center text-zinc-700 whitespace-normal break-words sm:px-5">
-                  {row.name || "-"}
-                </TableCell>
-                <TableCell className="border-b last:border-b-0 border-r border-zinc-200 px-4 py-4 text-center text-zinc-700 whitespace-normal break-words sm:px-5">
-                  {row.translation || "-"}
-                </TableCell>
-                <TableCell className="border-b border-r border-zinc-200 px-4 py-4 text-center text-zinc-700 whitespace-normal break-words sm:px-5">
-                  {row.torah || "-"}
-                </TableCell>
-                <TableCell className="border-b border-r border-zinc-200 px-4 py-4 text-center text-zinc-700 whitespace-normal break-words sm:px-5">
-                  {row.haftarah || "-"}
-                </TableCell>
-                <TableCell className="border-b max-w-64 md:max-w-none border-zinc-200 px-4 py-4 text-center text-zinc-700 whitespace-normal break-words sm:px-5">
-                  {row.brit_hadasha || "-"}
+                <TableCell className={`${cellBase} max-w-64 md:max-w-none p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "text-zinc-700"}`}>
+                  <Link href={row.href} className={`${linkBase} ${row.isSelected ? "text-zinc-900" : "text-zinc-700"}`} aria-label={`Перейти к чтению: ${row.passage}`}>
+                    {row.passage || "-"}
+                  </Link>
                 </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow className="border-zinc-200 bg-white">
               <TableCell colSpan={HEADERS.length} className="px-5 py-10 text-center text-zinc-500">
-                Добавьте строки в слайс TorahSchedule в Prismic.
+                Чтения ещё не добавлены в Prismic.
               </TableCell>
             </TableRow>
           )}

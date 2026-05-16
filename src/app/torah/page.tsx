@@ -201,7 +201,7 @@ export default async function ReadTorahPage(props: {
       )}
 
       {/* ───── Prismic Slices ───── */}
-      <SliceZone slices={slices} components={components} />
+      <SliceZone slices={slices} components={components} context={{ readings: allReadings, today }} />
     </div>
   );
 }
