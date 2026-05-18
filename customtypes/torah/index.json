@@ -26,6 +26,13 @@
           "placeholder": "Дата"
         }
       },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": "Заголовок"
+        }
+      },
       "bible_passage": {
         "type": "Text",
         "config": {

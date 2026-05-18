@@ -88,8 +88,9 @@ export default async function ReadTorahPage(props: {
   const passageRef = currentReading?.data?.bible_passage as string | undefined;
   let fetchFailed = false;
   const passage = passageRef
-    ? await fetchPassage(passageRef, currentBibleId).catch(() => {
+    ? await fetchPassage(passageRef, currentBibleId).catch((error) => {
         fetchFailed = true;
+        console.error("[Torah page] fetchPassage failed:", passageRef, currentBibleId, error);
         return null;
       })
     : null;
