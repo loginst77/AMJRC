@@ -14,13 +14,23 @@ type Tab = "scripture" | "commentaries";
 interface TorahMobileReaderProps {
   passage: TorahPassage;
   passageRef: string;
+  /** Prismic reading title (matches desktop ScripturePanel). */
+  readingTitle?: string | null;
   currentVersion: TranslationCode;
   commentaries: any[];
   prevHref?: string;
   nextHref?: string;
 }
 
-export function TorahMobileReader({ passage, passageRef, currentVersion, commentaries, prevHref, nextHref }: TorahMobileReaderProps) {
+export function TorahMobileReader({
+  passage,
+  passageRef,
+  readingTitle,
+  currentVersion,
+  commentaries,
+  prevHref,
+  nextHref,
+}: TorahMobileReaderProps) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>("scripture");
   const [mounted, setMounted] = useState(false);
@@ -41,10 +51,12 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
     };
   }, [open]);
 
+  const headingTitle = readingTitle?.trim();
+
   // Reset scroll when switching tabs or when the passage changes
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
-  }, [activeTab, passageRef]);
+  }, [activeTab, passageRef, headingTitle]);
 
   // Group verses into paragraphs
   const paragraphs: (typeof passage.verses)[] = [];
@@ -72,39 +84,47 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
           </div>
         </div>
         <div className="flex flex-col md:flex-row md:items-stretch gap-3">
-        <button
-          type="button"
-          onClick={() => openWithTab("scripture")}
-          className="group flex flex-1 items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5 text-left transition-colors hover:border-blue-200 hover:bg-blue-50">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-zinc-900">
-            <BookOpen className="h-6 w-6 text-white" strokeWidth={1.5} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="text-base font-semibold text-zinc-950">{passage.reference}</h3>
-            <p className="text-sm text-zinc-500">Нажмите, чтобы читать стихи</p>
-          </div>
-        </button>
+          <button
+            type="button"
+            onClick={() => openWithTab("scripture")}
+            className="group flex flex-1 items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5 text-left transition-colors hover:border-blue-200 hover:bg-blue-50"
+          >
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-zinc-900">
+              <BookOpen className="h-6 w-6 text-white" strokeWidth={1.5} />
+            </div>
+            <div className="min-w-0 flex-1">
+              {headingTitle ? (
+                <>
+                  <h3 className="text-base font-semibold text-zinc-950 truncate">{headingTitle}</h3>
+                  <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-base font-semibold text-zinc-950 truncate">{passage.reference}</h3>
+                  <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                </>
+              )}
+              <p className="text-sm text-zinc-500">Нажмите, чтобы читать стихи</p>
+            </div>
+          </button>
 
-        <button
-          type="button"
-          onClick={() => openWithTab("commentaries")}
-          className="group flex flex-1 items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5 text-left transition-colors hover:border-blue-200 hover:bg-blue-50">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-blue-600">
-            <MessageSquareQuote className="h-6 w-6 text-white" strokeWidth={1.5} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <h3 className="text-base font-semibold text-zinc-950">Комментарии</h3>
-            <p className="text-sm text-zinc-500">
-              {commentaries.length > 0 ?
-                `${commentaries.length} комментари${
-                  commentaries.length === 1 ? "й"
-                  : commentaries.length < 5 ? "я"
-                  : "ев"
-                }`
-              : "Нет комментариев"}
-            </p>
-          </div>
-        </button>
+          <button
+            type="button"
+            onClick={() => openWithTab("commentaries")}
+            className="group flex flex-1 items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5 text-left transition-colors hover:border-blue-200 hover:bg-blue-50"
+          >
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-blue-600">
+              <MessageSquareQuote className="h-6 w-6 text-white" strokeWidth={1.5} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-base font-semibold text-zinc-950">Комментарии</h3>
+              <p className="text-sm text-zinc-500">
+                {commentaries.length > 0
+                  ? `${commentaries.length} комментари${commentaries.length === 1 ? "й" : commentaries.length < 5 ? "я" : "ев"}`
+                  : "Нет комментариев"}
+              </p>
+            </div>
+          </button>
         </div>
       </div>
 
@@ -118,19 +138,35 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
             )}
             role="dialog"
             aria-modal="true"
-            aria-label="Torah reader">
+            aria-label="Torah reader"
+          >
             {/* ── Header with close & tabs ── */}
             <div className="shrink-0 border-b border-zinc-200 bg-zinc-50">
-              <div className="flex items-center justify-between px-4 py-3">
-                <h2 className="text-base font-semibold text-zinc-950 truncate pr-2">
-                  {activeTab === "scripture" ? passage.reference : "Комментарии"}
-                </h2>
+              <div className="flex items-center justify-between px-4 py-3 gap-2">
+                <div className="min-w-0 flex-1">
+                  {activeTab === "scripture" ? (
+                    headingTitle ? (
+                      <>
+                        <h2 className="text-base font-semibold text-zinc-950 truncate">{headingTitle}</h2>
+                        <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                      </>
+                    ) : (
+                      <>
+                        <h2 className="text-base font-semibold text-zinc-950 truncate">{passage.reference}</h2>
+                        <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                      </>
+                    )
+                  ) : (
+                    <h2 className="text-base font-semibold text-zinc-950 truncate">Комментарии</h2>
+                  )}
+                </div>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-10 px-4 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 hover:bg-zinc-100"
-                    aria-label="Закрыть">
+                    aria-label="Закрыть"
+                  >
                     Закрыть
                     <X className="ml-1 h-4 w-4" strokeWidth={1.5} />
                   </button>
@@ -144,10 +180,9 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
                   onClick={() => setActiveTab("scripture")}
                   className={cn(
                     "flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-colors",
-                    activeTab === "scripture" ?
-                      "bg-zinc-900 text-white"
-                    : "bg-zinc-100 text-zinc-600",
-                  )}>
+                    activeTab === "scripture" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-600",
+                  )}
+                >
                   <BookOpen className="h-4 w-4" strokeWidth={1.5} />
                   Стихи
                 </button>
@@ -156,10 +191,9 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
                   onClick={() => setActiveTab("commentaries")}
                   className={cn(
                     "flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-colors",
-                    activeTab === "commentaries" ?
-                      "bg-zinc-900 text-white"
-                    : "bg-zinc-100 text-zinc-600",
-                  )}>
+                    activeTab === "commentaries" ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-600",
+                  )}
+                >
                   <MessageSquareQuote className="h-4 w-4" strokeWidth={1.5} />
                   Комментарии
                 </button>
@@ -168,18 +202,18 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
 
             {/* ── Scrollable content ── */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin">
-              {activeTab === "scripture" ?
+              {activeTab === "scripture" ? (
                 <div className="px-5 py-6">
                   {paragraphs.map((group, pIdx) => (
                     <React.Fragment key={pIdx}>
                       {group[0].chapterRef && (
-                        <h4
-                          className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
+                        <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
                           {group[0].chapterRef}
                         </h4>
                       )}
                       <p
-                        className={`text-base leading-[2] text-zinc-700 mb-2 last:mb-6 ${group[0].chapterRef || pIdx === 0 ? "indent-0" : "indent-4"}`}>
+                        className={`text-base leading-[2] text-zinc-700 mb-2 last:mb-6 ${group[0].chapterRef || pIdx === 0 ? "indent-0" : "indent-4"}`}
+                      >
                         {group.map((v) => (
                           <span key={v.verse}>
                             <span className="mr-1.5 inline-flex items-center justify-center rounded-md text-xs font-bold tabular-nums text-zinc-700 align-text-top">
@@ -192,8 +226,9 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
                     </React.Fragment>
                   ))}
                 </div>
-              : <div className="divide-y divide-zinc-100">
-                  {commentaries.length > 0 ?
+              ) : (
+                <div className="divide-y divide-zinc-100">
+                  {commentaries.length > 0 ? (
                     commentaries.map((c: any, i: number) => (
                       <div key={i} className="px-5 py-5 bg-white transition-colors">
                         <div className="text-sm leading-relaxed text-zinc-600 prose prose-sm max-w-none [&>p:first-child]:inline">
@@ -211,37 +246,44 @@ export function TorahMobileReader({ passage, passageRef, currentVersion, comment
                         </div>
                       </div>
                     ))
-                  : <div className="flex flex-col items-center justify-center text-center px-6 text-zinc-400 py-20">
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-center px-6 text-zinc-400 py-20">
                       <MessageSquareQuote className="h-10 w-10 text-zinc-200 mb-4" />
                       <p className="text-sm">Комментариев к этому чтению пока нет.</p>
                     </div>
-                  }
+                  )}
                 </div>
-              }
+              )}
             </div>
 
             {/* ── Previous / Next footer ── */}
             {(prevHref || nextHref) && (
               <div className="shrink-0 flex border-t border-zinc-200 bg-zinc-50">
-                {prevHref ?
+                {prevHref ? (
                   <Link
                     href={prevHref}
                     scroll={false}
-                    className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100">
+                    className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100"
+                  >
                     <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
                     Назад
                   </Link>
-                : <div className="flex-1" />}
+                ) : (
+                  <div className="flex-1" />
+                )}
                 <div className="w-px bg-zinc-200" />
-                {nextHref ?
+                {nextHref ? (
                   <Link
                     href={nextHref}
                     scroll={false}
-                    className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100">
+                    className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100"
+                  >
                     Вперёд
                     <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
                   </Link>
-                : <div className="flex-1" />}
+                ) : (
+                  <div className="flex-1" />
+                )}
               </div>
             )}
           </div>,

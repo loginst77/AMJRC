@@ -19,7 +19,7 @@ export type TorahScheduleProps = SliceComponentProps<Content.TorahScheduleSlice,
 
 const ROWS_PER_PAGE = 10;
 
-const HEADERS = ["Дата", "Тора"] as const;
+const HEADERS = ["Название", "Стихи", "Дата"] as const;
 
 const formatDate = (dateStr: string | null | undefined) => {
   if (!dateStr) return "";
@@ -45,10 +45,19 @@ type ScheduleRow = {
   key: string;
   startDate: string;
   endDate: string;
+  /** Prismic reading title (trimmed). */
+  readingTitle: string;
   passage: string;
   isCurrent: boolean;
   isSelected: boolean;
   href: string;
+};
+
+const torahReadingAriaLabel = (row: ScheduleRow) => {
+  const title = row.readingTitle.trim() || "без названия";
+  const verses = row.passage.trim() || "не указаны";
+  const dates = formatDateRange(row.startDate, row.endDate);
+  return `Перейти к чтению: ${title}. Стихи: ${verses}. Период: ${dates}`;
 };
 
 const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
@@ -91,6 +100,7 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
         key: doc.id,
         startDate: (doc.data?.startDate as string | null) || "",
         endDate: (doc.data?.enddate as string | null) || "",
+        readingTitle: typeof doc.data?.title === "string" ? doc.data.title.trim() : "",
         passage: (doc.data?.bible_passage as string | null) || "",
         isCurrent: idx === currentIndex,
         isSelected: idx === selectedIndex,
@@ -161,8 +171,21 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
                 aria-current={row.isSelected ? "page" : undefined}
                 className={`${rowBg(row)} transition-colors`}
               >
-                <TableCell className={`${cellBase} max-w-34 md:max-w-none p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "font-medium text-zinc-900"}`}>
-                  <Link href={row.href} className={`${linkBase} text-zinc-900`} aria-label={`Перейти к чтению: ${row.passage}`}>
+                <TableCell className={`${cellBase} max-w-[min(14rem,40vw)] md:max-w-xs lg:max-w-sm p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "font-medium text-zinc-900"}`}>
+                  <Link href={row.href} className={`${linkBase} text-zinc-900`} aria-label={torahReadingAriaLabel(row)}>
+                    {row.readingTitle.trim() || "—"}
+                  </Link>
+                </TableCell>
+                <TableCell className={`${cellBase} max-w-[min(12rem,35vw)] md:max-w-xs p-0 ${row.isSelected ? "font-semibold" : "font-medium"}`}>
+                  <Link
+                    href={row.href}
+                    className={`${linkBase} ${row.isSelected ? "text-blue-700" : "text-blue-600"}`}
+                    aria-label={torahReadingAriaLabel(row)}>
+                    {row.passage.trim() || "—"}
+                  </Link>
+                </TableCell>
+                <TableCell className={`${cellBase} max-w-36 md:max-w-none p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "font-medium text-zinc-900"}`}>
+                  <Link href={row.href} className={`${linkBase} text-zinc-900`} aria-label={torahReadingAriaLabel(row)}>
                     <span className="inline-flex items-center justify-center gap-2 flex-wrap">
                       <span>{formatDateRange(row.startDate, row.endDate)}</span>
                       {row.isCurrent ? (
@@ -171,11 +194,6 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
                         </span>
                       ) : null}
                     </span>
-                  </Link>
-                </TableCell>
-                <TableCell className={`${cellBase} max-w-64 md:max-w-none p-0 ${row.isSelected ? "font-semibold text-zinc-900" : "text-zinc-700"}`}>
-                  <Link href={row.href} className={`${linkBase} ${row.isSelected ? "text-zinc-900" : "text-zinc-700"}`} aria-label={`Перейти к чтению: ${row.passage}`}>
-                    {row.passage || "-"}
                   </Link>
                 </TableCell>
               </TableRow>

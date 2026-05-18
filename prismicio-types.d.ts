@@ -2061,6 +2061,17 @@ interface TorahDocumentData {
   enddate: prismic.DateField;
 
   /**
+   * Title field in *Torah*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Заголовок
+   * - **API ID Path**: torah.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
    * Bible Passage field in *Torah*
    *
    * - **Field Type**: Text

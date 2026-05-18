@@ -20,6 +20,14 @@ export const metadata: Metadata = {
   description: "Читайте ежедневную главу Торы (Хумаш) с красивым оформлением стихов.",
 };
 
+function readingPreviewTitle(reading: TorahDocument): string {
+  const rawTitle = reading.data.title;
+  if (typeof rawTitle === "string" && rawTitle.trim().length > 0) return rawTitle.trim();
+  const bp = reading.data.bible_passage;
+  if (typeof bp === "string" && bp.trim()) return bp.trim();
+  return "Безымянное чтение";
+}
+
 export default async function ReadTorahPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined };
 }) {
@@ -116,6 +124,9 @@ export default async function ReadTorahPage(props: {
         breadcrumbCurrent="Тора"
       />
 
+      {/* ───── Prismic Slices ───── */}
+      <SliceZone slices={slices} components={components} context={{ readings: allReadings, today }} />
+
       {/* ───── Torah Reader ───── */}
       <section id="reader" className="py-14 sm:py-20 bg-white flex-1 scroll-mt-20">
         <Container>
@@ -125,6 +136,7 @@ export default async function ReadTorahPage(props: {
               <TorahMobileReader
                 passage={passage}
                 passageRef={passageRef!}
+                readingTitle={currentReading.data.title}
                 currentVersion={currentVersionCode}
                 commentaries={commentaries}
                 prevHref={prevReading ? `/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader` : undefined}
@@ -137,11 +149,13 @@ export default async function ReadTorahPage(props: {
                 <ScripturePanel
                   passage={passage}
                   passageRef={passageRef!}
+                  readingTitle={currentReading.data.title}
                   currentVersion={currentVersionCode}
                   actions={
                     <FullscreenReaderButton
                       passage={passage}
                       passageRef={passageRef!}
+                      readingTitle={currentReading.data.title}
                       currentVersion={currentVersionCode}
                       commentaries={commentaries}
                       prevHref={prevReading ? `/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader` : undefined}
@@ -178,7 +192,8 @@ export default async function ReadTorahPage(props: {
                 {prevReading ? (
                   <ReadingPreviewCard
                     direction="prev"
-                    title={prevReading.data.bible_passage || "Безымянное чтение"}
+                    title={readingPreviewTitle(prevReading)}
+                    passageReference={prevReading.data.bible_passage}
                     dateRange={`${formatDate(prevReading.data.startDate || "")} — ${formatDate(prevReading.data.enddate || "")}`}
                     href={`/torah?version=${currentVersionCode}&offset=${prevIndex - baseIndex}#reader`}
                   />
@@ -188,7 +203,8 @@ export default async function ReadTorahPage(props: {
                 {nextReading ? (
                   <ReadingPreviewCard
                     direction="next"
-                    title={nextReading.data.bible_passage || "Безымянное чтение"}
+                    title={readingPreviewTitle(nextReading)}
+                    passageReference={nextReading.data.bible_passage}
                     dateRange={`${formatDate(nextReading.data.startDate || "")} — ${formatDate(nextReading.data.enddate || "")}`}
                     href={`/torah?version=${currentVersionCode}&offset=${nextIndex - baseIndex}#reader`}
                   />
@@ -200,9 +216,6 @@ export default async function ReadTorahPage(props: {
           </Container>
         </section>
       )}
-
-      {/* ───── Prismic Slices ───── */}
-      <SliceZone slices={slices} components={components} context={{ readings: allReadings, today }} />
     </div>
   );
 }

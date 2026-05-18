@@ -8,11 +8,14 @@ import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
 export function ScripturePanel({
   passage,
   passageRef,
+  readingTitle,
   currentVersion,
   actions,
 }: {
   passage: TorahPassage;
   passageRef: string;
+  /** Display title from Prismic (above passage reference). */
+  readingTitle?: string | null;
   currentVersion: TranslationCode;
   actions?: React.ReactNode;
 }) {
@@ -21,7 +24,9 @@ export function ScripturePanel({
   // Reset scroll position when passage changes
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
-  }, [passage.reference, passageRef]);
+  }, [passage.reference, passageRef, readingTitle]);
+
+  const headingTitle = readingTitle?.trim();
 
   // Group verses into paragraphs based on paragraphStart flag
   const paragraphs: (typeof passage.verses)[] = [];
@@ -43,8 +48,17 @@ export function ScripturePanel({
               <BookOpen className="h-5 w-5 text-white" strokeWidth={1.5} />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-zinc-950">{passage.reference}</h3>
-              <p className="text-sm text-blue-500">{passageRef}</p>
+              {headingTitle ? (
+                <>
+                  <h3 className="text-lg font-semibold text-zinc-950">{headingTitle}</h3>
+                  <p className="text-sm text-blue-500">{passageRef}</p>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-lg font-semibold text-zinc-950">{passage.reference}</h3>
+                  <p className="text-sm text-blue-500">{passageRef}</p>
+                </>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -58,13 +72,11 @@ export function ScripturePanel({
           {paragraphs.map((group, pIdx) => (
             <React.Fragment key={pIdx}>
               {group[0].chapterRef && (
-                <h4
-                  className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
+                <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
                   {group[0].chapterRef}
                 </h4>
               )}
-              <p
-                className={`text-base leading-[2] text-zinc-700 mb-2 last:mb-6 ${group[0].chapterRef || pIdx === 0 ? "indent-0" : "indent-4"}`}>
+              <p className={`text-base leading-[2] text-zinc-700 mb-2 last:mb-6 ${group[0].chapterRef || pIdx === 0 ? "indent-0" : "indent-4"}`}>
                 {group.map((v) => (
                   <span key={v.verse}>
                     <span className="mr-1.5 inline-flex items-center justify-center rounded-md text-xs font-bold tabular-nums text-zinc-700 align-text-top">

@@ -11,13 +11,23 @@ import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
 interface FullscreenReaderProps {
   passage: TorahPassage;
   passageRef: string;
+  /** Prismic reading title (matches ScripturePanel). */
+  readingTitle?: string | null;
   currentVersion: TranslationCode;
   commentaries: any[];
   prevHref?: string;
   nextHref?: string;
 }
 
-export function FullscreenReaderButton({ passage, passageRef, currentVersion, commentaries, prevHref, nextHref }: FullscreenReaderProps) {
+export function FullscreenReaderButton({
+  passage,
+  passageRef,
+  readingTitle,
+  currentVersion,
+  commentaries,
+  prevHref,
+  nextHref,
+}: FullscreenReaderProps) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const scriptureScrollRef = useRef<HTMLDivElement>(null);
@@ -54,6 +64,9 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
     return () => document.removeEventListener("keydown", handler);
   }, [open]);
 
+  const headingTitle =
+    typeof readingTitle === "string" && readingTitle.trim().length > 0 ? readingTitle.trim() : undefined;
+
   const paragraphs: (typeof passage.verses)[] = [];
   passage.verses.forEach((v) => {
     if (v.paragraphStart || paragraphs.length === 0) {
@@ -87,17 +100,26 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
           >
             {/* Header */}
             <div className="shrink-0 border-b border-zinc-200 bg-zinc-50">
-              <div className="flex items-center justify-between px-6 py-4 max-w-[1800px] mx-auto w-full">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900">
+              <div className="flex items-start justify-between gap-4 px-6 py-4 max-w-[1800px] mx-auto w-full">
+                <div className="flex min-w-0 flex-1 items-start gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-900">
                     <BookOpen className="h-5 w-5 text-white" strokeWidth={1.5} />
                   </div>
-                  <div>
-                    <h2 className="text-lg font-semibold text-zinc-950">{passage.reference}</h2>
-                    <p className="text-sm text-blue-500">{passageRef}</p>
+                  <div className="min-w-0 flex-1">
+                    {headingTitle ? (
+                      <>
+                        <h3 className="text-lg font-semibold leading-snug text-zinc-950 line-clamp-2 break-words">{headingTitle}</h3>
+                        <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-lg font-semibold leading-snug text-zinc-950 line-clamp-2 break-words">{passage.reference}</h3>
+                        <p className="text-sm text-blue-500 truncate">{passageRef}</p>
+                      </>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex shrink-0 items-center gap-3 pt-0.5">
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
@@ -118,9 +140,7 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                   {paragraphs.map((group, pIdx) => (
                     <React.Fragment key={pIdx}>
                       {group[0].chapterRef && (
-                        <h4
-                          className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}
-                        >
+                        <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
                           {group[0].chapterRef}
                         </h4>
                       )}
@@ -153,7 +173,7 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                   </div>
                 </div>
                 <div ref={commentariesScrollRef} className="divide-y divide-zinc-100 flex-1 overflow-y-auto scrollbar-thin">
-                  {commentaries.length > 0 ?
+                  {commentaries.length > 0 ? (
                     commentaries.map((c: any, i: number) => (
                       <div key={i} className="px-6 py-5 transition-colors">
                         <div className="text-sm leading-relaxed text-zinc-600 prose prose-sm max-w-none [&>p:first-child]:inline">
@@ -171,11 +191,12 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                         </div>
                       </div>
                     ))
-                  : <div className="flex flex-col items-center justify-center h-full text-center px-6 text-zinc-400 py-10 my-auto">
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full text-center px-6 text-zinc-400 py-10 my-auto">
                       <MessageSquareQuote className="h-10 w-10 text-zinc-200 mb-4" />
                       <p className="text-sm">Комментариев к этому чтению пока нет.</p>
                     </div>
-                  }
+                  )}
                 </div>
               </div>
             </div>
@@ -183,7 +204,7 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
             {/* Previous / Next footer */}
             {(prevHref || nextHref) && (
               <div className="shrink-0 flex border-t border-zinc-200 bg-zinc-50">
-                {prevHref ?
+                {prevHref ? (
                   <Link
                     href={prevHref}
                     className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100"
@@ -191,9 +212,11 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                     <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
                     Назад
                   </Link>
-                : <div className="flex-1" />}
+                ) : (
+                  <div className="flex-1" />
+                )}
                 <div className="w-px bg-zinc-200" />
-                {nextHref ?
+                {nextHref ? (
                   <Link
                     href={nextHref}
                     className="flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-100"
@@ -201,7 +224,9 @@ export function FullscreenReaderButton({ passage, passageRef, currentVersion, co
                     Вперёд
                     <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
                   </Link>
-                : <div className="flex-1" />}
+                ) : (
+                  <div className="flex-1" />
+                )}
               </div>
             )}
           </div>,
