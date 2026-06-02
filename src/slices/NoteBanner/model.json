@@ -9,7 +9,7 @@
       "name": "Default",
       "docURL": "...",
       "version": "sktxnotebanner001",
-      "description": "President note banner with portrait, message, and CTA",
+      "description": "President note banner with message and CTA",
       "primary": {
         "label": {
           "type": "Text",
@@ -30,14 +30,6 @@
           "config": {
             "label": "Title",
             "placeholder": "President title"
-          }
-        },
-        "image": {
-          "type": "Image",
-          "config": {
-            "label": "Photo",
-            "constraint": {},
-            "thumbnails": []
           }
         },
         "signature": {

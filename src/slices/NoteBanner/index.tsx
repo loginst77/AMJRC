@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { asLink, type Content, isFilled } from "@prismicio/client";
-import { PrismicNextImage } from "@prismicio/next";
 import { SliceComponentProps } from "@prismicio/react";
 
 import { Container } from "@/components/ui/container";
@@ -17,40 +16,22 @@ export type NoteBannerProps = SliceComponentProps<Content.NoteBannerSlice>;
 const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
   const label = slice.primary.label || "Слово президента";
   const name = slice.primary.name || "";
-  const title = slice.primary.title || "";
   const buttonHref = asLink(slice.primary.buttonLink);
   const signature = slice.primary.signature || (name ? `С любовью во Мессии, ${name}` : "С любовью во Мессии");
   const paragraphs = slice.items.map((item) => item.paragraph).filter(isFilled.keyText);
 
   return (
-    <section
-      data-slice-type={slice.slice_type}
-      data-slice-variation={slice.variation}
-      className="border-t border-zinc-200 bg-zinc-50">
+    <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="border-t border-zinc-200 bg-zinc-50">
       <Container className="py-16 sm:py-20 md:py-28">
-        <div className="mx-auto max-w-5xl">
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 sm:mb-10 sm:text-sm">
-            {label}
-          </p>
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 sm:mb-10 sm:text-sm">{label}</p>
 
-          <div className="grid gap-8 sm:grid-cols-[auto_1fr] sm:items-start sm:gap-10 md:gap-12 lg:gap-16">
-            <div className="mx-auto flex w-full max-w-xs flex-col items-center gap-4 text-center sm:mx-0 sm:w-48 md:w-52 lg:w-60">
-              <div className="relative h-64 w-full shrink-0 overflow-hidden rounded-3xl bg-zinc-200 ring-1 ring-zinc-900/10 sm:h-64 md:h-72 lg:h-80">
-                {isFilled.image(slice.primary.image) && (
-                  <PrismicNextImage field={slice.primary.image} fill={true} className="object-cover" />
-                )}
-              </div>
-
-              <div className="sm:mt-2">
-                {name && <p className="font-semibold text-zinc-950">{name}</p>}
-                {title && <p className="mt-0.5 text-sm text-zinc-500">{title}</p>}
-              </div>
-            </div>
-
+          <div>
             <div className="relative">
               <span
                 aria-hidden={true}
-                className="pointer-events-none absolute -left-1 -top-3 select-none font-serif text-6xl leading-none text-zinc-200 sm:-left-2 sm:-top-4 sm:text-7xl md:text-8xl">
+                className="pointer-events-none absolute -left-1 -top-7 select-none font-serif text-6xl leading-none text-zinc-200 sm:-left-2 sm:-top-10 sm:text-7xl md:text-8xl"
+              >
                 &ldquo;
               </span>
 
