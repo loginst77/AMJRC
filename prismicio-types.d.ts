@@ -3878,20 +3878,10 @@ export interface NoteBannerSliceDefaultPrimary {
   title: prismic.KeyTextField;
 
   /**
-   * Photo field in *NoteBanner → Default → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: note_banner.default.primary.image
-   * - **Documentation**: https://prismic.io/docs/fields/image
-   */
-  image: prismic.ImageField<never>;
-
-  /**
    * Button field in *NoteBanner → Default → Primary*
    *
    * - **Field Type**: Link
-   * - **Placeholder**: *None*
+   * - **Placeholder**: https://example.com
    * - **API ID Path**: note_banner.default.primary.buttonLink
    * - **Documentation**: https://prismic.io/docs/fields/link
    */
@@ -3923,7 +3913,7 @@ export interface NoteBannerSliceDefaultItem {
  * Default variation for NoteBanner Slice
  *
  * - **API ID**: `default`
- * - **Description**: President note banner with portrait, message, and CTA
+ * - **Description**: President note banner with message and CTA
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type NoteBannerSliceDefault = prismic.SharedSliceVariation<
