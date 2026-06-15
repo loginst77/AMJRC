@@ -14,39 +14,44 @@ export type NoteBannerProps = SliceComponentProps<Content.NoteBannerSlice>;
  * Component for "NoteBanner" Slices.
  */
 const NoteBanner: FC<NoteBannerProps> = ({ slice }) => {
-  const label = slice.primary.label || "Слово президента";
-  const name = slice.primary.name || "";
-  const buttonHref = asLink(slice.primary.buttonLink);
-  const signature = slice.primary.signature || (name ? `С любовью во Мессии, ${name}` : "С любовью во Мессии");
+  const name = isFilled.keyText(slice.primary.name) ? slice.primary.name : null;
+  const title = isFilled.keyText(slice.primary.title) ? slice.primary.title : null;
+  const buttonLink = slice.primary.buttonLink;
+  const buttonHref = asLink(buttonLink);
+  const buttonLabel = isFilled.link(buttonLink) && buttonLink.text ? buttonLink.text : null;
   const paragraphs = slice.items.map((item) => item.paragraph).filter(isFilled.keyText);
 
   return (
     <section data-slice-type={slice.slice_type} data-slice-variation={slice.variation} className="border-t border-zinc-200 bg-zinc-50">
       <Container className="py-16 sm:py-20 md:py-28">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400 sm:mb-10 sm:text-sm">{label}</p>
-
           <div>
             <div className="relative">
-              <span
-                aria-hidden={true}
-                className="pointer-events-none absolute -left-1 -top-7 select-none font-serif text-6xl leading-none text-zinc-200 sm:-left-2 sm:-top-10 sm:text-7xl md:text-8xl"
-              >
-                &ldquo;
-              </span>
-
               <div className="relative space-y-4 text-base leading-relaxed text-zinc-700 sm:space-y-5 sm:text-[17px]">
                 {paragraphs.map((paragraph, index) => (
                   <p key={`${index}-${paragraph}`}>{paragraph}</p>
                 ))}
               </div>
 
-              {signature && <p className="mt-6 text-sm font-medium italic text-zinc-400 sm:mt-8">{signature}</p>}
+              {(name || title) && (
+                <div className="mt-6 flex flex-col gap-4 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="space-y-1">
+                    {name && <p className="text-sm font-semibold text-zinc-700">{name}</p>}
+                    {title && <p className="text-sm text-zinc-500">{title}</p>}
+                  </div>
 
-              {isFilled.keyText(slice.primary.buttonText) && isFilled.link(slice.primary.buttonLink) && buttonHref && (
+                  {buttonLabel && buttonHref && (
+                    <ButtonLink href={buttonHref} variant="primary" size="md" className="w-full shrink-0 sm:w-auto">
+                      {buttonLabel}
+                    </ButtonLink>
+                  )}
+                </div>
+              )}
+
+              {buttonLabel && buttonHref && !(name || title) && (
                 <div className="mt-6">
                   <ButtonLink href={buttonHref} variant="primary" size="md" className="w-full sm:w-auto">
-                    {slice.primary.buttonText}
+                    {buttonLabel}
                   </ButtonLink>
                 </div>
               )}

@@ -3858,16 +3858,6 @@ export type NewspaperListSlice = prismic.SharedSlice<
  */
 export interface NoteBannerSliceDefaultPrimary {
   /**
-   * Label field in *NoteBanner → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Слово президента
-   * - **API ID Path**: note_banner.default.primary.label
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  label: prismic.KeyTextField;
-
-  /**
    * Name field in *NoteBanner → Default → Primary*
    *
    * - **Field Type**: Text
@@ -3898,27 +3888,7 @@ export interface NoteBannerSliceDefaultPrimary {
   image: prismic.ImageField<never>;
 
   /**
-   * Signature field in *NoteBanner → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Optional closing line
-   * - **API ID Path**: note_banner.default.primary.signature
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  signature: prismic.KeyTextField;
-
-  /**
-   * Button Text field in *NoteBanner → Default → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Read more
-   * - **API ID Path**: note_banner.default.primary.buttonText
-   * - **Documentation**: https://prismic.io/docs/fields/text
-   */
-  buttonText: prismic.KeyTextField;
-
-  /**
-   * Button Link field in *NoteBanner → Default → Primary*
+   * Button field in *NoteBanner → Default → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*

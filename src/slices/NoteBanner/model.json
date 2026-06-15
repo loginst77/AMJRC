@@ -8,16 +8,9 @@
       "id": "default",
       "name": "Default",
       "docURL": "...",
-      "version": "sktxnotebanner001",
+      "version": "sktxnotebanner004",
       "description": "President note banner with message and CTA",
       "primary": {
-        "label": {
-          "type": "Text",
-          "config": {
-            "label": "Label",
-            "placeholder": "Слово президента"
-          }
-        },
         "name": {
           "type": "Text",
           "config": {
@@ -32,26 +25,13 @@
             "placeholder": "President title"
           }
         },
-        "signature": {
-          "type": "Text",
-          "config": {
-            "label": "Signature",
-            "placeholder": "Optional closing line"
-          }
-        },
-        "buttonText": {
-          "type": "Text",
-          "config": {
-            "label": "Button Text",
-            "placeholder": "Read more"
-          }
-        },
         "buttonLink": {
           "type": "Link",
           "config": {
-            "label": "Button Link",
-            "placeholder": "",
-            "select": null
+            "label": "Button",
+            "placeholder": "https://example.com",
+            "select": null,
+            "allowText": true
           }
         }
       },
