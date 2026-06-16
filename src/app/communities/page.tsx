@@ -8,6 +8,48 @@ import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import { SectionHeader } from "@/components/SectionHeader";
 
+function toYouTubeEmbed(url?: string): string | null {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.slice(1);
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      if (id) return `https://www.youtube.com/embed/${id}`;
+      const paths = parsed.pathname.split("/");
+      const embedIdx = paths.indexOf("embed");
+      if (embedIdx >= 0 && paths[embedIdx + 1]) return `https://www.youtube.com/embed/${paths[embedIdx + 1]}`;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function youtubeThumbnail(url?: string): string | null {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtube.com")) {
+      const id = parsed.searchParams.get("v");
+      if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      const parts = parsed.pathname.split("/");
+      const embedIdx = parts.indexOf("embed");
+      if (embedIdx >= 0 && parts[embedIdx + 1]) return `https://img.youtube.com/vi/${parts[embedIdx + 1]}/hqdefault.jpg`;
+    }
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.slice(1);
+      if (id) return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 export const metadata: Metadata = {
   title: "Общины",
   description: "Все общины и домашние группы",
@@ -31,7 +73,11 @@ export default async function CommunitiesPage() {
     const address: string = (doc.data?.address as string) || "";
     const leader: string | undefined = doc.data?.leader || undefined;
     const serviceTime: string | undefined = doc.data?.service_time || undefined;
-    const imageSrc: string | undefined = doc.data?.image?.url || undefined;
+    const videoUrl = doc.data?.youtube_url?.embed_url || doc.data?.youtube_url?.url;
+    const embedUrl = toYouTubeEmbed(videoUrl) ?? undefined;
+    const imageSrc: string | undefined =
+      embedUrl ? youtubeThumbnail(videoUrl) || undefined
+      : doc.data?.image?.url || undefined;
     const imageAlt: string | undefined = doc.data?.image?.alt || name;
 
     return {
@@ -42,6 +88,7 @@ export default async function CommunitiesPage() {
       serviceTime,
       imageSrc,
       imageAlt,
+      embedUrl,
       href: `/communities/${doc.uid}`,
     };
   });
@@ -97,6 +144,7 @@ export default async function CommunitiesPage() {
                   serviceTime={comm.serviceTime}
                   imageSrc={comm.imageSrc}
                   imageAlt={comm.imageAlt}
+                  embedUrl={comm.embedUrl}
                   href={comm.href}
                 />
               ))}

@@ -62,6 +62,13 @@
           "placeholder": "Служение"
         }
       },
+      "youtube_url": {
+        "type": "Embed",
+        "config": {
+          "label": "YouTube URL",
+          "placeholder": "https://www.youtube.com/watch?v=..."
+        }
+      },
       "button_1_link": {
         "type": "Link",
         "config": {
