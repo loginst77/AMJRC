@@ -1,6 +1,6 @@
 {
   "libraries": ["./src/slices"],
   "adapter": "@slicemachine/adapter-next",
-  "repositoryName": "church-website",
+  "repositoryName": "amjrc",
   "localSliceSimulatorURL": "http://localhost:3000/slice-simulator"
 }
