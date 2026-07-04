@@ -6,6 +6,7 @@ import { FeaturedArticle } from "@/app/media/articles/components/featured-articl
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { MediaPageHero } from "@/components/media-components/media-page-hero";
+import { Pagination, MEDIA_PAGE_SIZE } from "@/components/ui/pagination";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -15,7 +16,11 @@ export const metadata: Metadata = {
   description: "Все статьи",
 };
 
-export default async function ArticlesPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+export default async function ArticlesPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tag?: string | string[]; page?: string | string[] }>;
+}) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
@@ -25,6 +30,10 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
         ? decodeURIComponent(rawTagParam)
         : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
+
+  const rawPageParam = resolvedSearchParams?.page;
+  const pageParamValue = Array.isArray(rawPageParam) ? rawPageParam[0] : rawPageParam;
+  const requestedPage = Math.max(1, Number.parseInt(pageParamValue ?? "1", 10) || 1);
 
   const client = createClient();
   const [landing, articles] = await Promise.all([
@@ -117,6 +126,18 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
   const rest = regularCards.filter((c) => matchesTag(c));
   const totalVisible = rest.length;
 
+  const totalPages = Math.max(1, Math.ceil(rest.length / MEDIA_PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageStart = (currentPage - 1) * MEDIA_PAGE_SIZE;
+  const paginatedCards = rest.slice(pageStart, pageStart + MEDIA_PAGE_SIZE);
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (matchedTag) params.set("tag", matchedTag.slug);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    return `/media/articles${query ? `?${query}` : ""}#article-list`;
+  };
+
   return (
     <div className="bg-white">
       <MediaPageHero title="Статьи" />
@@ -155,11 +176,14 @@ export default async function ArticlesPage({ searchParams }: { searchParams?: Pr
                 Пока нет несекреплённых статей для выбранного тега.
               </div>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
-                {rest.map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-              </div>
+              <>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
+                  {paginatedCards.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                  ))}
+                </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} buildHref={buildPageHref} />
+              </>
             )}
           </div>
         </Container>

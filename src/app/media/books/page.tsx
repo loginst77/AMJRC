@@ -3,6 +3,7 @@ import { asText, isFilled, type Content, type RichTextField } from "@prismicio/c
 import { SliceZone } from "@prismicio/react";
 import { Container } from "@/components/ui/container";
 import { MediaPageHero } from "@/components/media-components/media-page-hero";
+import { Pagination, MEDIA_PAGE_SIZE } from "@/components/ui/pagination";
 import { SectionHeader } from "@/components/SectionHeader";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { type MediaItem, type MediaTag } from "@/lib/media-data";
@@ -16,7 +17,11 @@ export const metadata: Metadata = {
   description: "Рекомендованные книги и литература для изучения.",
 };
 
-export default async function BooksPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+export default async function BooksPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tag?: string | string[]; page?: string | string[] }>;
+}) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
@@ -24,6 +29,10 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
     : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
     : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
+
+  const rawPageParam = resolvedSearchParams?.page;
+  const pageParamValue = Array.isArray(rawPageParam) ? rawPageParam[0] : rawPageParam;
+  const requestedPage = Math.max(1, Number.parseInt(pageParamValue ?? "1", 10) || 1);
 
   const client = createClient();
   const [landing, bookDocs] = await Promise.all([
@@ -92,6 +101,18 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
     activeTagKey ? regularBooks.filter((book) => book.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey)) : regularBooks;
   const listHeading = matchedTag?.name ? `Книги · ${matchedTag.name}` : "Все книги";
 
+  const totalPages = Math.max(1, Math.ceil(visibleBooks.length / MEDIA_PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageStart = (currentPage - 1) * MEDIA_PAGE_SIZE;
+  const paginatedBooks = visibleBooks.slice(pageStart, pageStart + MEDIA_PAGE_SIZE);
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (matchedTag) params.set("tag", matchedTag.slug);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    return `/media/books${query ? `?${query}` : ""}#book-list`;
+  };
+
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Книги" />
@@ -136,11 +157,14 @@ export default async function BooksPage({ searchParams }: { searchParams?: Promi
                     <p className="font-semibold text-zinc-800">Нет книг для выбранного тега</p>
                     <p className="text-sm text-zinc-500">Добавьте книги с этим тегом в Prismic, и они появятся здесь.</p>
                   </div>
-                : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {visibleBooks.map((book) => (
-                      <BookCard key={book.id} book={book} />
-                    ))}
-                  </div>
+                : <>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {paginatedBooks.map((book) => (
+                        <BookCard key={book.id} book={book} />
+                      ))}
+                    </div>
+                    <Pagination currentPage={currentPage} totalPages={totalPages} buildHref={buildPageHref} />
+                  </>
                 }
               </div>
             </div>

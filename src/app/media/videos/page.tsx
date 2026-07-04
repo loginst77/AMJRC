@@ -4,6 +4,7 @@ import { asDate, asText, type Content, type RichTextField } from "@prismicio/cli
 
 import { Container } from "@/components/ui/container";
 import { MediaPageHero } from "@/components/media-components/media-page-hero";
+import { Pagination, MEDIA_PAGE_SIZE } from "@/components/ui/pagination";
 import { SectionHeader } from "@/components/SectionHeader";
 import { FeaturedVideo } from "@/app/media/videos/components/featured-video";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
@@ -81,7 +82,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function VideosPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+export default async function VideosPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tag?: string | string[]; page?: string | string[] }>;
+}) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
@@ -89,6 +94,10 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
     : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
     : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
+
+  const rawPageParam = resolvedSearchParams?.page;
+  const pageParamValue = Array.isArray(rawPageParam) ? rawPageParam[0] : rawPageParam;
+  const requestedPage = Math.max(1, Number.parseInt(pageParamValue ?? "1", 10) || 1);
 
   const client = createClient();
   const landing = await client.getSingle("videolandingpage").catch(() => null);
@@ -196,6 +205,18 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
   const matchesTag = (item: VideoCardItem) => !activeTagKey || item.tags?.some((tag) => tag.slug.toLowerCase() === activeTagKey);
   const visibleVideos = activeTagKey ? regularVideos.filter((v) => matchesTag(v)) : regularVideos;
 
+  const totalPages = Math.max(1, Math.ceil(visibleVideos.length / MEDIA_PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageStart = (currentPage - 1) * MEDIA_PAGE_SIZE;
+  const paginatedVideos = visibleVideos.slice(pageStart, pageStart + MEDIA_PAGE_SIZE);
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (matchedTag) params.set("tag", matchedTag.slug);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    return `/media/videos${query ? `?${query}` : ""}#video-list`;
+  };
+
   return (
     <div className="bg-white">
       <MediaPageHero title="Видео" />
@@ -240,11 +261,14 @@ export default async function VideosPage({ searchParams }: { searchParams?: Prom
                     <p className="font-semibold text-zinc-800">Нет видео для выбранного тега</p>
                     <p className="text-sm text-zinc-500">Назначьте видео тег в Prismic или выберите другой фильтр.</p>
                   </div>
-                : <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
-                    {visibleVideos.map((video) => (
-                      <VideoCard key={video.id} video={video} />
-                    ))}
-                  </div>
+                : <>
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+                      {paginatedVideos.map((video) => (
+                        <VideoCard key={video.id} video={video} />
+                      ))}
+                    </div>
+                    <Pagination currentPage={currentPage} totalPages={totalPages} buildHref={buildPageHref} />
+                  </>
                 }
               </div>
             </div>

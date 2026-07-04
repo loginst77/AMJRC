@@ -8,6 +8,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { Container } from "@/components/ui/container";
 import { MediaPageHero } from "@/components/media-components/media-page-hero";
+import { Pagination, MEDIA_PAGE_SIZE } from "@/components/ui/pagination";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 
@@ -54,7 +55,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function NewspaperPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+export default async function NewspaperPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tag?: string | string[]; page?: string | string[] }>;
+}) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
@@ -64,6 +69,10 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
         ? decodeURIComponent(rawTagParam)
         : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
+
+  const rawPageParam = resolvedSearchParams?.page;
+  const pageParamValue = Array.isArray(rawPageParam) ? rawPageParam[0] : rawPageParam;
+  const requestedPage = Math.max(1, Number.parseInt(pageParamValue ?? "1", 10) || 1);
 
   const client = createClient();
   const [landing, issues] = await Promise.all([
@@ -139,6 +148,18 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
     ? regularCards.filter((card) => card.tags.some((tag) => tag.slug.toLowerCase() === activeTagKey))
     : regularCards;
 
+  const totalPages = Math.max(1, Math.ceil(filteredCards.length / MEDIA_PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageStart = (currentPage - 1) * MEDIA_PAGE_SIZE;
+  const paginatedCards = filteredCards.slice(pageStart, pageStart + MEDIA_PAGE_SIZE);
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (matchedTag) params.set("tag", matchedTag.slug);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    return `/media/newspaper${query ? `?${query}` : ""}#newspaper-list`;
+  };
+
   return (
     <div className="flex flex-col bg-white">
       <MediaPageHero title="Газета" />
@@ -176,7 +197,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
           ) : (
             <div id="newspaper-list" className="scroll-mt-24">
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredCards.map((issue) => (
+                {paginatedCards.map((issue) => (
                   <div key={issue.id} className="flex h-full flex-col">
                     <NewspaperCard
                       issue={{
@@ -193,6 +214,7 @@ export default async function NewspaperPage({ searchParams }: { searchParams?: P
                   </div>
                 ))}
               </div>
+              <Pagination currentPage={currentPage} totalPages={totalPages} buildHref={buildPageHref} />
             </div>
           )}
         </Container>

@@ -7,6 +7,7 @@ import { TagFilterBar } from "@/components/tags/tag-filter-bar";
 import { PodcastEpisodeList, type PodcastEpisode, type PodcastTag } from "@/components/media-components/podcast-episode-list";
 import { Container } from "@/components/ui/container";
 import { MediaPageHero } from "@/components/media-components/media-page-hero";
+import { Pagination, MEDIA_PAGE_SIZE } from "@/components/ui/pagination";
 import { createClient } from "@/prismicio";
 import { components } from "@/slices";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -16,7 +17,11 @@ export const metadata: Metadata = {
   description: "Аудиобеседы, интервью и размышления о вере.",
 };
 
-export default async function PodcastsPage({ searchParams }: { searchParams?: Promise<{ tag?: string | string[] }> }) {
+export default async function PodcastsPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ tag?: string | string[]; page?: string | string[] }>;
+}) {
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const rawTagParam = resolvedSearchParams?.tag;
   const selectedTag =
@@ -24,6 +29,10 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
     : typeof rawTagParam === "string" ? decodeURIComponent(rawTagParam)
     : undefined;
   const selectedTagKey = selectedTag?.toLowerCase();
+
+  const rawPageParam = resolvedSearchParams?.page;
+  const pageParamValue = Array.isArray(rawPageParam) ? rawPageParam[0] : rawPageParam;
+  const requestedPage = Math.max(1, Number.parseInt(pageParamValue ?? "1", 10) || 1);
 
   const client = createClient();
 
@@ -122,6 +131,18 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
   const rest = regularEpisodes.filter((episode) => matchesTag(episode));
   const totalVisible = rest.length;
 
+  const totalPages = Math.max(1, Math.ceil(rest.length / MEDIA_PAGE_SIZE));
+  const currentPage = Math.min(requestedPage, totalPages);
+  const pageStart = (currentPage - 1) * MEDIA_PAGE_SIZE;
+  const paginatedEpisodes = rest.slice(pageStart, pageStart + MEDIA_PAGE_SIZE);
+  const buildPageHref = (page: number) => {
+    const params = new URLSearchParams();
+    if (matchedTag) params.set("tag", matchedTag.slug);
+    if (page > 1) params.set("page", String(page));
+    const query = params.toString();
+    return `/media/podcasts${query ? `?${query}` : ""}#podcast-list`;
+  };
+
   return (
     <div className="flex flex-col">
       <MediaPageHero title="Подкасты" />
@@ -155,7 +176,11 @@ export default async function PodcastsPage({ searchParams }: { searchParams?: Pr
               <div className="rounded-xl border border-zinc-200 bg-white px-6 py-6 text-sm text-zinc-600 shadow-sm">
                 Пока нет незакреплённых выпусков для выбранного тега.
               </div>
-            : <PodcastEpisodeList episodes={rest} />}
+            : <>
+                <PodcastEpisodeList episodes={paginatedEpisodes} />
+                <Pagination currentPage={currentPage} totalPages={totalPages} buildHref={buildPageHref} />
+              </>
+            }
           </div>
         </Container>
       </section>
