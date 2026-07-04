@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/cn";
 
-export const MEDIA_PAGE_SIZE = 20;
+export const MEDIA_PAGE_SIZE = 18;
 
 const PAGE_WINDOW = 1;
 
