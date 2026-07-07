@@ -14,7 +14,7 @@ type BannerProps = SliceComponentProps<Content.BannerSlice>;
 const Banner: FC<BannerProps> = ({ slice }) => {
   if (slice.variation === "noImage") {
     const primary = slice.primary as any;
-    const { title, description, primaryButton, secondary_Button } = primary;
+    const { title, description, primaryButton, secondary_button } = primary;
 
     const displayTitle = title || "Пожертвования";
     const displayDescription =
@@ -23,10 +23,10 @@ const Banner: FC<BannerProps> = ({ slice }) => {
     const primaryHref = isFilled.link(primaryButton) ? asLink(primaryButton) : undefined;
     const primaryLabel = primaryButton?.text || "Пожертвовать онлайн";
 
-    // secondary_Button might come as a Link field or plain Text field depending on type generation
-    const isSecondaryLink = secondary_Button && typeof secondary_Button === "object" && "link_type" in secondary_Button;
-    const secondaryHref = isSecondaryLink && isFilled.link(secondary_Button) ? asLink(secondary_Button) : undefined;
-    const secondaryLabel = isSecondaryLink ? secondary_Button?.text || "Нужна молитва?" : secondary_Button || "Нужна молитва?";
+    // secondary_button might come as a Link field or plain Text field depending on type generation
+    const isSecondaryLink = secondary_button && typeof secondary_button === "object" && "link_type" in secondary_button;
+    const secondaryHref = isSecondaryLink && isFilled.link(secondary_button) ? asLink(secondary_button) : undefined;
+    const secondaryLabel = isSecondaryLink ? secondary_button?.text || "Нужна молитва?" : secondary_button || "Нужна молитва?";
 
     const isSecondaryBg = primary.background === "Secondary (grey)";
 
@@ -54,7 +54,7 @@ const Banner: FC<BannerProps> = ({ slice }) => {
                   <ButtonLink href={secondaryHref} variant="ghost" size="lg">
                     {secondaryLabel}
                   </ButtonLink>
-                : secondaryLabel && secondary_Button ?
+                : secondaryLabel && secondary_button ?
                   <ButtonLink href="#" variant="ghost" size="lg">
                     {secondaryLabel}
                   </ButtonLink>
