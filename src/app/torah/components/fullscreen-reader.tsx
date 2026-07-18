@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
 
 interface FullscreenReaderProps {
-  passage: TorahPassage;
+  passage: TorahPassage | null;
   passageRef: string;
   /** Prismic reading title (matches ScripturePanel). */
   readingTitle?: string | null;
@@ -52,7 +52,7 @@ export function FullscreenReaderButton({
   useEffect(() => {
     scriptureScrollRef.current?.scrollTo(0, 0);
     commentariesScrollRef.current?.scrollTo(0, 0);
-  }, [passageRef]);
+  }, [passageRef, passage?.reference]);
 
   // Close on Escape
   useEffect(() => {
@@ -67,8 +67,8 @@ export function FullscreenReaderButton({
   const headingTitle =
     typeof readingTitle === "string" && readingTitle.trim().length > 0 ? readingTitle.trim() : undefined;
 
-  const paragraphs: (typeof passage.verses)[] = [];
-  passage.verses.forEach((v) => {
+  const paragraphs: TorahPassage["verses"][] = [];
+  (passage?.verses ?? []).forEach((v) => {
     if (v.paragraphStart || paragraphs.length === 0) {
       paragraphs.push([v]);
     } else {
@@ -113,7 +113,7 @@ export function FullscreenReaderButton({
                       </>
                     ) : (
                       <>
-                        <h3 className="text-lg font-semibold leading-snug text-zinc-950 line-clamp-2 break-words">{passage.reference}</h3>
+                        <h3 className="text-lg font-semibold leading-snug text-zinc-950 line-clamp-2 break-words">{passage?.reference ?? passageRef}</h3>
                         <p className="text-sm text-blue-500 truncate">{passageRef}</p>
                       </>
                     )}
@@ -137,7 +137,13 @@ export function FullscreenReaderButton({
               {/* Scripture */}
               <div ref={scriptureScrollRef} className="flex-1 overflow-y-auto scrollbar-thin border-r border-zinc-200">
                 <div className="px-8 py-8 lg:px-12 lg:py-10">
-                  {paragraphs.map((group, pIdx) => (
+                  {paragraphs.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center text-center text-zinc-400 py-20">
+                      <BookOpen className="h-10 w-10 text-zinc-200 mb-4" />
+                      <p className="max-w-xs text-sm">Стихи временно недоступны. Пожалуйста, обновите страницу или попробуйте позже.</p>
+                    </div>
+                  ) : (
+                    paragraphs.map((group, pIdx) => (
                     <React.Fragment key={pIdx}>
                       {group[0].chapterRef && (
                         <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
@@ -157,7 +163,8 @@ export function FullscreenReaderButton({
                         ))}
                       </p>
                     </React.Fragment>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
 

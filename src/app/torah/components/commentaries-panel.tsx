@@ -2,6 +2,15 @@ import { MessageSquareQuote, Bookmark } from "lucide-react";
 import { PrismicRichText } from "@/components/PrismicRichText";
 
 export function CommentariesPanel({ commentaries }: { commentaries: any[] }) {
+  // Drop rows that carry no actual content — a group entry can exist in Prismic
+  // while its rich-text/author fields are still empty, which otherwise renders
+  // as a stray bookmark + dash instead of the empty state.
+  const filledCommentaries = (commentaries ?? []).filter((c: any) => {
+    const hasBody = Array.isArray(c?.commentary) ? c.commentary.length > 0 : Boolean(c?.commentary);
+    const hasAuthor = typeof c?.author === "string" && c.author.trim().length > 0;
+    return hasBody || hasAuthor;
+  });
+
   return (
     <div className="lg:absolute lg:top-0 lg:bottom-0 lg:right-0 lg:w-[calc(40%-0.75rem)] flex flex-col h-auto max-h-[60vh] sm:max-h-[65vh] lg:max-h-none lg:h-[85vh]">
       <div className="rounded-3xl shadow-secondary border border-zinc-200 bg-white overflow-hidden flex flex-col flex-1">
@@ -16,8 +25,8 @@ export function CommentariesPanel({ commentaries }: { commentaries: any[] }) {
         </div>
 
         <div className="divide-y divide-zinc-100 flex-1 overflow-y-auto scrollbar-thin">
-          {commentaries.length > 0 ?
-            commentaries.map((c: any, i: number) => (
+          {filledCommentaries.length > 0 ?
+            filledCommentaries.map((c: any, i: number) => (
               <div key={i} className="px-6 bg-white border-b border-zinc-200 py-5 transition-colors">
                 <div className="text-sm leading-relaxed text-zinc-600 prose prose-sm max-w-none [&>p:first-child]:inline">
                   <Bookmark

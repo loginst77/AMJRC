@@ -60,7 +60,9 @@ const routes: prismic.ClientConfig["routes"] = [
 export const createClient = (config: prismic.ClientConfig = {}) => {
   const client = prismic.createClient(repositoryName, {
     routes,
-    fetchOptions: process.env.NODE_ENV === "production" ? { next: { tags: ["prismic"] }, cache: "force-cache" } : { next: { revalidate: 5 } },
+    // Production: time-based TTL (self-heals within 60s even if a publish webhook is missed)
+    // plus the "prismic" tag for near-instant on-demand revalidation on publish.
+    fetchOptions: process.env.NODE_ENV === "production" ? { next: { tags: ["prismic"], revalidate: 60 } } : { next: { revalidate: 5 } },
     ...config,
   });
 

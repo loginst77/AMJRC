@@ -3,8 +3,7 @@ import type { TorahDocument } from "../../../prismicio-types";
 import { SliceZone } from "@prismicio/react";
 import { asLink } from "@prismicio/client";
 import { Container } from "@/components/ui/container";
-import { fetchPassage, VERSIONS, TranslationCode } from "@/lib/torah-data";
-import { TranslationSelector } from "./components/translation-selector";
+import { fetchPassageWithFallback, VERSIONS, TranslationCode } from "@/lib/torah-data";
 import { CommentariesPanel } from "./components/commentaries-panel";
 import { ScripturePanel } from "./components/scripture-panel";
 import { TorahMobileReader } from "./components/torah-mobile-reader";
@@ -92,16 +91,19 @@ export default async function ReadTorahPage(props: {
     }
   };
 
-  // Fetch passage text from YouVersion
+  // Fetch passage text from YouVersion.
+  // Verse-source fallback: try the selected translation first, then any other
+  // Old-Testament-capable translation, so one failing source doesn't blank the reader.
   const passageRef = currentReading?.data?.bible_passage as string | undefined;
-  let fetchFailed = false;
-  const passage = passageRef
-    ? await fetchPassage(passageRef, currentBibleId).catch((error) => {
-        fetchFailed = true;
-        console.error("[Torah page] fetchPassage failed:", passageRef, currentBibleId, error);
-        return null;
-      })
-    : null;
+  const fallbackBibleIds = [
+    currentBibleId,
+    ...Object.values(VERSIONS)
+      .filter((v) => v.canons.includes("old_testament") && v.id !== currentBibleId)
+      .map((v) => v.id),
+  ];
+  const { passage } = passageRef
+    ? await fetchPassageWithFallback(passageRef, fallbackBibleIds)
+    : { passage: null };
 
   // Commentaries from Prismic
   const commentaries = (currentReading?.data?.commentarie ?? []) as any[];
@@ -130,12 +132,14 @@ export default async function ReadTorahPage(props: {
       {/* ───── Torah Reader ───── */}
       <section id="reader" className="py-14 sm:py-20 bg-white flex-1 scroll-mt-20">
         <Container>
-          {currentReading && passage ? (
+          {currentReading ? (
+            // Render the reader whenever a reading exists — commentary stays visible
+            // even if the verses are temporarily unavailable (passage === null).
             <div className="mx-auto max-w-7xl relative">
               {/* Mobile reader (below md) */}
               <TorahMobileReader
                 passage={passage}
-                passageRef={passageRef!}
+                passageRef={passageRef ?? ""}
                 readingTitle={currentReading.data.title}
                 currentVersion={currentVersionCode}
                 commentaries={commentaries}
@@ -148,13 +152,13 @@ export default async function ReadTorahPage(props: {
                 {/* ── Scripture (left) ── */}
                 <ScripturePanel
                   passage={passage}
-                  passageRef={passageRef!}
+                  passageRef={passageRef ?? ""}
                   readingTitle={currentReading.data.title}
                   currentVersion={currentVersionCode}
                   actions={
                     <FullscreenReaderButton
                       passage={passage}
-                      passageRef={passageRef!}
+                      passageRef={passageRef ?? ""}
                       readingTitle={currentReading.data.title}
                       currentVersion={currentVersionCode}
                       commentaries={commentaries}
@@ -170,14 +174,9 @@ export default async function ReadTorahPage(props: {
             </div>
           ) : (
             <div className="mx-auto max-w-2xl text-center py-20">
-              {fetchFailed && <TranslationSelector currentVersion={currentVersionCode} fetchFailed={true} canon="old_testament" />}
               <BookOpen className="h-12 w-12 text-zinc-300 mx-auto mb-4 animate-pulse" />
-              <h2 className="text-2xl font-bold text-zinc-950 mb-2">{fetchFailed ? "Ошибка при загрузке" : "Нет текущего чтения"}</h2>
-              <p className="text-zinc-500">
-                {fetchFailed
-                  ? "Не удалось загрузить выбранный перевод. Возвращаемся к предыдущему..."
-                  : "На эту неделю чтение ещё не назначено. Пожалуйста, проверьте позже."}
-              </p>
+              <h2 className="text-2xl font-bold text-zinc-950 mb-2">Нет текущего чтения</h2>
+              <p className="text-zinc-500">На эту неделю чтение ещё не назначено. Пожалуйста, проверьте позже.</p>
             </div>
           )}
         </Container>

@@ -12,7 +12,7 @@ export function ScripturePanel({
   currentVersion,
   actions,
 }: {
-  passage: TorahPassage;
+  passage: TorahPassage | null;
   passageRef: string;
   /** Display title from Prismic (above passage reference). */
   readingTitle?: string | null;
@@ -24,13 +24,13 @@ export function ScripturePanel({
   // Reset scroll position when passage changes
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
-  }, [passage.reference, passageRef, readingTitle]);
+  }, [passage?.reference, passageRef, readingTitle]);
 
   const headingTitle = readingTitle?.trim();
 
   // Group verses into paragraphs based on paragraphStart flag
-  const paragraphs: (typeof passage.verses)[] = [];
-  passage.verses.forEach((v) => {
+  const paragraphs: TorahPassage["verses"][] = [];
+  (passage?.verses ?? []).forEach((v) => {
     if (v.paragraphStart || paragraphs.length === 0) {
       paragraphs.push([v]);
     } else {
@@ -55,7 +55,7 @@ export function ScripturePanel({
                 </>
               ) : (
                 <>
-                  <h3 className="text-lg font-semibold text-zinc-950">{passage.reference}</h3>
+                  <h3 className="text-lg font-semibold text-zinc-950">{passage?.reference ?? passageRef}</h3>
                   <p className="text-sm text-blue-500">{passageRef}</p>
                 </>
               )}
@@ -69,7 +69,13 @@ export function ScripturePanel({
 
         {/* Verses */}
         <div ref={scrollRef} className="px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 flex-1 bg-white overflow-y-auto scrollbar-thin">
-          {paragraphs.map((group, pIdx) => (
+          {paragraphs.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center text-center text-zinc-400 py-16">
+              <BookOpen className="h-10 w-10 text-zinc-200 mb-4" />
+              <p className="max-w-xs text-sm">Стихи временно недоступны. Пожалуйста, обновите страницу или попробуйте позже.</p>
+            </div>
+          ) : (
+            paragraphs.map((group, pIdx) => (
             <React.Fragment key={pIdx}>
               {group[0].chapterRef && (
                 <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
@@ -87,7 +93,8 @@ export function ScripturePanel({
                 ))}
               </p>
             </React.Fragment>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>

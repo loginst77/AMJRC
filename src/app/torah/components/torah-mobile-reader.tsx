@@ -12,7 +12,7 @@ import type { TorahPassage, TranslationCode } from "@/lib/torah-data";
 type Tab = "scripture" | "commentaries";
 
 interface TorahMobileReaderProps {
-  passage: TorahPassage;
+  passage: TorahPassage | null;
   passageRef: string;
   /** Prismic reading title (matches desktop ScripturePanel). */
   readingTitle?: string | null;
@@ -59,8 +59,8 @@ export function TorahMobileReader({
   }, [activeTab, passageRef, headingTitle]);
 
   // Group verses into paragraphs
-  const paragraphs: (typeof passage.verses)[] = [];
-  passage.verses.forEach((v) => {
+  const paragraphs: TorahPassage["verses"][] = [];
+  (passage?.verses ?? []).forEach((v) => {
     if (v.paragraphStart || paragraphs.length === 0) {
       paragraphs.push([v]);
     } else {
@@ -100,7 +100,7 @@ export function TorahMobileReader({
                 </>
               ) : (
                 <>
-                  <h3 className="text-base font-semibold text-zinc-950 truncate">{passage.reference}</h3>
+                  <h3 className="text-base font-semibold text-zinc-950 truncate">{passage?.reference ?? passageRef}</h3>
                   <p className="text-sm text-blue-500 truncate">{passageRef}</p>
                 </>
               )}
@@ -152,7 +152,7 @@ export function TorahMobileReader({
                       </>
                     ) : (
                       <>
-                        <h2 className="text-base font-semibold text-zinc-950 truncate">{passage.reference}</h2>
+                        <h2 className="text-base font-semibold text-zinc-950 truncate">{passage?.reference ?? passageRef}</h2>
                         <p className="text-sm text-blue-500 truncate">{passageRef}</p>
                       </>
                     )
@@ -204,7 +204,13 @@ export function TorahMobileReader({
             <div ref={scrollRef} className="flex-1 overflow-y-auto scrollbar-thin">
               {activeTab === "scripture" ? (
                 <div className="px-5 py-6">
-                  {paragraphs.map((group, pIdx) => (
+                  {paragraphs.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center text-center text-zinc-400 py-20">
+                      <BookOpen className="h-10 w-10 text-zinc-200 mb-4" />
+                      <p className="max-w-xs text-sm">Стихи временно недоступны. Пожалуйста, обновите страницу или попробуйте позже.</p>
+                    </div>
+                  ) : (
+                    paragraphs.map((group, pIdx) => (
                     <React.Fragment key={pIdx}>
                       {group[0].chapterRef && (
                         <h4 className={`mb-4 text-lg font-bold text-zinc-900 border-b border-zinc-200 pb-2 ${pIdx === 0 ? "mt-0" : "mt-8"}`}>
@@ -224,7 +230,8 @@ export function TorahMobileReader({
                         ))}
                       </p>
                     </React.Fragment>
-                  ))}
+                    ))
+                  )}
                 </div>
               ) : (
                 <div className="divide-y divide-zinc-100">

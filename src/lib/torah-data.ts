@@ -146,26 +146,46 @@ export function parsePassageRef(ref: string): string[] {
 /**
  * Fetch a passage from YouVersion. Returns raw content and reference.
  */
-async function fetchFromYouVersion(passageId: string, bibleId: number): Promise<{ content: string; reference: string }> {
+async function fetchFromYouVersion(passageId: string, bibleId: number, retries = 2): Promise<{ content: string; reference: string }> {
   const apiKey = process.env.YVP_APP_KEY;
   if (!apiKey) {
     throw new Error("YVP_APP_KEY is not configured in .env.local");
   }
 
-  const res = await fetch(`${API_BASE}/bibles/${bibleId}/passages/${passageId}?format=html`, {
-    headers: { "X-YVP-App-Key": apiKey },
-    next: { revalidate: 86400 },
-  });
+  const url = `${API_BASE}/bibles/${bibleId}/passages/${passageId}?format=html`;
+  let lastError: unknown;
 
-  if (!res.ok) {
-    throw new Error(`YouVersion API error: ${res.status} ${res.statusText}`);
+  // Retry transient failures (network errors, 5xx, rate limits). Permanent
+  // client errors (4xx other than 429) fail fast — a retry won't help.
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    let res: Response | undefined;
+    try {
+      res = await fetch(url, {
+        headers: { "X-YVP-App-Key": apiKey },
+        next: { revalidate: 86400 },
+      });
+    } catch (err) {
+      lastError = err; // network/DNS/timeout — retryable
+    }
+
+    if (res) {
+      if (res.ok) {
+        const data = await res.json();
+        return {
+          content: data.content ?? "",
+          reference: data.reference ?? passageId,
+        };
+      }
+      lastError = new Error(`YouVersion API error: ${res.status} ${res.statusText}`);
+      if (res.status < 500 && res.status !== 429) break; // permanent — stop retrying
+    }
+
+    if (attempt < retries) {
+      await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+    }
   }
 
-  const data = await res.json();
-  return {
-    content: data.content ?? "",
-    reference: data.reference ?? passageId,
-  };
+  throw lastError instanceof Error ? lastError : new Error("YouVersion request failed");
 }
 
 // ─── Public API ─────────────────────────────────────────────────────────────
@@ -264,4 +284,31 @@ export async function fetchPassage(ref: string, bibleId: number = 143): Promise<
     content: plainText,
     verses: allVerses,
   };
+}
+
+/**
+ * Fetch a passage, trying each Bible version in order until one returns verses.
+ * Lets a single failing source (e.g. the selected translation being temporarily
+ * down) fall back to another instead of blanking the reader.
+ *
+ * @param ref      Human-readable or USFM passage reference.
+ * @param bibleIds Versions to try, most-preferred first.
+ * @returns The first passage that yields verses, plus the version that produced
+ *          it — or `{ passage: null }` if every source fails.
+ */
+export async function fetchPassageWithFallback(
+  ref: string,
+  bibleIds: number[],
+): Promise<{ passage: TorahPassage | null; usedBibleId: number | null }> {
+  for (const bibleId of bibleIds) {
+    try {
+      const passage = await fetchPassage(ref, bibleId);
+      if (passage.verses.length > 0) {
+        return { passage, usedBibleId: bibleId };
+      }
+    } catch (error) {
+      console.error("[torah-data] passage source failed:", ref, bibleId, error);
+    }
+  }
+  return { passage: null, usedBibleId: null };
 }
