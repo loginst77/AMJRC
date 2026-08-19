@@ -3,7 +3,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/cn";
 
-export const MEDIA_PAGE_SIZE = 18;
+/** Shared page size for every /media list page. */
+export const MEDIA_PAGE_SIZE = 25;
 
 const PAGE_WINDOW = 1;
 
