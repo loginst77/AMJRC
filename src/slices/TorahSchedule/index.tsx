@@ -8,6 +8,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/container";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Pagination } from "@/components/ui/pagination";
 import { BookOpen, X } from "lucide-react";
 
 type TorahScheduleContext = {
@@ -65,7 +66,6 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const tablePageParam = searchParams.get("torahSchedulePage");
-  const currentPage = Math.max(Number.parseInt(tablePageParam || "1", 10) || 1, 1);
 
   const readings = context?.readings ?? [];
   const today = context?.today ?? new Date().toISOString().slice(0, 10);
@@ -91,25 +91,35 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
 
     const versionParam = (searchParams.get("version") || "NRP").toUpperCase();
 
-    return sorted.map((doc, idx) => {
-      const offset = idx - baseIndex;
-      const params = new URLSearchParams();
-      params.set("version", versionParam);
-      params.set("offset", String(offset));
-      return {
-        key: doc.id,
-        startDate: (doc.data?.startDate as string | null) || "",
-        endDate: (doc.data?.enddate as string | null) || "",
-        readingTitle: typeof doc.data?.title === "string" ? doc.data.title.trim() : "",
-        passage: (doc.data?.bible_passage as string | null) || "",
-        isCurrent: idx === currentIndex,
-        isSelected: idx === selectedIndex,
-        href: `/torah?${params.toString()}#reader`,
-      };
-    });
+    // Rows are built over the ascending array so `offset` matches page.tsx's index math,
+    // then reversed so the newest reading is listed first.
+    return sorted
+      .map((doc, idx) => {
+        const offset = idx - baseIndex;
+        const params = new URLSearchParams();
+        params.set("version", versionParam);
+        params.set("offset", String(offset));
+        return {
+          key: doc.id,
+          startDate: (doc.data?.startDate as string | null) || "",
+          endDate: (doc.data?.enddate as string | null) || "",
+          readingTitle: typeof doc.data?.title === "string" ? doc.data.title.trim() : "",
+          passage: (doc.data?.bible_passage as string | null) || "",
+          isCurrent: idx === currentIndex,
+          isSelected: idx === selectedIndex,
+          href: `/torah?${params.toString()}#reader`,
+        };
+      })
+      .reverse();
   }, [readings, today, searchParams]);
 
   const totalPages = Math.max(1, Math.ceil(rows.length / ROWS_PER_PAGE));
+
+  // With no explicit ?torahSchedulePage, open on the page holding the highlighted reading
+  // (the current one, or whatever ?offset selected) instead of always page 1.
+  const selectedRowIndex = rows.findIndex((row) => row.isSelected);
+  const defaultPage = selectedRowIndex >= 0 ? Math.floor(selectedRowIndex / ROWS_PER_PAGE) + 1 : 1;
+  const currentPage = tablePageParam ? Math.max(Number.parseInt(tablePageParam, 10) || 1, 1) : defaultPage;
   const safeCurrentPage = Math.min(currentPage, totalPages);
   const startIndex = (safeCurrentPage - 1) * ROWS_PER_PAGE;
   const pagedRows = rows.slice(startIndex, startIndex + ROWS_PER_PAGE);
@@ -255,32 +265,28 @@ const TorahSchedule: FC<TorahScheduleProps> = ({ slice, context }) => {
                 </div>
               </div>
               <div className="flex-1 overflow-hidden bg-white">{renderTableMarkup({ fullscreen: true })}</div>
+              {totalPages > 1 ? (
+                <div className="shrink-0 overflow-x-auto border-t border-zinc-200 bg-white px-2 py-3">
+                  {/* w-max + min-w-full keeps the pager centred when it fits and scrollable from the left when it doesn't. */}
+                  <Pagination
+                    compact
+                    currentPage={safeCurrentPage}
+                    totalPages={totalPages}
+                    buildHref={buildPageHref}
+                    className="mx-auto w-max min-w-full pt-0"
+                  />
+                </div>
+              ) : null}
             </div>
           ) : null}
 
-          {totalPages > 1 ? (
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-              {Array.from({ length: totalPages }, (_, index) => {
-                const page = index + 1;
-                const isActive = page === safeCurrentPage;
-
-                return (
-                  <Link
-                    key={page}
-                    href={buildPageHref(page)}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`inline-flex h-10 min-w-15 items-center justify-center rounded-xl border px-3 text-sm font-semibold transition-colors ${
-                      isActive
-                        ? "border-blue-400 bg-blue-400 text-white"
-                        : "border-zinc-200 bg-white text-zinc-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
-                    }`}
-                  >
-                    {page}
-                  </Link>
-                );
-              })}
-            </div>
-          ) : null}
+          {/* Mobile gets its pager inside the fullscreen table overlay instead, under the table. */}
+          <Pagination
+            currentPage={safeCurrentPage}
+            totalPages={totalPages}
+            buildHref={buildPageHref}
+            className="mt-6 hidden sm:flex"
+          />
         </div>
       </Container>
     </section>
